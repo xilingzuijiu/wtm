@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <properties resource="server.properties"/>
+
+    <context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <plugin type="com.github.abel533.generator.MapperPlugin">
+            <property name="mappers" value="com.github.abel533.mapper.Mapper"/>
+        </plugin>
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="${master1.jdbc.url}"
+                        userId="${master1.jdbc.username}"
+                        password="${master1.jdbc.password}">
+        </jdbcConnection>
+
+        <javaModelGenerator targetPackage="com.weitaomi.application.model.bean" targetProject="F:\Program\git\weitaomi\weitaomi/src/main/java"/>
+
+        <sqlMapGenerator targetPackage="mapper"  targetProject="F:\Program\git\weitaomi\weitaomi/src/main/resources"/>
+
+        <javaClientGenerator targetPackage="com.weitaomi.application.model.mapper" targetProject="F:\Program\git\weitaomi\weitaomi/src/main/java" type="XMLMAPPER" />
+        <!--<table tableName="wtm_member"  domainObjectName="Member">-->
+            <!--<property name="useActualColumnNames" value="true"/>-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="seckill"  domainObjectName="Seckill">-->
+            <!--<property name="useActualColumnNames" value="true"/>-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="success_killed"  domainObjectName="SuccessKilled">-->
+            <!--<property name="useActualColumnNames" value="true"/>-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="wtm_third_login"  domainObjectName="ThirdLogin">-->
+            <!--<property name="useActualColumnNames" value="true"/>-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="wtm_user"  domainObjectName="User">-->
+        <!--<property name="useActualColumnNames" value="true"/>-->
+        <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+    <!--</table>-->
+        <!--<table tableName="wtm_user_type"  domainObjectName="UserType">-->
+            <!--<property name="useActualColumnNames" value="true"/>-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="wtm_article"  domainObjectName="Article">-->
+            <!--<property name="useActualColumnNames" value="true"/>-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="wtm_member_score"  domainObjectName="MemberScore">-->
+            <!--<property name="useActualColumnNames" value="true"/>-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="wtm_member_score_flow"  domainObjectName="MemberScoreFlow">-->
+            <!--<property name="useActualColumnNames" value="true"/>-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="wtm_member_score_flow_type"  domainObjectName="MemberScoreFlowType">-->
+        <!--<property name="useActualColumnNames" value="true"/>-->
+        <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+        <table tableName="wtm_article_read_record"  domainObjectName="ArticleReadRecord">
+            <property name="useActualColumnNames" value="true"/>
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
+    </context>
+</generatorConfiguration>

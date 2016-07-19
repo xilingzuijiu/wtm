@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite failures="0" time="1.169" errors="1" skipped="0" tests="1" name="configuration.RedisConnectionTest">
+  <properties>
+    <property name="idea.version" value="15.0.2"/>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.7.0_75\jre\bin"/>
+    <property name="java.vm.version" value="24.75-b04"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="path.separator" value=";"/>
+    <property name="guice.disable.misplaced.annotation.check" value="true"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="idea.launcher.port" value="7533"/>
+    <property name="user.script" value=""/>
+    <property name="user.country" value="CN"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="F:\Program\git\weitaomi\weitaomi"/>
+    <property name="java.runtime.version" value="1.7.0_75-b13"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
+    <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.7.0_75\jre\lib\endorsed"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.io.tmpdir" value="C:\Users\supumall\AppData\Local\Temp\"/>
+    <property name="line.separator" value="
+"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.variant" value=""/>
+    <property name="os.name" value="Windows 8.1"/>
+    <property name="classworlds.conf" value="C:\Maven3\bin\m2.conf"/>
+    <property name="sun.jnu.encoding" value="GBK"/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk1.7.0_75\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows; C:\Program\JavaSoft\bin;C:\Program\JavaSoft\jre\bin;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Maven3\bin;C:\Program\JavaSoft\bin;C:\Program Files\gradle-2.12\bin;C:\Program Files\TortoiseSVN\bin;C:\Program Files (x86)\MySQL\MySQL Fabric 1.5 &amp; MySQL Utilities 1.5\;C:\Program Files (x86)\MySQL\MySQL Fabric 1.5 &amp; MySQL Utilities 1.5\Doctrine extensions for PHP\;C:\Program Files\apache-maven-3.3.9\bin;."/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.class.version" value="51.0"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="os.version" value="6.3"/>
+    <property name="user.home" value="C:\Users\supumall"/>
+    <property name="user.timezone" value="Asia/Shanghai"/>
+    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
+    <property name="java.specification.version" value="1.7"/>
+    <property name="idea.launcher.bin.path" value="C:\Program Files (x86)\JetBrains\IntelliJ IDEA 15.0.2\bin"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="user.name" value="supumall"/>
+    <property name="java.class.path" value="C:\Maven3\boot\plexus-classworlds-2.4.jar;C:\Program Files (x86)\JetBrains\IntelliJ IDEA 15.0.2\lib\idea_rt.jar"/>
+    <property name="java.vm.specification.version" value="1.7"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.home" value="C:\Program Files\Java\jdk1.7.0_75\jre"/>
+    <property name="sun.java.command" value="com.intellij.rt.execution.application.AppMain org.codehaus.classworlds.Launcher -Didea.version=15.0.2 package"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.language" value="zh"/>
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.version" value="1.7.0_75"/>
+    <property name="java.ext.dirs" value="C:\Program Files\Java\jdk1.7.0_75\jre\lib\ext;C:\Windows\Sun\Java\lib\ext"/>
+    <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.7.0_75\jre\lib\resources.jar;C:\Program Files\Java\jdk1.7.0_75\jre\lib\rt.jar;C:\Program Files\Java\jdk1.7.0_75\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.7.0_75\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.7.0_75\jre\lib\jce.jar;C:\Program Files\Java\jdk1.7.0_75\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.7.0_75\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.7.0_75\jre\classes"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="maven.home" value="C:\Maven3"/>
+    <property name="file.separator" value="\"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="sun.desktop" value="windows"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+  </properties>
+  <testcase time="1.114" classname="configuration.RedisConnectionTest" name="testKeyValue">
+    <error message="Cannot get Jedis connection; nested exception is redis.clients.jedis.exceptions.JedisConnectionException: Could not get a resource from the pool" type="org.springframework.data.redis.RedisConnectionFailureException">org.springframework.data.redis.RedisConnectionFailureException: Cannot get Jedis connection; nested exception is redis.clients.jedis.exceptions.JedisConnectionException: Could not get a resource from the pool
+	at org.springframework.data.redis.connection.jedis.JedisConnectionFactory.fetchJedisConnector(JedisConnectionFactory.java:162)
+	at org.springframework.data.redis.connection.jedis.JedisConnectionFactory.getConnection(JedisConnectionFactory.java:251)
+	at org.springframework.data.redis.connection.jedis.JedisConnectionFactory.getConnection(JedisConnectionFactory.java:58)
+	at org.springframework.data.redis.core.RedisConnectionUtils.doGetConnection(RedisConnectionUtils.java:128)
+	at org.springframework.data.redis.core.RedisConnectionUtils.getConnection(RedisConnectionUtils.java:91)
+	at org.springframework.data.redis.core.RedisConnectionUtils.getConnection(RedisConnectionUtils.java:78)
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:178)
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:153)
+	at org.springframework.data.redis.core.AbstractOperations.execute(AbstractOperations.java:86)
+	at org.springframework.data.redis.core.DefaultValueOperations.set(DefaultValueOperations.java:169)
+	at configuration.RedisConnectionTest.testKeyValue(RedisConnectionTest.java:20)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestMethodCallbacks.evaluate(RunBeforeTestMethodCallbacks.java:75)
+	at org.springframework.test.context.junit4.statements.RunAfterTestMethodCallbacks.evaluate(RunAfterTestMethodCallbacks.java:86)
+	at org.springframework.test.context.junit4.statements.SpringRepeat.evaluate(SpringRepeat.java:84)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:254)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:89)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:193)
+	at org.apache.maven.surefire.junit4.JUnit4TestSet.execute(JUnit4TestSet.java:53)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:123)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:104)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.maven.surefire.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:164)
+	at org.apache.maven.surefire.booter.ProviderFactory$ProviderProxy.invoke(ProviderFactory.java:110)
+	at org.apache.maven.surefire.booter.SurefireStarter.invokeProvider(SurefireStarter.java:175)
+	at org.apache.maven.surefire.booter.SurefireStarter.runSuitesInProcessWhenForked(SurefireStarter.java:107)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:68)
+Caused by: redis.clients.jedis.exceptions.JedisConnectionException: Could not get a resource from the pool
+	at redis.clients.util.Pool.getResource(Pool.java:50)
+	at redis.clients.jedis.JedisPool.getResource(JedisPool.java:86)
+	at redis.clients.jedis.JedisPool.getResource(JedisPool.java:12)
+	at org.springframework.data.redis.connection.jedis.JedisConnectionFactory.fetchJedisConnector(JedisConnectionFactory.java:155)
+	... 46 more
+Caused by: redis.clients.jedis.exceptions.JedisConnectionException: java.net.ConnectException: Connection refused: connect
+	at redis.clients.jedis.Connection.connect(Connection.java:154)
+	at redis.clients.jedis.BinaryClient.connect(BinaryClient.java:83)
+	at redis.clients.jedis.BinaryJedis.connect(BinaryJedis.java:1643)
+	at redis.clients.jedis.JedisFactory.makeObject(JedisFactory.java:85)
+	at org.apache.commons.pool2.impl.GenericObjectPool.create(GenericObjectPool.java:861)
+	at org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:435)
+	at org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:363)
+	at redis.clients.util.Pool.getResource(Pool.java:48)
+	... 49 more
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.waitForConnect(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:85)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:339)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:200)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:182)
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:579)
+	at redis.clients.jedis.Connection.connect(Connection.java:148)
+	... 56 more
+</error>
+    <system-out>16:32:19.264 [main] DEBUG o.s.t.c.s.AbstractDirtiesContextTestExecutionListener - After test class: context [DefaultTestContext@56b77265 testClass = MyBatisTest, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@25b7715d testClass = MyBatisTest, locations = &apos;{classpath:/configXml/spring-dao.xml}&apos;, classes = &apos;{}&apos;, contextInitializerClasses = &apos;[]&apos;, activeProfiles = &apos;{}&apos;, propertySourceLocations = &apos;{}&apos;, propertySourceProperties = &apos;{}&apos;, resourceBasePath = &apos;src/main/webapp&apos;, contextLoader = &apos;org.springframework.test.context.web.WebDelegatingSmartContextLoader&apos;, parent = [null]]], class annotated with @DirtiesContext [false] with mode [null].
+16:32:19.266 [main] DEBUG o.s.t.c.j.SpringJUnit4ClassRunner - SpringJUnit4ClassRunner constructor called with [class configuration.RedisConnectionTest]
+16:32:19.266 [main] DEBUG o.s.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
+16:32:19.266 [main] DEBUG o.s.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
+16:32:19.267 [main] DEBUG o.s.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [configuration.RedisConnectionTest] from class [org.springframework.test.context.web.WebTestContextBootstrapper]
+16:32:19.269 [main] DEBUG o.s.t.c.s.AbstractDelegatingSmartContextLoader - Delegating to GenericXmlWebContextLoader to process context configuration [ContextConfigurationAttributes@40aad9fc declaringClass = &apos;common.BaseContextCase&apos;, classes = &apos;{}&apos;, locations = &apos;{/configXml/spring-dao.xml}&apos;, inheritLocations = true, initializers = &apos;{}&apos;, inheritInitializers = true, name = [null], contextLoaderClass = &apos;org.springframework.test.context.ContextLoader&apos;].
+16:32:19.269 [main] DEBUG o.s.t.c.support.ActiveProfilesUtils - Could not find an &apos;annotation declaring class&apos; for annotation type [org.springframework.test.context.ActiveProfiles] and class [configuration.RedisConnectionTest]
+16:32:19.270 [main] INFO  o.s.t.c.w.WebTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@10cd508f, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@1763e4e7, org.springframework.test.context.support.DependencyInjectionTestExecutionListener@1f4905b0, org.springframework.test.context.support.DirtiesContextTestExecutionListener@731475db]
+16:32:19.276 [main] DEBUG o.s.t.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [configuration.RedisConnectionTest]
+16:32:19.277 [main] DEBUG o.s.t.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [configuration.RedisConnectionTest]
+16:32:19.278 [main] DEBUG o.s.t.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [configuration.RedisConnectionTest]
+16:32:19.278 [main] DEBUG o.s.t.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [configuration.RedisConnectionTest]
+16:32:19.279 [main] DEBUG o.s.t.c.s.AbstractDirtiesContextTestExecutionListener - Before test class: context [DefaultTestContext@4445b7e3 testClass = RedisConnectionTest, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@3d2bbb19 testClass = RedisConnectionTest, locations = &apos;{classpath:/configXml/spring-dao.xml}&apos;, classes = &apos;{}&apos;, contextInitializerClasses = &apos;[]&apos;, activeProfiles = &apos;{}&apos;, propertySourceLocations = &apos;{}&apos;, propertySourceProperties = &apos;{}&apos;, resourceBasePath = &apos;src/main/webapp&apos;, contextLoader = &apos;org.springframework.test.context.web.WebDelegatingSmartContextLoader&apos;, parent = [null]]], class annotated with @DirtiesContext [false] with mode [null].
+16:32:19.280 [main] DEBUG o.s.t.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [configuration.RedisConnectionTest]
+16:32:19.280 [main] DEBUG o.s.t.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [configuration.RedisConnectionTest]
+16:32:19.281 [main] DEBUG o.s.t.c.c.DefaultCacheAwareContextLoaderDelegate - Retrieved ApplicationContext from cache with key [[WebMergedContextConfiguration@3d2bbb19 testClass = RedisConnectionTest, locations = &apos;{classpath:/configXml/spring-dao.xml}&apos;, classes = &apos;{}&apos;, contextInitializerClasses = &apos;[]&apos;, activeProfiles = &apos;{}&apos;, propertySourceLocations = &apos;{}&apos;, propertySourceProperties = &apos;{}&apos;, resourceBasePath = &apos;src/main/webapp&apos;, contextLoader = &apos;org.springframework.test.context.web.WebDelegatingSmartContextLoader&apos;, parent = [null]]]
+16:32:19.281 [main] DEBUG o.springframework.test.context.cache - Spring test ApplicationContext cache statistics: [DefaultContextCache@63d7c62b size = 1, parentContextCount = 0, hitCount = 6, missCount = 1]
+16:32:19.281 [main] DEBUG o.s.t.c.w.ServletTestExecutionListener - Setting up MockHttpServletRequest, MockHttpServletResponse, ServletWebRequest, and RequestContextHolder for test context [DefaultTestContext@4445b7e3 testClass = RedisConnectionTest, testInstance = configuration.RedisConnectionTest@20885af, testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@3d2bbb19 testClass = RedisConnectionTest, locations = &apos;{classpath:/configXml/spring-dao.xml}&apos;, classes = &apos;{}&apos;, contextInitializerClasses = &apos;[]&apos;, activeProfiles = &apos;{}&apos;, propertySourceLocations = &apos;{}&apos;, propertySourceProperties = &apos;{}&apos;, resourceBasePath = &apos;src/main/webapp&apos;, contextLoader = &apos;org.springframework.test.context.web.WebDelegatingSmartContextLoader&apos;, parent = [null]]].
+16:32:19.287 [main] DEBUG o.s.t.c.s.DependencyInjectionTestExecutionListener - Performing dependency injection for test context [[DefaultTestContext@4445b7e3 testClass = RedisConnectionTest, testInstance = configuration.RedisConnectionTest@20885af, testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@3d2bbb19 testClass = RedisConnectionTest, locations = &apos;{classpath:/configXml/spring-dao.xml}&apos;, classes = &apos;{}&apos;, contextInitializerClasses = &apos;[]&apos;, activeProfiles = &apos;{}&apos;, propertySourceLocations = &apos;{}&apos;, propertySourceProperties = &apos;{}&apos;, resourceBasePath = &apos;src/main/webapp&apos;, contextLoader = &apos;org.springframework.test.context.web.WebDelegatingSmartContextLoader&apos;, parent = [null]]]].
+16:32:19.287 [main] DEBUG o.s.t.c.c.DefaultCacheAwareContextLoaderDelegate - Retrieved ApplicationContext from cache with key [[WebMergedContextConfiguration@3d2bbb19 testClass = RedisConnectionTest, locations = &apos;{classpath:/configXml/spring-dao.xml}&apos;, classes = &apos;{}&apos;, contextInitializerClasses = &apos;[]&apos;, activeProfiles = &apos;{}&apos;, propertySourceLocations = &apos;{}&apos;, propertySourceProperties = &apos;{}&apos;, resourceBasePath = &apos;src/main/webapp&apos;, contextLoader = &apos;org.springframework.test.context.web.WebDelegatingSmartContextLoader&apos;, parent = [null]]]
+16:32:19.287 [main] DEBUG o.springframework.test.context.cache - Spring test ApplicationContext cache statistics: [DefaultContextCache@63d7c62b size = 1, parentContextCount = 0, hitCount = 7, missCount = 1]
+16:32:19.291 [main] DEBUG o.s.b.f.annotation.InjectionMetadata - Processing injected element of bean &apos;configuration.RedisConnectionTest&apos;: AutowiredFieldElement for private org.springframework.web.context.WebApplicationContext common.BaseContextCase.webApplicationContext
+16:32:19.291 [main] DEBUG o.s.b.f.a.AutowiredAnnotationBeanPostProcessor - Autowiring by type from bean name &apos;configuration.RedisConnectionTest&apos; to bean named &apos;org.springframework.web.context.support.GenericWebApplicationContext@3c8c0b5a&apos;
+16:32:19.291 [main] DEBUG o.s.b.f.annotation.InjectionMetadata - Processing injected element of bean &apos;configuration.RedisConnectionTest&apos;: AutowiredFieldElement for private org.springframework.data.redis.core.RedisTemplate configuration.RedisConnectionTest.redisTemplate
+16:32:19.292 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Returning cached instance of singleton bean &apos;redisTemplate&apos;
+16:32:19.292 [main] DEBUG o.s.b.f.a.AutowiredAnnotationBeanPostProcessor - Autowiring by type from bean name &apos;configuration.RedisConnectionTest&apos; to bean named &apos;redisTemplate&apos;
+16:32:19.294 [main] DEBUG o.s.t.c.s.AbstractDirtiesContextTestExecutionListener - Before test method: context [DefaultTestContext@4445b7e3 testClass = RedisConnectionTest, testInstance = configuration.RedisConnectionTest@20885af, testMethod = testKeyValue@RedisConnectionTest, testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@3d2bbb19 testClass = RedisConnectionTest, locations = &apos;{classpath:/configXml/spring-dao.xml}&apos;, classes = &apos;{}&apos;, contextInitializerClasses = &apos;[]&apos;, activeProfiles = &apos;{}&apos;, propertySourceLocations = &apos;{}&apos;, propertySourceProperties = &apos;{}&apos;, resourceBasePath = &apos;src/main/webapp&apos;, contextLoader = &apos;org.springframework.test.context.web.WebDelegatingSmartContextLoader&apos;, parent = [null]]], class annotated with @DirtiesContext [false] with mode [null], method annotated with @DirtiesContext [false] with mode [null].
+16:32:19.294 [main] DEBUG o.s.t.w.s.TestDispatcherServlet - Initializing servlet &apos;&apos;
+16:32:19.295 [main] DEBUG o.s.w.c.s.StandardServletEnvironment - Adding [servletConfigInitParams] PropertySource with lowest search precedence
+16:32:19.296 [main] DEBUG o.s.w.c.s.StandardServletEnvironment - Adding [servletContextInitParams] PropertySource with lowest search precedence
+16:32:19.296 [main] DEBUG o.s.w.c.s.StandardServletEnvironment - Adding [systemProperties] PropertySource with lowest search precedence
+16:32:19.296 [main] DEBUG o.s.w.c.s.StandardServletEnvironment - Adding [systemEnvironment] PropertySource with lowest search precedence
+16:32:19.296 [main] DEBUG o.s.w.c.s.StandardServletEnvironment - Initialized StandardServletEnvironment with PropertySources [servletConfigInitParams,servletContextInitParams,systemProperties,systemEnvironment]
+16:32:19.296 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring FrameworkServlet &apos;&apos;
+16:32:19.296 [main] INFO  o.s.t.w.s.TestDispatcherServlet - FrameworkServlet &apos;&apos;: initialization started
+16:32:19.297 [main] DEBUG o.s.t.w.s.TestDispatcherServlet - Unable to locate MultipartResolver with name &apos;multipartResolver&apos;: no multipart request handling provided
+16:32:19.297 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Creating instance of bean &apos;org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver&apos;
+16:32:19.297 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Finished creating instance of bean &apos;org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver&apos;
+16:32:19.297 [main] DEBUG o.s.t.w.s.TestDispatcherServlet - Unable to locate LocaleResolver with name &apos;localeResolver&apos;: using default [org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver@6753df87]
+16:32:19.297 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Creating instance of bean &apos;org.springframework.web.servlet.theme.FixedThemeResolver&apos;
+16:32:19.297 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Finished creating instance of bean &apos;org.springframework.web.servlet.theme.FixedThemeResolver&apos;
+16:32:19.298 [main] DEBUG o.s.t.w.s.TestDispatcherServlet - Unable to locate ThemeResolver with name &apos;themeResolver&apos;: using default [org.springframework.web.servlet.theme.FixedThemeResolver@33784d10]
+16:32:19.298 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Creating instance of bean &apos;org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping&apos;
+16:32:19.299 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Looking for URL mappings in application context: org.springframework.web.context.support.GenericWebApplicationContext@3c8c0b5a: startup date [Fri Jul 08 16:32:13 CST 2016]; root of context hierarchy
+16:32:19.299 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0&apos;: no URL paths identified
+16:32:19.299 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;dataSource&apos;: no URL paths identified
+16:32:19.299 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;jedisPoolConfig&apos;: no URL paths identified
+16:32:19.299 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;jedisConnectionFactory&apos;: no URL paths identified
+16:32:19.299 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;stringRedisSerializer&apos;: no URL paths identified
+16:32:19.299 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;jdkRedisSerializer&apos;: no URL paths identified
+16:32:19.299 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;redisTemplate&apos;: no URL paths identified
+16:32:19.299 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;sqlSessionFactory&apos;: no URL paths identified
+16:32:19.299 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;org.mybatis.spring.mapper.MapperScannerConfigurer#0&apos;: no URL paths identified
+16:32:19.300 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;org.springframework.context.annotation.internalConfigurationAnnotationProcessor&apos;: no URL paths identified
+16:32:19.300 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;org.springframework.context.annotation.internalAutowiredAnnotationProcessor&apos;: no URL paths identified
+16:32:19.300 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;org.springframework.context.annotation.internalRequiredAnnotationProcessor&apos;: no URL paths identified
+16:32:19.300 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;org.springframework.context.annotation.internalCommonAnnotationProcessor&apos;: no URL paths identified
+16:32:19.300 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;org.springframework.context.event.internalEventListenerProcessor&apos;: no URL paths identified
+16:32:19.300 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;org.springframework.context.event.internalEventListenerFactory&apos;: no URL paths identified
+16:32:19.300 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor&apos;: no URL paths identified
+16:32:19.300 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;org.springframework.context.annotation.ConfigurationClassPostProcessor.enhancedConfigurationProcessor&apos;: no URL paths identified
+16:32:19.300 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;articleMapper&apos;: no URL paths identified
+16:32:19.300 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;articleReadRecordMapper&apos;: no URL paths identified
+16:32:19.300 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;IBaseMapper&apos;: no URL paths identified
+16:32:19.301 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;memberMapper&apos;: no URL paths identified
+16:32:19.301 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;memberScoreFlowMapper&apos;: no URL paths identified
+16:32:19.301 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;memberScoreFlowTypeMapper&apos;: no URL paths identified
+16:32:19.301 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;memberScoreMapper&apos;: no URL paths identified
+16:32:19.301 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;seckillMapper&apos;: no URL paths identified
+16:32:19.301 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;successKilledMapper&apos;: no URL paths identified
+16:32:19.301 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;thirdLoginMapper&apos;: no URL paths identified
+16:32:19.301 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;userMapper&apos;: no URL paths identified
+16:32:19.301 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;userTypeMapper&apos;: no URL paths identified
+16:32:19.301 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;environment&apos;: no URL paths identified
+16:32:19.301 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;systemProperties&apos;: no URL paths identified
+16:32:19.301 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;systemEnvironment&apos;: no URL paths identified
+16:32:19.302 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;servletContext&apos;: no URL paths identified
+16:32:19.302 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;contextParameters&apos;: no URL paths identified
+16:32:19.302 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;contextAttributes&apos;: no URL paths identified
+16:32:19.302 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;messageSource&apos;: no URL paths identified
+16:32:19.302 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;applicationEventMulticaster&apos;: no URL paths identified
+16:32:19.302 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;lifecycleProcessor&apos;: no URL paths identified
+16:32:19.302 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Finished creating instance of bean &apos;org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping&apos;
+16:32:19.302 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Creating instance of bean &apos;org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping&apos;
+16:32:19.303 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Looking for URL mappings in application context: org.springframework.web.context.support.GenericWebApplicationContext@3c8c0b5a: startup date [Fri Jul 08 16:32:13 CST 2016]; root of context hierarchy
+16:32:19.303 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0&apos;: no URL paths identified
+16:32:19.303 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;dataSource&apos;: no URL paths identified
+16:32:19.303 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;jedisPoolConfig&apos;: no URL paths identified
+16:32:19.304 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;jedisConnectionFactory&apos;: no URL paths identified
+16:32:19.304 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;stringRedisSerializer&apos;: no URL paths identified
+16:32:19.305 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;jdkRedisSerializer&apos;: no URL paths identified
+16:32:19.305 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;redisTemplate&apos;: no URL paths identified
+16:32:19.305 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;sqlSessionFactory&apos;: no URL paths identified
+16:32:19.306 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;org.mybatis.spring.mapper.MapperScannerConfigurer#0&apos;: no URL paths identified
+16:32:19.306 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;org.springframework.context.annotation.internalConfigurationAnnotationProcessor&apos;: no URL paths identified
+16:32:19.306 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;org.springframework.context.annotation.internalAutowiredAnnotationProcessor&apos;: no URL paths identified
+16:32:19.306 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;org.springframework.context.annotation.internalRequiredAnnotationProcessor&apos;: no URL paths identified
+16:32:19.306 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;org.springframework.context.annotation.internalCommonAnnotationProcessor&apos;: no URL paths identified
+16:32:19.307 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;org.springframework.context.event.internalEventListenerProcessor&apos;: no URL paths identified
+16:32:19.307 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;org.springframework.context.event.internalEventListenerFactory&apos;: no URL paths identified
+16:32:19.307 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor&apos;: no URL paths identified
+16:32:19.307 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;org.springframework.context.annotation.ConfigurationClassPostProcessor.enhancedConfigurationProcessor&apos;: no URL paths identified
+16:32:19.307 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;articleMapper&apos;: no URL paths identified
+16:32:19.308 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;articleReadRecordMapper&apos;: no URL paths identified
+16:32:19.308 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;IBaseMapper&apos;: no URL paths identified
+16:32:19.308 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;memberMapper&apos;: no URL paths identified
+16:32:19.308 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;memberScoreFlowMapper&apos;: no URL paths identified
+16:32:19.308 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;memberScoreFlowTypeMapper&apos;: no URL paths identified
+16:32:19.308 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;memberScoreMapper&apos;: no URL paths identified
+16:32:19.308 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;seckillMapper&apos;: no URL paths identified
+16:32:19.309 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;successKilledMapper&apos;: no URL paths identified
+16:32:19.309 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;thirdLoginMapper&apos;: no URL paths identified
+16:32:19.309 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;userMapper&apos;: no URL paths identified
+16:32:19.309 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;userTypeMapper&apos;: no URL paths identified
+16:32:19.309 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;environment&apos;: no URL paths identified
+16:32:19.309 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;systemProperties&apos;: no URL paths identified
+16:32:19.309 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;systemEnvironment&apos;: no URL paths identified
+16:32:19.309 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;servletContext&apos;: no URL paths identified
+16:32:19.310 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;contextParameters&apos;: no URL paths identified
+16:32:19.310 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;contextAttributes&apos;: no URL paths identified
+16:32:19.310 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;messageSource&apos;: no URL paths identified
+16:32:19.310 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;applicationEventMulticaster&apos;: no URL paths identified
+16:32:19.310 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;lifecycleProcessor&apos;: no URL paths identified
+16:32:19.310 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Finished creating instance of bean &apos;org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping&apos;
+16:32:19.311 [main] DEBUG o.s.t.w.s.TestDispatcherServlet - No HandlerMappings found in servlet &apos;&apos;: using default
+16:32:19.311 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Creating instance of bean &apos;org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter&apos;
+16:32:19.312 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Finished creating instance of bean &apos;org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter&apos;
+16:32:19.312 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Creating instance of bean &apos;org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter&apos;
+16:32:19.312 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Finished creating instance of bean &apos;org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter&apos;
+16:32:19.313 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Creating instance of bean &apos;org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter&apos;
+16:32:19.317 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Finished creating instance of bean &apos;org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter&apos;
+16:32:19.318 [main] DEBUG o.s.t.w.s.TestDispatcherServlet - No HandlerAdapters found in servlet &apos;&apos;: using default
+16:32:19.318 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Creating instance of bean &apos;org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerExceptionResolver&apos;
+16:32:19.338 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Finished creating instance of bean &apos;org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerExceptionResolver&apos;
+16:32:19.339 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Creating instance of bean &apos;org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver&apos;
+16:32:19.339 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Finished creating instance of bean &apos;org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver&apos;
+16:32:19.339 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Creating instance of bean &apos;org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver&apos;
+16:32:19.340 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Finished creating instance of bean &apos;org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver&apos;
+16:32:19.340 [main] DEBUG o.s.t.w.s.TestDispatcherServlet - No HandlerExceptionResolvers found in servlet &apos;&apos;: using default
+16:32:19.340 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Creating instance of bean &apos;org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator&apos;
+16:32:19.341 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Finished creating instance of bean &apos;org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator&apos;
+16:32:19.341 [main] DEBUG o.s.t.w.s.TestDispatcherServlet - Unable to locate RequestToViewNameTranslator with name &apos;viewNameTranslator&apos;: using default [org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@321427db]
+16:32:19.342 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Creating instance of bean &apos;org.springframework.web.servlet.view.InternalResourceViewResolver&apos;
+16:32:19.343 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Finished creating instance of bean &apos;org.springframework.web.servlet.view.InternalResourceViewResolver&apos;
+16:32:19.343 [main] DEBUG o.s.t.w.s.TestDispatcherServlet - No ViewResolvers found in servlet &apos;&apos;: using default
+16:32:19.343 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Creating instance of bean &apos;org.springframework.web.servlet.support.SessionFlashMapManager&apos;
+16:32:19.351 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Finished creating instance of bean &apos;org.springframework.web.servlet.support.SessionFlashMapManager&apos;
+16:32:19.351 [main] DEBUG o.s.t.w.s.TestDispatcherServlet - Unable to locate FlashMapManager with name &apos;flashMapManager&apos;: using default [org.springframework.web.servlet.support.SessionFlashMapManager@4944b48c]
+16:32:19.351 [main] DEBUG o.s.t.w.s.TestDispatcherServlet - Published WebApplicationContext of servlet &apos;&apos; as ServletContext attribute with name [org.springframework.web.servlet.FrameworkServlet.CONTEXT.]
+16:32:19.351 [main] INFO  o.s.t.w.s.TestDispatcherServlet - FrameworkServlet &apos;&apos;: initialization completed in 54 ms
+16:32:19.352 [main] DEBUG o.s.t.w.s.TestDispatcherServlet - Servlet &apos;&apos; configured successfully
+16:32:19.360 [main] DEBUG o.s.d.r.core.RedisConnectionUtils - Opening RedisConnection
+16:32:20.469 [main] DEBUG o.s.t.c.s.AbstractDirtiesContextTestExecutionListener - After test method: context [DefaultTestContext@4445b7e3 testClass = RedisConnectionTest, testInstance = configuration.RedisConnectionTest@20885af, testMethod = testKeyValue@RedisConnectionTest, testException = org.springframework.data.redis.RedisConnectionFailureException: Cannot get Jedis connection; nested exception is redis.clients.jedis.exceptions.JedisConnectionException: Could not get a resource from the pool, mergedContextConfiguration = [WebMergedContextConfiguration@3d2bbb19 testClass = RedisConnectionTest, locations = &apos;{classpath:/configXml/spring-dao.xml}&apos;, classes = &apos;{}&apos;, contextInitializerClasses = &apos;[]&apos;, activeProfiles = &apos;{}&apos;, propertySourceLocations = &apos;{}&apos;, propertySourceProperties = &apos;{}&apos;, resourceBasePath = &apos;src/main/webapp&apos;, contextLoader = &apos;org.springframework.test.context.web.WebDelegatingSmartContextLoader&apos;, parent = [null]]], class annotated with @DirtiesContext [false] with mode [null], method annotated with @DirtiesContext [false] with mode [null].
+16:32:20.469 [main] DEBUG o.s.t.c.w.ServletTestExecutionListener - Resetting RequestContextHolder for test context [DefaultTestContext@4445b7e3 testClass = RedisConnectionTest, testInstance = configuration.RedisConnectionTest@20885af, testMethod = testKeyValue@RedisConnectionTest, testException = org.springframework.data.redis.RedisConnectionFailureException: Cannot get Jedis connection; nested exception is redis.clients.jedis.exceptions.JedisConnectionException: Could not get a resource from the pool, mergedContextConfiguration = [WebMergedContextConfiguration@3d2bbb19 testClass = RedisConnectionTest, locations = &apos;{classpath:/configXml/spring-dao.xml}&apos;, classes = &apos;{}&apos;, contextInitializerClasses = &apos;[]&apos;, activeProfiles = &apos;{}&apos;, propertySourceLocations = &apos;{}&apos;, propertySourceProperties = &apos;{}&apos;, resourceBasePath = &apos;src/main/webapp&apos;, contextLoader = &apos;org.springframework.test.context.web.WebDelegatingSmartContextLoader&apos;, parent = [null]]].
+</system-out>
+  </testcase>
+</testsuite>

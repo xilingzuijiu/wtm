@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weitaomi.application.model.mapper.ArticleMapper">
+  <resultMap id="BaseResultMap" type="com.weitaomi.application.model.bean.Article">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="userId" jdbcType="BIGINT" property="userId" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="articleAbstract" jdbcType="VARCHAR" property="articleAbstract" />
+    <result column="readNumber" jdbcType="INTEGER" property="readNumber" />
+    <result column="agreeNumber" jdbcType="INTEGER" property="agreeNumber" />
+    <result column="agreeIncreaseNumber" jdbcType="INTEGER" property="agreeIncreaseNumber" />
+    <result column="readIncreaseNumber" jdbcType="INTEGER" property="readIncreaseNumber" />
+    <result column="validNumber" jdbcType="INTEGER" property="validNumber" />
+    <result column="isTop" jdbcType="INTEGER" property="isTop" />
+    <result column="createTime" jdbcType="BIGINT" property="createTime" />
+  </resultMap>
+</mapper>

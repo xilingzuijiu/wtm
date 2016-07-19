@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weitaomi.application.model.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.weitaomi.application.model.bean.User">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="typeCode" jdbcType="INTEGER" property="typeCode" />
+    <result column="isOpen" jdbcType="INTEGER" property="isOpen" />
+    <result column="openId" jdbcType="VARCHAR" property="openId" />
+    <result column="userName" jdbcType="VARCHAR" property="userName" />
+    <result column="accountNumber" jdbcType="INTEGER" property="accountNumber" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="createTime" jdbcType="BIGINT" property="createTime" />
+  </resultMap>
+</mapper>

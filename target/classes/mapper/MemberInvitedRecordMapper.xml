@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weitaomi.application.model.mapper.MemberInvitedRecordMapper">
+  <resultMap id="BaseResultMap" type="com.weitaomi.application.model.bean.MemberInvitedRecord">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="memberId" jdbcType="BIGINT" property="memberId" />
+    <result column="parentId" jdbcType="BIGINT" property="parentId" />
+    <result column="isAccessible" jdbcType="INTEGER" property="isAccessible" />
+    <result column="createTime" jdbcType="BIGINT" property="createTime" />
+  </resultMap>
+  <select id="getMemberInvitedRecordByMemberId" resultType="com.weitaomi.application.model.bean.MemberInvitedRecord">
+    select * from wtm_member_invited_record r WHERE r.memberId=#{memberId};
+  </select>
+  <select id="getInvitedRecord" resultType="com.weitaomi.application.model.dto.InvitedRecord">
+    select m.id memberId,m.memberName memberName,s.memberScore,FROM_UNIXTIME(r.createTime) invitedTime from wtm_member m LEFT JOIN wtm_member_invited_record r ON r.memberId=m.id LEFT JOIN wtm_member_score s ON s.memberId=m.id WHERE  r.parentId=#{parentID};
+  </select>
+</mapper>

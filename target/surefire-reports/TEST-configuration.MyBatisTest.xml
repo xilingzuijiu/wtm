@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite failures="0" time="8.889" errors="1" skipped="0" tests="3" name="configuration.MyBatisTest">
+  <properties>
+    <property name="idea.version" value="15.0.2"/>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.7.0_75\jre\bin"/>
+    <property name="java.vm.version" value="24.75-b04"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="path.separator" value=";"/>
+    <property name="guice.disable.misplaced.annotation.check" value="true"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="idea.launcher.port" value="7533"/>
+    <property name="user.script" value=""/>
+    <property name="user.country" value="CN"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="F:\Program\git\weitaomi\weitaomi"/>
+    <property name="java.runtime.version" value="1.7.0_75-b13"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
+    <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.7.0_75\jre\lib\endorsed"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.io.tmpdir" value="C:\Users\supumall\AppData\Local\Temp\"/>
+    <property name="line.separator" value="
+"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.variant" value=""/>
+    <property name="os.name" value="Windows 8.1"/>
+    <property name="classworlds.conf" value="C:\Maven3\bin\m2.conf"/>
+    <property name="sun.jnu.encoding" value="GBK"/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk1.7.0_75\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows; C:\Program\JavaSoft\bin;C:\Program\JavaSoft\jre\bin;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Maven3\bin;C:\Program\JavaSoft\bin;C:\Program Files\gradle-2.12\bin;C:\Program Files\TortoiseSVN\bin;C:\Program Files (x86)\MySQL\MySQL Fabric 1.5 &amp; MySQL Utilities 1.5\;C:\Program Files (x86)\MySQL\MySQL Fabric 1.5 &amp; MySQL Utilities 1.5\Doctrine extensions for PHP\;C:\Program Files\apache-maven-3.3.9\bin;."/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.class.version" value="51.0"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="os.version" value="6.3"/>
+    <property name="user.home" value="C:\Users\supumall"/>
+    <property name="user.timezone" value="Asia/Shanghai"/>
+    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
+    <property name="java.specification.version" value="1.7"/>
+    <property name="idea.launcher.bin.path" value="C:\Program Files (x86)\JetBrains\IntelliJ IDEA 15.0.2\bin"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="user.name" value="supumall"/>
+    <property name="java.class.path" value="C:\Maven3\boot\plexus-classworlds-2.4.jar;C:\Program Files (x86)\JetBrains\IntelliJ IDEA 15.0.2\lib\idea_rt.jar"/>
+    <property name="java.vm.specification.version" value="1.7"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.home" value="C:\Program Files\Java\jdk1.7.0_75\jre"/>
+    <property name="sun.java.command" value="com.intellij.rt.execution.application.AppMain org.codehaus.classworlds.Launcher -Didea.version=15.0.2 package"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.language" value="zh"/>
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.version" value="1.7.0_75"/>
+    <property name="java.ext.dirs" value="C:\Program Files\Java\jdk1.7.0_75\jre\lib\ext;C:\Windows\Sun\Java\lib\ext"/>
+    <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.7.0_75\jre\lib\resources.jar;C:\Program Files\Java\jdk1.7.0_75\jre\lib\rt.jar;C:\Program Files\Java\jdk1.7.0_75\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.7.0_75\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.7.0_75\jre\lib\jce.jar;C:\Program Files\Java\jdk1.7.0_75\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.7.0_75\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.7.0_75\jre\classes"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="maven.home" value="C:\Maven3"/>
+    <property name="file.separator" value="\"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="sun.desktop" value="windows"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+  </properties>
+  <testcase time="0.78" classname="configuration.MyBatisTest" name="testSelectMember"/>
+  <testcase time="0.354" classname="configuration.MyBatisTest" name="testAddMember"/>
+  <testcase time="0.131" classname="configuration.MyBatisTest" name="testSelectSelf">
+    <error message="nested exception is org.apache.ibatis.exceptions.TooManyResultsException: Expected one result (or null) to be returned by selectOne(), but found: 4" type="org.mybatis.spring.MyBatisSystemException">org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis.exceptions.TooManyResultsException: Expected one result (or null) to be returned by selectOne(), but found: 4
+	at org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:73)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:364)
+	at com.sun.proxy.$Proxy25.selectOne(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate.selectOne(SqlSessionTemplate.java:159)
+	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:68)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:52)
+	at com.sun.proxy.$Proxy26.getMemberByTelephone(Unknown Source)
+	at configuration.MyBatisTest.testSelectSelf(MyBatisTest.java:40)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestMethodCallbacks.evaluate(RunBeforeTestMethodCallbacks.java:75)
+	at org.springframework.test.context.junit4.statements.RunAfterTestMethodCallbacks.evaluate(RunAfterTestMethodCallbacks.java:86)
+	at org.springframework.test.context.junit4.statements.SpringRepeat.evaluate(SpringRepeat.java:84)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:254)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:89)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:193)
+	at org.apache.maven.surefire.junit4.JUnit4TestSet.execute(JUnit4TestSet.java:53)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:123)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:104)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.maven.surefire.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:164)
+	at org.apache.maven.surefire.booter.ProviderFactory$ProviderProxy.invoke(ProviderFactory.java:110)
+	at org.apache.maven.surefire.booter.SurefireStarter.invokeProvider(SurefireStarter.java:175)
+	at org.apache.maven.surefire.booter.SurefireStarter.runSuitesInProcessWhenForked(SurefireStarter.java:107)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:68)
+Caused by: org.apache.ibatis.exceptions.TooManyResultsException: Expected one result (or null) to be returned by selectOne(), but found: 4
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectOne(DefaultSqlSession.java:70)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:354)
+	... 42 more
+</error>
+    <system-out>16:32:19.130 [main] DEBUG o.s.t.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [configuration.MyBatisTest]
+16:32:19.130 [main] DEBUG o.s.t.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [configuration.MyBatisTest]
+16:32:19.131 [main] DEBUG o.s.t.c.c.DefaultCacheAwareContextLoaderDelegate - Retrieved ApplicationContext from cache with key [[WebMergedContextConfiguration@25b7715d testClass = MyBatisTest, locations = &apos;{classpath:/configXml/spring-dao.xml}&apos;, classes = &apos;{}&apos;, contextInitializerClasses = &apos;[]&apos;, activeProfiles = &apos;{}&apos;, propertySourceLocations = &apos;{}&apos;, propertySourceProperties = &apos;{}&apos;, resourceBasePath = &apos;src/main/webapp&apos;, contextLoader = &apos;org.springframework.test.context.web.WebDelegatingSmartContextLoader&apos;, parent = [null]]]
+16:32:19.131 [main] DEBUG o.springframework.test.context.cache - Spring test ApplicationContext cache statistics: [DefaultContextCache@63d7c62b size = 1, parentContextCount = 0, hitCount = 4, missCount = 1]
+16:32:19.132 [main] DEBUG o.s.t.c.w.ServletTestExecutionListener - Setting up MockHttpServletRequest, MockHttpServletResponse, ServletWebRequest, and RequestContextHolder for test context [DefaultTestContext@56b77265 testClass = MyBatisTest, testInstance = configuration.MyBatisTest@3181aa5d, testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@25b7715d testClass = MyBatisTest, locations = &apos;{classpath:/configXml/spring-dao.xml}&apos;, classes = &apos;{}&apos;, contextInitializerClasses = &apos;[]&apos;, activeProfiles = &apos;{}&apos;, propertySourceLocations = &apos;{}&apos;, propertySourceProperties = &apos;{}&apos;, resourceBasePath = &apos;src/main/webapp&apos;, contextLoader = &apos;org.springframework.test.context.web.WebDelegatingSmartContextLoader&apos;, parent = [null]]].
+16:32:19.132 [main] DEBUG o.s.t.c.s.DependencyInjectionTestExecutionListener - Performing dependency injection for test context [[DefaultTestContext@56b77265 testClass = MyBatisTest, testInstance = configuration.MyBatisTest@3181aa5d, testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@25b7715d testClass = MyBatisTest, locations = &apos;{classpath:/configXml/spring-dao.xml}&apos;, classes = &apos;{}&apos;, contextInitializerClasses = &apos;[]&apos;, activeProfiles = &apos;{}&apos;, propertySourceLocations = &apos;{}&apos;, propertySourceProperties = &apos;{}&apos;, resourceBasePath = &apos;src/main/webapp&apos;, contextLoader = &apos;org.springframework.test.context.web.WebDelegatingSmartContextLoader&apos;, parent = [null]]]].
+16:32:19.133 [main] DEBUG o.s.t.c.c.DefaultCacheAwareContextLoaderDelegate - Retrieved ApplicationContext from cache with key [[WebMergedContextConfiguration@25b7715d testClass = MyBatisTest, locations = &apos;{classpath:/configXml/spring-dao.xml}&apos;, classes = &apos;{}&apos;, contextInitializerClasses = &apos;[]&apos;, activeProfiles = &apos;{}&apos;, propertySourceLocations = &apos;{}&apos;, propertySourceProperties = &apos;{}&apos;, resourceBasePath = &apos;src/main/webapp&apos;, contextLoader = &apos;org.springframework.test.context.web.WebDelegatingSmartContextLoader&apos;, parent = [null]]]
+16:32:19.133 [main] DEBUG o.springframework.test.context.cache - Spring test ApplicationContext cache statistics: [DefaultContextCache@63d7c62b size = 1, parentContextCount = 0, hitCount = 5, missCount = 1]
+16:32:19.133 [main] DEBUG o.s.b.f.annotation.InjectionMetadata - Processing injected element of bean &apos;configuration.MyBatisTest&apos;: AutowiredFieldElement for private org.springframework.web.context.WebApplicationContext common.BaseContextCase.webApplicationContext
+16:32:19.133 [main] DEBUG o.s.b.f.annotation.InjectionMetadata - Processing injected element of bean &apos;configuration.MyBatisTest&apos;: AutowiredFieldElement for private com.weitaomi.application.model.mapper.MemberMapper configuration.MyBatisTest.memberMapper
+16:32:19.133 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Returning cached instance of singleton bean &apos;memberMapper&apos;
+16:32:19.135 [main] DEBUG o.s.t.c.s.AbstractDirtiesContextTestExecutionListener - Before test method: context [DefaultTestContext@56b77265 testClass = MyBatisTest, testInstance = configuration.MyBatisTest@3181aa5d, testMethod = testSelectSelf@MyBatisTest, testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@25b7715d testClass = MyBatisTest, locations = &apos;{classpath:/configXml/spring-dao.xml}&apos;, classes = &apos;{}&apos;, contextInitializerClasses = &apos;[]&apos;, activeProfiles = &apos;{}&apos;, propertySourceLocations = &apos;{}&apos;, propertySourceProperties = &apos;{}&apos;, resourceBasePath = &apos;src/main/webapp&apos;, contextLoader = &apos;org.springframework.test.context.web.WebDelegatingSmartContextLoader&apos;, parent = [null]]], class annotated with @DirtiesContext [false] with mode [null], method annotated with @DirtiesContext [false] with mode [null].
+16:32:19.135 [main] DEBUG o.s.t.w.s.TestDispatcherServlet - Initializing servlet &apos;&apos;
+16:32:19.136 [main] DEBUG o.s.w.c.s.StandardServletEnvironment - Adding [servletConfigInitParams] PropertySource with lowest search precedence
+16:32:19.136 [main] DEBUG o.s.w.c.s.StandardServletEnvironment - Adding [servletContextInitParams] PropertySource with lowest search precedence
+16:32:19.137 [main] DEBUG o.s.w.c.s.StandardServletEnvironment - Adding [systemProperties] PropertySource with lowest search precedence
+16:32:19.137 [main] DEBUG o.s.w.c.s.StandardServletEnvironment - Adding [systemEnvironment] PropertySource with lowest search precedence
+16:32:19.137 [main] DEBUG o.s.w.c.s.StandardServletEnvironment - Initialized StandardServletEnvironment with PropertySources [servletConfigInitParams,servletContextInitParams,systemProperties,systemEnvironment]
+16:32:19.138 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring FrameworkServlet &apos;&apos;
+16:32:19.138 [main] INFO  o.s.t.w.s.TestDispatcherServlet - FrameworkServlet &apos;&apos;: initialization started
+16:32:19.138 [main] DEBUG o.s.t.w.s.TestDispatcherServlet - Unable to locate MultipartResolver with name &apos;multipartResolver&apos;: no multipart request handling provided
+16:32:19.138 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Creating instance of bean &apos;org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver&apos;
+16:32:19.138 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Finished creating instance of bean &apos;org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver&apos;
+16:32:19.138 [main] DEBUG o.s.t.w.s.TestDispatcherServlet - Unable to locate LocaleResolver with name &apos;localeResolver&apos;: using default [org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver@3beb846d]
+16:32:19.139 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Creating instance of bean &apos;org.springframework.web.servlet.theme.FixedThemeResolver&apos;
+16:32:19.139 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Finished creating instance of bean &apos;org.springframework.web.servlet.theme.FixedThemeResolver&apos;
+16:32:19.139 [main] DEBUG o.s.t.w.s.TestDispatcherServlet - Unable to locate ThemeResolver with name &apos;themeResolver&apos;: using default [org.springframework.web.servlet.theme.FixedThemeResolver@63432ed6]
+16:32:19.140 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Creating instance of bean &apos;org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping&apos;
+16:32:19.140 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Looking for URL mappings in application context: org.springframework.web.context.support.GenericWebApplicationContext@3c8c0b5a: startup date [Fri Jul 08 16:32:13 CST 2016]; root of context hierarchy
+16:32:19.141 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0&apos;: no URL paths identified
+16:32:19.141 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;dataSource&apos;: no URL paths identified
+16:32:19.141 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;jedisPoolConfig&apos;: no URL paths identified
+16:32:19.141 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;jedisConnectionFactory&apos;: no URL paths identified
+16:32:19.141 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;stringRedisSerializer&apos;: no URL paths identified
+16:32:19.141 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;jdkRedisSerializer&apos;: no URL paths identified
+16:32:19.141 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;redisTemplate&apos;: no URL paths identified
+16:32:19.142 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;sqlSessionFactory&apos;: no URL paths identified
+16:32:19.142 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;org.mybatis.spring.mapper.MapperScannerConfigurer#0&apos;: no URL paths identified
+16:32:19.142 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;org.springframework.context.annotation.internalConfigurationAnnotationProcessor&apos;: no URL paths identified
+16:32:19.142 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;org.springframework.context.annotation.internalAutowiredAnnotationProcessor&apos;: no URL paths identified
+16:32:19.142 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;org.springframework.context.annotation.internalRequiredAnnotationProcessor&apos;: no URL paths identified
+16:32:19.142 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;org.springframework.context.annotation.internalCommonAnnotationProcessor&apos;: no URL paths identified
+16:32:19.142 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;org.springframework.context.event.internalEventListenerProcessor&apos;: no URL paths identified
+16:32:19.142 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;org.springframework.context.event.internalEventListenerFactory&apos;: no URL paths identified
+16:32:19.142 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor&apos;: no URL paths identified
+16:32:19.143 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;org.springframework.context.annotation.ConfigurationClassPostProcessor.enhancedConfigurationProcessor&apos;: no URL paths identified
+16:32:19.143 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;articleMapper&apos;: no URL paths identified
+16:32:19.143 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;articleReadRecordMapper&apos;: no URL paths identified
+16:32:19.143 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;IBaseMapper&apos;: no URL paths identified
+16:32:19.143 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;memberMapper&apos;: no URL paths identified
+16:32:19.143 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;memberScoreFlowMapper&apos;: no URL paths identified
+16:32:19.143 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;memberScoreFlowTypeMapper&apos;: no URL paths identified
+16:32:19.143 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;memberScoreMapper&apos;: no URL paths identified
+16:32:19.143 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;seckillMapper&apos;: no URL paths identified
+16:32:19.143 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;successKilledMapper&apos;: no URL paths identified
+16:32:19.144 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;thirdLoginMapper&apos;: no URL paths identified
+16:32:19.144 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;userMapper&apos;: no URL paths identified
+16:32:19.144 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;userTypeMapper&apos;: no URL paths identified
+16:32:19.144 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;environment&apos;: no URL paths identified
+16:32:19.144 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;systemProperties&apos;: no URL paths identified
+16:32:19.144 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;systemEnvironment&apos;: no URL paths identified
+16:32:19.144 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;servletContext&apos;: no URL paths identified
+16:32:19.144 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;contextParameters&apos;: no URL paths identified
+16:32:19.144 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;contextAttributes&apos;: no URL paths identified
+16:32:19.144 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;messageSource&apos;: no URL paths identified
+16:32:19.145 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;applicationEventMulticaster&apos;: no URL paths identified
+16:32:19.145 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Rejected bean name &apos;lifecycleProcessor&apos;: no URL paths identified
+16:32:19.145 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Finished creating instance of bean &apos;org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping&apos;
+16:32:19.145 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Creating instance of bean &apos;org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping&apos;
+16:32:19.146 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Looking for URL mappings in application context: org.springframework.web.context.support.GenericWebApplicationContext@3c8c0b5a: startup date [Fri Jul 08 16:32:13 CST 2016]; root of context hierarchy
+16:32:19.146 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0&apos;: no URL paths identified
+16:32:19.146 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;dataSource&apos;: no URL paths identified
+16:32:19.146 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;jedisPoolConfig&apos;: no URL paths identified
+16:32:19.147 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;jedisConnectionFactory&apos;: no URL paths identified
+16:32:19.147 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;stringRedisSerializer&apos;: no URL paths identified
+16:32:19.147 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;jdkRedisSerializer&apos;: no URL paths identified
+16:32:19.147 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;redisTemplate&apos;: no URL paths identified
+16:32:19.147 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;sqlSessionFactory&apos;: no URL paths identified
+16:32:19.147 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;org.mybatis.spring.mapper.MapperScannerConfigurer#0&apos;: no URL paths identified
+16:32:19.147 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;org.springframework.context.annotation.internalConfigurationAnnotationProcessor&apos;: no URL paths identified
+16:32:19.148 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;org.springframework.context.annotation.internalAutowiredAnnotationProcessor&apos;: no URL paths identified
+16:32:19.148 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;org.springframework.context.annotation.internalRequiredAnnotationProcessor&apos;: no URL paths identified
+16:32:19.148 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;org.springframework.context.annotation.internalCommonAnnotationProcessor&apos;: no URL paths identified
+16:32:19.148 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;org.springframework.context.event.internalEventListenerProcessor&apos;: no URL paths identified
+16:32:19.148 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;org.springframework.context.event.internalEventListenerFactory&apos;: no URL paths identified
+16:32:19.148 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor&apos;: no URL paths identified
+16:32:19.148 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;org.springframework.context.annotation.ConfigurationClassPostProcessor.enhancedConfigurationProcessor&apos;: no URL paths identified
+16:32:19.149 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;articleMapper&apos;: no URL paths identified
+16:32:19.149 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;articleReadRecordMapper&apos;: no URL paths identified
+16:32:19.149 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;IBaseMapper&apos;: no URL paths identified
+16:32:19.149 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;memberMapper&apos;: no URL paths identified
+16:32:19.149 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;memberScoreFlowMapper&apos;: no URL paths identified
+16:32:19.149 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;memberScoreFlowTypeMapper&apos;: no URL paths identified
+16:32:19.149 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;memberScoreMapper&apos;: no URL paths identified
+16:32:19.149 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;seckillMapper&apos;: no URL paths identified
+16:32:19.149 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;successKilledMapper&apos;: no URL paths identified
+16:32:19.150 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;thirdLoginMapper&apos;: no URL paths identified
+16:32:19.150 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;userMapper&apos;: no URL paths identified
+16:32:19.150 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;userTypeMapper&apos;: no URL paths identified
+16:32:19.150 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;environment&apos;: no URL paths identified
+16:32:19.150 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;systemProperties&apos;: no URL paths identified
+16:32:19.150 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;systemEnvironment&apos;: no URL paths identified
+16:32:19.150 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;servletContext&apos;: no URL paths identified
+16:32:19.151 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;contextParameters&apos;: no URL paths identified
+16:32:19.151 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;contextAttributes&apos;: no URL paths identified
+16:32:19.151 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;messageSource&apos;: no URL paths identified
+16:32:19.151 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;applicationEventMulticaster&apos;: no URL paths identified
+16:32:19.151 [main] DEBUG o.s.w.s.m.a.DefaultAnnotationHandlerMapping - Rejected bean name &apos;lifecycleProcessor&apos;: no URL paths identified
+16:32:19.151 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Finished creating instance of bean &apos;org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping&apos;
+16:32:19.151 [main] DEBUG o.s.t.w.s.TestDispatcherServlet - No HandlerMappings found in servlet &apos;&apos;: using default
+16:32:19.152 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Creating instance of bean &apos;org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter&apos;
+16:32:19.152 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Finished creating instance of bean &apos;org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter&apos;
+16:32:19.152 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Creating instance of bean &apos;org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter&apos;
+16:32:19.153 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Finished creating instance of bean &apos;org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter&apos;
+16:32:19.153 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Creating instance of bean &apos;org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter&apos;
+16:32:19.158 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Finished creating instance of bean &apos;org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter&apos;
+16:32:19.158 [main] DEBUG o.s.t.w.s.TestDispatcherServlet - No HandlerAdapters found in servlet &apos;&apos;: using default
+16:32:19.159 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Creating instance of bean &apos;org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerExceptionResolver&apos;
+16:32:19.167 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Finished creating instance of bean &apos;org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerExceptionResolver&apos;
+16:32:19.168 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Creating instance of bean &apos;org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver&apos;
+16:32:19.168 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Finished creating instance of bean &apos;org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver&apos;
+16:32:19.169 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Creating instance of bean &apos;org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver&apos;
+16:32:19.169 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Finished creating instance of bean &apos;org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver&apos;
+16:32:19.170 [main] DEBUG o.s.t.w.s.TestDispatcherServlet - No HandlerExceptionResolvers found in servlet &apos;&apos;: using default
+16:32:19.171 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Creating instance of bean &apos;org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator&apos;
+16:32:19.171 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Finished creating instance of bean &apos;org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator&apos;
+16:32:19.171 [main] DEBUG o.s.t.w.s.TestDispatcherServlet - Unable to locate RequestToViewNameTranslator with name &apos;viewNameTranslator&apos;: using default [org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@4fb81683]
+16:32:19.172 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Creating instance of bean &apos;org.springframework.web.servlet.view.InternalResourceViewResolver&apos;
+16:32:19.173 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Finished creating instance of bean &apos;org.springframework.web.servlet.view.InternalResourceViewResolver&apos;
+16:32:19.173 [main] DEBUG o.s.t.w.s.TestDispatcherServlet - No ViewResolvers found in servlet &apos;&apos;: using default
+16:32:19.173 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Creating instance of bean &apos;org.springframework.web.servlet.support.SessionFlashMapManager&apos;
+16:32:19.173 [main] DEBUG o.s.b.f.s.DefaultListableBeanFactory - Finished creating instance of bean &apos;org.springframework.web.servlet.support.SessionFlashMapManager&apos;
+16:32:19.174 [main] DEBUG o.s.t.w.s.TestDispatcherServlet - Unable to locate FlashMapManager with name &apos;flashMapManager&apos;: using default [org.springframework.web.servlet.support.SessionFlashMapManager@3ece1b58]
+16:32:19.174 [main] DEBUG o.s.t.w.s.TestDispatcherServlet - Published WebApplicationContext of servlet &apos;&apos; as ServletContext attribute with name [org.springframework.web.servlet.FrameworkServlet.CONTEXT.]
+16:32:19.174 [main] INFO  o.s.t.w.s.TestDispatcherServlet - FrameworkServlet &apos;&apos;: initialization completed in 36 ms
+16:32:19.174 [main] DEBUG o.s.t.w.s.TestDispatcherServlet - Servlet &apos;&apos; configured successfully
+16:32:19.177 [main] DEBUG org.mybatis.spring.SqlSessionUtils - Creating a new SqlSession
+16:32:19.177 [main] DEBUG org.mybatis.spring.SqlSessionUtils - SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3fd01553] was not registered for synchronization because synchronization is not active
+16:32:19.178 [main] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+16:32:19.178 [main] DEBUG druid.sql.Connection - {conn-10001} pool-connect
+16:32:19.178 [main] DEBUG o.m.s.t.SpringManagedTransaction - JDBC Connection [com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl@3af6513c] will not be managed by Spring
+16:32:19.179 [main] DEBUG c.w.a.m.m.M.getMemberByTelephone - ==&gt;  Preparing: select * from wtm_member m WHERE m.telephone=?; 
+16:32:19.179 [main] DEBUG druid.sql.Statement - {conn-10001, pstmt-20003} created. 
+select * from wtm_member m WHERE m.telephone=?;
+16:32:19.179 [main] DEBUG c.w.a.m.m.M.getMemberByTelephone - ==&gt; Parameters: 13105187050(String)
+16:32:19.180 [main] DEBUG druid.sql.Statement - {conn-10001, pstmt-20003} Parameters : [13105187050]
+16:32:19.181 [main] DEBUG druid.sql.Statement - {conn-10001, pstmt-20003} Types : [VARCHAR]
+16:32:19.249 [main] DEBUG druid.sql.Statement - {conn-10001, pstmt-20003} executed. 69.643541 millis. 
+select * from wtm_member m WHERE m.telephone=?;
+16:32:19.249 [main] DEBUG druid.sql.ResultSet - {conn-10001, pstmt-20003, rs-50002} open
+16:32:19.250 [main] DEBUG druid.sql.ResultSet - {conn-10001, pstmt-20003, rs-50002} Header: [id, memberName, nickName, sex, telephone, salt, password, birth, email, invitedCode, imageUrl, createTime]
+16:32:19.251 [main] DEBUG druid.sql.ResultSet - {conn-10001, pstmt-20003, rs-50002} Result: [4, xilingzuijiu, ��˽�, 0, 13105187050, asdfghj, f0c8a91ab500d09797bddc057311298a2d74202b9f1e7bd4248728999424a59d, 100000000, 1098795459@qq.com, 100086, /admin/image/10039689.jpg, 100000000]
+16:32:19.253 [main] DEBUG druid.sql.ResultSet - {conn-10001, pstmt-20003, rs-50002} Result: [5, xilingzuijiu, ��˽�, 0, 13105187050, asdfghj, f0c8a91ab500d09797bddc057311298a2d74202b9f1e7bd4248728999424a59d, 100000000, 1098795459@qq.com, 100086, /admin/image/10039689.jpg, 100000000]
+16:32:19.255 [main] DEBUG druid.sql.ResultSet - {conn-10001, pstmt-20003, rs-50002} Result: [6, xilingzuijiu, ��˽�, 0, 13105187050, asdfghj, f0c8a91ab500d09797bddc057311298a2d74202b9f1e7bd4248728999424a59d, 100000000, 1098795459@qq.com, 100086, /admin/image/10039689.jpg, 100000000]
+16:32:19.256 [main] DEBUG druid.sql.ResultSet - {conn-10001, pstmt-20003, rs-50002} Result: [7, xilingzuijiu, ��˽�, 0, 13105187050, asdfghj, f0c8a91ab500d09797bddc057311298a2d74202b9f1e7bd4248728999424a59d, 100000000, 1098795459@qq.com, 100086, /admin/image/10039689.jpg, 100000000]
+16:32:19.257 [main] DEBUG c.w.a.m.m.M.getMemberByTelephone - &lt;==      Total: 4
+16:32:19.257 [main] DEBUG druid.sql.ResultSet - {conn-10001, pstmt-20003, rs-50002} closed
+16:32:19.257 [main] DEBUG druid.sql.Statement - {conn-10001, pstmt-20003} closed
+16:32:19.258 [main] DEBUG org.mybatis.spring.SqlSessionUtils - Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3fd01553]
+16:32:19.258 [main] DEBUG o.s.jdbc.datasource.DataSourceUtils - Returning JDBC Connection to DataSource
+16:32:19.258 [main] DEBUG druid.sql.Connection - {conn-10001} pool-recycle
+16:32:19.260 [main] DEBUG o.s.t.c.s.AbstractDirtiesContextTestExecutionListener - After test method: context [DefaultTestContext@56b77265 testClass = MyBatisTest, testInstance = configuration.MyBatisTest@3181aa5d, testMethod = testSelectSelf@MyBatisTest, testException = org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis.exceptions.TooManyResultsException: Expected one result (or null) to be returned by selectOne(), but found: 4, mergedContextConfiguration = [WebMergedContextConfiguration@25b7715d testClass = MyBatisTest, locations = &apos;{classpath:/configXml/spring-dao.xml}&apos;, classes = &apos;{}&apos;, contextInitializerClasses = &apos;[]&apos;, activeProfiles = &apos;{}&apos;, propertySourceLocations = &apos;{}&apos;, propertySourceProperties = &apos;{}&apos;, resourceBasePath = &apos;src/main/webapp&apos;, contextLoader = &apos;org.springframework.test.context.web.WebDelegatingSmartContextLoader&apos;, parent = [null]]], class annotated with @DirtiesContext [false] with mode [null], method annotated with @DirtiesContext [false] with mode [null].
+16:32:19.260 [main] DEBUG o.s.t.c.w.ServletTestExecutionListener - Resetting RequestContextHolder for test context [DefaultTestContext@56b77265 testClass = MyBatisTest, testInstance = configuration.MyBatisTest@3181aa5d, testMethod = testSelectSelf@MyBatisTest, testException = org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis.exceptions.TooManyResultsException: Expected one result (or null) to be returned by selectOne(), but found: 4, mergedContextConfiguration = [WebMergedContextConfiguration@25b7715d testClass = MyBatisTest, locations = &apos;{classpath:/configXml/spring-dao.xml}&apos;, classes = &apos;{}&apos;, contextInitializerClasses = &apos;[]&apos;, activeProfiles = &apos;{}&apos;, propertySourceLocations = &apos;{}&apos;, propertySourceProperties = &apos;{}&apos;, resourceBasePath = &apos;src/main/webapp&apos;, contextLoader = &apos;org.springframework.test.context.web.WebDelegatingSmartContextLoader&apos;, parent = [null]]].
+</system-out>
+  </testcase>
+</testsuite>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weitaomi.application.model.mapper.MemberScoreFlowTypeMapper">
+  <resultMap id="BaseResultMap" type="com.weitaomi.application.model.bean.MemberScoreFlowType">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="flowCount" javaType="Decimal" property="flowCount"/>
+    <result column="typeName" jdbcType="VARCHAR" property="typeName" />
+    <result column="typeDesc" jdbcType="VARCHAR" property="typeDesc" />
+    <result column="createTime" jdbcType="BIGINT" property="createTime" />
+  </resultMap>
+</mapper>

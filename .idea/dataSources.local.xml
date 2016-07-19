@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="MySQL - sps_db@192.168.3.127" uuid="0bb09d2b-7f6b-4de8-84c7-427b0d61930d">
+      <secret-storage>memory</secret-storage>
+      <user-name>root</user-name>
+      <schema-pattern>sps_db.*</schema-pattern>
+      <default-schemas>sps_db.*</default-schemas>
+    </data-source>
+    <data-source name="MySQL - weitaomi@211.149.195.220 [2]" uuid="1b69c657-2a5e-4752-b97a-5e6852d1d280">
+      <secret-storage>master_key</secret-storage>
+      <user-name>xixi</user-name>
+      <schema-pattern>weitaomi.*</schema-pattern>
+      <default-schemas>weitaomi.*</default-schemas>
+    </data-source>
+  </component>
+</project>

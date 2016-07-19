@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weitaomi.application.model.mapper.SuccessKilledMapper">
+  <resultMap id="BaseResultMap" type="com.weitaomi.application.model.bean.SuccessKilled">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="success_id" jdbcType="BIGINT" property="success_id" />
+    <result column="seckill_id" jdbcType="BIGINT" property="seckill_id" />
+    <result column="user_phone" jdbcType="BIGINT" property="user_phone" />
+    <result column="state" jdbcType="TINYINT" property="state" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
+  </resultMap>
+</mapper>
