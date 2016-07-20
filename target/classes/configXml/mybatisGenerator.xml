@@ -69,9 +69,10 @@
             <!--<property name="useActualColumnNames" value="true"/>-->
             <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
         <!--</table>-->
-        <table tableName="wtm_member_invited_record"  domainObjectName="MemberInvitedRecord">
-            <property name="useActualColumnNames" value="true"/>
-            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
-        </table>
+        <!--<table tableName="wtm_member_invited_record"  domainObjectName="MemberInvitedRecord">-->
+            <!--<property name="useActualColumnNames" value="true"/>-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+        <table tableName=""></table>
     </context>
 </generatorConfiguration>
