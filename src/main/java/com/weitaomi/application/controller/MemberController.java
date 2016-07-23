@@ -1,5 +1,6 @@
 package com.weitaomi.application.controller;
 
+import com.weitaomi.application.controller.baseController.BaseController;
 import com.weitaomi.application.model.bean.ThirdLogin;
 import com.weitaomi.application.model.dto.RegisterMsg;
 import com.weitaomi.application.service.interf.IMemberService;
@@ -19,7 +20,7 @@ import java.text.ParseException;
  */
 @Controller
 @RequestMapping("/app/admin/member")
-public class MemberController {
+public class MemberController  extends BaseController {
     @Autowired
     private IMemberService memberService;
     /**

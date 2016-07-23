@@ -73,6 +73,13 @@
             <!--<property name="useActualColumnNames" value="true"/>-->
             <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
         <!--</table>-->
-        <table tableName=""></table>
+        <!--<table tableName="wtm_payment_history"  domainObjectName="PaymentHistory">-->
+            <!--<property name="useActualColumnNames" value="true"/>-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table> -->
+        <table tableName="wtm_payment_approve"  domainObjectName="PaymentApprove">
+            <property name="useActualColumnNames" value="true"/>
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
     </context>
 </generatorConfiguration>

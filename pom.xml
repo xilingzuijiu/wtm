@@ -76,7 +76,7 @@
                         都报错了，应该是xml schema定义时错误了 --><!-- 此处是正确配置 ，改jsp也重启太烦人，就注掉这个功能了
 					<scanIntervalSeconds>1</scanIntervalSeconds> -->
                     <httpConnector>
-                        <port>8012</port>
+                        <port>8015</port>
                     </httpConnector>
                     <requestLog implementation="org.eclipse.jetty.server.NCSARequestLog">
                         <filename>target/yyyy_mm_dd.request.log</filename>
@@ -339,6 +339,21 @@
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
             <version>3.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>jaxen</groupId>
+            <artifactId>jaxen</artifactId>
+            <version>1.1.6</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.9</version>
         </dependency>
     </dependencies>
 

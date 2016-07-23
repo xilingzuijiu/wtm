@@ -181,3 +181,32 @@ CREATE TABLE wtm_member_invited_record(
   KEY idx_member_invited_record_createTime(createTime)
 )ENGINE=InnoDB  DEFAULT CHARSET=UTF8 comment '用户邀请记录表（二阶分销表）';
 
+/*用户提现申请表*/
+CREATE TABLE wtm_payment_approve(
+  `id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `memberId` BIGINT NOT NULL COMMENT '用户ID',
+  `accountNumber` VARCHAR(50) NOT NULL COMMENT '收款账号',
+  `accountName` VARCHAR(50) NOT NULL COMMENT '收款人姓名',
+  `amount` DECIMAL(10,2) NOT NULL COMMENT '提现金额',
+  `remark` VARCHAR(500) NOT NULL COMMENT '备注',
+  `isPaid` INT(11) DEFAULT 0 COMMENT '是否提现成功标识位 0：未成功',
+  `createTime` BIGINT(20) COMMENT '创建日期',
+  PRIMARY KEY (id),
+  KEY idx_payment_approve_memberId(memberId),
+  KEY idx_payment_approve_createTime(createTime)
+)ENGINE=InnoDB  DEFAULT CHARSET=UTF8 comment '用户提现申请表';
+
+
+/*支付流水历史表*/
+CREATE TABLE wtm_payment_history(
+  `id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `payCode` VARCHAR(16) NOT NULL COMMENT '支付单号',
+  `memberId` BIGINT NOT NULL COMMENT '用户ID',
+  `platform` VARCHAR(20) NOT NULL COMMENT '支付平台',
+  `params` BIGINT NOT NULL COMMENT '请求参数',
+  `isPaySuccess` INT NOT NULL COMMENT '是否支付成功',
+  `createTime` BIGINT(20) COMMENT '创建日期',
+  PRIMARY KEY (id),
+  KEY idx_payment_history_memberId(memberId),
+  KEY idx_payment_history_createTime(createTime)
+)ENGINE=InnoDB  DEFAULT CHARSET=UTF8 comment '支付流水历史表';

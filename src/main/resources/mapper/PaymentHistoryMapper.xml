@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.weitaomi.application.model.mapper.PaymentHistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.weitaomi.application.model.bean.PaymentHistory" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="payCode" property="payCode" jdbcType="VARCHAR" />
+    <result column="memberId" property="memberId" jdbcType="BIGINT" />
+    <result column="platform" property="platform" jdbcType="VARCHAR" />
+    <result column="params" property="params" jdbcType="VARCHAR" />
+    <result column="batchPayNo" property="batchPayNo" jdbcType="VARCHAR" />
+    <result column="isPaySuccess" property="isPaySuccess" jdbcType="INTEGER" />
+    <result column="payType" property="payType" jdbcType="INTEGER" />
+    <result column="createTime" property="createTime" jdbcType="BIGINT" />
+  </resultMap>
+  <select id="getMaxPayCode" resultType="java.lang.String">
+    select max(payCode) from wtm_payment_history;
+  </select>
+  <select id="getPaymentHistory" resultMap="BaseResultMap">
+    select * from wtm_payment_history h WHERE h.payCode=#{payCode};
+  </select>
+</mapper>

@@ -51,7 +51,7 @@ public class DomainObjectReplacementTool {
 			String content = "";
 			
 			while((content = br.readLine()) != null){
-				content = content.replaceAll("(public class \\w*)", "$1 extends BaseDomain");
+				content = content.replaceAll("(public class \\w*)", "$1 extends BaseModel");
 				
 				content = content.replace("@Id", "");
 				
