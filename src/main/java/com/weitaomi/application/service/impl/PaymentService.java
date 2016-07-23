@@ -18,10 +18,7 @@ import org.springframework.util.StringUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by supumall on 2016/7/22.
@@ -126,6 +123,30 @@ public class PaymentService implements IPaymentService {
     }
 
     @Override
+    public String verifyBatchPayNotify(Map requestParams) {
+        String patchTradeNo=(String)requestParams.get("batch_no");
+        String flag= cacheService.getCacheByKey(patchTradeNo,String.class);
+        if (patchTradeNo.equals(flag)){
+            String fail_details=(String)requestParams.get("fail_details");
+            if (StringUtils.isEmpty(fail_details)){
+                paymentHistoryMapper.batchUpdatePayHistory(patchTradeNo,DateUtils.getUnixTimestamp());
+                return "success";
+            }else {
+                String success=(String)requestParams.get("success_details");
+                String[] success_details=success.split("\\|");
+                List<String> payCodeList=new ArrayList<String>();
+                for (int i=0;i<success_details.length;i++){
+                    payCodeList.add(success.substring(0,success.indexOf("^")));
+                }
+                paymentHistoryMapper.batchUpdatePayHistoryByTradeNo(payCodeList,DateUtils.getUnixTimestamp());
+                return "success";
+            }
+
+        }
+        return "fail";
+    }
+
+    @Override
     public void patchAliPayCustomers(List<PaymentApprove> approveList) {
         if (approveList.isEmpty()){
             throw new BusinessException("付款账户列表为空");
@@ -133,22 +154,46 @@ public class PaymentService implements IPaymentService {
         Map<String,String> params=new HashMap<String, String>();
         BigDecimal totalAmount=BigDecimal.ZERO;
         StringBuffer detail_data=new StringBuffer();
+        List<PaymentHistory> paymentHistoryList=new ArrayList<PaymentHistory>();
         for(PaymentApprove approve:approveList){
             totalAmount=totalAmount.add(approve.getAmount());
-            detail_data.append(this.getTradeNo());
+            String trade_no=this.getTradeNo();
+            detail_data.append(trade_no);
             if (!StringUtils.isEmpty(approve.getAccountNumber())&&!StringUtils.isEmpty(approve.getAccountName())&&approve.getAmount()!=null){
                 detail_data.append("^").append(approve.getAccountNumber()).append("^").append(approve.getAccountName()).append("^").append(approve.getAmount());
             }
             if (!StringUtils.isEmpty(approve.getRemark())){
                 detail_data.append("^").append(approve.getRemark()).append("|");
             }
+            PaymentHistory paymentHistory = new PaymentHistory();
+            paymentHistory.setIsPaySuccess(0);
+            paymentHistory.setPayType(1);
+            paymentHistory.setMemberId(approve.getMemberId());
+            paymentHistory.setPlatform(PayType.ALIPAY_WEB.getDesc());
+            paymentHistory.setPayCode(trade_no);
+            paymentHistory.setCreateTime(DateUtils.getUnixTimestamp());
+            paymentHistoryList.add(paymentHistory);
         }
         params.put("batch_num",String.valueOf(approveList.size()));
         params.put("batch_fee",totalAmount.toString());
         params.put("pay_date",DateUtils.formatYYYY());
-        params.put("batch_no",DateUtils.formatYYYYMMddHHmmssSSS());
-        params.put("detail_data",detail_data.substring(0,approveList.size()-1));
-        String result=payStrategyContext.getBatchPayParams(params, PayType.ALIPAY_APP.getValue());
+        String batch_no=DateUtils.formatYYYYMMddHHmmssSSS();
+        params.put("batch_no",batch_no);
+        String detail=detail_data.substring(0,approveList.size()-1);
+        params.put("detail_data",detail);
+        String result=payStrategyContext.getBatchPayParams(params, PayType.ALIPAY_WEB.getValue());
+        //TODO  处理result
+        if (paymentHistoryList!=null) {
+            for (PaymentHistory paymentHistory : paymentHistoryList) {
+                paymentHistory.setBatchPayNo(batch_no);
+                paymentHistory.setParams(detail);
+            }
+            int num= paymentHistoryMapper.batchInsertPayHistory(paymentHistoryList);
+            if (num>0){
+                logger.info("支付请求成功");
+            }
+        }
+        cacheService.setCacheByKey(batch_no,batch_no,24*60*60);
     }
     private String getTradeNo(){
         String key="wtm:orderCode:max";

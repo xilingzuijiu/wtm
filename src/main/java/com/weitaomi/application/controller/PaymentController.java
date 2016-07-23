@@ -32,4 +32,14 @@ public class PaymentController extends BaseController{
             e.printStackTrace();
         }
     }
+    @RequestMapping(value = "/verifyBatchPayNotify", method = RequestMethod.POST)
+    public void  verifyBatchPayNotify(HttpServletRequest request, HttpServletResponse response) throws SystemException,BusinessException{
+        Map map=request.getParameterMap();
+        String code=paymentService.verifyBatchPayNotify(map);
+        try {
+            response.getOutputStream().println(code);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

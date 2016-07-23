@@ -46,7 +46,7 @@ public class AlipayService implements IPayStrategyService {
         params.put("service",AlipayConfig.batchPayservice);
         params.put("partner",AlipayConfig.partner);
         params.put("_input_charset",AlipayConfig.input_charset);
-        params.put("notify_url",AlipayConfig.notify_url);
+        params.put("notify_url",AlipayConfig.batchPay_notify_url);
         params.put("account_name",AlipayConfig.seller_name);
         params.put("email",AlipayConfig.seller_id);
         try {

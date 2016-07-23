@@ -11,5 +11,6 @@ import java.util.Map;
 public interface IPaymentService {
     String getPaymentParams(Map<String,Object> params);
     String verifyAlipayNotify(Map requestParams);
+    String verifyBatchPayNotify(Map requestParams);
     void patchAliPayCustomers(List<PaymentApprove> approveList);
 }

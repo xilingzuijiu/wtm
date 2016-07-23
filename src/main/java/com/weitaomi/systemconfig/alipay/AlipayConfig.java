@@ -12,8 +12,6 @@ package com.weitaomi.systemconfig.alipay;
  */
 
 public class AlipayConfig {
-	
-//↓↓↓↓↓↓↓↓↓↓请在这里配置您的基本信息↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
 	// 合作身份者ID，签约账号，以2088开头由16位纯数字组成的字符串，查看地址：https://b.alipay.com/order/pidAndKey.htm
 	public static String partner = "2088321045613085";
@@ -45,6 +43,8 @@ public class AlipayConfig {
 	// 服务器异步通知页面路径  需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
 	//TODO
 	public static String notify_url = "http://211.149.195.220:8001/app/admin/payment/verifyAlipayNotify";
+	//批量付款通知页面
+	public static String batchPay_notify_url = "http://211.149.195.220:8001/app/admin/payment/verifyAlipayNotify";
 
 	// 页面跳转同步通知页面路径 需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
 	//TODO
@@ -66,9 +66,6 @@ public class AlipayConfig {
 	public static String service = "mobile.securitypay.pay";
 	// 批量付款接口
 	public static String batchPayservice = "batch_trans_notify";
-
-
-//↑↑↑↑↑↑↑↑↑↑请在这里配置您的基本信息↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 
 }
 
