@@ -31,7 +31,7 @@ public class ArticleSearch {
     /**
      * 分页默认50
      */
-    private Integer pageSize=50;
+    private Integer pageSize=20;
     /**
      * 查询方式（后续扩展需要）
       */

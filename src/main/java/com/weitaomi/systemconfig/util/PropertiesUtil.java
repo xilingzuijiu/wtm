@@ -5,6 +5,7 @@ import com.weitaomi.systemconfig.exception.BusinessException;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
@@ -27,6 +28,11 @@ public class PropertiesUtil {
         }
     }
     public static String getValue(String key){
-        return properties.getProperty(key,"");
+        try {
+            return new String(properties.getProperty(key,"").getBytes("ISO-8859-1"),"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

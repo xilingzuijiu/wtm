@@ -20,11 +20,11 @@
                         password="${master1.jdbc.password}">
         </jdbcConnection>
 
-        <javaModelGenerator targetPackage="com.weitaomi.application.model.bean" targetProject="F:\Program\git\weitaomi\weitaomi/src/main/java"/>
+        <javaModelGenerator targetPackage="com.weitaomi.application.model.bean" targetProject="C:\Program\weitaomi\wtm/src/main/java"/>
 
-        <sqlMapGenerator targetPackage="mapper"  targetProject="F:\Program\git\weitaomi\weitaomi/src/main/resources"/>
+        <sqlMapGenerator targetPackage="mapper"  targetProject="C:\Program\weitaomi\wtm/src/main/resources"/>
 
-        <javaClientGenerator targetPackage="com.weitaomi.application.model.mapper" targetProject="F:\Program\git\weitaomi\weitaomi/src/main/java" type="XMLMAPPER" />
+        <javaClientGenerator targetPackage="com.weitaomi.application.model.mapper" targetProject="C:\Program\weitaomi\wtm/src/main/java" type="XMLMAPPER" />
         <!--<table tableName="wtm_member"  domainObjectName="Member">-->
             <!--<property name="useActualColumnNames" value="true"/>-->
             <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
@@ -65,7 +65,19 @@
         <!--<property name="useActualColumnNames" value="true"/>-->
         <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
         <!--</table>-->
-        <table tableName="wtm_article_read_record"  domainObjectName="ArticleReadRecord">
+        <!--<table tableName="wtm_article_read_record"  domainObjectName="ArticleReadRecord">-->
+            <!--<property name="useActualColumnNames" value="true"/>-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="wtm_member_invited_record"  domainObjectName="MemberInvitedRecord">-->
+            <!--<property name="useActualColumnNames" value="true"/>-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="wtm_payment_history"  domainObjectName="PaymentHistory">-->
+            <!--<property name="useActualColumnNames" value="true"/>-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table> -->
+        <table tableName="wtm_payment_approve"  domainObjectName="PaymentApprove">
             <property name="useActualColumnNames" value="true"/>
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>

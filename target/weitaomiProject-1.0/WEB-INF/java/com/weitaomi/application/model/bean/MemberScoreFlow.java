@@ -3,6 +3,7 @@ package com.weitaomi.application.model.bean;
 import com.weitaomi.application.model.BaseModel;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Table(name = "wtm_member_score_flow")
 public class MemberScoreFlow extends BaseModel{
@@ -28,19 +29,19 @@ public class MemberScoreFlow extends BaseModel{
      * 用户流动前积分
      */
     @Column(name = "memberScoreBefore")
-    private Integer memberScoreBefore;
+    private BigDecimal memberScoreBefore;
 
     /**
      * 用户流动后积分
      */
     @Column(name = "memberScoreAfter")
-    private Integer memberScoreAfter;
+    private BigDecimal memberScoreAfter;
 
     /**
      * 流动积分
      */
     @Column(name = "flowScore")
-    private Integer flowScore;
+    private BigDecimal flowScore;
 
     /**
      * 积分流动描述
@@ -131,7 +132,7 @@ public class MemberScoreFlow extends BaseModel{
      *
      * @return memberScoreBefore - 用户流动前积分
      */
-    public Integer getMemberScoreBefore() {
+    public BigDecimal getMemberScoreBefore() {
         return memberScoreBefore;
     }
 
@@ -140,7 +141,7 @@ public class MemberScoreFlow extends BaseModel{
      *
      * @param memberScoreBefore 用户流动前积分
      */
-    public void setMemberScoreBefore(Integer memberScoreBefore) {
+    public void setMemberScoreBefore(BigDecimal memberScoreBefore) {
         this.memberScoreBefore = memberScoreBefore;
     }
 
@@ -149,7 +150,7 @@ public class MemberScoreFlow extends BaseModel{
      *
      * @return memberScoreAfter - 用户流动后积分
      */
-    public Integer getMemberScoreAfter() {
+    public BigDecimal getMemberScoreAfter() {
         return memberScoreAfter;
     }
 
@@ -158,7 +159,7 @@ public class MemberScoreFlow extends BaseModel{
      *
      * @param memberScoreAfter 用户流动后积分
      */
-    public void setMemberScoreAfter(Integer memberScoreAfter) {
+    public void setMemberScoreAfter(BigDecimal memberScoreAfter) {
         this.memberScoreAfter = memberScoreAfter;
     }
 
@@ -167,7 +168,7 @@ public class MemberScoreFlow extends BaseModel{
      *
      * @return flowScore - 流动积分
      */
-    public Integer getFlowScore() {
+    public BigDecimal getFlowScore() {
         return flowScore;
     }
 
@@ -176,7 +177,7 @@ public class MemberScoreFlow extends BaseModel{
      *
      * @param flowScore 流动积分
      */
-    public void setFlowScore(Integer flowScore) {
+    public void setFlowScore(BigDecimal flowScore) {
         this.flowScore = flowScore;
     }
 

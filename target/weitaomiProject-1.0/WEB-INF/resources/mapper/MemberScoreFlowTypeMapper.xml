@@ -6,6 +6,7 @@
       WARNING - @mbggenerated
     -->
     <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="flowCount" javaType="Decimal" property="flowCount"/>
     <result column="typeName" jdbcType="VARCHAR" property="typeName" />
     <result column="typeDesc" jdbcType="VARCHAR" property="typeDesc" />
     <result column="createTime" jdbcType="BIGINT" property="createTime" />

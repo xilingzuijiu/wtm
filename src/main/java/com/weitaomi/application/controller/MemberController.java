@@ -50,7 +50,7 @@ public class MemberController  extends BaseController {
     @RequestMapping(value = "/getIdentifyCode", method = RequestMethod.POST)
     public AjaxResult getIdentifyCodeAction(@RequestParam("mobile") String mobile, @RequestParam(value = "type", defaultValue ="0") Integer type, HttpServletRequest request) throws BusinessException, IOException {
         String identifyCode=memberService.sendIndentifyCode(mobile,type);
-        if (identifyCode!=null&&identifyCode.isEmpty()){
+        if (identifyCode!=null&&!identifyCode.isEmpty()){
             return AjaxResult.getOK(identifyCode);
         }
         return null;

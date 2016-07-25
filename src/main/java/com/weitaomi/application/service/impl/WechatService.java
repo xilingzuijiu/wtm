@@ -12,4 +12,9 @@ public class WechatService implements IPayStrategyService {
     public String getPaymentParams(Map<String, Object> params) {
         return null;
     }
+
+    @Override
+    public String getBatchPayParams(Map<String, String> params) {
+        return null;
+    }
 }

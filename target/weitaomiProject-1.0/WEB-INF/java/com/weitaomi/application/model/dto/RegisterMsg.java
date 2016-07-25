@@ -23,6 +23,11 @@ public class RegisterMsg {
      * 来源
      */
     private String source;
+
+    /**
+     * 邀请者的code
+     */
+    private String code;
     /**
      * 注册标识，0：本地注册，1：第三方注册
      */
@@ -106,5 +111,21 @@ public class RegisterMsg {
      */
     public void setFlag(Integer flag) {
         this.flag = flag;
+    }
+
+    /**
+     * 获取邀请者的code
+     * @return code 邀请者的code
+     */
+    public String getCode() {
+        return this.code;
+    }
+
+    /**
+     * 设置邀请者的code
+     * @param code 邀请者的code
+     */
+    public void setCode(String code) {
+        this.code = code;
     }
 }

@@ -1,10 +1,10 @@
 package com.weitaomi.application.service.interf;
 
 import com.weitaomi.application.model.bean.Article;
+import com.weitaomi.application.model.dto.ArticleDto;
 import com.weitaomi.application.model.dto.ArticleSearch;
 import com.weitaomi.application.model.dto.ArticleShowDto;
-
-import java.util.List;
+import com.weitaomi.systemconfig.util.Page;
 
 /**
  * Created by supumall on 2016/7/7.
@@ -15,13 +15,36 @@ public interface IArticleService {
      * @param articleSearch
      * @return
      */
-    public List<ArticleShowDto> getAllArticle(ArticleSearch articleSearch);
+    public Page<ArticleShowDto> getAllArticle(ArticleSearch articleSearch);
 
     /**
      * 增加文章
+     * @param articleDto
+     * @return
+     */
+    public Boolean addArticle(ArticleDto articleDto);
+
+    /**
+     * 修改文章
      * @param article
      * @return
      */
-    public Boolean addArticle(Article article);
+    public Boolean modifyAticle(Article article);
+
+    /**
+     * 文章ID，置顶与否状态 0：不置顶，1：置顶
+     * @param articleId
+     * @param isTop
+     * @return
+     */
+    public Boolean putArticleToTop(Long articleId,Integer isTop);
+
+    /**
+     * 用户点击阅读/点赞文章
+     * @param memberId
+     * @param articleId
+     * @return
+     */
+    public Boolean readArticle(Long memberId,Long articleId,Integer typeId,Long sessionmdID);
 
 }

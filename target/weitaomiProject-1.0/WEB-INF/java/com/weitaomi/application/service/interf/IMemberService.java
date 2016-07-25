@@ -2,7 +2,10 @@ package com.weitaomi.application.service.interf;
 
 import com.weitaomi.application.model.bean.Member;
 import com.weitaomi.application.model.bean.ThirdLogin;
+import com.weitaomi.application.model.dto.InvitedRecord;
 import com.weitaomi.application.model.dto.RegisterMsg;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/6/27.
@@ -21,7 +24,7 @@ public interface IMemberService {
      * @param type
      * @return
      */
-    public String sendIndetifyCode(String mobile,Integer type);
+    public String sendIndentifyCode(String mobile,Integer type);
 
     /**
      * 绑定第三方平台
@@ -46,4 +49,17 @@ public interface IMemberService {
      */
     public Member thirdPlatLogin(String openId,Integer type);
 
+    /**
+     * 获取用户信息
+     * @param memberId
+     * @return
+     */
+    public Member getMemberDetailById(Long memberId);
+
+     /**
+      * 获取邀请记录
+      * @param memberId
+      * @return
+      */
+    public List<InvitedRecord> getInvitedRecord(Long memberId);
 }

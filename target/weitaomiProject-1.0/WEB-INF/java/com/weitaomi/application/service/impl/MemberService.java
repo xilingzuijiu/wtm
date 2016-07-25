@@ -1,13 +1,19 @@
 package com.weitaomi.application.service.impl;
 
 import com.weitaomi.application.model.bean.Member;
+import com.weitaomi.application.model.bean.MemberInvitedRecord;
 import com.weitaomi.application.model.bean.ThirdLogin;
+import com.weitaomi.application.model.dto.InvitedRecord;
 import com.weitaomi.application.model.dto.RegisterMsg;
+import com.weitaomi.application.model.mapper.MemberInvitedRecordMapper;
 import com.weitaomi.application.model.mapper.MemberMapper;
 import com.weitaomi.application.model.mapper.ThirdLoginMapper;
+import com.weitaomi.application.service.interf.ICacheService;
 import com.weitaomi.application.service.interf.IMemberService;
 import com.weitaomi.systemconfig.exception.BusinessException;
 import com.weitaomi.systemconfig.util.DateUtils;
+import com.weitaomi.systemconfig.util.PropertiesUtil;
+import com.weitaomi.systemconfig.util.SendMCUtils;
 import com.weitaomi.systemconfig.util.StringUtil;
 import org.apache.ibatis.cache.CacheException;
 import org.apache.shiro.crypto.hash.Sha256Hash;
@@ -19,6 +25,9 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.UnsupportedEncodingException;
+import java.text.MessageFormat;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -33,6 +42,10 @@ public class MemberService implements IMemberService {
     private MemberMapper memberMapper;
     @Autowired
     private ThirdLoginMapper thirdLoginMapper;
+    @Autowired
+    private ICacheService cacheService;
+    @Autowired
+    private MemberInvitedRecordMapper memberInvitedRecordMapper;
     @Override
     @Transactional
     public Boolean register(RegisterMsg registerMsg) {
@@ -77,13 +90,15 @@ public class MemberService implements IMemberService {
         if (member.getEmail()!=null&&member.getEmail().matches("[_a-z\\d\\-\\./]+@[_a-z\\d\\-]+(\\.[_a-z\\d\\-]+)*(\\.(info|biz|com|edu|gov|net|am|bz|cn|cx|hk|jp|tw|vc|vn))$")){
             memberTemp.setEmail(member.getEmail());
         }
-        if (!this.validateIndetifyCode(memberTemp.getTelephone())){
+        if (this.validateIndetifyCode(memberTemp.getTelephone(),registerMsg.getIdentifyCode())){
             throw new BusinessException("验证码错误，请重试");
         }
+            memberTemp.setSource(registerMsg.getSource());
             memberTemp.setCreateTime(DateUtils.getUnixTimestamp());
+            Long newMemberId=null;
         if (registerMsg.getFlag()!=null&&registerMsg.getFlag()==0){
             memberMapper.insertSelective(memberTemp);
-            return true;
+            newMemberId=memberTemp.getId();
         }else if (registerMsg.getFlag()!=null&&registerMsg.getFlag()==1){
             ThirdLogin thirdLogin=registerMsg.getThirdLogin();
             if (thirdLogin==null){
@@ -93,13 +108,29 @@ public class MemberService implements IMemberService {
                 throw new BusinessException("第三方OpenId为空");
             }
             memberMapper.insertSelective(memberTemp);
-            Long newMemberId = memberMapper.getByCellphoneAndPassword(memberTemp.getTelephone(), memberTemp.getPassword()).getId();
+            newMemberId =memberTemp.getId();
+            String code=StringUtil.toSerialNumber(newMemberId);
+            memberTemp.setInvitedCode(code);
+            memberMapper.updateByPrimaryKeySelective(memberTemp);
             thirdLogin.setMemberId(newMemberId);
             thirdLogin.setCreateTime(DateUtils.getUnixTimestamp());
             thirdLoginMapper.insertSelective(thirdLogin);
-            return true;
         }
-        return false;
+        if (registerMsg.getCode()!=null&&!registerMsg.getCode().isEmpty()){
+            Member memberInvited=memberMapper.getMemberByInviteCode(registerMsg.getCode());
+            if (memberInvited!=null) {
+                MemberInvitedRecord memberInvitedRecordTemp=memberInvitedRecordMapper.getMemberInvitedRecordByMemberId(newMemberId);
+                if (memberInvitedRecordTemp==null) {
+                    MemberInvitedRecord memberInvitedRecord = new MemberInvitedRecord();
+                    memberInvitedRecord.setMemberId(newMemberId);
+                    memberInvitedRecord.setParentId(memberInvited.getId());
+                    memberInvitedRecord.setIsAccessible(1);
+                    memberInvitedRecord.setCreateTime(DateUtils.getUnixTimestamp());
+                    memberInvitedRecordMapper.insertSelective(memberInvitedRecord);
+                }
+            }
+        }
+        return true;
     }
     @Override
     @Transactional
@@ -145,6 +176,9 @@ public class MemberService implements IMemberService {
             if (!member.getPassword().equals(new Sha256Hash(password,member.getSalt()).toString())){
                 throw new BusinessException("用户名或密码错误");
             }
+            String key="member:login:"+member.getId();
+            Integer times=60*60*24*30;
+            cacheService.setCacheByKey(key,member,times);
             return member;
         }else{
             throw new BusinessException("用户名/密码为空");
@@ -167,17 +201,10 @@ public class MemberService implements IMemberService {
         if (member==null){
             throw new BusinessException("获取账号失败，请重试");
         }
+        String key="member:login:"+member.getId();
+        Integer times=60*60*24*30;
+        cacheService.setCacheByKey(key,member,times);
         return member;
-    }
-
-    @Override
-    public String sendIndetifyCode(String mobile, Integer type) {
-
-        return null;
-    }
-    private Boolean validateIndetifyCode(String mobile) {
-
-        return null;
     }
     /**
      * 设置缓存
@@ -186,7 +213,7 @@ public class MemberService implements IMemberService {
      * @param timeout
      * @throws CacheException
      */
-    private void setIndetifyCodeToCache(String key, String IdentifyCode, Long timeout)  {
+    private void setIndentifyCodeToCache(String key, String IdentifyCode, Long timeout)  {
         Long timeoutTemp = timeout;
         if (timeout == null) {
             timeoutTemp = 120L;
@@ -200,7 +227,7 @@ public class MemberService implements IMemberService {
      * @param key
      * @return
      */
-    private String getIndetifyCodeFromCache(String key) {
+    private String getIndentifyCodeFromCache(String key) {
         ValueOperations<String, String> valueOper = redisTemplate.opsForValue();
         StringBuilder sb = new StringBuilder();
         String type = null;
@@ -211,4 +238,49 @@ public class MemberService implements IMemberService {
             return value;
         }
     }
+    @Override
+    public Member getMemberDetailById(Long memberId) {
+        String key="member:login:"+memberId;
+        Member member= cacheService.getCacheByKey(key,Member.class);
+        if(member==null){
+            throw new BusinessException("请先完成登陆");
+        }
+        return memberMapper.selectByPrimaryKey(memberId);
+    }
+
+    @Override
+    public List<InvitedRecord> getInvitedRecord(Long memberId) {
+        List<InvitedRecord> invitedRecordList=memberInvitedRecordMapper.getInvitedRecord(memberId);
+        if (invitedRecordList!=null&&!invitedRecordList.isEmpty()){
+            return invitedRecordList;
+        }
+        return null;
+    }
+
+    @Override
+    public String sendIndentifyCode(String mobile, Integer type) {
+        if (!mobile.matches("^[1][34578]\\d{9}$")) {
+            throw new BusinessException("手机号码格式不正确");
+        }
+        String identifyCode=StringUtil.numRandom(6);
+        String content= null;
+        try {
+            content = MessageFormat.format(new String(PropertiesUtil.getValue("verifycode.msg").getBytes("iso-8859-1"),"utf-8"),identifyCode);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        SendMCUtils.sendMessage(mobile,content);
+        String key="member:indentifyCode:"+mobile;
+        this.setIndentifyCodeToCache(key,identifyCode,120L);
+        return identifyCode;
+    }
+    private Boolean validateIndetifyCode(String mobile,String indentifyCode) {
+        String key="member:indentifyCode:"+mobile;
+        String value =this.getIndentifyCodeFromCache(key);
+        if(indentifyCode.equals(value)){
+            return true;
+        }
+        return false;
+    }
+
 }

@@ -16,15 +16,19 @@
     <result column="email" property="email" jdbcType="VARCHAR" />
     <result column="invitedCode" property="invitedCode" jdbcType="VARCHAR" />
     <result column="imageUrl" property="imageUrl" jdbcType="VARCHAR" />
+    <result column="source" property="source" jdbcType="VARCHAR" />
     <result column="createTime" property="createTime" jdbcType="BIGINT" />
   </resultMap>
   <select id="getMemberByTelephone" resultMap="BaseResultMap">
       select * from wtm_member m WHERE m.telephone=#{telephone};
   </select>
-  <select id="getByCellphoneAndPassword" resultType="com.weitaomi.application.model.bean.Member">
+  <select id="getByCellphoneAndPassword" resultMap="BaseResultMap">
     select * from wtm_member m WHERE m.telephone=#{cellphone} AND m.password=#{password};
   </select>
-  <select id="getMemberByMemberName" resultType="com.weitaomi.application.model.bean.Member">
+  <select id="getMemberByMemberName" resultMap="BaseResultMap">
     select * from wtm_member m WHERE m.memberName=#{memberName};
+  </select>
+  <select id="getMemberByInviteCode" resultMap="BaseResultMap">
+    select * from wtm_member m WHERE m.invitedCode=#{inviteCode};
   </select>
 </mapper>

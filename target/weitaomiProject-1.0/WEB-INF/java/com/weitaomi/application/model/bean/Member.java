@@ -61,6 +61,11 @@ public class Member extends BaseModel  implements Serializable {
      */
     @Column(name = "invitedCode")
     private String invitedCode;
+    /**
+     * 来源
+     */
+    @Column(name = "source")
+    private String source;
 
     /**
      * 头像url
@@ -163,6 +168,7 @@ public class Member extends BaseModel  implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+
 
     /**
      * 获取会员生日
@@ -268,5 +274,21 @@ public class Member extends BaseModel  implements Serializable {
      */
     public void setSex(Integer sex) {
         this.sex = sex;
+    }
+
+    /**
+     * 获取来源
+     * @return source 来源
+     */
+    public String getSource() {
+        return this.source;
+    }
+
+    /**
+     * 设置来源
+     * @param source 来源
+     */
+    public void setSource(String source) {
+        this.source = source;
     }
 }

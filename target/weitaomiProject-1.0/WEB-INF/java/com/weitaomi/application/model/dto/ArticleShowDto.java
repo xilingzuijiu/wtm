@@ -16,7 +16,7 @@ public class ArticleShowDto {
      */
     private User user;
     /**
-     * 是否已经阅读过
+     * 是否已经阅读过 0:未阅读，1：已阅读
      */
     private Integer isReadBefore;
 

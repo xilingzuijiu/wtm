@@ -1,48 +1,34 @@
 package com.weitaomi.application.model.bean;
 
+import com.weitaomi.application.model.BaseModel;
+
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Table(name = "wtm_member_score_flow_type")
-public class MemberScoreFlowType {
+public class MemberScoreFlowType  extends BaseModel{
     /**
-     * 主键
+     * 积分数量
      */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    @Column(name = "flowCount")
+    private BigDecimal flowCount;
     /**
      * 积分流动类型
      */
+    @Column(name = "typeName")
     private String typeName;
 
     /**
      * 积分流动类型描述
      */
+    @Column(name = "typeDesc")
     private String typeDesc;
 
     /**
      * 创建日期
      */
+    @Column(name = "createTime")
     private Long createTime;
-
-    /**
-     * 获取主键
-     *
-     * @return id - 主键
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * 设置主键
-     *
-     * @param id 主键
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     /**
      * 获取积分流动类型
@@ -96,5 +82,21 @@ public class MemberScoreFlowType {
      */
     public void setCreateTime(Long createTime) {
         this.createTime = createTime;
+    }
+
+    /**
+     * 获取积分数量
+     * @return flowCount 积分数量
+     */
+    public BigDecimal getFlowCount() {
+        return this.flowCount;
+    }
+
+    /**
+     * 设置积分数量
+     * @param flowCount 积分数量
+     */
+    public void setFlowCount(BigDecimal flowCount) {
+        this.flowCount = flowCount;
     }
 }

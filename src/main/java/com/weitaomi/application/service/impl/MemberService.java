@@ -25,6 +25,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.UnsupportedEncodingException;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -262,7 +263,12 @@ public class MemberService implements IMemberService {
             throw new BusinessException("手机号码格式不正确");
         }
         String identifyCode=StringUtil.numRandom(6);
-        String content= MessageFormat.format(PropertiesUtil.getValue("verifycode.msg"),identifyCode);
+        String content= null;
+        try {
+            content = MessageFormat.format(new String(PropertiesUtil.getValue("verifycode.msg").getBytes("iso-8859-1"),"utf-8"),identifyCode);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         SendMCUtils.sendMessage(mobile,content);
         String key="member:indentifyCode:"+mobile;
         this.setIndentifyCodeToCache(key,identifyCode,120L);

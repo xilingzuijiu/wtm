@@ -106,6 +106,14 @@ public class AjaxResult implements Serializable {
     public static AjaxResult getOK(){
         return getOK(ActionConstants.DEFAULT_SUCCESS_RETURNMSG,null);
     }
+    /**
+     * 获取错误结果模板
+     *
+     * @return AjaxResult
+     */
+    public static AjaxResult getError(){
+        return getOK(ActionConstants.DEFAULT_FAILED_RETURNMSG,null);
+    }
 
 
     /**

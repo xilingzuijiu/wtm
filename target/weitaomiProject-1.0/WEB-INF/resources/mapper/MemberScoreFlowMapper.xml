@@ -9,9 +9,9 @@
     <result column="memberScoreId" jdbcType="BIGINT" property="memberScoreId" />
     <result column="memberId" jdbcType="BIGINT" property="memberId" />
     <result column="typeId" jdbcType="BIGINT" property="typeId" />
-    <result column="memberScoreBefore" jdbcType="INTEGER" property="memberScoreBefore" />
-    <result column="memberScoreAfter" jdbcType="INTEGER" property="memberScoreAfter" />
-    <result column="flowScore" jdbcType="INTEGER" property="flowScore" />
+    <result column="memberScoreBefore" jdbcType="DECIMAL" property="memberScoreBefore" />
+    <result column="memberScoreAfter" jdbcType="DECIMAL" property="memberScoreAfter" />
+    <result column="flowScore" jdbcType="DECIMAL" property="flowScore" />
     <result column="detail" jdbcType="VARCHAR" property="detail" />
     <result column="createTime" jdbcType="BIGINT" property="createTime" />
   </resultMap>

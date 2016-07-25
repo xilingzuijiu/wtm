@@ -3,6 +3,7 @@ package com.weitaomi.application.model.bean;
 import com.weitaomi.application.model.BaseModel;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Table(name = "wtm_member_score")
 public class MemberScore extends BaseModel{
@@ -17,37 +18,28 @@ public class MemberScore extends BaseModel{
      * 用户总积分
      */
     @Column(name = "memberScore")
-    private Integer memberScore;
+    private BigDecimal memberScore;
 
     /**
      * 可用积分
      */
     @Column(name = "validScore")
-    private Integer validScore;
-
+    private BigDecimal validScore;
+    /**
+     * 可用倍率
+     */
+    @Column(name = "rate")
+    private BigDecimal rate;
+    /**
+     * 更新日期
+     */
+    @Column(name = "updateTime")
+    private Long updateTime;
     /**
      * 创建日期
      */
     @Column(name = "createTime")
     private Long createTime;
-
-    /**
-     * 获取主键
-     *
-     * @return id - 主键
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * 设置主键
-     *
-     * @param id 主键
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     /**
      * 获取用户ID
@@ -72,7 +64,7 @@ public class MemberScore extends BaseModel{
      *
      * @return memberScore - 用户总积分
      */
-    public Integer getMemberScore() {
+    public BigDecimal getMemberScore() {
         return memberScore;
     }
 
@@ -81,7 +73,7 @@ public class MemberScore extends BaseModel{
      *
      * @param memberScore 用户总积分
      */
-    public void setMemberScore(Integer memberScore) {
+    public void setMemberScore(BigDecimal memberScore) {
         this.memberScore = memberScore;
     }
 
@@ -90,7 +82,7 @@ public class MemberScore extends BaseModel{
      *
      * @return validScore - 可用积分
      */
-    public Integer getValidScore() {
+    public BigDecimal getValidScore() {
         return validScore;
     }
 
@@ -99,7 +91,7 @@ public class MemberScore extends BaseModel{
      *
      * @param validScore 可用积分
      */
-    public void setValidScore(Integer validScore) {
+    public void setValidScore(BigDecimal validScore) {
         this.validScore = validScore;
     }
 
@@ -119,5 +111,37 @@ public class MemberScore extends BaseModel{
      */
     public void setCreateTime(Long createTime) {
         this.createTime = createTime;
+    }
+
+    /**
+     * 获取更新日期
+     * @return updateTime 更新日期
+     */
+    public Long getUpdateTime() {
+        return this.updateTime;
+    }
+
+    /**
+     * 设置更新日期
+     * @param updateTime 更新日期
+     */
+    public void setUpdateTime(Long updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    /**
+     * 获取可用倍率
+     * @return rate 可用倍率
+     */
+    public BigDecimal getRate() {
+        return this.rate;
+    }
+
+    /**
+     * 设置可用倍率
+     * @param rate 可用倍率
+     */
+    public void setRate(BigDecimal rate) {
+        this.rate = rate;
     }
 }

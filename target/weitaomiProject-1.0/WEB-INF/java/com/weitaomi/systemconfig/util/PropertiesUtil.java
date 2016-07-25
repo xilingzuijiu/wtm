@@ -15,8 +15,7 @@ import java.util.Properties;
 public class PropertiesUtil {
     public static Properties properties = new Properties();
     public static List<String> configFile = Arrays.asList(
-            "third_plat.properties","server.properties","sys-config.properties",
-            "bonded-config.properties","invoice-config.properties","advertisement.properties","ceb_merchant.properties");
+            "server.properties","properties/configuration.properties","properties/message.properties");
     static {
         try {
             for(String fileName:configFile) {

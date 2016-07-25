@@ -12,10 +12,6 @@ import java.io.UnsupportedEncodingException;
 import java.security.Key;
 import java.security.spec.AlgorithmParameterSpec;
 
-
-/**
- * Created by Martin on 2016/1/31.
- */
 public class DESEncryptDecrypt {
 
     private static Logger log = LoggerFactory.getLogger(DESEncryptDecrypt.class);

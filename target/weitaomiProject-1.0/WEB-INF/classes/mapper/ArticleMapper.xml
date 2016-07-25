@@ -18,4 +18,44 @@
     <result column="isTop" jdbcType="INTEGER" property="isTop" />
     <result column="createTime" jdbcType="BIGINT" property="createTime" />
   </resultMap>
+  <update id="putArticleToTop">
+    update wtm_article a set a.isTop=#{isTop}  =  where a.articleId=#{articleId};
+  </update>
+  <update id="updateArticleByRead">
+    update wtm_article a
+     <if test="typeId=0">
+       set a.readIncreaseNumber = a.readIncreaseNumber+1
+     </if>
+    <if test="typeId=1">
+      set a.agreeIncreaseNumber = a.agreeIncreaseNumber+1
+    </if>
+       where a.IDENTITY=#{articleId} ;
+  </update>
+  <sql id="getArticleParams">
+    a.id,a.userId,a.url,a.title,a.articleAbstract,a.readNumber,a.agreeNumber,a.agreeIncreaseNumber,a.readIncreaseNumber,a.validNumber,a.isTop,a.createTime
+    </sql>
+  <sql id="getUserParams">
+    u.typeCode,u.isOpen,u.openId,u.userName,u.accountNumber,u.remark
+  </sql>
+  <select id="getAtricleList" resultType="com.weitaomi.application.model.dto.ArticleShowDto">
+    select * from (select <include refid="getArticleParams"/>,<include refid="getUserParams"/> ,CASE  WHEN rr.id>0 THEN 1 ELSE 0 END AS isReadBefore
+    from wtm_article a LEFT JOIN wtm_user u ON a.userId=u.id LEFT JOIN
+    (select r.id,r.articleId from wtm_article_read_record r WHERE r.memberId=#{articleSearch.memberId}) rr ON rr.articleId=a.id
+    <if test="articleSearch.articleId!=null">
+      AND a.id=#{articleSearch.articleId}
+    </if>
+    <if test="articleSearch.startTime!=null">
+      AND a.createTime>#{articleSearch.startTime}
+    </if>
+    <if test="articleSearch.endTime!=null">
+      AND a.createTime &lt; #{articleSearch.endTime}
+    </if>
+    <if test="articleSearch.userId!=null">
+      AND a.userId=#{articleSearch.userId}
+    </if>
+    <if test="articleSearch.titleKeyWord!=null">
+      AND a.title like concat(#{articleSearch.titleKeyWord},'%')
+    </if>
+    ORDER BY a.isTop DESC,a.createTime DESC) p WHERE p.isReadBefore=0
+  </select>
 </mapper>

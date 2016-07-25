@@ -7,8 +7,13 @@
     -->
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="memberId" jdbcType="BIGINT" property="memberId" />
-    <result column="memberScore" jdbcType="INTEGER" property="memberScore" />
-    <result column="validScore" jdbcType="INTEGER" property="validScore" />
+    <result column="memberScore" jdbcType="DECIMAL" property="memberScore" />
+    <result column="validScore" jdbcType="DECIMAL" property="validScore" />
+    <result column="rate" jdbcType="DECIMAL" property="rate" />
+    <result column="updateTime" jdbcType="BIGINT" property="updateTime" />
     <result column="createTime" jdbcType="BIGINT" property="createTime" />
   </resultMap>
+  <select id="getMemberScoreByMemberId" resultMap="BaseResultMap">
+    select * from wtm_member_score s WHERE s.memberId=#{memberId};
+  </select>
 </mapper>

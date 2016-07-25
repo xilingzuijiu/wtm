@@ -1,5 +1,6 @@
 package com.weitaomi.application.controller;
 
+import com.weitaomi.application.controller.baseController.BaseController;
 import com.weitaomi.application.model.bean.ThirdLogin;
 import com.weitaomi.application.model.dto.RegisterMsg;
 import com.weitaomi.application.service.interf.IMemberService;
@@ -19,7 +20,7 @@ import java.text.ParseException;
  */
 @Controller
 @RequestMapping("/app/admin/member")
-public class MemberController {
+public class MemberController  extends BaseController {
     @Autowired
     private IMemberService memberService;
     /**
@@ -48,7 +49,7 @@ public class MemberController {
     @ResponseBody
     @RequestMapping(value = "/getIdentifyCode", method = RequestMethod.POST)
     public AjaxResult getIdentifyCodeAction(@RequestParam("mobile") String mobile, @RequestParam(value = "type", defaultValue ="0") Integer type, HttpServletRequest request) throws BusinessException, IOException {
-        String identifyCode=memberService.sendIndetifyCode(mobile,type);
+        String identifyCode=memberService.sendIndentifyCode(mobile,type);
         if (identifyCode!=null&&identifyCode.isEmpty()){
             return AjaxResult.getOK(identifyCode);
         }

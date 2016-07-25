@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 @Table(name = "wtm_article_read_record")
 public class ArticleReadRecord extends BaseModel{
+
     /**
      * 用户ID
      */
@@ -19,10 +20,18 @@ public class ArticleReadRecord extends BaseModel{
     private Long articleId;
 
     /**
+     * 类型 0：阅读 1：点赞
+     */
+    @Column(name = "type")
+    private Integer type=0;
+
+    /**
      * 创建日期
      */
     @Column(name = "createTime")
     private Long createTime;
+
+
     /**
      * 获取用户ID
      *
@@ -57,6 +66,24 @@ public class ArticleReadRecord extends BaseModel{
      */
     public void setArticleId(Long articleId) {
         this.articleId = articleId;
+    }
+
+    /**
+     * 获取类型 0：阅读 1：点赞
+     *
+     * @return type - 类型 0：阅读 1：点赞
+     */
+    public Integer getType() {
+        return type;
+    }
+
+    /**
+     * 设置类型 0：阅读 1：点赞
+     *
+     * @param type 类型 0：阅读 1：点赞
+     */
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     /**

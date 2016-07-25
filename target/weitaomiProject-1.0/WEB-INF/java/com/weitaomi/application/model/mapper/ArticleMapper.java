@@ -1,8 +1,15 @@
 package com.weitaomi.application.model.mapper;
 
 import com.weitaomi.application.model.bean.Article;
+import com.weitaomi.application.model.dto.ArticleSearch;
+import com.weitaomi.application.model.dto.ArticleShowDto;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.session.RowBounds;
+
+import java.util.List;
 
 public interface ArticleMapper extends IBaseMapper<Article> {
-    Article getArticleByMemberId(@Param("memberId") Long memberId);
+    List<ArticleShowDto> getAtricleList(@Param("articleSearch")ArticleSearch articleSearch, @Param("rowBounds")RowBounds rowBounds);
+    Integer putArticleToTop(@Param("articleId") Long articleId,@Param("isTop") Integer isTop);
+    Integer updateArticleByRead(@Param("articleId") Long articleId,@Param("typeId")Integer typeId);
 }

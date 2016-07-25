@@ -27,7 +27,7 @@ public class MyBatisTest extends BaseContextCase{
         member.setPassword(new Sha256Hash("123456789","asdfghj").toString());
         member.setSalt("asdfghj");
         member.setSex(0);
-        member.setTelephone("13105187050");
+        member.setTelephone("13953186923");
         System.out.println(memberMapper.insertSelective(member));
         System.out.println(member.getId());
     }
