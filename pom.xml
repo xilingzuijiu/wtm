@@ -17,7 +17,22 @@
         <spring.version>4.2.6.RELEASE</spring.version>
         <!-- Plugin的属性定义 -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
     </properties>
+    <repositories>
+        <repository>
+            <id>nexus</id>
+            <!--<name>Team Nexus Repository</name>-->
+            <url>http://121.42.196.236:8081/nexus/content/groups/public</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>nexus</id>
+            <!--<name>Team Nexus Repository</name>-->
+            <url>http://121.42.196.236:8081/nexus/content/groups/public</url>
+        </pluginRepository>
+    </pluginRepositories>
     <build>
         <plugins>
             <plugin>
@@ -25,21 +40,21 @@
                 <artifactId>mybatis-generator-maven-plugin</artifactId>
                 <version>1.3.2</version>
                 <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>Generate MyBatis Artifacts</id>-->
-                        <!--<goals>-->
-                            <!--<goal>generate</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
+                <!--<execution>-->
+                <!--<id>Generate MyBatis Artifacts</id>-->
+                <!--<goals>-->
+                <!--<goal>generate</goal>-->
+                <!--</goals>-->
+                <!--</execution>-->
                 <!--</executions>-->
                 <configuration>
                     <configurationFile>src/main/resources/configXml/mybatisGenerator.xml</configurationFile>
                     <verbose>true</verbose>
                     <overwrite>true</overwrite>
-                     <!--<jdbcDriver>com.mysql.jdbc.Driver</jdbcDriver>-->
-                     <!--<jdbcURL>jdbc:mysql://127.0.0.1:3306/test</jdbcURL>-->
-                     <!--<jdbcUserId>test</jdbcUserId>-->
-                     <!--<jdbcPassword>test</jdbcPassword>-->
+                    <!--<jdbcDriver>com.mysql.jdbc.Driver</jdbcDriver>-->
+                    <!--<jdbcURL>jdbc:mysql://127.0.0.1:3306/test</jdbcURL>-->
+                    <!--<jdbcUserId>test</jdbcUserId>-->
+                    <!--<jdbcPassword>test</jdbcPassword>-->
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -354,6 +369,24 @@
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
             <version>1.9</version>
+        </dependency>
+        <!-- 增加poi对文件（excel）操作包-->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.12</version>
+        </dependency>
+        <!--poi对excel2007以上版本的支持-->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>3.12</version>
+        </dependency>
+        <!--增加jxl对excel操作支持-->
+        <dependency>
+            <groupId>net.sourceforge.jexcelapi</groupId>
+            <artifactId>jxl</artifactId>
+            <version>2.6.10</version>
         </dependency>
     </dependencies>
 

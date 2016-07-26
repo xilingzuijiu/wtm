@@ -1,22 +1,27 @@
 package com.weitaomi.application.controller;
 
+import com.weitaomi.application.controller.baseController.BaseController;
 import com.weitaomi.application.model.bean.Article;
 import com.weitaomi.application.model.dto.ArticleDto;
 import com.weitaomi.application.model.dto.ArticleSearch;
 import com.weitaomi.application.service.interf.IArticleService;
 import com.weitaomi.systemconfig.dataFormat.AjaxResult;
+import com.weitaomi.systemconfig.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by supumall on 2016/7/23.
  */
 @Controller
 @RequestMapping(name = "/app/admin/article")
-public class ArticleController {
+public class ArticleController extends BaseController {
     @Autowired
     private IArticleService articleService;
     /**
@@ -25,7 +30,7 @@ public class ArticleController {
      * @return
      */
     @ResponseBody
-    @RequestMapping("/getAllArticle")
+    @RequestMapping(value = "/getAllArticle",method = RequestMethod.POST)
     public AjaxResult getAllArticle(@RequestBody ArticleSearch articleSearch){
         return AjaxResult.getOK(articleService.getAllArticle(articleSearch));
     }
@@ -36,7 +41,7 @@ public class ArticleController {
      * @return
      */
     @ResponseBody
-    @RequestMapping("/addArticle")
+    @RequestMapping(value = "/addArticle",method = RequestMethod.POST)
     public AjaxResult addArticle(@RequestBody ArticleDto articleDto){
         return AjaxResult.getOK(articleService.addArticle(articleDto));
     }
@@ -47,7 +52,7 @@ public class ArticleController {
      * @return
      */
     @ResponseBody
-    @RequestMapping("/modifyAticle")
+    @RequestMapping(value = "/modifyAticle",method = RequestMethod.POST)
     public AjaxResult modifyAticle(@RequestBody Article article){
         return AjaxResult.getOK(articleService.modifyAticle(article));
     }
@@ -59,20 +64,23 @@ public class ArticleController {
      * @return
      */
     @ResponseBody
-    @RequestMapping("/putArticleToTop")
+    @RequestMapping(value = "/putArticleToTop",method = RequestMethod.POST)
     public AjaxResult putArticleToTop(Long articleId,Integer isTop){
         return AjaxResult.getOK(articleService.putArticleToTop(articleId, isTop));
     }
 
     /**
      * 用户点击阅读/点赞文章
-     * @param memberId
      * @param articleId
      * @return
      */
     @ResponseBody
-    @RequestMapping("/readArticle")
-    public AjaxResult readArticle(Long memberId,Long articleId,Integer typeId,Long sessionmdID){
+    @RequestMapping(value = "/readArticle",method = RequestMethod.POST)
+    public AjaxResult readArticle(HttpServletRequest request,Long articleId, Integer typeId, Long sessionmdID){
+        Long memberId=this.getUserId(request);
+        if (memberId==null){
+            throw new BusinessException("用户ID为空");
+        }
         return AjaxResult.getOK(articleService.readArticle(memberId, articleId, typeId, sessionmdID));
     }
 
