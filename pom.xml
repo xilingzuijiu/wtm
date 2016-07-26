@@ -19,20 +19,20 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     </properties>
-    <repositories>
-        <repository>
-            <id>nexus</id>
-            <!--<name>Team Nexus Repository</name>-->
-            <url>http://121.42.196.236:8081/nexus/content/groups/public</url>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>nexus</id>
-            <!--<name>Team Nexus Repository</name>-->
-            <url>http://121.42.196.236:8081/nexus/content/groups/public</url>
-        </pluginRepository>
-    </pluginRepositories>
+    <!--<repositories>-->
+        <!--<repository>-->
+            <!--<id>nexus</id>-->
+            <!--&lt;!&ndash;<name>Team Nexus Repository</name>&ndash;&gt;-->
+            <!--<url>http://121.42.196.236:8081/nexus/content/groups/public</url>-->
+        <!--</repository>-->
+    <!--</repositories>-->
+    <!--<pluginRepositories>-->
+        <!--<pluginRepository>-->
+            <!--<id>nexus</id>-->
+            <!--&lt;!&ndash;<name>Team Nexus Repository</name>&ndash;&gt;-->
+            <!--<url>http://121.42.196.236:8081/nexus/content/groups/public</url>-->
+        <!--</pluginRepository>-->
+    <!--</pluginRepositories>-->
     <build>
         <plugins>
             <plugin>

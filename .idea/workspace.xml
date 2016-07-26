@@ -26,19 +26,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3d87fb1b-5958-4d31-90c7-c2eb56a93a69" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__log4j_log4j_1_2_14.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_sourceforge_jexcelapi_jxl_2_6_10.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_poi_poi_3_12.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_poi_poi_ooxml_3_12.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_poi_poi_ooxml_schemas_3_12.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_xmlbeans_xmlbeans_2_6_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__stax_stax_api_1_0_1.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/ArticleController.java" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/ArticleController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/MemberController.java" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/MemberController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/MemberScoreController.java" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/MemberScoreController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weitaomi.iml" afterPath="$PROJECT_DIR$/weitaomi.iml" />
     </list>
     <ignored path="weitaomi.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -128,8 +117,8 @@
       <file leaf-file-name="pom.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.85461">
-              <caret line="36" column="17" selection-start-line="36" selection-start-column="17" selection-end-line="36" selection-end-column="17" />
+            <state vertical-scroll-proportion="1.7907802">
+              <caret line="34" column="29" selection-start-line="21" selection-start-column="8" selection-end-line="34" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -1211,7 +1200,7 @@
       <workItem from="1468915938013" duration="4837000" />
       <workItem from="1469003019223" duration="20730000" />
       <workItem from="1469177672842" duration="49502000" />
-      <workItem from="1469410773245" duration="8498000" />
+      <workItem from="1469410773245" duration="8816000" />
     </task>
     <task id="LOCAL-00001" summary="F[初始化项目] 初始化项目，增加依赖">
       <created>1467069376670</created>
@@ -1297,7 +1286,13 @@
       <option name="project" value="LOCAL" />
       <updated>1469410845469</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="F[web] 增加web层访问">
+      <created>1469527798360</created>
+      <option name="number" value="00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1469527798360</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1333,7 +1328,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="279600000" />
+    <option name="totallyTimeSpent" value="279918000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1864,8 +1859,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.85461">
-          <caret line="36" column="17" selection-start-line="36" selection-start-column="17" selection-end-line="36" selection-end-column="17" />
+        <state vertical-scroll-proportion="1.7907802">
+          <caret line="34" column="29" selection-start-line="21" selection-start-column="8" selection-end-line="34" selection-end-column="29" />
           <folding />
         </state>
       </provider>
