@@ -50,7 +50,7 @@ public class MemberController  extends BaseController {
     @RequestMapping(value = "/getIdentifyCode", method = RequestMethod.POST)
     public AjaxResult getIdentifyCodeAction(@RequestParam("mobile") String mobile, @RequestParam(value = "type", defaultValue ="0") Integer type, HttpServletRequest request) throws BusinessException, IOException {
         String identifyCode=memberService.sendIndentifyCode(mobile,type);
-        if (identifyCode!=null&&identifyCode.isEmpty()){
+        if (identifyCode!=null&&!identifyCode.isEmpty()){
             return AjaxResult.getOK(identifyCode);
         }
         return null;
@@ -92,4 +92,32 @@ public class MemberController  extends BaseController {
     public AjaxResult thirdPlatLogin(@RequestParam("openId")String openId, @RequestParam("type")Integer type){
         return AjaxResult.getOK(memberService.thirdPlatLogin(openId, type));
     }
+    /**
+     * 获取用户信息
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getMemberDetailById", method = RequestMethod.POST)
+    public AjaxResult getMemberDetailById(HttpServletRequest request){
+        Long memberId=this.getUserId(request);
+        if (memberId==null){
+            throw new BusinessException("用户ID为空");
+        }
+        return AjaxResult.getOK(memberService.getMemberDetailById(memberId));
+    }
+
+    /**
+     * 获取邀请记录
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getInvitedRecord", method = RequestMethod.POST)
+    public AjaxResult getInvitedRecord(HttpServletRequest request){
+        Long memberId=this.getUserId(request);
+        if (memberId==null){
+            throw new BusinessException("用户ID为空");
+        }
+        return AjaxResult.getOK(memberService.getMemberDetailById(memberId));
+    }
+
 }
