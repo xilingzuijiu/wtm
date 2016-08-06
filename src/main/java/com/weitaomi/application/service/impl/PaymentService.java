@@ -7,6 +7,7 @@ import com.weitaomi.application.model.mapper.PaymentHistoryMapper;
 import com.weitaomi.application.service.interf.ICacheService;
 import com.weitaomi.application.service.interf.IPayStrategyContext;
 import com.weitaomi.application.service.interf.IPaymentService;
+import com.weitaomi.systemconfig.alipay.AlipayConfig;
 import com.weitaomi.systemconfig.alipay.AlipayNotify;
 import com.weitaomi.systemconfig.exception.BusinessException;
 import com.weitaomi.systemconfig.util.DateUtils;
@@ -35,7 +36,7 @@ public class PaymentService implements IPaymentService {
     @Override
     public String getPaymentParams(Map<String,Object> params) {
         String payCode=this.getTradeNo();
-        params.put("trade_no",payCode);
+        params.put("trade_no", AlipayConfig.payCode_prefix+payCode);
         String requestParam=payStrategyContext.getPaymentParams(params);
         PaymentHistory paymentHistory=new PaymentHistory();
         paymentHistory.setMemberId((Long)params.get("memberId"));
@@ -158,7 +159,7 @@ public class PaymentService implements IPaymentService {
         for(PaymentApprove approve:approveList){
             totalAmount=totalAmount.add(approve.getAmount());
             String trade_no=this.getTradeNo();
-            detail_data.append(trade_no);
+            detail_data.append(AlipayConfig.payCode_prefix+trade_no);
             if (!StringUtils.isEmpty(approve.getAccountNumber())&&!StringUtils.isEmpty(approve.getAccountName())&&approve.getAmount()!=null){
                 detail_data.append("^").append(approve.getAccountNumber()).append("^").append(approve.getAccountName()).append("^").append(approve.getAmount());
             }
@@ -178,7 +179,7 @@ public class PaymentService implements IPaymentService {
         params.put("batch_fee",totalAmount.toString());
         params.put("pay_date",DateUtils.formatYYYY());
         String batch_no=DateUtils.formatYYYYMMddHHmmssSSS();
-        params.put("batch_no",batch_no);
+        params.put("batch_no",AlipayConfig.payCode_prefix+batch_no);
         String detail=detail_data.substring(0,approveList.size()-1);
         params.put("detail_data",detail);
         String result=payStrategyContext.getBatchPayParams(params, PayType.ALIPAY_WEB.getValue());

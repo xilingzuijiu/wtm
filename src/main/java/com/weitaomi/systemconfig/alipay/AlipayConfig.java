@@ -13,6 +13,8 @@ package com.weitaomi.systemconfig.alipay;
 
 public class AlipayConfig {
 
+	public static String payCode_prefix="wtm";
+
 	// 合作身份者ID，签约账号，以2088开头由16位纯数字组成的字符串，查看地址：https://b.alipay.com/order/pidAndKey.htm
 	public static String partner = "2088321045613085";
 	//账户名
