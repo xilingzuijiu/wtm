@@ -63,7 +63,7 @@ public class MemberService implements IMemberService {
         if (memberExist!=null){
             throw new BusinessException("手机号已经被注册");
         }
-        String salt= StringUtil.numRandom(6);
+        String salt= StringUtil.random(6);
         String password=member.getPassword();
         Member memberTemp=new Member();
         memberTemp.setTelephone(member.getTelephone());
@@ -90,12 +90,12 @@ public class MemberService implements IMemberService {
         if (member.getEmail()!=null&&member.getEmail().matches("[_a-z\\d\\-\\./]+@[_a-z\\d\\-]+(\\.[_a-z\\d\\-]+)*(\\.(info|biz|com|edu|gov|net|am|bz|cn|cx|hk|jp|tw|vc|vn))$")){
             memberTemp.setEmail(member.getEmail());
         }
-        if (this.validateIndetifyCode(memberTemp.getTelephone(),registerMsg.getIdentifyCode())){
+        if (!this.validateIndetifyCode(memberTemp.getTelephone(),registerMsg.getIdentifyCode())){
             throw new BusinessException("验证码错误，请重试");
         }
-            memberTemp.setSource(registerMsg.getSource());
-            memberTemp.setCreateTime(DateUtils.getUnixTimestamp());
-            Long newMemberId=null;
+        memberTemp.setSource(member.getSource());
+        memberTemp.setCreateTime(DateUtils.getUnixTimestamp());
+        Long newMemberId=null;
         if (registerMsg.getFlag()!=null&&registerMsg.getFlag()==0){
             memberMapper.insertSelective(memberTemp);
             newMemberId=memberTemp.getId();
@@ -116,8 +116,8 @@ public class MemberService implements IMemberService {
             thirdLogin.setCreateTime(DateUtils.getUnixTimestamp());
             thirdLoginMapper.insertSelective(thirdLogin);
         }
-        if (registerMsg.getCode()!=null&&!registerMsg.getCode().isEmpty()){
-            Member memberInvited=memberMapper.getMemberByInviteCode(registerMsg.getCode());
+        if (registerMsg.getInvitedCode()!=null&&!registerMsg.getInvitedCode().isEmpty()){
+            Member memberInvited=memberMapper.getMemberByInviteCode(registerMsg.getInvitedCode());
             if (memberInvited!=null) {
                 MemberInvitedRecord memberInvitedRecordTemp=memberInvitedRecordMapper.getMemberInvitedRecordByMemberId(newMemberId);
                 if (memberInvitedRecordTemp==null) {
@@ -162,12 +162,12 @@ public class MemberService implements IMemberService {
             Member member=null;
             if (mobileOrName.matches("^[1][34578]\\d{9}$")) {
                 logger.info("手机登陆用户");
-                 member=memberMapper.getMemberByTelephone(mobileOrName);
+                member=memberMapper.getMemberByTelephone(mobileOrName);
                 if (member==null){
                     throw new BusinessException("手机号未注册，请注册");
                 }
             }else {
-                 member=memberMapper.getMemberByMemberName(mobileOrName);
+                member=memberMapper.getMemberByMemberName(mobileOrName);
                 if (member==null){
                     throw new BusinessException("用户不存在，请注册");
                 }
@@ -264,11 +264,7 @@ public class MemberService implements IMemberService {
         }
         String identifyCode=StringUtil.numRandom(6);
         String content= null;
-        try {
-            content = MessageFormat.format(new String(PropertiesUtil.getValue("verifycode.msg").getBytes("iso-8859-1"),"utf-8"),identifyCode);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        content = MessageFormat.format(new String(PropertiesUtil.getValue("verifycode.msg")),identifyCode);
         SendMCUtils.sendMessage(mobile,content);
         String key="member:indentifyCode:"+mobile;
         this.setIndentifyCodeToCache(key,identifyCode,120L);

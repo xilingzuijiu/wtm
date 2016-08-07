@@ -1,6 +1,7 @@
 package com.weitaomi.application.controller;
 
 import com.weitaomi.application.controller.baseController.BaseController;
+import com.weitaomi.application.model.bean.Member;
 import com.weitaomi.application.model.bean.ThirdLogin;
 import com.weitaomi.application.model.dto.RegisterMsg;
 import com.weitaomi.application.service.interf.IMemberService;
@@ -34,9 +35,17 @@ public class MemberController  extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public AjaxResult registerAction(@RequestBody RegisterMsg registerMsg)
+    public AjaxResult registerAction(@RequestBody RegisterMsg registerMsg,HttpServletRequest request)
             throws BusinessException, DBException, ParseException {
-        return AjaxResult.getOK(memberService.register(registerMsg));
+        String source=this.getRequestFrom(request).getName();
+        if (registerMsg!=null){
+            Member member=registerMsg.getMember();
+            if (member!=null){
+                member.setSource(source);
+                return AjaxResult.getOK(memberService.register(registerMsg));
+            }
+        }
+        return AjaxResult.getError();
     }
     /**
      * 向手机发送验证码

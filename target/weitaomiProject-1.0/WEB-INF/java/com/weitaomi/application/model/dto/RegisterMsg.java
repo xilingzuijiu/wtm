@@ -19,15 +19,11 @@ public class RegisterMsg {
      * 验证码
      */
     private String identifyCode;
-    /**
-     * 来源
-     */
-    private String source;
 
     /**
      * 邀请者的code
      */
-    private String code;
+    private String invitedCode;
     /**
      * 注册标识，0：本地注册，1：第三方注册
      */
@@ -66,22 +62,6 @@ public class RegisterMsg {
     }
 
     /**
-     * 获取来源
-     * @return source 来源
-     */
-    public String getSource() {
-        return this.source;
-    }
-
-    /**
-     * 设置来源
-     * @param source 来源
-     */
-    public void setSource(String source) {
-        this.source = source;
-    }
-
-    /**
      * 获取第三方登陆信息
      * @return thirdLogin 第三方登陆信息
      */
@@ -117,15 +97,15 @@ public class RegisterMsg {
      * 获取邀请者的code
      * @return code 邀请者的code
      */
-    public String getCode() {
-        return this.code;
+    public String getInvitedCode() {
+        return this.invitedCode;
     }
 
     /**
      * 设置邀请者的code
-     * @param code 邀请者的code
+     * @param invitedCode 邀请者的code
      */
-    public void setCode(String code) {
-        this.code = code;
+    public void setInvitedCode(String invitedCode) {
+        this.invitedCode = invitedCode;
     }
 }

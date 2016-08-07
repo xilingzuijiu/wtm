@@ -84,7 +84,7 @@
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/target/weitaomiProject-1.0/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="D:\program\wtm\target/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="weitaomi/web/Web" />
     </root>

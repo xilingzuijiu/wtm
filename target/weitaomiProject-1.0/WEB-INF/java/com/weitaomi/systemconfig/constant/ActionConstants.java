@@ -9,5 +9,6 @@ public class ActionConstants {
      * 默认值KEY - 执行成功时ReturnContext的ReturnMsg
      */
     public static final String DEFAULT_SUCCESS_RETURNMSG = "执行成功!";
+    public static  final  String PARAM_AUTHENTICATION="authentication";
 
 }
