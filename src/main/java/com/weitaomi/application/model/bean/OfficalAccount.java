@@ -4,14 +4,14 @@ import com.weitaomi.application.model.BaseModel;
 
 import javax.persistence.*;
 
-@Table(name = "wtm_user")
-public class User extends BaseModel{
+@Table(name = "wtm_official_accounts")
+public class OfficalAccount extends BaseModel{
 
     /**
      * 商家类型
      */
-    @Column(name = "typeCode")
-    private Integer typeCode;
+    @Column(name = "sellerTypeId")
+    private Integer sellerTypeId;
 
     /**
      * 是否开通 0：未开通，1：开通
@@ -24,9 +24,19 @@ public class User extends BaseModel{
      */
     @Column(name = "openId")
     private String openId;
+    /**
+     * 用户ID
+     */
+    @Column(name = "memberId")
+    private String memberId;
+    /**
+     * 公号原始ID
+     */
+    @Column(name = "originId")
+    private String originId;
 
     /**
-     * 商家名称
+     * 公号名称
      */
     @Column(name = "userName")
     private String userName;
@@ -42,6 +52,17 @@ public class User extends BaseModel{
      */
     @Column(name = "remark")
     private String remark;
+    /**
+     * 关注地址
+     */
+    @Column(name = "addUrl")
+    private String addUrl;
+    /**
+     * 头像地址
+     */
+    @Column(name = "imageUrl")
+    private String imageUrl;
+
 
     /**
      * 创建日期
@@ -65,24 +86,6 @@ public class User extends BaseModel{
      */
     public void setId(Long id) {
         this.id = id;
-    }
-
-    /**
-     * 获取商家类型
-     *
-     * @return typeCode - 商家类型
-     */
-    public Integer getTypeCode() {
-        return typeCode;
-    }
-
-    /**
-     * 设置商家类型
-     *
-     * @param typeCode 商家类型
-     */
-    public void setTypeCode(Integer typeCode) {
-        this.typeCode = typeCode;
     }
 
     /**
@@ -191,5 +194,85 @@ public class User extends BaseModel{
      */
     public void setCreateTime(Long createTime) {
         this.createTime = createTime;
+    }
+
+    /**
+     * 获取商家类型
+     * @return sellerTypeId 商家类型
+     */
+    public Integer getSellerTypeId() {
+        return this.sellerTypeId;
+    }
+
+    /**
+     * 设置商家类型
+     * @param sellerTypeId 商家类型
+     */
+    public void setSellerTypeId(Integer sellerTypeId) {
+        this.sellerTypeId = sellerTypeId;
+    }
+
+    /**
+     * 获取用户ID
+     * @return memberId 用户ID
+     */
+    public String getMemberId() {
+        return this.memberId;
+    }
+
+    /**
+     * 设置用户ID
+     * @param memberId 用户ID
+     */
+    public void setMemberId(String memberId) {
+        this.memberId = memberId;
+    }
+
+    /**
+     * 获取公号原始ID
+     * @return originId 公号原始ID
+     */
+    public String getOriginId() {
+        return this.originId;
+    }
+
+    /**
+     * 设置公号原始ID
+     * @param originId 公号原始ID
+     */
+    public void setOriginId(String originId) {
+        this.originId = originId;
+    }
+
+    /**
+     * 获取关注地址
+     * @return addUrl 关注地址
+     */
+    public String getAddUrl() {
+        return this.addUrl;
+    }
+
+    /**
+     * 设置关注地址
+     * @param addUrl 关注地址
+     */
+    public void setAddUrl(String addUrl) {
+        this.addUrl = addUrl;
+    }
+
+    /**
+     * 获取头像地址
+     * @return imageUrl 头像地址
+     */
+    public String getImageUrl() {
+        return this.imageUrl;
+    }
+
+    /**
+     * 设置头像地址
+     * @param imageUrl 头像地址
+     */
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

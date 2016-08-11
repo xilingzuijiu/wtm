@@ -12,6 +12,11 @@ public class ThirdLogin extends BaseModel{
      */
     @Column(name = "openId")
     private String openId;
+    /**
+     * 开放平台ID
+     */
+    @Column(name = "unionId")
+    private String unionId;
 
     /**
      * 会员ID
@@ -167,5 +172,21 @@ public class ThirdLogin extends BaseModel{
      */
     public void setCreateTime(Long createTime) {
         this.createTime = createTime;
+    }
+
+    /**
+     * 获取开放平台ID
+     * @return unionId 开放平台ID
+     */
+    public String getUnionId() {
+        return this.unionId;
+    }
+
+    /**
+     * 设置开放平台ID
+     * @param unionId 开放平台ID
+     */
+    public void setUnionId(String unionId) {
+        this.unionId = unionId;
     }
 }

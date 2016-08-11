@@ -77,7 +77,19 @@
             <!--<property name="useActualColumnNames" value="true"/>-->
             <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
         <!--</table> -->
-        <table tableName="wtm_payment_approve"  domainObjectName="PaymentApprove">
+        <!--<table tableName="wtm_payment_approve"  domainObjectName="PaymentApprove">-->
+            <!--<property name="useActualColumnNames" value="true"/>-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="wtm_office_user"  domainObjectName="OfficeUser">-->
+            <!--<property name="useActualColumnNames" value="true"/>-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="wtm_office_member"  domainObjectName="OfficeMember">-->
+            <!--<property name="useActualColumnNames" value="true"/>-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table> -->
+        <table tableName="wtm_weitaomi_official_member"  domainObjectName="WtmOfficialMember">
             <property name="useActualColumnNames" value="true"/>
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>

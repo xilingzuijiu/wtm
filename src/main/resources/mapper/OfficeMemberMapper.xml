@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.weitaomi.application.model.mapper.OfficeMemberMapper" >
+  <resultMap id="BaseResultMap" type="com.weitaomi.application.model.bean.OfficeMember" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="officeAccountId" property="officeAccountId" jdbcType="BIGINT" />
+    <result column="memberId" property="memberId" jdbcType="BIGINT" />
+    <result column="isAccessNow" property="isAccessNow" jdbcType="INTEGER" />
+    <result column="createTime" property="createTime" jdbcType="BIGINT" />
+  </resultMap>
+</mapper>

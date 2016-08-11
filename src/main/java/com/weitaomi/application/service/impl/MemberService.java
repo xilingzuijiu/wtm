@@ -25,7 +25,6 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.UnsupportedEncodingException;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -139,6 +138,9 @@ public class MemberService implements IMemberService {
             throw new BusinessException("第三方注册信息为空");
         }
         if (thirdLogin.getOpenId()==null||thirdLogin.getOpenId().isEmpty()){
+            throw new BusinessException("第三方OpenId为空");
+        }
+        if (thirdLogin.getUnionId()==null||thirdLogin.getOpenId().isEmpty()){
             throw new BusinessException("第三方OpenId为空");
         }
         if (thirdLogin.getMemberId()==null){

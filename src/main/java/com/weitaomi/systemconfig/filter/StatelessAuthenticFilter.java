@@ -33,13 +33,14 @@ public class StatelessAuthenticFilter extends AccessControlFilter {
     protected boolean onAccessDenied(ServletRequest servletRequest, ServletResponse servletResponse) throws Exception {
         HttpServletRequest httpServletRequest=(HttpServletRequest) servletRequest;
         //authentication = username:randomkey:digest      digest=time+username+randomkey+url;
-        String authentication=httpServletRequest.getParameter(ActionConstants.PARAM_AUTHENTICATION);
+        String authentication=httpServletRequest.getHeader(ActionConstants.PARAM_AUTHENTICATION);
         String uri=httpServletRequest.getRequestURI();
-        String time=httpServletRequest.getParameter("time");
+        logger.info("请求路径为 :"+uri);
+        String time=httpServletRequest.getHeader("time");
         if (StringUtil.isEmpty(authentication)||StringUtil.isEmpty(uri)||StringUtil.isEmpty(time)){
             throw new BusinessException("非法请求参数");
         }
-        if (!this.isAccessTime(time)){
+        if (this.isAccessTime(time)){
             logger.warn("time:{}",time);
             throw new BusinessException("非法的请求时间");
         }
@@ -48,7 +49,7 @@ public class StatelessAuthenticFilter extends AccessControlFilter {
         String randomkey=map.get("randomkey");
         String digest=map.get("digest");
         map.remove("digest");
-        if (!this.isAccessRandomkey(randomkey)){
+        if (this.isAccessRandomkey(randomkey)){
             throw new BusinessException("该缓存随机数不可用");
         }
         //生成无状态的token

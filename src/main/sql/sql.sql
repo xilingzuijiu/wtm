@@ -210,3 +210,43 @@ CREATE TABLE wtm_payment_history(
   KEY idx_payment_history_memberId(memberId),
   KEY idx_payment_history_createTime(createTime)
 )ENGINE=InnoDB  DEFAULT CHARSET=UTF8 comment '支付流水历史表';
+
+SHOW DATABASES ;
+
+CREATE TABLE wtm_office_user(
+  `id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `officeAccountId` BIGINT NOT NULL COMMENT '公众号ID',
+  `unionId` VARCHAR(50) DEFAULT '' COMMENT '用户唯一识别标识',
+  `openId` VARCHAR(50) DEFAULT '' COMMENT '公号分配给用户的ID',
+  `nickname` VARCHAR(50) DEFAULT '' COMMENT '昵称',
+  `createTime` BIGINT(20) COMMENT '创建日期',
+  PRIMARY KEY (id),
+  KEY idx_office_user_openId(openId),
+  KEY idx_office_user_createTime(createTime)
+)ENGINE=InnoDB  DEFAULT CHARSET=UTF8 comment '公号关注表';
+
+
+CREATE TABLE wtm_office_member(
+  `id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `officeAccountId` BIGINT NOT NULL COMMENT '公众号ID',
+  `memberId` BIGINT NOT NULL COMMENT '会员ID',
+  `isAccessNow` INT(11) NOT NULL DEFAULT '0' COMMENT '当前是否还在关注  0 ：未关注， 1 ：关注',
+  `createTime` BIGINT(20) COMMENT '创建日期',
+  PRIMARY KEY (id),
+  KEY idx_office_member_memberId(memberId),
+  KEY idx_office_user_createTime(createTime)
+)ENGINE=InnoDB  DEFAULT CHARSET=UTF8 comment '本地会员关注表';
+
+
+CREATE TABLE wtm_weitaomi_official_member(
+  `id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `memberId` BIGINT NOT NULL COMMENT '会员ID',
+  `unionId` VARCHAR(50) NOT NULL DEFAULT '' COMMENT '用户唯一识别标识',
+  `openId` VARCHAR(50) NOT NULL DEFAULT '' COMMENT '公号分配给用户的ID',
+  `nickname` VARCHAR(50) NOT NULL  DEFAULT '' COMMENT '昵称',
+  `followTime` BIGINT(20) NOT NULL  COMMENT '关注时间',
+  `createTime` BIGINT(20) COMMENT '创建日期',
+  PRIMARY KEY (id),
+  KEY idx_weitaomi_official_member(unionId),
+  KEY idx_weitaomi_official_createTime(createTime)
+)ENGINE=InnoDB  DEFAULT CHARSET=UTF8 comment '微淘米公众号关注';

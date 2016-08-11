@@ -7,6 +7,7 @@
     -->
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="openId" jdbcType="VARCHAR" property="openId" />
+    <result column="unionId" jdbcType="VARCHAR" property="unionId" />
     <result column="memberId" jdbcType="BIGINT" property="memberId" />
     <result column="type" jdbcType="INTEGER" property="type" />
     <result column="nickname" jdbcType="VARCHAR" property="nickname" />

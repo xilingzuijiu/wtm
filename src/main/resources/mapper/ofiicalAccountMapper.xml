@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weitaomi.application.model.mapper.OfficalAccountMapper">
+  <resultMap id="BaseResultMap" type="com.weitaomi.application.model.bean.OfficalAccount">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="memberId" jdbcType="BIGINT" property="memberId" />
+    <result column="sellerTypeId" jdbcType="INTEGER" property="sellerTypeId" />
+    <result column="isOpen" jdbcType="INTEGER" property="isOpen" />
+    <result column="openId" jdbcType="VARCHAR" property="openId" />
+    <result column="originId" jdbcType="VARCHAR" property="originId" />
+    <result column="userName" jdbcType="VARCHAR" property="userName" />
+    <result column="accountNumber" jdbcType="INTEGER" property="accountNumber" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="addUrl" jdbcType="VARCHAR" property="addUrl" />
+    <result column="imageUrl" jdbcType="VARCHAR" property="imageUrl" />
+    <result column="createTime" jdbcType="BIGINT" property="createTime" />
+  </resultMap>
+  <select id="getAccountsByMemberId"
+          resultType="com.weitaomi.application.model.dto.UnFollowOfficicalAccountDto">
+    select fa.originId originId,fa.imageUrl imageUrl,fa.addUrl addUrl,fa.userName ofiicialAccountName from wtm_official_accounts fa WHERE fa.id NOT IN (
+      select m.officeAccountId from wtm_office_member m WHERE m.memberId=#{memberId}
+    )
+  </select>
+  <select id="getOfficalAccountByoriginId" resultType="com.weitaomi.application.model.bean.OfficalAccount">
+    select * from wtm_official_accounts a WHERE a.originId=#{originId}
+  </select>
+</mapper>
