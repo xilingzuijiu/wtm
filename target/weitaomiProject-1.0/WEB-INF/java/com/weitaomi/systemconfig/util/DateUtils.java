@@ -278,6 +278,16 @@ public class DateUtils extends PropertyEditorSupport {
         return dt.getMillis() / 1000;
     }
 
+    /**
+     * 获取今天零点的时间戳
+     *
+     * @return the long
+     */
+    public static long getTodayEndSeconds() {
+        DateTime dt = DateTime.now().withTimeAtStartOfDay();
+        Long today=dt.getMillis() / 1000;
+        return today+24*60*60;
+    }
     public static long getDate(Integer num, String startOrEnd, String scope) {
         DateTime dt = DateTime.now();
         if (scope != null) {

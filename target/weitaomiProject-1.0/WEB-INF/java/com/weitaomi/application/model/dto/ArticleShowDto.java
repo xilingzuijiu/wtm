@@ -1,7 +1,7 @@
 package com.weitaomi.application.model.dto;
 
 import com.weitaomi.application.model.bean.Article;
-import com.weitaomi.application.model.bean.User;
+import com.weitaomi.application.model.bean.OfficalAccount;
 
 /**
  * Created by supumall on 2016/7/7.
@@ -14,7 +14,7 @@ public class ArticleShowDto {
     /**
      * 用户信息
      */
-    private User user;
+    private OfficalAccount user;
     /**
      * 是否已经阅读过 0:未阅读，1：已阅读
      */
@@ -35,24 +35,6 @@ public class ArticleShowDto {
     public void setArticle(Article article) {
         this.article = article;
     }
-
-    /**
-     * 获取用户信息
-     * @return user 用户信息
-     */
-    public User getUser() {
-        return this.user;
-    }
-
-    /**
-     * 设置用户信息
-     * @param user 用户信息
-     */
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-
     /**
      * 获取是否已经阅读过
      * @return isReadBefore 是否已经阅读过
@@ -67,5 +49,21 @@ public class ArticleShowDto {
      */
     public void setIsReadBefore(Integer isReadBefore) {
         this.isReadBefore = isReadBefore;
+    }
+
+    /**
+     * 获取用户信息
+     * @return user 用户信息
+     */
+    public OfficalAccount getUser() {
+        return this.user;
+    }
+
+    /**
+     * 设置用户信息
+     * @param user 用户信息
+     */
+    public void setUser(OfficalAccount user) {
+        this.user = user;
     }
 }

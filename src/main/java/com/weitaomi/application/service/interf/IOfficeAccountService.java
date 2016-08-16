@@ -2,6 +2,7 @@ package com.weitaomi.application.service.interf;
 
 import com.weitaomi.application.model.dto.AddOfficalAccountDto;
 import com.weitaomi.application.model.dto.AddResponseTaskDto;
+import com.weitaomi.application.model.dto.OfficialAccountMsg;
 import com.weitaomi.application.model.dto.UnFollowOfficicalAccountDto;
 
 import java.util.List;
@@ -27,5 +28,12 @@ public interface IOfficeAccountService {
      * {"originId":""," nickname ":"昵称，如果unionId一致则换成unionId","time":"关注时间"}
      */
     public void receiveAddOffical(AddResponseTaskDto addResponseTaskDto);
+
+    /**
+     * 获取公众号关注列表
+     * @param memberId
+     * @return
+     */
+    public List<OfficialAccountMsg> getOfficialAccountMsg(Long memberId);
 
 }

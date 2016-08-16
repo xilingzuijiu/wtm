@@ -46,5 +46,4 @@ public interface IArticleService {
      * @return
      */
     public Boolean readArticle(Long memberId,Long articleId,Integer typeId,Long sessionmdID);
-
 }

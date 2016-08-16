@@ -16,12 +16,11 @@ public class AddOfficialAccountListener implements ChannelAwareMessageListener {
     private IOfficeAccountService officeAccountService;
     @Autowired
     private Gson2JsonMessageConverter messageConverter;
-
     @Override
     public void onMessage(Message message, Channel channel) throws Exception {
         channel.basicQos(100);
-        channel.basicAck(message.getMessageProperties().getDeliveryTag(),false);
         String jsonParams=(String)messageConverter.fromMessage(message);
+        channel.basicAck(message.getMessageProperties().getDeliveryTag(),false);
         AddResponseTaskDto addResponseTaskDto= JSONObject.parseObject(jsonParams,AddResponseTaskDto.class);
         if (addResponseTaskDto!=null){
             officeAccountService.receiveAddOffical(addResponseTaskDto);

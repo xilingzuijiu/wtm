@@ -1,20 +1,20 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.weitaomi.application.model.mapper.ThirdLoginMapper">
-  <resultMap id="BaseResultMap" type="com.weitaomi.application.model.bean.ThirdLogin">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.weitaomi.application.model.mapper.ThirdLoginMapper" >
+  <resultMap id="BaseResultMap" type="com.weitaomi.application.model.bean.ThirdLogin" >
     <!--
       WARNING - @mbggenerated
     -->
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="openId" jdbcType="VARCHAR" property="openId" />
-    <result column="unionId" jdbcType="VARCHAR" property="unionId" />
-    <result column="memberId" jdbcType="BIGINT" property="memberId" />
-    <result column="type" jdbcType="INTEGER" property="type" />
-    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
-    <result column="remark" jdbcType="VARCHAR" property="remark" />
-    <result column="createTime" jdbcType="BIGINT" property="createTime" />
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="openId" property="openId" jdbcType="VARCHAR" />
+    <result column="unionId" property="unionId" jdbcType="VARCHAR" />
+    <result column="memberId" property="memberId" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="createTime" property="createTime" jdbcType="BIGINT" />
   </resultMap>
   <select id="getThirdLoginInfo" resultType="com.weitaomi.application.model.bean.ThirdLogin">
-    select * from wtm_third_login login WHERE login.openId=#{openId};
+    select * from wtm_third_login login where login.openId=#{openId}
   </select>
 </mapper>

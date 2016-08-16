@@ -14,8 +14,8 @@
     <bean id="messageConverter" class="com.weitaomi.systemconfig.listener.Gson2JsonMessageConverter"/>
     <rabbit:connection-factory id="connectionFactory" host="${rabbit.host}" port="${rabbit.port}" username="${rabbit.username}" password="${rabbit.password}" />
     <rabbit:template id="rabbitTemplate" connection-factory="connectionFactory" exchange="add_topic_exchage" message-converter="messageConverter"/>
-    <rabbit:admin connection-factory="connectionFactory"/>
-    <rabbit:queue name="addOfficialAccountQueue" durable="true" />
+    <rabbit:admin connection-factory="connectionFactory" auto-startup="true"/>
+    <rabbit:queue name="addOfficialAccountQueue" durable="true" auto-delete="false" exclusive="false" />
     <rabbit:topic-exchange name="add_official_account_queue">
         <rabbit:bindings>
             <rabbit:binding pattern="addOfficialAccount.#" queue="addOfficialAccountQueue" />

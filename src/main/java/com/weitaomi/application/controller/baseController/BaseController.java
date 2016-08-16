@@ -27,14 +27,14 @@ public abstract class BaseController {
      */
     protected Long getUserId(HttpServletRequest request) {
 
-        String sId = request.getHeader("userId");
+        String sId = request.getHeader("memberId");
 
         if (!StringUtils.isEmpty(sId)) {
             try {
                 Long userId = Long.parseLong(sId);
                 return userId;
             } catch (NumberFormatException e) {
-                logger.warn("请求头userId参数格式错误:{}", sId);
+                logger.warn("请求头memberId参数格式错误:{}", sId);
             }
 
         }

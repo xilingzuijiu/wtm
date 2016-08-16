@@ -25,6 +25,11 @@ public class OfficalAccount extends BaseModel{
     @Column(name = "openId")
     private String openId;
     /**
+     * 公众号等级
+     */
+    @Column(name = "level")
+    private String level;
+    /**
      * 用户ID
      */
     @Column(name = "memberId")
@@ -34,12 +39,26 @@ public class OfficalAccount extends BaseModel{
      */
     @Column(name = "originId")
     private String originId;
-
+    /**
+     * 公号appId
+     */
+    @Column(name = "appId")
+    private String appId;
+    /**
+     * 公号appId
+     */
+    @Column(name = "appSecret")
+    private String appSecret;
     /**
      * 公号名称
      */
     @Column(name = "userName")
     private String userName;
+    /**
+     * 公号token
+     */
+    @Column(name = "accessToken")
+    private String accessToken;
 
     /**
      * 粉丝数量
@@ -62,13 +81,17 @@ public class OfficalAccount extends BaseModel{
      */
     @Column(name = "imageUrl")
     private String imageUrl;
-
-
+    /**
+     * 创建日期
+     */
+    @Column(name = "tokenUpdateTime")
+    private Long tokenUpdateTime;
     /**
      * 创建日期
      */
     @Column(name = "createTime")
     private Long createTime;
+
 
     /**
      * 获取主键
@@ -274,5 +297,86 @@ public class OfficalAccount extends BaseModel{
      */
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+
+    /**
+     * 获取公号appId
+     * @return appId 公号appId
+     */
+    public String getAppId() {
+        return this.appId;
+    }
+
+    /**
+     * 设置公号appId
+     * @param appId 公号appId
+     */
+    public void setAppId(String appId) {
+        this.appId = appId;
+    }
+
+    /**
+     * 获取公号appId
+     * @return appSecret 公号appId
+     */
+    public String getAppSecret() {
+        return this.appSecret;
+    }
+
+    /**
+     * 设置公号appId
+     * @param appSecret 公号appId
+     */
+    public void setAppSecret(String appSecret) {
+        this.appSecret = appSecret;
+    }
+
+    /**
+     * 获取公号token
+     * @return accessToken 公号token
+     */
+    public String getAccessToken() {
+        return this.accessToken;
+    }
+
+    /**
+     * 设置公号token
+     * @param accessToken 公号token
+     */
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
+    /**
+     * 获取创建日期
+     * @return tokenUpdateTime 创建日期
+     */
+    public Long getTokenUpdateTime() {
+        return this.tokenUpdateTime;
+    }
+
+    /**
+     * 设置创建日期
+     * @param tokenUpdateTime 创建日期
+     */
+    public void setTokenUpdateTime(Long tokenUpdateTime) {
+        this.tokenUpdateTime = tokenUpdateTime;
+    }
+
+    /**
+     * 获取公众号等级
+     * @return level 公众号等级
+     */
+    public String getLevel() {
+        return this.level;
+    }
+
+    /**
+     * 设置公众号等级
+     * @param level 公众号等级
+     */
+    public void setLevel(String level) {
+        this.level = level;
     }
 }

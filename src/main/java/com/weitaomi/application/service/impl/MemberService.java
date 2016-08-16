@@ -11,6 +11,7 @@ import com.weitaomi.application.model.mapper.ThirdLoginMapper;
 import com.weitaomi.application.service.interf.ICacheService;
 import com.weitaomi.application.service.interf.IMemberService;
 import com.weitaomi.systemconfig.exception.BusinessException;
+import com.weitaomi.systemconfig.exception.InfoException;
 import com.weitaomi.systemconfig.util.DateUtils;
 import com.weitaomi.systemconfig.util.PropertiesUtil;
 import com.weitaomi.systemconfig.util.SendMCUtils;
@@ -33,7 +34,7 @@ import java.util.concurrent.TimeUnit;
  * Created by Administrator on 2016/6/27.
  */
 @Service
-public class MemberService implements IMemberService {
+public class MemberService extends BaseService implements IMemberService {
     private Logger logger= LoggerFactory.getLogger(MemberService.class);
     @Autowired
     private RedisTemplate redisTemplate;
@@ -53,21 +54,21 @@ public class MemberService implements IMemberService {
         }
         Member member=registerMsg.getMember();
         if (member.getTelephone()==null||member.getTelephone().isEmpty()){
-            throw new BusinessException("手机号不能为空");
+            throw new InfoException("手机号不能为空");
         }
         if (!member.getTelephone().matches("^[1][34578]\\d{9}$")){
             throw new BusinessException("手机格式不正确");
         }
         Member memberExist=memberMapper.getMemberByTelephone(member.getTelephone());
         if (memberExist!=null){
-            throw new BusinessException("手机号已经被注册");
+            throw new InfoException("手机号已经被注册");
         }
         String salt= StringUtil.random(6);
         String password=member.getPassword();
         Member memberTemp=new Member();
         memberTemp.setTelephone(member.getTelephone());
         if (password.length()<6){
-            throw new BusinessException("密码长度不能小于六位");
+            throw new InfoException("密码长度不能小于六位");
         }
         if (salt!=null&&!salt.isEmpty()) {
             memberTemp.setSalt(salt);
@@ -151,7 +152,7 @@ public class MemberService implements IMemberService {
         }
         ThirdLogin thirdLoginFlag=thirdLoginMapper.getThirdLoginInfo(thirdLogin.getOpenId());
         if (thirdLoginFlag!=null){
-            throw new BusinessException("该用户已经绑定此账号");
+            throw new InfoException("您已经绑定此账号");
         }
         thirdLogin.setCreateTime(DateUtils.getUnixTimestamp());
         Integer num=thirdLoginMapper.insertSelective(thirdLogin);
@@ -166,24 +167,26 @@ public class MemberService implements IMemberService {
                 logger.info("手机登陆用户");
                 member=memberMapper.getMemberByTelephone(mobileOrName);
                 if (member==null){
-                    throw new BusinessException("手机号未注册，请注册");
+                    throw new InfoException("手机号未注册，请注册");
                 }
             }else {
                 member=memberMapper.getMemberByMemberName(mobileOrName);
                 if (member==null){
-                    throw new BusinessException("用户不存在，请注册");
+                    throw new InfoException("用户不存在，请注册");
                 }
                 logger.info("用户名登陆用户");
             }
             if (!member.getPassword().equals(new Sha256Hash(password,member.getSalt()).toString())){
-                throw new BusinessException("用户名或密码错误");
+                throw new InfoException("用户名或密码错误");
             }
+
             String key="member:login:"+member.getId();
             Integer times=60*60*24*30;
             cacheService.setCacheByKey(key,member,times);
+
             return member;
         }else{
-            throw new BusinessException("用户名/密码为空");
+            throw new InfoException("用户名/密码为空");
         }
     }
 
@@ -193,15 +196,18 @@ public class MemberService implements IMemberService {
             throw new BusinessException("第三方OpenId为空");
         }
         ThirdLogin thirdLogin=thirdLoginMapper.getThirdLoginInfo(openId);
+        if (thirdLogin==null){
+            throw new InfoException("该微信账号未绑定，请登录绑定或者重新注册");
+        }
         if (!thirdLogin.getType().equals(type)){
             throw new BusinessException("登录平台与OpenID不匹配");
         }
         if (thirdLogin.getMemberId()==null){
-            throw new BusinessException("该平台账号未绑定，请重新绑定");
+            throw new InfoException("该平台账号未绑定，请重新绑定");
         }
         Member member=memberMapper.selectByPrimaryKey(thirdLogin.getMemberId());
         if (member==null){
-            throw new BusinessException("获取账号失败，请重试");
+            throw new InfoException("微信号未绑定，请重新注册");
         }
         String key="member:login:"+member.getId();
         Integer times=60*60*24*30;
@@ -234,18 +240,17 @@ public class MemberService implements IMemberService {
         StringBuilder sb = new StringBuilder();
         String type = null;
         String value = valueOper.get(key);
-        if (value == null) {
-            throw new BusinessException("验证码错误");
-        } else {
+        if (value!= null) {
             return value;
         }
+        return "00000000";
     }
     @Override
     public Member getMemberDetailById(Long memberId) {
         String key="member:login:"+memberId;
         Member member= cacheService.getCacheByKey(key,Member.class);
         if(member==null){
-            throw new BusinessException("请先完成登陆");
+            throw new InfoException("请先完成登陆");
         }
         return memberMapper.selectByPrimaryKey(memberId);
     }
@@ -260,15 +265,29 @@ public class MemberService implements IMemberService {
     }
 
     @Override
+    @Transactional
+    public String uploadShowImage(Long memberId,String imageFiles,String imageType) {
+        String imageUrl="/member/showMessage/"+memberId+DateUtils.getUnixTimestamp()+"."+imageType;
+        if (super.uploadImage(imageUrl,imageType)) {
+            memberMapper.upLoadMemberShowImage(memberId, imageUrl);
+        }
+        return imageUrl;
+    }
+
+    @Override
     public String sendIndentifyCode(String mobile, Integer type) {
         if (!mobile.matches("^[1][34578]\\d{9}$")) {
             throw new BusinessException("手机号码格式不正确");
+        }
+        String key="member:indentifyCode:"+mobile;
+        String value= this.getIndentifyCodeFromCache(key);
+        if (value!=null&&!value.equals("00000000")){
+            throw new InfoException("验证码已发送，请120s后重试");
         }
         String identifyCode=StringUtil.numRandom(6);
         String content= null;
         content = MessageFormat.format(new String(PropertiesUtil.getValue("verifycode.msg")),identifyCode);
         SendMCUtils.sendMessage(mobile,content);
-        String key="member:indentifyCode:"+mobile;
         this.setIndentifyCodeToCache(key,identifyCode,120L);
         return identifyCode;
     }

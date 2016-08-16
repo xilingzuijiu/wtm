@@ -56,6 +56,14 @@ public class RestErrorHandler {
         logger.warn("业务错误:{}", exception.getMessage());
         return result;
     }
+    @ExceptionHandler(InfoException.class)
+    @ResponseBody
+    public AjaxResult handleBusinessException(InfoException exception){
+        AjaxResult result = AjaxResult.getError(ResultCode.InfoException);
+        result.setMessage(exception.getMessage());
+        logger.warn("提示级错误:{}", exception.getMessage());
+        return result;
+    }
 
     @ExceptionHandler(SystemException.class)
     @ResponseBody

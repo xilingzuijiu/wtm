@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.weitaomi.application.model.mapper.MemberTaskMapper" >
+  <resultMap id="BaseResultMap" type="com.weitaomi.application.model.bean.MemberTask" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="count" property="count" jdbcType="BIGINT" />
+    <result column="isDailyTask" property="isDailyTask" jdbcType="INTEGER" />
+    <result column="taskName" property="taskName" jdbcType="VARCHAR" />
+    <result column="taskDesc" property="taskDesc" jdbcType="VARCHAR" />
+    <result column="createTime" property="createTime" jdbcType="BIGINT" />
+  </resultMap>
+  <select id="getMemberTaskFinished" resultType="com.weitaomi.application.model.bean.MemberTask">
+    SELECT task.* FROM wtm_member_task task LEFT JOIN wtm_member_task_history history ON task.id=history.taskId
+      WHERE history.memberId=#{memberId} AND history.createTime >#{start} AND history.createTime $lt; #{end}
+  </select>
+  <select id="getAllMemberTask" resultType="com.weitaomi.application.model.bean.MemberTask">
+    select * from wtm_member_task
+  </select>
+</mapper>

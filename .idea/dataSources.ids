@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="dataSourceStorage">
-  <data-source name="MySQL - weitaomi@121.42.196.236" uuid="4b038171-6967-4d02-b45b-ad5aee638031">
+  <data-source name="MySQL - weitaomi@121.42.196.236" uuid="452cf64b-a62b-4628-a756-1c99424ecad9">
     <database-info product="MySQL" version="5.6.31-0ubuntu0.14.04.2" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
       <extra-name-characters>#@</extra-name-characters>
       <identifier-quote-string>`</identifier-quote-string>
     </database-info>
     <case-sensitivity plain-identifiers="exact" quoted-identifiers="exact"/>
-    <database-model serializer="dbm" rdbms="MYSQL" format-version="2.4">
+    <database-model serializer="dbm" rdbms="MYSQL" format-version="2.5">
       <schema id="1" name="weitaomi"/>
       <table id="2" parent="1" name="seckill">
         <comment>秒杀库存表</comment>
@@ -35,913 +35,1005 @@
       <table id="10" parent="1" name="wtm_member_score_flow_type">
         <comment>积分流动类型表</comment>
       </table>
-      <table id="11" parent="1" name="wtm_official_accounts">
-        <comment>商家开通记录表</comment>
+      <table id="11" parent="1" name="wtm_office_member">
+        <comment>本地会员关注表</comment>
       </table>
-      <table id="12" parent="1" name="wtm_payment_approve">
-        <comment>用户提现申请表</comment>
-      </table>
-      <table id="13" parent="1" name="wtm_payment_history">
-        <comment>支付流水历史表</comment>
-      </table>
-      <table id="14" parent="1" name="wtm_seller_type">
-        <comment>商家类型记录表</comment>
-      </table>
-      <table id="15" parent="1" name="wtm_third_login">
-        <comment>第三方平台登陆表</comment>
-      </table>
-      <table id="16" parent="1" name="wtm_office_user">
+      <table id="12" parent="1" name="wtm_office_user">
         <comment>公号关注表</comment>
       </table>
-      <table id="17" parent="1" name="wtm_office_member">
-        <comment>本地会员关注表</comment>
+      <table id="13" parent="1" name="wtm_official_accounts">
+        <comment>商家开通记录表</comment>
+      </table>
+      <table id="14" parent="1" name="wtm_payment_approve">
+        <comment>用户提现申请表</comment>
+      </table>
+      <table id="15" parent="1" name="wtm_payment_history">
+        <comment>支付流水历史表</comment>
+      </table>
+      <table id="16" parent="1" name="wtm_seller_type">
+        <comment>商家类型记录表</comment>
+      </table>
+      <table id="17" parent="1" name="wtm_third_login">
+        <comment>第三方平台登陆表</comment>
       </table>
       <table id="18" parent="1" name="wtm_weitaomi_official_member">
         <comment>微淘米公众号关注</comment>
       </table>
-      <column id="19" parent="2" name="seckill_id">
+      <table id="19" parent="1" name="wtm_member_daily_task">
+        <comment>每日任务列表</comment>
+      </table>
+      <table id="20" parent="1" name="wtm_member_history">
+        <comment>任务记录表</comment>
+      </table>
+      <column id="21" parent="2" name="seckill_id">
         <comment>id</comment>
         <mandatory>1</mandatory>
         <data-type>bigint(20)</data-type>
       </column>
-      <column id="20" parent="2" name="goodsName">
+      <column id="22" parent="2" name="goodsName">
         <comment>商品名称</comment>
         <mandatory>1</mandatory>
         <data-type>varchar(200)</data-type>
       </column>
-      <column id="21" parent="2" name="goodsNum">
+      <column id="23" parent="2" name="goodsNum">
         <comment>商品数量</comment>
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="22" parent="2" name="start_time">
+      <column id="24" parent="2" name="start_time">
         <comment>秒杀开始时间</comment>
         <mandatory>1</mandatory>
         <data-type>timestamp</data-type>
         <default-expression>&apos;CURRENT_TIMESTAMP&apos;</default-expression>
       </column>
-      <column id="23" parent="2" name="end_time">
+      <column id="25" parent="2" name="end_time">
         <comment>秒杀结束时间</comment>
         <mandatory>1</mandatory>
         <data-type>timestamp</data-type>
         <default-expression>&apos;0000-00-00 00:00:00&apos;</default-expression>
       </column>
-      <column id="24" parent="2" name="create_time">
+      <column id="26" parent="2" name="create_time">
         <comment>时间</comment>
         <mandatory>1</mandatory>
         <data-type>timestamp</data-type>
         <default-expression>&apos;0000-00-00 00:00:00&apos;</default-expression>
       </column>
-      <index id="25" parent="2" name="idx_create_time">
+      <index id="27" parent="2" name="idx_create_time">
         <columns>create_time</columns>
         <desc-columns></desc-columns>
       </index>
-      <index id="26" parent="2" name="idx_end_time">
+      <index id="28" parent="2" name="idx_end_time">
         <columns>end_time</columns>
         <desc-columns></desc-columns>
       </index>
-      <index id="27" parent="2" name="idx_start_time">
+      <index id="29" parent="2" name="idx_start_time">
         <columns>start_time</columns>
         <desc-columns></desc-columns>
       </index>
-      <key id="28" parent="2" name="PRIMARY">
+      <key id="30" parent="2" name="PRIMARY">
         <columns>seckill_id</columns>
         <primary>1</primary>
       </key>
-      <column id="29" parent="3" name="success_id">
+      <column id="31" parent="3" name="success_id">
         <comment>主键ID</comment>
         <mandatory>1</mandatory>
         <data-type>bigint(20)</data-type>
       </column>
-      <column id="30" parent="3" name="seckill_id">
+      <column id="32" parent="3" name="seckill_id">
         <comment>秒杀产品ID</comment>
         <mandatory>1</mandatory>
         <data-type>bigint(20)</data-type>
       </column>
-      <column id="31" parent="3" name="user_phone">
+      <column id="33" parent="3" name="user_phone">
         <comment>用户手机号</comment>
         <mandatory>1</mandatory>
         <data-type>bigint(20)</data-type>
       </column>
-      <column id="32" parent="3" name="state">
+      <column id="34" parent="3" name="state">
         <comment>秒杀状态 -1：秒杀无效，0：秒杀成功，1：已付款</comment>
         <mandatory>1</mandatory>
         <data-type>tinyint(4)</data-type>
         <default-expression>&apos;-1&apos;</default-expression>
       </column>
-      <column id="33" parent="3" name="create_time">
+      <column id="35" parent="3" name="create_time">
         <comment>秒杀时间</comment>
         <mandatory>1</mandatory>
         <data-type>timestamp</data-type>
         <default-expression>&apos;CURRENT_TIMESTAMP&apos;</default-expression>
       </column>
-      <index id="34" parent="3" name="idx_create_time">
+      <index id="36" parent="3" name="idx_create_time">
         <columns>create_time</columns>
         <desc-columns></desc-columns>
       </index>
-      <key id="35" parent="3" name="PRIMARY">
+      <key id="37" parent="3" name="PRIMARY">
         <columns>success_id</columns>
         <primary>1</primary>
       </key>
-      <column id="36" parent="4" name="id">
+      <column id="38" parent="4" name="id">
         <comment>主键</comment>
         <mandatory>1</mandatory>
         <data-type>bigint(20)</data-type>
       </column>
-      <column id="37" parent="4" name="userId">
+      <column id="39" parent="4" name="userId">
         <comment>商家ID</comment>
         <mandatory>1</mandatory>
         <data-type>bigint(20)</data-type>
       </column>
-      <column id="38" parent="4" name="url">
+      <column id="40" parent="4" name="url">
         <comment>文章地址</comment>
         <mandatory>1</mandatory>
         <data-type>varchar(500)</data-type>
       </column>
-      <column id="39" parent="4" name="title">
+      <column id="41" parent="4" name="title">
         <comment>文章标题</comment>
         <mandatory>1</mandatory>
         <data-type>varchar(500)</data-type>
       </column>
-      <column id="40" parent="4" name="articleAbstract">
+      <column id="42" parent="4" name="articleAbstract">
         <comment>文章摘要</comment>
         <mandatory>1</mandatory>
         <data-type>varchar(500)</data-type>
       </column>
-      <column id="41" parent="4" name="readNumber">
+      <column id="43" parent="4" name="readNumber">
         <comment>总阅读数</comment>
         <data-type>int(11)</data-type>
       </column>
-      <column id="42" parent="4" name="agreeNumber">
+      <column id="44" parent="4" name="agreeNumber">
         <comment>点赞数</comment>
         <data-type>int(11)</data-type>
       </column>
-      <column id="43" parent="4" name="agreeIncreaseNumber">
+      <column id="45" parent="4" name="agreeIncreaseNumber">
         <comment>通过该平台点赞增长数</comment>
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
         <default-expression>&apos;0&apos;</default-expression>
       </column>
-      <column id="44" parent="4" name="readIncreaseNumber">
+      <column id="46" parent="4" name="readIncreaseNumber">
         <comment>通过该平台阅读增长数</comment>
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
         <default-expression>&apos;0&apos;</default-expression>
       </column>
-      <column id="45" parent="4" name="validNumber">
+      <column id="47" parent="4" name="validNumber">
         <comment>有效阅读数</comment>
         <data-type>int(11)</data-type>
         <default-expression>&apos;0&apos;</default-expression>
       </column>
-      <column id="46" parent="4" name="isTop">
+      <column id="48" parent="4" name="isTop">
         <comment>是否置顶 0：不置顶，1：置顶</comment>
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
         <default-expression>&apos;0&apos;</default-expression>
       </column>
-      <column id="47" parent="4" name="createTime">
+      <column id="49" parent="4" name="createTime">
         <comment>创建日期</comment>
         <data-type>bigint(20)</data-type>
       </column>
-      <index id="48" parent="4" name="idx_createTime">
+      <index id="50" parent="4" name="idx_createTime">
         <columns>createTime</columns>
         <desc-columns></desc-columns>
       </index>
-      <index id="49" parent="4" name="idx_isTop">
+      <index id="51" parent="4" name="idx_isTop">
         <columns>isTop</columns>
         <desc-columns></desc-columns>
       </index>
-      <index id="50" parent="4" name="idx_title">
+      <index id="52" parent="4" name="idx_title">
         <columns>title</columns>
         <desc-columns></desc-columns>
       </index>
-      <index id="51" parent="4" name="idx_userId">
+      <index id="53" parent="4" name="idx_userId">
         <columns>userId</columns>
         <desc-columns></desc-columns>
       </index>
-      <key id="52" parent="4" name="PRIMARY">
+      <key id="54" parent="4" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <column id="53" parent="5" name="id">
+      <column id="55" parent="5" name="id">
         <comment>主键</comment>
         <mandatory>1</mandatory>
         <data-type>bigint(20)</data-type>
       </column>
-      <column id="54" parent="5" name="memberId">
+      <column id="56" parent="5" name="memberId">
         <comment>用户ID</comment>
         <mandatory>1</mandatory>
         <data-type>bigint(20)</data-type>
       </column>
-      <column id="55" parent="5" name="articleId">
+      <column id="57" parent="5" name="articleId">
         <comment>文章ID</comment>
         <mandatory>1</mandatory>
         <data-type>bigint(20)</data-type>
       </column>
-      <column id="56" parent="5" name="type">
+      <column id="58" parent="5" name="type">
         <comment>类型 0：阅读 1：点赞</comment>
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
         <default-expression>&apos;0&apos;</default-expression>
       </column>
-      <column id="57" parent="5" name="createTime">
+      <column id="59" parent="5" name="createTime">
         <comment>创建日期</comment>
         <mandatory>1</mandatory>
         <data-type>bigint(20)</data-type>
       </column>
-      <index id="58" parent="5" name="idx_article_read_record_articleId">
+      <index id="60" parent="5" name="idx_article_read_record_articleId">
         <columns>articleId</columns>
         <desc-columns></desc-columns>
       </index>
-      <index id="59" parent="5" name="idx_article_read_record_memberId">
+      <index id="61" parent="5" name="idx_article_read_record_memberId">
         <columns>memberId</columns>
         <desc-columns></desc-columns>
       </index>
-      <key id="60" parent="5" name="PRIMARY">
+      <key id="62" parent="5" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <column id="61" parent="6" name="id">
+      <column id="63" parent="6" name="id">
         <comment>主键</comment>
         <mandatory>1</mandatory>
         <data-type>bigint(20)</data-type>
       </column>
-      <column id="62" parent="6" name="memberName">
+      <column id="64" parent="6" name="memberName">
         <comment>会员名称</comment>
         <mandatory>1</mandatory>
         <data-type>varchar(120)</data-type>
       </column>
-      <column id="63" parent="6" name="nickName">
+      <column id="65" parent="6" name="nickName">
         <comment>会员昵称</comment>
-        <mandatory>1</mandatory>
         <data-type>varchar(120)</data-type>
       </column>
-      <column id="64" parent="6" name="sex">
+      <column id="66" parent="6" name="sex">
         <comment>性别 0：男，1：女，2，保密</comment>
-        <mandatory>1</mandatory>
         <data-type>int(1)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
       </column>
-      <column id="65" parent="6" name="telephone">
+      <column id="67" parent="6" name="telephone">
         <comment>电话</comment>
         <mandatory>1</mandatory>
         <data-type>varchar(20)</data-type>
       </column>
-      <column id="66" parent="6" name="salt">
+      <column id="68" parent="6" name="salt">
         <comment>加密盐</comment>
         <mandatory>1</mandatory>
         <data-type>varchar(50)</data-type>
       </column>
-      <column id="67" parent="6" name="password">
+      <column id="69" parent="6" name="password">
         <comment>密码</comment>
         <mandatory>1</mandatory>
         <data-type>varchar(200)</data-type>
       </column>
-      <column id="68" parent="6" name="birth">
+      <column id="70" parent="6" name="birth">
         <comment>会员生日</comment>
         <data-type>bigint(20)</data-type>
       </column>
-      <column id="69" parent="6" name="email">
+      <column id="71" parent="6" name="email">
         <comment>会员邮箱</comment>
         <data-type>varchar(50)</data-type>
       </column>
-      <column id="70" parent="6" name="invitedCode">
+      <column id="72" parent="6" name="invitedCode">
         <comment>邀请码</comment>
         <data-type>varchar(20)</data-type>
       </column>
-      <column id="71" parent="6" name="imageUrl">
+      <column id="73" parent="6" name="imageUrl">
         <comment>头像url</comment>
         <data-type>varchar(500)</data-type>
       </column>
-      <column id="72" parent="6" name="source">
+      <column id="74" parent="6" name="source">
         <comment>来源</comment>
         <data-type>varchar(20)</data-type>
       </column>
-      <column id="73" parent="6" name="createTime">
+      <column id="75" parent="6" name="createTime">
         <comment>创建日期</comment>
         <data-type>bigint(20)</data-type>
       </column>
-      <index id="74" parent="6" name="idx_memberName">
+      <index id="76" parent="6" name="idx_memberName">
         <columns>memberName</columns>
         <desc-columns></desc-columns>
       </index>
-      <index id="75" parent="6" name="idx_member_createTime">
+      <index id="77" parent="6" name="idx_member_createTime">
         <columns>createTime</columns>
         <desc-columns></desc-columns>
       </index>
-      <index id="76" parent="6" name="idx_member_email">
+      <index id="78" parent="6" name="idx_member_email">
         <columns>email</columns>
         <desc-columns></desc-columns>
       </index>
-      <index id="77" parent="6" name="idx_member_telephone">
+      <index id="79" parent="6" name="idx_member_telephone">
         <columns>telephone</columns>
         <desc-columns></desc-columns>
       </index>
-      <index id="78" parent="6" name="idx_nickName">
+      <index id="80" parent="6" name="idx_nickName">
         <columns>nickName</columns>
         <desc-columns></desc-columns>
       </index>
-      <key id="79" parent="6" name="PRIMARY">
+      <key id="81" parent="6" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <column id="80" parent="7" name="id">
+      <column id="82" parent="7" name="id">
         <comment>主键</comment>
         <mandatory>1</mandatory>
         <data-type>bigint(20)</data-type>
       </column>
-      <column id="81" parent="7" name="memberId">
+      <column id="83" parent="7" name="memberId">
         <comment>被邀请用户ID</comment>
         <mandatory>1</mandatory>
         <data-type>bigint(20)</data-type>
       </column>
-      <column id="82" parent="7" name="parentId">
+      <column id="84" parent="7" name="parentId">
         <comment>邀请用户</comment>
         <mandatory>1</mandatory>
         <data-type>bigint(20)</data-type>
       </column>
-      <column id="83" parent="7" name="isAccessible">
+      <column id="85" parent="7" name="isAccessible">
         <comment>是否有效</comment>
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="84" parent="7" name="createTime">
+      <column id="86" parent="7" name="createTime">
         <comment>创建日期</comment>
         <data-type>bigint(20)</data-type>
       </column>
-      <index id="85" parent="7" name="idx_member_invited_memberId">
+      <index id="87" parent="7" name="idx_member_invited_memberId">
         <columns>memberId</columns>
         <desc-columns></desc-columns>
       </index>
-      <index id="86" parent="7" name="idx_member_invited_parentId">
+      <index id="88" parent="7" name="idx_member_invited_parentId">
         <columns>parentId</columns>
         <desc-columns></desc-columns>
       </index>
-      <index id="87" parent="7" name="idx_member_invited_record_createTime">
+      <index id="89" parent="7" name="idx_member_invited_record_createTime">
         <columns>createTime</columns>
         <desc-columns></desc-columns>
       </index>
-      <key id="88" parent="7" name="PRIMARY">
+      <key id="90" parent="7" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <column id="89" parent="8" name="id">
+      <column id="91" parent="8" name="id">
         <comment>主键</comment>
         <mandatory>1</mandatory>
         <data-type>bigint(20)</data-type>
       </column>
-      <column id="90" parent="8" name="memberId">
+      <column id="92" parent="8" name="memberId">
         <comment>用户ID</comment>
         <mandatory>1</mandatory>
         <data-type>bigint(20)</data-type>
       </column>
-      <column id="91" parent="8" name="memberScore">
+      <column id="93" parent="8" name="memberScore">
         <comment>用户总积分</comment>
         <mandatory>1</mandatory>
         <data-type>decimal(11,2)</data-type>
         <default-expression>&apos;0.00&apos;</default-expression>
       </column>
-      <column id="92" parent="8" name="validScore">
+      <column id="94" parent="8" name="validScore">
         <comment>可用积分</comment>
         <mandatory>1</mandatory>
         <data-type>decimal(11,2)</data-type>
         <default-expression>&apos;0.00&apos;</default-expression>
       </column>
-      <column id="93" parent="8" name="rate">
+      <column id="95" parent="8" name="rate">
         <comment>倍率</comment>
         <mandatory>1</mandatory>
         <data-type>decimal(11,2)</data-type>
         <default-expression>&apos;1.00&apos;</default-expression>
       </column>
-      <column id="94" parent="8" name="updateTime">
+      <column id="96" parent="8" name="updateTime">
         <comment>更新日期</comment>
         <mandatory>1</mandatory>
         <data-type>bigint(20)</data-type>
       </column>
-      <column id="95" parent="8" name="createTime">
+      <column id="97" parent="8" name="createTime">
         <comment>创建日期</comment>
         <mandatory>1</mandatory>
         <data-type>bigint(20)</data-type>
       </column>
-      <index id="96" parent="8" name="idx_member_score_createTime">
+      <index id="98" parent="8" name="idx_member_score_createTime">
         <columns>createTime</columns>
         <desc-columns></desc-columns>
       </index>
-      <index id="97" parent="8" name="idx_member_score_memberId">
+      <index id="99" parent="8" name="idx_member_score_memberId">
         <columns>memberId</columns>
         <desc-columns></desc-columns>
       </index>
-      <key id="98" parent="8" name="PRIMARY">
+      <key id="100" parent="8" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <column id="99" parent="9" name="id">
+      <column id="101" parent="9" name="id">
         <comment>主键</comment>
         <mandatory>1</mandatory>
         <data-type>bigint(20)</data-type>
       </column>
-      <column id="100" parent="9" name="memberScoreId">
+      <column id="102" parent="9" name="memberScoreId">
         <comment>用户积分ID</comment>
         <mandatory>1</mandatory>
         <data-type>bigint(20)</data-type>
       </column>
-      <column id="101" parent="9" name="memberId">
+      <column id="103" parent="9" name="memberId">
         <comment>用户ID</comment>
         <mandatory>1</mandatory>
         <data-type>bigint(20)</data-type>
       </column>
-      <column id="102" parent="9" name="typeId">
+      <column id="104" parent="9" name="typeId">
         <comment>积分变动类型</comment>
         <mandatory>1</mandatory>
         <data-type>bigint(20)</data-type>
         <default-expression>&apos;0&apos;</default-expression>
       </column>
-      <column id="103" parent="9" name="memberScoreBefore">
+      <column id="105" parent="9" name="memberScoreBefore">
         <comment>用户流动前积分</comment>
         <mandatory>1</mandatory>
         <data-type>decimal(11,2)</data-type>
         <default-expression>&apos;0.00&apos;</default-expression>
       </column>
-      <column id="104" parent="9" name="memberScoreAfter">
+      <column id="106" parent="9" name="memberScoreAfter">
         <comment>用户流动后积分</comment>
         <mandatory>1</mandatory>
         <data-type>decimal(11,2)</data-type>
         <default-expression>&apos;0.00&apos;</default-expression>
       </column>
-      <column id="105" parent="9" name="flowScore">
+      <column id="107" parent="9" name="flowScore">
         <comment>流动积分</comment>
         <mandatory>1</mandatory>
         <data-type>decimal(11,2)</data-type>
         <default-expression>&apos;0.00&apos;</default-expression>
       </column>
-      <column id="106" parent="9" name="detail">
+      <column id="108" parent="9" name="detail">
         <comment>积分流动描述</comment>
         <mandatory>1</mandatory>
         <data-type>varchar(500)</data-type>
       </column>
-      <column id="107" parent="9" name="createTime">
+      <column id="109" parent="9" name="createTime">
         <comment>创建日期</comment>
         <data-type>bigint(20)</data-type>
       </column>
-      <index id="108" parent="9" name="idx_member_score_flow_createTime">
+      <index id="110" parent="9" name="idx_member_score_flow_createTime">
         <columns>createTime</columns>
         <desc-columns></desc-columns>
       </index>
-      <index id="109" parent="9" name="idx_member_score_flow_memberId">
+      <index id="111" parent="9" name="idx_member_score_flow_memberId">
         <columns>memberId</columns>
         <desc-columns></desc-columns>
       </index>
-      <index id="110" parent="9" name="idx_member_score_flow_memberScoreId">
+      <index id="112" parent="9" name="idx_member_score_flow_memberScoreId">
         <columns>memberScoreId</columns>
         <desc-columns></desc-columns>
       </index>
-      <index id="111" parent="9" name="idx_member_score_flow_typeId">
+      <index id="113" parent="9" name="idx_member_score_flow_typeId">
         <columns>typeId</columns>
         <desc-columns></desc-columns>
       </index>
-      <key id="112" parent="9" name="PRIMARY">
+      <key id="114" parent="9" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <column id="113" parent="10" name="id">
+      <column id="115" parent="10" name="id">
         <comment>主键</comment>
         <mandatory>1</mandatory>
         <data-type>bigint(20)</data-type>
       </column>
-      <column id="114" parent="10" name="flowCount">
+      <column id="116" parent="10" name="flowCount">
         <comment>积分数量</comment>
         <mandatory>1</mandatory>
         <data-type>decimal(11,2)</data-type>
         <default-expression>&apos;0.00&apos;</default-expression>
       </column>
-      <column id="115" parent="10" name="typeName">
+      <column id="117" parent="10" name="typeName">
         <comment>积分流动类型</comment>
         <mandatory>1</mandatory>
         <data-type>varchar(50)</data-type>
       </column>
-      <column id="116" parent="10" name="typeDesc">
+      <column id="118" parent="10" name="typeDesc">
         <comment>积分流动类型描述</comment>
         <mandatory>1</mandatory>
         <data-type>varchar(500)</data-type>
       </column>
-      <column id="117" parent="10" name="createTime">
+      <column id="119" parent="10" name="createTime">
         <comment>创建日期</comment>
         <data-type>bigint(20)</data-type>
       </column>
-      <index id="118" parent="10" name="idx_member_score_flow_type_createTime">
+      <index id="120" parent="10" name="idx_member_score_flow_type_createTime">
         <columns>createTime</columns>
         <desc-columns></desc-columns>
       </index>
-      <index id="119" parent="10" name="idx_member_score_flow_type_typeName">
+      <index id="121" parent="10" name="idx_member_score_flow_type_typeName">
         <columns>typeName</columns>
         <desc-columns></desc-columns>
       </index>
-      <key id="120" parent="10" name="PRIMARY">
+      <key id="122" parent="10" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <column id="121" parent="11" name="id">
+      <column id="123" parent="11" name="id">
         <comment>主键</comment>
         <mandatory>1</mandatory>
         <data-type>bigint(20)</data-type>
       </column>
-      <column id="122" parent="11" name="sellerTypeId">
-        <comment>商家类型</comment>
-        <mandatory>1</mandatory>
-        <data-type>int(11)</data-type>
-      </column>
-      <column id="123" parent="11" name="memberId">
-        <comment>用户ID</comment>
-        <mandatory>1</mandatory>
-        <data-type>bigint(20)</data-type>
-      </column>
-      <column id="124" parent="11" name="isOpen">
-        <comment>是否开通 0：未开通，1：开通</comment>
-        <mandatory>1</mandatory>
-        <data-type>int(11)</data-type>
-        <default-expression>&apos;0&apos;</default-expression>
-      </column>
-      <column id="125" parent="11" name="openId">
-        <comment>商家开通授权ID</comment>
-        <mandatory>1</mandatory>
-        <data-type>varchar(120)</data-type>
-      </column>
-      <column id="126" parent="11" name="originId">
-        <comment>公众号原始ID</comment>
-        <mandatory>1</mandatory>
-        <data-type>varchar(120)</data-type>
-      </column>
-      <column id="127" parent="11" name="userName">
-        <comment>商家名称</comment>
-        <mandatory>1</mandatory>
-        <data-type>varchar(120)</data-type>
-      </column>
-      <column id="128" parent="11" name="accountNumber">
-        <comment>粉丝数量</comment>
-        <data-type>int(11)</data-type>
-      </column>
-      <column id="129" parent="11" name="remark">
-        <comment>备注信息</comment>
-        <data-type>varchar(500)</data-type>
-      </column>
-      <column id="130" parent="11" name="addUrl">
-        <comment>关注地址</comment>
-        <mandatory>1</mandatory>
-        <data-type>varchar(500)</data-type>
-      </column>
-      <column id="131" parent="11" name="imageUrl">
-        <comment>头像地址</comment>
-        <mandatory>1</mandatory>
-        <data-type>varchar(500)</data-type>
-      </column>
-      <column id="132" parent="11" name="createTime">
-        <comment>创建日期</comment>
-        <data-type>bigint(20)</data-type>
-      </column>
-      <index id="133" parent="11" name="idx_openId">
-        <columns>openId</columns>
-        <desc-columns></desc-columns>
-      </index>
-      <index id="134" parent="11" name="idx_userName">
-        <columns>userName</columns>
-        <desc-columns></desc-columns>
-      </index>
-      <index id="135" parent="11" name="idx_user_createTime">
-        <columns>createTime</columns>
-        <desc-columns></desc-columns>
-      </index>
-      <key id="136" parent="11" name="PRIMARY">
-        <columns>id</columns>
-        <primary>1</primary>
-      </key>
-      <column id="137" parent="12" name="id">
-        <comment>主键</comment>
-        <mandatory>1</mandatory>
-        <data-type>bigint(20)</data-type>
-      </column>
-      <column id="138" parent="12" name="memberId">
-        <comment>用户ID</comment>
-        <mandatory>1</mandatory>
-        <data-type>bigint(20)</data-type>
-      </column>
-      <column id="139" parent="12" name="accountNumber">
-        <comment>收款账号</comment>
-        <mandatory>1</mandatory>
-        <data-type>varchar(50)</data-type>
-      </column>
-      <column id="140" parent="12" name="accountName">
-        <comment>收款人姓名</comment>
-        <mandatory>1</mandatory>
-        <data-type>varchar(50)</data-type>
-      </column>
-      <column id="141" parent="12" name="amount">
-        <comment>提现金额</comment>
-        <mandatory>1</mandatory>
-        <data-type>decimal(10,2)</data-type>
-        <default-expression>&apos;0.00&apos;</default-expression>
-      </column>
-      <column id="142" parent="12" name="remark">
-        <comment>备注</comment>
-        <mandatory>1</mandatory>
-        <data-type>varchar(500)</data-type>
-      </column>
-      <column id="143" parent="12" name="isPaid">
-        <comment>是否提现成功标识位 0：未成功</comment>
-        <data-type>int(11)</data-type>
-        <default-expression>&apos;0&apos;</default-expression>
-      </column>
-      <column id="144" parent="12" name="createTime">
-        <comment>创建日期</comment>
-        <data-type>bigint(20)</data-type>
-      </column>
-      <index id="145" parent="12" name="idx_payment_approve_createTime">
-        <columns>createTime</columns>
-        <desc-columns></desc-columns>
-      </index>
-      <index id="146" parent="12" name="idx_payment_approve_memberId">
-        <columns>memberId</columns>
-        <desc-columns></desc-columns>
-      </index>
-      <key id="147" parent="12" name="PRIMARY">
-        <columns>id</columns>
-        <primary>1</primary>
-      </key>
-      <column id="148" parent="13" name="id">
-        <comment>主键</comment>
-        <mandatory>1</mandatory>
-        <data-type>bigint(20)</data-type>
-      </column>
-      <column id="149" parent="13" name="payCode">
-        <comment>支付单号</comment>
-        <mandatory>1</mandatory>
-        <data-type>varchar(16)</data-type>
-      </column>
-      <column id="150" parent="13" name="memberId">
-        <comment>用户ID</comment>
-        <mandatory>1</mandatory>
-        <data-type>bigint(20)</data-type>
-      </column>
-      <column id="151" parent="13" name="platform">
-        <comment>支付平台</comment>
-        <mandatory>1</mandatory>
-        <data-type>varchar(20)</data-type>
-      </column>
-      <column id="152" parent="13" name="params">
-        <comment>请求参数</comment>
-        <mandatory>1</mandatory>
-        <data-type>varchar(500)</data-type>
-      </column>
-      <column id="153" parent="13" name="isPaySuccess">
-        <comment>是否支付成功 0:未成功，1成功</comment>
-        <mandatory>1</mandatory>
-        <data-type>int(11)</data-type>
-        <default-expression>&apos;0&apos;</default-expression>
-      </column>
-      <column id="154" parent="13" name="serialNumber">
-        <comment>交易流水号</comment>
-        <data-type>int(32)</data-type>
-      </column>
-      <column id="155" parent="13" name="payType">
-        <comment>交易类型，0：付款给商家，1：付款给用户</comment>
-        <mandatory>1</mandatory>
-        <data-type>int(32)</data-type>
-        <default-expression>&apos;0&apos;</default-expression>
-      </column>
-      <column id="156" parent="13" name="batchPayNo">
-        <comment>批量付款批次号，payType=1时 使用</comment>
-        <data-type>varchar(50)</data-type>
-      </column>
-      <column id="157" parent="13" name="createTime">
-        <comment>创建日期</comment>
-        <data-type>bigint(20)</data-type>
-      </column>
-      <index id="158" parent="13" name="idx_payment_history_createTime">
-        <columns>createTime</columns>
-        <desc-columns></desc-columns>
-      </index>
-      <index id="159" parent="13" name="idx_payment_history_memberId">
-        <columns>memberId</columns>
-        <desc-columns></desc-columns>
-      </index>
-      <key id="160" parent="13" name="PRIMARY">
-        <columns>id</columns>
-        <primary>1</primary>
-      </key>
-      <column id="161" parent="14" name="id">
-        <comment>主键</comment>
-        <mandatory>1</mandatory>
-        <data-type>bigint(20)</data-type>
-      </column>
-      <column id="162" parent="14" name="typeCode">
-        <comment>商家类型</comment>
-        <mandatory>1</mandatory>
-        <data-type>int(11)</data-type>
-      </column>
-      <column id="163" parent="14" name="userTypeName">
-        <comment>商家类型名称</comment>
-        <mandatory>1</mandatory>
-        <data-type>varchar(50)</data-type>
-      </column>
-      <column id="164" parent="14" name="createTime">
-        <comment>创建日期</comment>
-        <data-type>bigint(20)</data-type>
-      </column>
-      <index id="165" parent="14" name="idx_typeCode">
-        <columns>typeCode</columns>
-        <desc-columns></desc-columns>
-      </index>
-      <index id="166" parent="14" name="idx_userTypeName">
-        <columns>userTypeName</columns>
-        <desc-columns></desc-columns>
-      </index>
-      <index id="167" parent="14" name="idx_user_typecreateTime">
-        <columns>createTime</columns>
-        <desc-columns></desc-columns>
-      </index>
-      <key id="168" parent="14" name="PRIMARY">
-        <columns>id</columns>
-        <primary>1</primary>
-      </key>
-      <column id="169" parent="15" name="id">
-        <comment>主键</comment>
-        <mandatory>1</mandatory>
-        <data-type>bigint(20)</data-type>
-      </column>
-      <column id="170" parent="15" name="openId">
-        <comment>开放平台ID</comment>
-        <mandatory>1</mandatory>
-        <data-type>varchar(120)</data-type>
-      </column>
-      <column id="171" parent="15" name="unionId">
-        <comment>用户唯一识别ID</comment>
-        <mandatory>1</mandatory>
-        <data-type>varchar(120)</data-type>
-      </column>
-      <column id="172" parent="15" name="memberId">
-        <comment>会员ID</comment>
-        <mandatory>1</mandatory>
-        <data-type>bigint(20)</data-type>
-      </column>
-      <column id="173" parent="15" name="type">
-        <comment>类型 0：微信，1：支付宝，2：QQ</comment>
-        <mandatory>1</mandatory>
-        <data-type>int(11)</data-type>
-      </column>
-      <column id="174" parent="15" name="nickname">
-        <comment>昵称</comment>
-        <data-type>varchar(20)</data-type>
-      </column>
-      <column id="175" parent="15" name="remark">
-        <comment>备注</comment>
-        <data-type>varchar(500)</data-type>
-      </column>
-      <column id="176" parent="15" name="createTime">
-        <comment>创建日期</comment>
-        <data-type>bigint(20)</data-type>
-      </column>
-      <index id="177" parent="15" name="idx_memberId">
-        <columns>memberId</columns>
-        <desc-columns></desc-columns>
-      </index>
-      <index id="178" parent="15" name="idx_nickName">
-        <columns>nickname</columns>
-        <desc-columns></desc-columns>
-      </index>
-      <index id="179" parent="15" name="idx_openId">
-        <columns>openId</columns>
-        <desc-columns></desc-columns>
-      </index>
-      <index id="180" parent="15" name="idx_third_createTime">
-        <columns>createTime</columns>
-        <desc-columns></desc-columns>
-      </index>
-      <key id="181" parent="15" name="PRIMARY">
-        <columns>id</columns>
-        <primary>1</primary>
-      </key>
-      <column id="182" parent="16" name="id">
-        <comment>主键</comment>
-        <mandatory>1</mandatory>
-        <data-type>bigint(20)</data-type>
-      </column>
-      <column id="183" parent="16" name="officeAccountId">
+      <column id="124" parent="11" name="officeAccountId">
         <comment>公众号ID</comment>
         <mandatory>1</mandatory>
         <data-type>bigint(20)</data-type>
       </column>
-      <column id="184" parent="16" name="unionId">
-        <comment>用户唯一识别标识</comment>
-        <data-type>varchar(50)</data-type>
-        <default-expression>&apos;&apos;</default-expression>
-      </column>
-      <column id="185" parent="16" name="openId">
-        <comment>公号分配给用户的ID</comment>
-        <data-type>varchar(50)</data-type>
-        <default-expression>&apos;&apos;</default-expression>
-      </column>
-      <column id="186" parent="16" name="nickname">
-        <comment>昵称</comment>
-        <data-type>varchar(50)</data-type>
-        <default-expression>&apos;&apos;</default-expression>
-      </column>
-      <column id="187" parent="16" name="createTime">
-        <comment>创建日期</comment>
-        <data-type>bigint(20)</data-type>
-      </column>
-      <index id="188" parent="16" name="idx_office_user_createTime">
-        <columns>createTime</columns>
-        <desc-columns></desc-columns>
-      </index>
-      <index id="189" parent="16" name="idx_office_user_openId">
-        <columns>openId</columns>
-        <desc-columns></desc-columns>
-      </index>
-      <key id="190" parent="16" name="PRIMARY">
-        <columns>id</columns>
-        <primary>1</primary>
-      </key>
-      <column id="191" parent="17" name="id">
-        <comment>主键</comment>
-        <mandatory>1</mandatory>
-        <data-type>bigint(20)</data-type>
-      </column>
-      <column id="192" parent="17" name="officeAccountId">
-        <comment>公众号ID</comment>
-        <mandatory>1</mandatory>
-        <data-type>bigint(20)</data-type>
-      </column>
-      <column id="193" parent="17" name="memberId">
+      <column id="125" parent="11" name="memberId">
         <comment>会员ID</comment>
         <mandatory>1</mandatory>
         <data-type>bigint(20)</data-type>
       </column>
-      <column id="194" parent="17" name="isAccessNow">
+      <column id="126" parent="11" name="isAccessNow">
         <comment>当前是否还在关注  0 ：未关注， 1 ：关注</comment>
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
         <default-expression>&apos;0&apos;</default-expression>
       </column>
-      <column id="195" parent="17" name="createTime">
+      <column id="127" parent="11" name="createTime">
         <comment>创建日期</comment>
         <data-type>bigint(20)</data-type>
       </column>
-      <index id="196" parent="17" name="idx_office_member_memberId">
+      <index id="128" parent="11" name="idx_office_member_memberId">
         <columns>memberId</columns>
         <desc-columns></desc-columns>
       </index>
-      <index id="197" parent="17" name="idx_office_user_createTime">
+      <index id="129" parent="11" name="idx_office_user_createTime">
         <columns>createTime</columns>
         <desc-columns></desc-columns>
       </index>
-      <key id="198" parent="17" name="PRIMARY">
+      <key id="130" parent="11" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <column id="199" parent="18" name="id">
+      <column id="131" parent="12" name="id">
         <comment>主键</comment>
         <mandatory>1</mandatory>
         <data-type>bigint(20)</data-type>
       </column>
-      <column id="200" parent="18" name="memberId">
+      <column id="132" parent="12" name="officeAccountId">
+        <comment>公众号ID</comment>
+        <mandatory>1</mandatory>
+        <data-type>bigint(20)</data-type>
+      </column>
+      <column id="133" parent="12" name="unionId">
+        <comment>用户唯一识别标识</comment>
+        <data-type>varchar(50)</data-type>
+        <default-expression>&apos;&apos;</default-expression>
+      </column>
+      <column id="134" parent="12" name="openId">
+        <comment>公号分配给用户的ID</comment>
+        <data-type>varchar(50)</data-type>
+        <default-expression>&apos;&apos;</default-expression>
+      </column>
+      <column id="135" parent="12" name="nickname">
+        <comment>昵称</comment>
+        <data-type>varchar(50)</data-type>
+        <default-expression>&apos;&apos;</default-expression>
+      </column>
+      <column id="136" parent="12" name="createTime">
+        <comment>创建日期</comment>
+        <data-type>bigint(20)</data-type>
+      </column>
+      <index id="137" parent="12" name="idx_office_user_createTime">
+        <columns>createTime</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="138" parent="12" name="idx_office_user_openId">
+        <columns>openId</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="139" parent="12" name="PRIMARY">
+        <columns>id</columns>
+        <primary>1</primary>
+      </key>
+      <column id="140" parent="13" name="id">
+        <comment>主键</comment>
+        <mandatory>1</mandatory>
+        <data-type>bigint(20)</data-type>
+      </column>
+      <column id="141" parent="13" name="sellerTypeId">
+        <comment>商家类型</comment>
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="142" parent="13" name="memberId">
+        <comment>用户ID</comment>
+        <mandatory>1</mandatory>
+        <data-type>bigint(20)</data-type>
+      </column>
+      <column id="143" parent="13" name="isOpen">
+        <comment>是否开通 0：未开通，1：开通</comment>
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
+      </column>
+      <column id="144" parent="13" name="appId">
+        <comment>公众号appId</comment>
+        <mandatory>1</mandatory>
+        <data-type>varchar(120)</data-type>
+      </column>
+      <column id="145" parent="13" name="appSecret">
+        <comment>公众号appsercret</comment>
+        <mandatory>1</mandatory>
+        <data-type>varchar(120)</data-type>
+      </column>
+      <column id="146" parent="13" name="openId">
+        <comment>商家开通授权ID</comment>
+        <mandatory>1</mandatory>
+        <data-type>varchar(120)</data-type>
+      </column>
+      <column id="147" parent="13" name="originId">
+        <comment>公众号原始ID</comment>
+        <mandatory>1</mandatory>
+        <data-type>varchar(120)</data-type>
+      </column>
+      <column id="148" parent="13" name="accessToken">
+        <comment>公众号第三方token</comment>
+        <mandatory>1</mandatory>
+        <data-type>varchar(120)</data-type>
+      </column>
+      <column id="149" parent="13" name="tokenUpdateTime">
+        <comment>token更新时间</comment>
+        <data-type>bigint(20)</data-type>
+      </column>
+      <column id="150" parent="13" name="userName">
+        <comment>商家名称</comment>
+        <mandatory>1</mandatory>
+        <data-type>varchar(120)</data-type>
+      </column>
+      <column id="151" parent="13" name="accountNumber">
+        <comment>粉丝数量</comment>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="152" parent="13" name="remark">
+        <comment>备注信息</comment>
+        <data-type>varchar(500)</data-type>
+      </column>
+      <column id="153" parent="13" name="addUrl">
+        <comment>关注地址</comment>
+        <mandatory>1</mandatory>
+        <data-type>varchar(500)</data-type>
+      </column>
+      <column id="154" parent="13" name="imageUrl">
+        <comment>头像地址</comment>
+        <mandatory>1</mandatory>
+        <data-type>varchar(500)</data-type>
+      </column>
+      <column id="155" parent="13" name="createTime">
+        <comment>创建日期</comment>
+        <data-type>bigint(20)</data-type>
+      </column>
+      <index id="156" parent="13" name="idx_openId">
+        <columns>openId</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="157" parent="13" name="idx_userName">
+        <columns>userName</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="158" parent="13" name="idx_user_createTime">
+        <columns>createTime</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="159" parent="13" name="PRIMARY">
+        <columns>id</columns>
+        <primary>1</primary>
+      </key>
+      <column id="160" parent="14" name="id">
+        <comment>主键</comment>
+        <mandatory>1</mandatory>
+        <data-type>bigint(20)</data-type>
+      </column>
+      <column id="161" parent="14" name="memberId">
+        <comment>用户ID</comment>
+        <mandatory>1</mandatory>
+        <data-type>bigint(20)</data-type>
+      </column>
+      <column id="162" parent="14" name="accountNumber">
+        <comment>收款账号</comment>
+        <mandatory>1</mandatory>
+        <data-type>varchar(50)</data-type>
+      </column>
+      <column id="163" parent="14" name="accountName">
+        <comment>收款人姓名</comment>
+        <mandatory>1</mandatory>
+        <data-type>varchar(50)</data-type>
+      </column>
+      <column id="164" parent="14" name="amount">
+        <comment>提现金额</comment>
+        <mandatory>1</mandatory>
+        <data-type>decimal(10,2)</data-type>
+        <default-expression>&apos;0.00&apos;</default-expression>
+      </column>
+      <column id="165" parent="14" name="remark">
+        <comment>备注</comment>
+        <mandatory>1</mandatory>
+        <data-type>varchar(500)</data-type>
+      </column>
+      <column id="166" parent="14" name="isPaid">
+        <comment>是否提现成功标识位 0：未成功</comment>
+        <data-type>int(11)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
+      </column>
+      <column id="167" parent="14" name="createTime">
+        <comment>创建日期</comment>
+        <data-type>bigint(20)</data-type>
+      </column>
+      <index id="168" parent="14" name="idx_payment_approve_createTime">
+        <columns>createTime</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="169" parent="14" name="idx_payment_approve_memberId">
+        <columns>memberId</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="170" parent="14" name="PRIMARY">
+        <columns>id</columns>
+        <primary>1</primary>
+      </key>
+      <column id="171" parent="15" name="id">
+        <comment>主键</comment>
+        <mandatory>1</mandatory>
+        <data-type>bigint(20)</data-type>
+      </column>
+      <column id="172" parent="15" name="payCode">
+        <comment>支付单号</comment>
+        <mandatory>1</mandatory>
+        <data-type>varchar(16)</data-type>
+      </column>
+      <column id="173" parent="15" name="memberId">
+        <comment>用户ID</comment>
+        <mandatory>1</mandatory>
+        <data-type>bigint(20)</data-type>
+      </column>
+      <column id="174" parent="15" name="platform">
+        <comment>支付平台</comment>
+        <mandatory>1</mandatory>
+        <data-type>varchar(20)</data-type>
+      </column>
+      <column id="175" parent="15" name="params">
+        <comment>请求参数</comment>
+        <mandatory>1</mandatory>
+        <data-type>varchar(500)</data-type>
+      </column>
+      <column id="176" parent="15" name="isPaySuccess">
+        <comment>是否支付成功 0:未成功，1成功</comment>
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
+      </column>
+      <column id="177" parent="15" name="serialNumber">
+        <comment>交易流水号</comment>
+        <data-type>int(32)</data-type>
+      </column>
+      <column id="178" parent="15" name="payType">
+        <comment>交易类型，0：付款给商家，1：付款给用户</comment>
+        <mandatory>1</mandatory>
+        <data-type>int(32)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
+      </column>
+      <column id="179" parent="15" name="batchPayNo">
+        <comment>批量付款批次号，payType=1时 使用</comment>
+        <data-type>varchar(50)</data-type>
+      </column>
+      <column id="180" parent="15" name="createTime">
+        <comment>创建日期</comment>
+        <data-type>bigint(20)</data-type>
+      </column>
+      <index id="181" parent="15" name="idx_payment_history_createTime">
+        <columns>createTime</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="182" parent="15" name="idx_payment_history_memberId">
+        <columns>memberId</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="183" parent="15" name="PRIMARY">
+        <columns>id</columns>
+        <primary>1</primary>
+      </key>
+      <column id="184" parent="16" name="id">
+        <comment>主键</comment>
+        <mandatory>1</mandatory>
+        <data-type>bigint(20)</data-type>
+      </column>
+      <column id="185" parent="16" name="typeCode">
+        <comment>商家类型</comment>
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="186" parent="16" name="userTypeName">
+        <comment>商家类型名称</comment>
+        <mandatory>1</mandatory>
+        <data-type>varchar(50)</data-type>
+      </column>
+      <column id="187" parent="16" name="createTime">
+        <comment>创建日期</comment>
+        <data-type>bigint(20)</data-type>
+      </column>
+      <index id="188" parent="16" name="idx_typeCode">
+        <columns>typeCode</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="189" parent="16" name="idx_userTypeName">
+        <columns>userTypeName</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="190" parent="16" name="idx_user_typecreateTime">
+        <columns>createTime</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="191" parent="16" name="PRIMARY">
+        <columns>id</columns>
+        <primary>1</primary>
+      </key>
+      <column id="192" parent="17" name="id">
+        <comment>主键</comment>
+        <mandatory>1</mandatory>
+        <data-type>bigint(20)</data-type>
+      </column>
+      <column id="193" parent="17" name="openId">
+        <comment>开放平台ID</comment>
+        <mandatory>1</mandatory>
+        <data-type>varchar(120)</data-type>
+      </column>
+      <column id="194" parent="17" name="unionId">
+        <comment>用户唯一识别ID</comment>
+        <mandatory>1</mandatory>
+        <data-type>varchar(120)</data-type>
+      </column>
+      <column id="195" parent="17" name="memberId">
         <comment>会员ID</comment>
         <mandatory>1</mandatory>
         <data-type>bigint(20)</data-type>
       </column>
-      <column id="201" parent="18" name="unionId">
+      <column id="196" parent="17" name="type">
+        <comment>类型 0：微信，1：支付宝，2：QQ</comment>
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="197" parent="17" name="nickname">
+        <comment>昵称</comment>
+        <data-type>varchar(20)</data-type>
+      </column>
+      <column id="198" parent="17" name="remark">
+        <comment>备注</comment>
+        <data-type>varchar(500)</data-type>
+      </column>
+      <column id="199" parent="17" name="createTime">
+        <comment>创建日期</comment>
+        <data-type>bigint(20)</data-type>
+      </column>
+      <index id="200" parent="17" name="idx_memberId">
+        <columns>memberId</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="201" parent="17" name="idx_nickName">
+        <columns>nickname</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="202" parent="17" name="idx_openId">
+        <columns>openId</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="203" parent="17" name="idx_third_createTime">
+        <columns>createTime</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="204" parent="17" name="PRIMARY">
+        <columns>id</columns>
+        <primary>1</primary>
+      </key>
+      <column id="205" parent="18" name="id">
+        <comment>主键</comment>
+        <mandatory>1</mandatory>
+        <data-type>bigint(20)</data-type>
+      </column>
+      <column id="206" parent="18" name="memberId">
+        <comment>会员ID</comment>
+        <mandatory>1</mandatory>
+        <data-type>bigint(20)</data-type>
+      </column>
+      <column id="207" parent="18" name="unionId">
         <comment>用户唯一识别标识</comment>
         <mandatory>1</mandatory>
         <data-type>varchar(50)</data-type>
         <default-expression>&apos;&apos;</default-expression>
       </column>
-      <column id="202" parent="18" name="openId">
+      <column id="208" parent="18" name="openId">
         <comment>公号分配给用户的ID</comment>
         <mandatory>1</mandatory>
         <data-type>varchar(50)</data-type>
         <default-expression>&apos;&apos;</default-expression>
       </column>
-      <column id="203" parent="18" name="nickname">
+      <column id="209" parent="18" name="nickname">
         <comment>昵称</comment>
         <mandatory>1</mandatory>
         <data-type>varchar(50)</data-type>
         <default-expression>&apos;&apos;</default-expression>
       </column>
-      <column id="204" parent="18" name="followTime">
+      <column id="210" parent="18" name="followTime">
         <comment>关注时间</comment>
         <mandatory>1</mandatory>
         <data-type>bigint(20)</data-type>
       </column>
-      <column id="205" parent="18" name="createTime">
+      <column id="211" parent="18" name="createTime">
         <comment>创建日期</comment>
         <data-type>bigint(20)</data-type>
       </column>
-      <index id="206" parent="18" name="idx_weitaomi_official_createTime">
+      <index id="212" parent="18" name="idx_weitaomi_official_createTime">
         <columns>createTime</columns>
         <desc-columns></desc-columns>
       </index>
-      <index id="207" parent="18" name="idx_weitaomi_official_member">
+      <index id="213" parent="18" name="idx_weitaomi_official_member">
         <columns>unionId</columns>
         <desc-columns></desc-columns>
       </index>
-      <key id="208" parent="18" name="PRIMARY">
+      <key id="214" parent="18" name="PRIMARY">
+        <columns>id</columns>
+        <primary>1</primary>
+      </key>
+      <column id="215" parent="19" name="id">
+        <comment>主键</comment>
+        <mandatory>1</mandatory>
+        <data-type>bigint(20)</data-type>
+      </column>
+      <column id="216" parent="19" name="count">
+        <comment>奖励积分</comment>
+        <mandatory>1</mandatory>
+        <data-type>bigint(20)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
+      </column>
+      <column id="217" parent="19" name="taskName">
+        <comment>任务名称</comment>
+        <mandatory>1</mandatory>
+        <data-type>varchar(50)</data-type>
+        <default-expression>&apos;&apos;</default-expression>
+      </column>
+      <column id="218" parent="19" name="taskDesc">
+        <comment>任务描述</comment>
+        <mandatory>1</mandatory>
+        <data-type>varchar(50)</data-type>
+        <default-expression>&apos;&apos;</default-expression>
+      </column>
+      <column id="219" parent="19" name="createTime">
+        <comment>创建日期</comment>
+        <data-type>bigint(20)</data-type>
+      </column>
+      <key id="220" parent="19" name="PRIMARY">
+        <columns>id</columns>
+        <primary>1</primary>
+      </key>
+      <column id="221" parent="20" name="id">
+        <comment>主键</comment>
+        <mandatory>1</mandatory>
+        <data-type>bigint(20)</data-type>
+      </column>
+      <column id="222" parent="20" name="count">
+        <comment>奖励积分</comment>
+        <mandatory>1</mandatory>
+        <data-type>bigint(20)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
+      </column>
+      <column id="223" parent="20" name="taskName">
+        <comment>任务名称</comment>
+        <mandatory>1</mandatory>
+        <data-type>varchar(50)</data-type>
+        <default-expression>&apos;&apos;</default-expression>
+      </column>
+      <column id="224" parent="20" name="taskDesc">
+        <comment>任务描述</comment>
+        <mandatory>1</mandatory>
+        <data-type>varchar(50)</data-type>
+        <default-expression>&apos;&apos;</default-expression>
+      </column>
+      <column id="225" parent="20" name="isFinished">
+        <comment>是否已经完成</comment>
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
+      </column>
+      <column id="226" parent="20" name="createTime">
+        <comment>创建日期</comment>
+        <data-type>bigint(20)</data-type>
+      </column>
+      <key id="227" parent="20" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>

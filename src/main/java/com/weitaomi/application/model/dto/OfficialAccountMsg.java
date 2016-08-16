@@ -15,11 +15,19 @@ public class OfficialAccountMsg {
     /**
      * 公号名
      */
-    private String name;
+    private String username;
     /**
      * 公号关注地址
      */
     private String addUrl;
+    /**
+     * 关注人数
+     */
+    private Integer followNumber;
+    /**
+     * 关注奖励
+     */
+    private Integer rewardCount;
 
     /**
      * 获取开放平台分配给公众号的appId
@@ -53,21 +61,6 @@ public class OfficialAccountMsg {
         this.originId = originId;
     }
 
-    /**
-     * 获取公号名
-     * @return name 公号名
-     */
-    public String getName() {
-        return this.name;
-    }
-
-    /**
-     * 设置公号名
-     * @param name 公号名
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
 
     /**
      * 获取公号关注地址
@@ -83,5 +76,53 @@ public class OfficialAccountMsg {
      */
     public void setAddUrl(String addUrl) {
         this.addUrl = addUrl;
+    }
+
+    /**
+     * 获取关注人数
+     * @return followNumber 关注人数
+     */
+    public Integer getFollowNumber() {
+        return this.followNumber;
+    }
+
+    /**
+     * 设置关注人数
+     * @param followNumber 关注人数
+     */
+    public void setFollowNumber(Integer followNumber) {
+        this.followNumber = followNumber;
+    }
+
+    /**
+     * 获取关注奖励
+     * @return rewardCount 关注奖励
+     */
+    public Integer getRewardCount() {
+        return this.rewardCount;
+    }
+
+    /**
+     * 设置关注奖励
+     * @param rewardCount 关注奖励
+     */
+    public void setRewardCount(Integer rewardCount) {
+        this.rewardCount = rewardCount;
+    }
+
+    /**
+     * 获取公号名
+     * @return username 公号名
+     */
+    public String getUsername() {
+        return this.username;
+    }
+
+    /**
+     * 设置公号名
+     * @param username 公号名
+     */
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

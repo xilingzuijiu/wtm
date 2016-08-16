@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.weitaomi.application.model.mapper.MemberTaskHistoryDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.weitaomi.application.model.bean.MemberTaskHistoryDetail" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="taskHistoryId" property="taskHistoryId" jdbcType="BIGINT" />
+    <result column="count" property="count" jdbcType="BIGINT" />
+    <result column="taskName" property="taskName" jdbcType="VARCHAR" />
+    <result column="taskDesc" property="taskDesc" jdbcType="VARCHAR" />
+    <result column="isFinished" property="isFinished" jdbcType="INTEGER" />
+    <result column="createTime" property="createTime" jdbcType="BIGINT" />
+  </resultMap>
+  <select id="getMemberTaskHistoryDetialList"
+          resultMap="BaseResultMap">
+    select * from wtm_member_task_history_detail detail WHERE detail.taskHistoryId=#{taskHistoryId}
+  </select>
+</mapper>

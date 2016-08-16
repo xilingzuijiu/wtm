@@ -3,7 +3,11 @@ package com.weitaomi.application.model.dto;
 /**
  * Created by supumall on 2016/7/16.
  */
-public class MemberTaskHistory {
+public class MemberTaskHistoryDto {
+    /**
+     * 任务Id
+     */
+    private Long taskHistoryId;
     /**
      * 类型
      */
@@ -16,6 +20,10 @@ public class MemberTaskHistory {
      * 时间
      */
     private String createTime;
+    /**
+     * 任务类型  0:每日任务，1待完成任务
+     */
+    private Integer taskType;
 
     /**
      * 获取类型
@@ -63,5 +71,30 @@ public class MemberTaskHistory {
      */
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
+    }
+
+
+    /**
+     * 获取任务类型  0:每日任务，1待完成任务
+     * @return taskType 任务类型  0:每日任务，1待完成任务
+     */
+    public Integer getTaskType() {
+        return this.taskType;
+    }
+
+    /**
+     * 设置任务类型  0:每日任务，1待完成任务
+     * @param taskType 任务类型  0:每日任务，1待完成任务
+     */
+    public void setTaskType(Integer taskType) {
+        this.taskType = taskType;
+    }
+
+    public Long getTaskHistoryId() {
+        return this.taskHistoryId;
+    }
+
+    public void setTaskHistoryId(Long taskId) {
+        this.taskHistoryId = taskId;
     }
 }

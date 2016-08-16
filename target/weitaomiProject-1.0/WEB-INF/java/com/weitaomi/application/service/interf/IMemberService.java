@@ -62,4 +62,11 @@ public interface IMemberService {
       * @return
       */
     public List<InvitedRecord> getInvitedRecord(Long memberId);
+
+     /**
+      * 上传用户头像
+      * @param memberId
+      * @return
+         */
+    public String uploadShowImage(Long memberId,String imageFiles,String imageType);
 }

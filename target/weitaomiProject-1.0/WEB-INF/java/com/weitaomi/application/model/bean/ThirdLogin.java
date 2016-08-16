@@ -6,12 +6,17 @@ import javax.persistence.*;
 
 @Table(name = "wtm_third_login")
 public class ThirdLogin extends BaseModel{
-
     /**
      * 开放平台ID
      */
     @Column(name = "openId")
     private String openId;
+
+    /**
+     * 用户唯一识别ID
+     */
+    @Column(name = "unionId")
+    private String unionId;
 
     /**
      * 会员ID
@@ -44,24 +49,6 @@ public class ThirdLogin extends BaseModel{
     private Long createTime;
 
     /**
-     * 获取主键
-     *
-     * @return id - 主键
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * 设置主键
-     *
-     * @param id 主键
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    /**
      * 获取开放平台ID
      *
      * @return openId - 开放平台ID
@@ -77,6 +64,24 @@ public class ThirdLogin extends BaseModel{
      */
     public void setOpenId(String openId) {
         this.openId = openId;
+    }
+
+    /**
+     * 获取用户唯一识别ID
+     *
+     * @return unionId - 用户唯一识别ID
+     */
+    public String getUnionId() {
+        return unionId;
+    }
+
+    /**
+     * 设置用户唯一识别ID
+     *
+     * @param unionId 用户唯一识别ID
+     */
+    public void setUnionId(String unionId) {
+        this.unionId = unionId;
     }
 
     /**

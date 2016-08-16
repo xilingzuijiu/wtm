@@ -8,6 +8,9 @@ import com.weitaomi.application.service.interf.IMemberService;
 import com.weitaomi.systemconfig.dataFormat.AjaxResult;
 import com.weitaomi.systemconfig.exception.BusinessException;
 import com.weitaomi.systemconfig.exception.DBException;
+import com.weitaomi.systemconfig.util.StringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2016/6/27.
@@ -22,6 +26,7 @@ import java.text.ParseException;
 @Controller
 @RequestMapping("/app/admin/member")
 public class MemberController  extends BaseController {
+    private static Logger logger= LoggerFactory.getLogger(MemberController.class);
     @Autowired
     private IMemberService memberService;
     /**
@@ -57,7 +62,7 @@ public class MemberController  extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/getIdentifyCode", method = RequestMethod.POST)
-    public AjaxResult getIdentifyCodeAction(@RequestParam("mobile") String mobile, @RequestParam(value = "type", defaultValue ="0") Integer type, HttpServletRequest request) throws BusinessException, IOException {
+    public AjaxResult getIdentifyCodeAction(@RequestParam("mobile") String mobile, @RequestParam(value = "type", defaultValue ="0",required = false) Integer type, HttpServletRequest request) throws BusinessException, IOException {
         String identifyCode=memberService.sendIndentifyCode(mobile,type);
         if (identifyCode!=null&&!identifyCode.isEmpty()){
             return AjaxResult.getOK(identifyCode);
@@ -88,6 +93,7 @@ public class MemberController  extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public AjaxResult login(@RequestParam("mobileOrName")String mobileOrName,@RequestParam("password") String password){
+        logger.info("开始登录");
         return AjaxResult.getOK(memberService.login(mobileOrName, password));
     }
     /**
@@ -127,6 +133,25 @@ public class MemberController  extends BaseController {
             throw new BusinessException("用户ID为空");
         }
         return AjaxResult.getOK(memberService.getMemberDetailById(memberId));
+    }
+    /**
+     * 上传头像
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/uploadShowImage", method = RequestMethod.POST)
+    public AjaxResult uploadShowImage(HttpServletRequest request,@RequestBody(required = true) Map<String,String> params){
+        Long memberId=this.getUserId(request);
+        if (memberId==null){
+            throw new BusinessException("用户ID为空");
+        }
+        String imageFiles=params.get("imageFiles");
+        String imageType=params.get("imageType");
+        String imageUrl="";
+        if (!StringUtil.isEmpty(imageFiles)&&!StringUtil.isEmpty(imageType)){
+            imageUrl=memberService.uploadShowImage(memberId,imageFiles,imageType);
+        }
+        return AjaxResult.getOK(imageUrl);
     }
 
 }

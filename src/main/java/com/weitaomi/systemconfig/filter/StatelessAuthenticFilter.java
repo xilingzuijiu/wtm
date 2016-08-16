@@ -36,11 +36,11 @@ public class StatelessAuthenticFilter extends AccessControlFilter {
         String authentication=httpServletRequest.getHeader(ActionConstants.PARAM_AUTHENTICATION);
         String uri=httpServletRequest.getRequestURI();
         logger.info("请求路径为 :"+uri);
-        String time=httpServletRequest.getHeader("time");
-        if (StringUtil.isEmpty(authentication)||StringUtil.isEmpty(uri)||StringUtil.isEmpty(time)){
+        Long time=Long.valueOf(httpServletRequest.getHeader("time"));
+        if (StringUtil.isEmpty(authentication)||StringUtil.isEmpty(uri)||time==null){
             throw new BusinessException("非法请求参数");
         }
-        if (this.isAccessTime(time)){
+        if (!this.isAccessTime(time)){
             logger.warn("time:{}",time);
             throw new BusinessException("非法的请求时间");
         }
@@ -49,32 +49,33 @@ public class StatelessAuthenticFilter extends AccessControlFilter {
         String randomkey=map.get("randomkey");
         String digest=map.get("digest");
         map.remove("digest");
-        if (this.isAccessRandomkey(randomkey)){
+        if (!this.isAccessRandomkey(randomkey)){
             throw new BusinessException("该缓存随机数不可用");
         }
         //生成无状态的token
         StatelessToken statelessToken=new StatelessToken(username,map,digest);
         //交给设置的realm进行验证处理
         try {
-            logger.debug("客户端信息：randomKey：{}，time:{},url:{},username:{},digest:{}",randomkey,time,uri,username,digest);
+            logger.info("客户端信息：randomKey：{}，time:{},url:{},username:{},digest:{}",randomkey,time,uri,username,digest);
             super.getSubject(servletRequest,servletResponse).login(statelessToken);
         }catch (Exception e){
+            logger.info("login failed");
+            e.printStackTrace();
             return false;
         }
         return true;
     }
-    private boolean isAccessTime(String time){
+    private boolean isAccessTime(Long time){
         Long now= DateUtils.getUnixTimestamp();
-        Long timeRequest=DateUtils.getUnixTimestamp(time,DateUtils.standard);
-        if (Math.abs(now-timeRequest)>600){
+        if (Math.abs(now-time)>600){
             return false;
         }
         return true;
     }
-    private Map<String,String> formLinkedMap(String authentication,String url,String time){
+    private Map<String,String> formLinkedMap(String authentication,String url,Long time){
         Map<String,String> map=new LinkedHashMap<String, String>();
         String[] params=authentication.split(":");
-        map.put("time",time);
+        map.put("time",time.toString());
         map.put("username",params[0]);
         map.put("randomkey",params[1]);
         map.put("url",url);

@@ -21,8 +21,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.support.ManagedList;
 import org.springframework.beans.factory.support.ManagedMap;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +46,7 @@ public class OfficeAccountService implements IOfficeAccountService {
         return officalAccountMapper.getAccountsByMemberId(memberId);
     }
     @Override
+    @Transactional
     public void pushAddRequest(AddOfficalAccountDto addOfficalAccountDto) {
         if (addOfficalAccountDto==null){
             throw new BusinessException("任务列表为空");
@@ -61,7 +64,7 @@ public class OfficeAccountService implements IOfficeAccountService {
         if (list.isEmpty()){
             throw new BusinessException("要关注的公号列表为空");
         }
-        List<Map<String,String>> mapList=new ManagedList<Map<String, String>>();
+        List<Map<String,String>> mapList=new ArrayList<Map<String, String>>();
         Map<String,Object> params=new ManagedMap<String, Object>();
         params.put("unionId",addOfficalAccountDto.getUnionId());
         for (OfficialAccountMsg officialAccountMsg:list){
@@ -70,7 +73,7 @@ public class OfficeAccountService implements IOfficeAccountService {
             String value=officalAccount.getId().toString();
             cacheService.setCacheByKey(key,value,60*30);
             Map<String,String> map=new HashMap<String, String>();
-            map.put("name",officialAccountMsg.getName());
+            map.put("name",officialAccountMsg.getUsername());
             map.put("addUrl",officialAccountMsg.getAddUrl());
             mapList.add(map);
         }
@@ -87,6 +90,15 @@ public class OfficeAccountService implements IOfficeAccountService {
     @Override
     public void receiveAddOffical(AddResponseTaskDto addResponseTaskDto) {
 
+    }
+
+    @Override
+    public List<OfficialAccountMsg> getOfficialAccountMsg(Long memberId) {
+        List<OfficialAccountMsg> officialAccountMsgs=officalAccountMapper.getOfficialAccountMsg(memberId);
+        if (officialAccountMsgs.isEmpty()){
+            return null;
+        }
+        return officialAccountMsgs;
     }
 
 }

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.weitaomi.application.model.mapper.OfficialAccountsLevelMapper" >
+  <resultMap id="BaseResultMap" type="com.weitaomi.application.model.bean.OfficialAccountsLevel" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="followReward" property="followReward" jdbcType="INTEGER" />
+    <result column="levelName" property="levelName" jdbcType="VARCHAR" />
+    <result column="createTime" property="createTime" jdbcType="BIGINT" />
+  </resultMap>
+</mapper>
