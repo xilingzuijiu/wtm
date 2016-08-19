@@ -3,6 +3,8 @@ package com.weitaomi.application.service.interf;
 import com.weitaomi.application.model.bean.Member;
 import com.weitaomi.application.model.bean.ThirdLogin;
 import com.weitaomi.application.model.dto.InvitedRecord;
+import com.weitaomi.application.model.dto.MemberInfoDto;
+import com.weitaomi.application.model.dto.ModifyPasswordDto;
 import com.weitaomi.application.model.dto.RegisterMsg;
 
 import java.util.List;
@@ -31,7 +33,7 @@ public interface IMemberService {
      * @param thirdLogin
      * @return
      */
-    public Boolean bindThirdPlat(ThirdLogin thirdLogin);
+    public Boolean bindThirdPlat(Long memberId,ThirdLogin thirdLogin);
 
     /**
      * 会员登陆
@@ -39,7 +41,7 @@ public interface IMemberService {
      * @param password
      * @return
      */
-    public Member login(String mobileOrName,String password);
+    public MemberInfoDto login(String mobileOrName, String password);
 
     /**
      * 第三方登陆
@@ -47,7 +49,7 @@ public interface IMemberService {
      * @param type
      * @return
      */
-    public Member thirdPlatLogin(String openId,Integer type);
+    public MemberInfoDto thirdPlatLogin(String openId,Integer type);
 
     /**
      * 获取用户信息
@@ -56,17 +58,20 @@ public interface IMemberService {
      */
     public Member getMemberDetailById(Long memberId);
 
-     /**
-      * 获取邀请记录
-      * @param memberId
-      * @return
-      */
-    public List<InvitedRecord> getInvitedRecord(Long memberId);
+   /**
+    * 更换密码
+    * @param memberId
+    * @param modifyPasswordDto
+    * @return
+       */
+     boolean modifyPassWord(Long memberId, ModifyPasswordDto modifyPasswordDto);
 
-     /**
+ /**
       * 上传用户头像
       * @param memberId
       * @return
          */
     public String uploadShowImage(Long memberId,String imageFiles,String imageType);
+
+ Boolean validateIndetifyCode(String mobile, String indentifyCode);
 }

@@ -13,6 +13,12 @@
     <result column="isFinished" property="isFinished" jdbcType="INTEGER" />
     <result column="createTime" property="createTime" jdbcType="BIGINT" />
   </resultMap>
+  <insert id="insertIntoDetail">
+    insert into wtm_member_task_history_detail detail (detail.taskHistoryId,detail.count,detail.taskName,detail.taskDesc,detail.isFinished,detail.createTime) values
+    <foreach collection="memberTaskHistoryDetails" close=")" open="(" index="flag" item="item" separator=",">
+      #{taskId},#{item.count},#{item.count},#{item.taskName},#{item.taskDesc},#{item.isFinished},#{createTime}
+    </foreach>
+  </insert>
   <select id="getMemberTaskHistoryDetialList"
           resultMap="BaseResultMap">
     select * from wtm_member_task_history_detail detail WHERE detail.taskHistoryId=#{taskHistoryId}

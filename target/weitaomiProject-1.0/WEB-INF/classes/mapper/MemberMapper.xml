@@ -20,18 +20,26 @@
     <result column="createTime" property="createTime" jdbcType="BIGINT" />
   </resultMap>
   <update id="upLoadMemberShowImage">
-    update wtm_member m  set m.imageUrl  = #{imageUrl}  where m.memberId=#{memberId}
+    update wtm_member m  set m.imageUrl  = #{imageUrl}  where m.id=#{memberId}
   </update>
-  <select id="getMemberByTelephone" resultMap="BaseResultMap">
-      select * from wtm_member m WHERE m.telephone=#{telephone};
+  <select id="getMemberByTelephone" resultType="com.weitaomi.application.model.dto.MemberInfoDto">
+      select m.*,s.memberScore,login.openId,account.* from wtm_member m LEFT JOIN wtm_member_score s ON s.memberId=m.id LEFT JOIN wtm_third_login login ON login.memberId=m.id
+      LEFT JOIN wtm_official_accounts account ON account.memberId=m.id
+      WHERE m.telephone=#{telephone}
   </select>
   <select id="getByCellphoneAndPassword" resultMap="BaseResultMap">
-    select * from wtm_member m WHERE m.telephone=#{cellphone} AND m.password=#{password};
+    select * from wtm_member m WHERE m.telephone=#{cellphone} AND m.password=#{password}
   </select>
-  <select id="getMemberByMemberName" resultMap="BaseResultMap">
-    select * from wtm_member m WHERE m.memberName=#{memberName};
+  <select id="getMemberByMemberName" resultType="com.weitaomi.application.model.dto.MemberInfoDto">
+    select m.*,s.memberScore,login.openId from wtm_member m LEFT JOIN wtm_member_score s ON s.memberId=m.id LEFT JOIN wtm_third_login login ON login.memberId=m.id
+     WHERE m.memberName=#{memberName}
   </select>
   <select id="getMemberByInviteCode" resultMap="BaseResultMap">
-    select * from wtm_member m WHERE m.invitedCode=#{inviteCode};
+    select * from wtm_member m WHERE m.invitedCode=#{inviteCode}
+  </select>
+  <select id="getMemberInfoById" resultType="com.weitaomi.application.model.dto.MemberInfoDto">
+    select m.*,s.memberScore,login.openId,account.* from wtm_member m LEFT JOIN wtm_member_score s ON s.memberId=m.id LEFT JOIN wtm_third_login login ON login.memberId=m.id
+    LEFT JOIN wtm_official_accounts account ON account.memberId=m.id
+     WHERE m.id=#{memberId}
   </select>
 </mapper>

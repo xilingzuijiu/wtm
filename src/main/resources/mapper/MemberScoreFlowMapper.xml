@@ -15,4 +15,8 @@
     <result column="detail" jdbcType="VARCHAR" property="detail" />
     <result column="createTime" jdbcType="BIGINT" property="createTime" />
   </resultMap>
+  <select id="getMemberScoreFlowListByMemberId"
+          resultType="com.weitaomi.application.model.bean.MemberScoreFlow">
+    select * from wtm_member_score_flow flow  WHERE flow.memberId=#{memberId}
+  </select>
 </mapper>

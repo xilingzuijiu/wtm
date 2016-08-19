@@ -103,7 +103,7 @@ public class ArticleService implements IArticleService {
 
     @Override
     @Transactional
-    public Boolean readArticle(Long memberId, Long articleId,Integer typeId,Long sessionID) {
+    public Boolean readArticle(Long memberId, Long articleId,Integer typeId,String sessionID) {
         if(memberId==null){
             throw new BusinessException("用户ID为空");
         }
@@ -123,7 +123,7 @@ public class ArticleService implements IArticleService {
         if (typeId==0) {
             articleReadRecordMapper.insertSelective(articleReadRecord);
             //TODO 修改typeID
-            memberScoreService.addMemberScore(memberId,3L, 3.00, sessionID);
+            memberScoreService.addMemberScore(memberId,3L, 3L, sessionID);
         }
         articleMapper.updateArticleByRead(articleId,typeId);
         Integer times=45;

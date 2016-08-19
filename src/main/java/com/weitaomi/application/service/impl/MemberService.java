@@ -4,11 +4,14 @@ import com.weitaomi.application.model.bean.Member;
 import com.weitaomi.application.model.bean.MemberInvitedRecord;
 import com.weitaomi.application.model.bean.ThirdLogin;
 import com.weitaomi.application.model.dto.InvitedRecord;
+import com.weitaomi.application.model.dto.MemberInfoDto;
+import com.weitaomi.application.model.dto.ModifyPasswordDto;
 import com.weitaomi.application.model.dto.RegisterMsg;
 import com.weitaomi.application.model.mapper.MemberInvitedRecordMapper;
 import com.weitaomi.application.model.mapper.MemberMapper;
 import com.weitaomi.application.model.mapper.ThirdLoginMapper;
 import com.weitaomi.application.service.interf.ICacheService;
+import com.weitaomi.application.service.interf.IMemberScoreService;
 import com.weitaomi.application.service.interf.IMemberService;
 import com.weitaomi.systemconfig.exception.BusinessException;
 import com.weitaomi.systemconfig.exception.InfoException;
@@ -46,6 +49,8 @@ public class MemberService extends BaseService implements IMemberService {
     private ICacheService cacheService;
     @Autowired
     private MemberInvitedRecordMapper memberInvitedRecordMapper;
+    @Autowired
+    private IMemberScoreService memberScoreService;
     @Override
     @Transactional
     public Boolean register(RegisterMsg registerMsg) {
@@ -90,7 +95,9 @@ public class MemberService extends BaseService implements IMemberService {
         if (member.getEmail()!=null&&member.getEmail().matches("[_a-z\\d\\-\\./]+@[_a-z\\d\\-]+(\\.[_a-z\\d\\-]+)*(\\.(info|biz|com|edu|gov|net|am|bz|cn|cx|hk|jp|tw|vc|vn))$")){
             memberTemp.setEmail(member.getEmail());
         }
-        if (!this.validateIndetifyCode(memberTemp.getTelephone(),registerMsg.getIdentifyCode())){
+//TODO
+//       if (!this.validateIndetifyCode(memberTemp.getTelephone(),registerMsg.getIdentifyCode())){
+        if (false){
             throw new BusinessException("验证码错误，请重试");
         }
         memberTemp.setSource(member.getSource());
@@ -110,6 +117,10 @@ public class MemberService extends BaseService implements IMemberService {
             memberMapper.insertSelective(memberTemp);
             newMemberId =memberTemp.getId();
             String code=StringUtil.toSerialNumber(newMemberId);
+            if (!StringUtil.isEmpty(thirdLogin.getImageFiles())){
+                String imageUrl=this.uploadShowImage(newMemberId,thirdLogin.getImageFiles(),"jpg");
+                memberTemp.setImageUrl(imageUrl);
+            }
             memberTemp.setInvitedCode(code);
             memberMapper.updateByPrimaryKeySelective(memberTemp);
             thirdLogin.setMemberId(newMemberId);
@@ -126,6 +137,7 @@ public class MemberService extends BaseService implements IMemberService {
                     memberInvitedRecord.setParentId(memberInvited.getId());
                     memberInvitedRecord.setIsAccessible(1);
                     memberInvitedRecord.setCreateTime(DateUtils.getUnixTimestamp());
+
                     memberInvitedRecordMapper.insertSelective(memberInvitedRecord);
                 }
             }
@@ -134,10 +146,11 @@ public class MemberService extends BaseService implements IMemberService {
     }
     @Override
     @Transactional
-    public Boolean bindThirdPlat(ThirdLogin thirdLogin) {
+    public Boolean bindThirdPlat(Long memberId,ThirdLogin thirdLogin) {
         if (thirdLogin==null){
             throw new BusinessException("第三方注册信息为空");
         }
+        thirdLogin.setMemberId(memberId);
         if (thirdLogin.getOpenId()==null||thirdLogin.getOpenId().isEmpty()){
             throw new BusinessException("第三方OpenId为空");
         }
@@ -160,9 +173,9 @@ public class MemberService extends BaseService implements IMemberService {
     }
 
     @Override
-    public Member login(String mobileOrName, String password) {
+    public MemberInfoDto login(String mobileOrName, String password) {
         if (mobileOrName!=null) {
-            Member member=null;
+            MemberInfoDto member=null;
             if (mobileOrName.matches("^[1][34578]\\d{9}$")) {
                 logger.info("手机登陆用户");
                 member=memberMapper.getMemberByTelephone(mobileOrName);
@@ -191,7 +204,7 @@ public class MemberService extends BaseService implements IMemberService {
     }
 
     @Override
-    public Member thirdPlatLogin(String openId, Integer type) {
+    public MemberInfoDto thirdPlatLogin(String openId, Integer type) {
         if (openId==null||openId.isEmpty()){
             throw new BusinessException("第三方OpenId为空");
         }
@@ -205,7 +218,7 @@ public class MemberService extends BaseService implements IMemberService {
         if (thirdLogin.getMemberId()==null){
             throw new InfoException("该平台账号未绑定，请重新绑定");
         }
-        Member member=memberMapper.selectByPrimaryKey(thirdLogin.getMemberId());
+        MemberInfoDto member=memberMapper.getMemberInfoById(thirdLogin.getMemberId());
         if (member==null){
             throw new InfoException("微信号未绑定，请重新注册");
         }
@@ -256,19 +269,52 @@ public class MemberService extends BaseService implements IMemberService {
     }
 
     @Override
-    public List<InvitedRecord> getInvitedRecord(Long memberId) {
-        List<InvitedRecord> invitedRecordList=memberInvitedRecordMapper.getInvitedRecord(memberId);
-        if (invitedRecordList!=null&&!invitedRecordList.isEmpty()){
-            return invitedRecordList;
+    public boolean modifyPassWord(Long memberId, ModifyPasswordDto modifyPasswordDto){
+        boolean flag=false;
+        if (modifyPasswordDto==null){
+            throw new InfoException("密码信息为空，请重新修改或者登录");
         }
-        return null;
+        if ("0".equals(modifyPasswordDto.getFlag())){
+            Member member=memberMapper.getMemberByTelephone(modifyPasswordDto.getMobile());
+            if (member==null){
+                throw new BusinessException("用户不存在");
+            }
+            String salt="";
+            if (!StringUtil.isEmpty(member.getSalt())){
+                salt=member.getSalt();
+            }else {
+                salt=StringUtil.random(6);
+            }
+            member.setPassword(new Sha256Hash(modifyPasswordDto.getNewPassword(),salt).toString());
+            int number=memberMapper.updateByPrimaryKeySelective(member);
+            flag=number>0?true:false;
+        }else if ("1".equals(modifyPasswordDto.getFlag())){
+            Member member=memberMapper.selectByPrimaryKey(memberId);
+            if (member==null){
+                throw new BusinessException("用户不存在");
+            }
+            if (!new Sha256Hash(modifyPasswordDto.getPassword(),member.getSalt()).toString().equals(member.getPassword())){
+                throw new InfoException("原密码错误");
+            }
+            String salt="";
+            if (!StringUtil.isEmpty(member.getSalt())){
+                salt=member.getSalt();
+            }else {
+                salt=StringUtil.random(6);
+            }
+            member.setPassword(new Sha256Hash(modifyPasswordDto.getNewPassword(),salt).toString());
+            int number=memberMapper.updateByPrimaryKeySelective(member);
+            flag=number>0?true:false;
+        }
+
+        return  flag;
     }
 
     @Override
     @Transactional
     public String uploadShowImage(Long memberId,String imageFiles,String imageType) {
-        String imageUrl="/member/showMessage/"+memberId+DateUtils.getUnixTimestamp()+"."+imageType;
-        if (super.uploadImage(imageUrl,imageType)) {
+        String imageUrl="/member/showImage/"+memberId+DateUtils.getUnixTimestamp()+"."+imageType;
+        if (super.uploadImage(imageUrl,imageFiles)) {
             memberMapper.upLoadMemberShowImage(memberId, imageUrl);
         }
         return imageUrl;
@@ -291,9 +337,13 @@ public class MemberService extends BaseService implements IMemberService {
         this.setIndentifyCodeToCache(key,identifyCode,120L);
         return identifyCode;
     }
-    private Boolean validateIndetifyCode(String mobile,String indentifyCode) {
+    @Override
+    public Boolean validateIndetifyCode(String mobile, String indentifyCode) {
         String key="member:indentifyCode:"+mobile;
         String value =this.getIndentifyCodeFromCache(key);
+        if(value==null){
+            throw new InfoException("邀请码未发送");
+        }
         if(indentifyCode.equals(value)){
             return true;
         }

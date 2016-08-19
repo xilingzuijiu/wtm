@@ -45,5 +45,5 @@ public interface IArticleService {
      * @param articleId
      * @return
      */
-    public Boolean readArticle(Long memberId,Long articleId,Integer typeId,Long sessionmdID);
+    public Boolean readArticle(Long memberId,Long articleId,Integer typeId,String sessionmdID);
 }

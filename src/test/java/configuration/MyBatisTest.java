@@ -5,10 +5,14 @@ import com.weitaomi.application.model.bean.Member;
 import com.weitaomi.application.model.mapper.ArticleMapper;
 import com.weitaomi.application.model.mapper.MemberMapper;
 import com.weitaomi.application.model.mapper.ThirdLoginMapper;
+import com.weitaomi.systemconfig.util.HttpRequestUtils;
+import com.weitaomi.systemconfig.util.UUIDGenerator;
 import common.BaseContextCase;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.io.IOException;
 
 /**
  * Created by supumall on 2016/7/6.
@@ -50,7 +54,19 @@ public class MyBatisTest extends BaseContextCase{
     @Test
     public void testThridLoginMapper(){
         System.out.println("========================================>");
+        System.out.println(UUIDGenerator.generate());
         System.out.println(JSON.toJSONString(thirdLoginMapper.getThirdLoginInfo("123456")));
         System.out.println("========================================>");
+    }
+
+    @Test
+    public void testPushAddAccounts(){
+        String url="http://www.yuyinggzs.com/index.php/home/js/index";
+        String msg="{\"unionId\":\"oaPViwaKBrL3mdrngn7VtkDA7lt4\",\"linkList\":[{\"name\":\"90后轻生活\",\"url\":\"https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzA4MDQxMjE4MA==&scene=110#wechat_redirect\"}]}";
+        try {
+            HttpRequestUtils.postStringEntity(url,msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -47,6 +47,8 @@ public class ThirdLogin extends BaseModel{
      */
     @Column(name = "createTime")
     private Long createTime;
+    @Transient
+    private String imageFiles;
 
     /**
      * 获取开放平台ID
@@ -173,4 +175,13 @@ public class ThirdLogin extends BaseModel{
     public void setCreateTime(Long createTime) {
         this.createTime = createTime;
     }
+
+    public String getImageFiles() {
+        return this.imageFiles;
+    }
+
+    public void setImageFiles(String imageFiles) {
+        this.imageFiles = imageFiles;
+    }
+
 }

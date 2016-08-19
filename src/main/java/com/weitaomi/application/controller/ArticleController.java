@@ -76,7 +76,7 @@ public class ArticleController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/readArticle",method = RequestMethod.POST)
-    public AjaxResult readArticle(HttpServletRequest request,Long articleId, Integer typeId, Long sessionmdID){
+    public AjaxResult readArticle(HttpServletRequest request,Long articleId, Integer typeId, String sessionmdID){
         Long memberId=this.getUserId(request);
         if (memberId==null){
             throw new BusinessException("用户ID为空");

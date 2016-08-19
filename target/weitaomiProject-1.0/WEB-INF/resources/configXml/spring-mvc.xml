@@ -15,6 +15,7 @@
          http://www.springframework.org/schema/cache
          http://www.springframework.org/schema/cache/spring-cache-3.2.xsd
          http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    <import resource="spring-shiro.xml"/>
     <!--
         1.开启SPringMvc注解模式
         2.简化配置

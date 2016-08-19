@@ -23,7 +23,7 @@ public class AddOfficialAccountListener implements ChannelAwareMessageListener {
         channel.basicAck(message.getMessageProperties().getDeliveryTag(),false);
         AddResponseTaskDto addResponseTaskDto= JSONObject.parseObject(jsonParams,AddResponseTaskDto.class);
         if (addResponseTaskDto!=null){
-            officeAccountService.receiveAddOffical(addResponseTaskDto);
+//            officeAccountService.receiveAddOffical(addResponseTaskDto);
         }
     }
 }

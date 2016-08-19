@@ -30,11 +30,26 @@ public class MemberScoreController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/addMemberScore",method = RequestMethod.POST)
-    AjaxResult addMemberScore(HttpServletRequest request,Long typeId, Double score, Long sessionId){
+    AjaxResult addMemberScore(HttpServletRequest request,Long typeId, Long score, String sessionId){
         Long memberId=this.getUserId(request);
         if (memberId==null){
             throw new BusinessException("用户ID为空");
         }
         return AjaxResult.getOK(memberScoreService.addMemberScore(memberId, typeId, score, sessionId));
+    }
+
+    /**
+     * 获取积分记录
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getMemberScoreFlowList",method = RequestMethod.POST)
+    AjaxResult getMemberScoreFlowList(HttpServletRequest request){
+        Long memberId=this.getUserId(request);
+        if (memberId==null){
+            throw new BusinessException("用户ID为空");
+        }
+        return AjaxResult.getOK(memberScoreService.getMemberScoreFlowList(memberId));
     }
 }

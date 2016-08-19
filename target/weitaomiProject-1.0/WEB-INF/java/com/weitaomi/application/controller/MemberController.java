@@ -3,6 +3,7 @@ package com.weitaomi.application.controller;
 import com.weitaomi.application.controller.baseController.BaseController;
 import com.weitaomi.application.model.bean.Member;
 import com.weitaomi.application.model.bean.ThirdLogin;
+import com.weitaomi.application.model.dto.ModifyPasswordDto;
 import com.weitaomi.application.model.dto.RegisterMsg;
 import com.weitaomi.application.service.interf.IMemberService;
 import com.weitaomi.systemconfig.dataFormat.AjaxResult;
@@ -15,7 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Map;
@@ -80,9 +83,10 @@ public class MemberController  extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/bindThirdPlat", method = RequestMethod.POST)
-    public AjaxResult bindThirdPlat(@RequestBody ThirdLogin thirdLogin)
+    public AjaxResult bindThirdPlat(HttpServletRequest request,@RequestBody ThirdLogin thirdLogin)
             throws BusinessException, DBException, ParseException {
-        return AjaxResult.getOK(memberService.bindThirdPlat(thirdLogin));
+        Long memberId=this.getUserId(request);
+        return AjaxResult.getOK(memberService.bindThirdPlat(memberId,thirdLogin));
     }
     /**
      * 会员登陆
@@ -135,7 +139,7 @@ public class MemberController  extends BaseController {
         return AjaxResult.getOK(memberService.getMemberDetailById(memberId));
     }
     /**
-     * 上传头像
+     * 获取邀请记录
      * @return
      */
     @ResponseBody
@@ -153,5 +157,41 @@ public class MemberController  extends BaseController {
         }
         return AjaxResult.getOK(imageUrl);
     }
-
+    /**
+     * 修改密码
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/modifyPassWord", method = RequestMethod.POST)
+    public AjaxResult modifyPassWord(HttpServletRequest request,@RequestBody ModifyPasswordDto modifyPasswordDto){
+        Long memberId=this.getUserId(request);
+        if (memberId==null){
+            throw new BusinessException("用户ID为空");
+        }
+        return AjaxResult.getOK(memberService.modifyPassWord(memberId,modifyPasswordDto));
+    }
+    /**
+     * 验证验证码
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/validateIndetifyCode", method = RequestMethod.POST)
+    public AjaxResult validateIndetifyCode(String mobile,String identifyCode){
+        return AjaxResult.getOK(memberService.validateIndetifyCode(mobile, identifyCode));
+    }
+//    /**
+//     * 获取邀请记录
+//     * @return
+//     */
+//    @ResponseBody
+//    @RequestMapping(value = "/getSharedPage", method = RequestMethod.GET)
+//    public void getSharedPage(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+//       response.setIntHeader("refresh",1);
+//        try {
+//            request.getRequestDispatcher("/frontPage/articleList.jsp").forward(request,response);
+//            response.getWriter().write((int) Math.random());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }

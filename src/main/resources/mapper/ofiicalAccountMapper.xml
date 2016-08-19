@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.weitaomi.application.model.mapper.OfficalAccountMapper">
-    <resultMap id="BaseResultMap" type="com.weitaomi.application.model.bean.OfficalAccount">
+    <resultMap id="BaseResultMap" type="com.weitaomi.application.model.bean.OfficialAccount">
         <!--
           WARNING - @mbggenerated
         -->
@@ -16,7 +16,7 @@
         <result column="appSecret" jdbcType="VARCHAR" property="appSecret"/>
         <result column="userName" jdbcType="VARCHAR" property="userName"/>
         <result column="accessToken" jdbcType="VARCHAR" property="accessToken"/>
-        <result column="tokenUpdateTime" jdbcType="BIGINT" property="tokenUpdateTime"/>
+        <result column="tokenUpdateTime" jdbcType="VARCHAR" property="tokenUpdateTime"/>
         <result column="accountNumber" jdbcType="INTEGER" property="accountNumber"/>
         <result column="remark" jdbcType="VARCHAR" property="remark"/>
         <result column="addUrl" jdbcType="VARCHAR" property="addUrl"/>
@@ -29,7 +29,7 @@
       select m.officeAccountId from wtm_office_member m WHERE m.memberId=#{memberId}
     )
   </select>
-    <select id="getOfficalAccountByoriginId" resultType="com.weitaomi.application.model.bean.OfficalAccount">
+    <select id="getOfficalAccountByoriginId" resultType="com.weitaomi.application.model.bean.OfficialAccount">
     select * from wtm_official_accounts a WHERE a.originId=#{originId}
   </select>
 <select id="getOfficialAccountMsg" resultType="com.weitaomi.application.model.dto.OfficialAccountMsg">
@@ -40,8 +40,9 @@
       a.addUrl        addUrl,
       a.accountNumber followNumber,
       l.followReward  rewardCount
-    FROM wtm_official_accounts a LEFT JOIN wtm_official_accounts_level l ON a.level = l.id
-    WHERE a.id NOT IN (
+    FROM wtm_official_accounts a LEFT JOIN wtm_official_accounts_level l ON a.level = l.id LEFT JOIN wtm_task_pool pool
+    ON pool.officialAccountsId=a.id
+    WHERE pool.id>0 AND pool.taskType=0 AND a.id NOT IN (
       SELECT account.id
       FROM wtm_official_accounts account LEFT JOIN wtm_office_member member ON member.officeAccountId = account.id
       WHERE member.id > 0 AND member.memberId = #{memberId}
@@ -49,4 +50,8 @@
     ORDER BY a.createTime DESC
     LIMIT 9
 </select>
+    <select id="getOfficialAccountWithScoreById"
+            resultType="com.weitaomi.application.model.dto.OfficialAccountWithScore">
+         select account.*,le.followReward score from wtm_official_accounts account LEFT wtm_official_accounts_level le ON account.level=le.id WHERE account.id=#{id}
+    </select>
 </mapper>

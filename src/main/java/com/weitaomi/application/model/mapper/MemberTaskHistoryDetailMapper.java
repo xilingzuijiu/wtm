@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface MemberTaskHistoryDetailMapper extends IBaseMapper<MemberTaskHistoryDetail> {
     List<MemberTaskHistoryDetail> getMemberTaskHistoryDetialList(@Param("taskHistoryId") Long taskHistoryId);
+    int insertIntoDetail(@Param("memberTaskHistoryDetails") List<MemberTaskHistoryDetail> memberTaskHistoryDetails, @Param("taskId") Long taskId,@Param("createTime") Long createTime);
 }

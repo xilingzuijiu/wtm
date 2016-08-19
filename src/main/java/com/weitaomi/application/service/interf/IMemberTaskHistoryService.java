@@ -1,9 +1,11 @@
 package com.weitaomi.application.service.interf;
 
+import com.weitaomi.application.model.bean.MemberScore;
 import com.weitaomi.application.model.bean.MemberTask;
 import com.weitaomi.application.model.bean.MemberTaskHistoryDetail;
 import com.weitaomi.application.model.dto.MemberTaskDto;
 import com.weitaomi.application.model.dto.MemberTaskHistoryDto;
+import com.weitaomi.application.model.dto.MemberTaskWithDetail;
 import com.weitaomi.systemconfig.util.Page;
 
 import java.util.List;
@@ -35,4 +37,19 @@ public interface IMemberTaskHistoryService {
      * @return
      */
     public List<MemberTaskDto> getMemberDailyTask(Long memberId);
+
+    /**
+     * 增加任务记录
+     * @param memberTaskWithDetail
+     * @return
+     */
+    public boolean addMemberTaskToHistory(MemberTaskWithDetail memberTaskWithDetail);
+
+    /**
+     * 每日任务记录
+     * @param memberId
+     * @param typeId
+     * @return
+     */
+    MemberScore addDailyTask(Long memberId, Long typeId);
 }

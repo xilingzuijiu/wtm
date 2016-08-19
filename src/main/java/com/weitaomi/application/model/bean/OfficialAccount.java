@@ -5,7 +5,7 @@ import com.weitaomi.application.model.BaseModel;
 import javax.persistence.*;
 
 @Table(name = "wtm_official_accounts")
-public class OfficalAccount extends BaseModel{
+public class OfficialAccount extends BaseModel{
 
     /**
      * 商家类型
@@ -85,7 +85,7 @@ public class OfficalAccount extends BaseModel{
      * 创建日期
      */
     @Column(name = "tokenUpdateTime")
-    private Long tokenUpdateTime;
+    private String tokenUpdateTime;
     /**
      * 创建日期
      */
@@ -348,21 +348,6 @@ public class OfficalAccount extends BaseModel{
         this.accessToken = accessToken;
     }
 
-    /**
-     * 获取创建日期
-     * @return tokenUpdateTime 创建日期
-     */
-    public Long getTokenUpdateTime() {
-        return this.tokenUpdateTime;
-    }
-
-    /**
-     * 设置创建日期
-     * @param tokenUpdateTime 创建日期
-     */
-    public void setTokenUpdateTime(Long tokenUpdateTime) {
-        this.tokenUpdateTime = tokenUpdateTime;
-    }
 
     /**
      * 获取公众号等级
@@ -378,5 +363,21 @@ public class OfficalAccount extends BaseModel{
      */
     public void setLevel(String level) {
         this.level = level;
+    }
+
+    /**
+     * 获取创建日期
+     * @return tokenUpdateTime 创建日期
+     */
+    public String getTokenUpdateTime() {
+        return this.tokenUpdateTime;
+    }
+
+    /**
+     * 设置创建日期
+     * @param tokenUpdateTime 创建日期
+     */
+    public void setTokenUpdateTime(String tokenUpdateTime) {
+        this.tokenUpdateTime = tokenUpdateTime;
     }
 }

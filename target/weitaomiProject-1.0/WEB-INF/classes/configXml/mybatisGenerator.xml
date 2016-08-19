@@ -105,7 +105,11 @@
             <!--<property name="useActualColumnNames" value="true"/>-->
             <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
         <!--</table>-->
-        <table tableName="wtm_official_accounts_level"  domainObjectName="OfficialAccountsLevel">
+        <!--<table tableName="wtm_official_accounts_level"  domainObjectName="OfficialAccountsLevel">-->
+            <!--<property name="useActualColumnNames" value="true"/>-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+        <table tableName="wtm_task_pool"  domainObjectName="TaskPool">
             <property name="useActualColumnNames" value="true"/>
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>

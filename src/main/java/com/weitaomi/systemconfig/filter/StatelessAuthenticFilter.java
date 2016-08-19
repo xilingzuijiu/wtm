@@ -1,11 +1,14 @@
 package com.weitaomi.systemconfig.filter;
 
 import com.weitaomi.application.service.interf.ICacheService;
+import java.util.concurrent.*;
 import com.weitaomi.systemconfig.constant.ActionConstants;
 import com.weitaomi.systemconfig.exception.BusinessException;
+import com.weitaomi.systemconfig.exception.InfoException;
 import com.weitaomi.systemconfig.token.StatelessToken;
 import com.weitaomi.systemconfig.util.DateUtils;
 import com.weitaomi.systemconfig.util.StringUtil;
+import jodd.servlet.URLDecoder;
 import org.apache.shiro.web.filter.AccessControlFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,6 +40,13 @@ public class StatelessAuthenticFilter extends AccessControlFilter {
         String uri=httpServletRequest.getRequestURI();
         logger.info("请求路径为 :"+uri);
         Long time=Long.valueOf(httpServletRequest.getHeader("time"));
+        Long memberId=Long.valueOf(httpServletRequest.getHeader("memberId"));
+        if (memberId==1){
+            if (!"/weitaomi/app/admin/member/login".equals(uri)&&!"/weitaomi/app/admin/member/register".equals(uri)&&!"/weitaomi/app/admin/member/thirdPlatLogin".equals(uri)) {
+                logger.warn("请求账号为测试账号");
+                throw new InfoException("请求账号为系统账号");
+            }
+        }
         if (StringUtil.isEmpty(authentication)||StringUtil.isEmpty(uri)||time==null){
             throw new BusinessException("非法请求参数");
         }
@@ -45,7 +55,13 @@ public class StatelessAuthenticFilter extends AccessControlFilter {
             throw new BusinessException("非法的请求时间");
         }
         Map<String,String> map=this.formLinkedMap(authentication,uri,time);
-        String username=map.get("username");
+        String username=URLDecoder.decode(map.get("username"));
+        if (username.equals("guest")){
+            if (!"/weitaomi/app/admin/member/login".equals(uri)&&!"/weitaomi/app/admin/member/register".equals(uri)&&!"/weitaomi/app/admin/member/thirdPlatLogin".equals(uri)) {
+                logger.warn("请求账号为测试账号");
+                throw new InfoException("请求账号为系统账号");
+            }
+        }
         String randomkey=map.get("randomkey");
         String digest=map.get("digest");
         map.remove("digest");
@@ -76,7 +92,7 @@ public class StatelessAuthenticFilter extends AccessControlFilter {
         Map<String,String> map=new LinkedHashMap<String, String>();
         String[] params=authentication.split(":");
         map.put("time",time.toString());
-        map.put("username",params[0]);
+        map.put("username", params[0]);
         map.put("randomkey",params[1]);
         map.put("url",url);
         map.put("digest",params[2]);

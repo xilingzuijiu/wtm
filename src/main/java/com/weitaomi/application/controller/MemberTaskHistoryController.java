@@ -3,6 +3,7 @@ package com.weitaomi.application.controller;
 import com.weitaomi.application.controller.baseController.BaseController;
 import com.weitaomi.application.service.interf.IMemberTaskHistoryService;
 import com.weitaomi.systemconfig.dataFormat.AjaxResult;
+import com.weitaomi.systemconfig.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,5 +53,19 @@ public class MemberTaskHistoryController extends BaseController {
     @RequestMapping(value = "/getMemberTaskInfoDetail")
     public AjaxResult getMemberTaskInfoDetail(Long taskHistoryId){
         return AjaxResult.getOK(memberTaskHistoryService.getMemberTaskInfoDetail(taskHistoryId));
+    }
+    /**
+     * 用户每日任务提交
+     * @param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/addDailyTask")
+    public AjaxResult addDailyTask(HttpServletRequest request, @RequestParam Long taskId){
+        Long memberId=this.getUserId(request);
+        if (memberId==null){
+            throw new BusinessException("用户ID为空");
+        }
+        return AjaxResult.getOK(memberTaskHistoryService.addDailyTask(memberId,taskId));
     }
 }

@@ -6,6 +6,7 @@ import com.weitaomi.application.model.dto.OfficialAccountMsg;
 import com.weitaomi.application.model.dto.UnFollowOfficicalAccountDto;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by supumall on 2016/8/9.
@@ -22,12 +23,12 @@ public interface IOfficeAccountService {
      * 推送关注任务
      * @param addOfficalAccountDto
      */
-    public void pushAddRequest(AddOfficalAccountDto addOfficalAccountDto);
+    public boolean pushAddRequest(Long memberId,AddOfficalAccountDto addOfficalAccountDto);
 
     /**
      * {"originId":""," nickname ":"昵称，如果unionId一致则换成unionId","time":"关注时间"}
      */
-    public void receiveAddOffical(AddResponseTaskDto addResponseTaskDto);
+    public Boolean pushAddFinished(Map<String,String> params);
 
     /**
      * 获取公众号关注列表

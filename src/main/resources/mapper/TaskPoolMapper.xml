@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.weitaomi.application.model.mapper.TaskPoolMapper" >
+  <resultMap id="BaseResultMap" type="com.weitaomi.application.model.bean.TaskPool" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="taskType" property="taskType" jdbcType="INTEGER" />
+    <result column="totalScore" property="totalScore" jdbcType="INTEGER" />
+    <result column="officeAccountId" property="officeAccountId" jdbcType="BIGINT" />
+    <result column="articleId" property="articleId" jdbcType="BIGINT" />
+    <result column="needNumber" property="needNumber" jdbcType="INTEGER" />
+    <result column="createTime" property="createTime" jdbcType="BIGINT" />
+  </resultMap>
+  <update id="updateTaskPoolWithScore">
+    update wtm_task_pool pool set pool.totalScore =pool.totalScore-#{score}  where pool.id=#{taskId}
+  </update>
+  <select id="getTaskPoolByOfficialId" resultType="com.weitaomi.application.model.bean.TaskPool">
+    select * from wtm_task_pool pool WHERE pool.officialAccountsId=#{officialAccountId}
+  </select>
+</mapper>

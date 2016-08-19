@@ -65,7 +65,6 @@ public class HttpRequestUtils {
         // httpPost.setHeader("Content-Type", "text/xml;charset=GBK");
 
         HttpResponse response = httpClient.execute(httpPost);
-
         if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
             throw new RuntimeException("请求失败");
         }

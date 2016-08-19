@@ -17,4 +17,7 @@
   <select id="getThirdLoginInfo" resultType="com.weitaomi.application.model.bean.ThirdLogin">
     select * from wtm_third_login login where login.openId=#{openId}
   </select>
+  <select id="getMemberIdByUnionId" resultType="java.lang.Long">
+    select login.memberId from wtm_third_login login WHERE login.unionId=#{unionId}
+  </select>
 </mapper>

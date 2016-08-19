@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Created by supumall on 2016/7/8.
@@ -40,7 +41,7 @@ public class MemberScoreService implements IMemberScoreService {
     private MemberInvitedRecordMapper memberInvitedRecordMapper;
     @Override
     @Transactional
-    public MemberScore addMemberScore(Long memberId, Long typeId, Double score, Long sessionId) {
+    public MemberScore addMemberScore(Long memberId, Long typeId, Long score, String sessionId) {
         if (sessionId==null){
             throw new BusinessException("幂等性操作，请生成随机数");
         }
@@ -154,4 +155,10 @@ public class MemberScoreService implements IMemberScoreService {
             }
         }
     }
+
+    @Override
+    public List<MemberScoreFlow> getMemberScoreFlowList(Long memberId) {
+        return memberScoreFlowMapper.getMemberScoreFlowListByMemberId(memberId);
+    }
+
 }

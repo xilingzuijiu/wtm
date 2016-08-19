@@ -21,6 +21,12 @@ public class BaseService {
         byte[] imageFile = new byte[0];
         try {
             imageFile=  base64Decoder.decodeBuffer(imageFiles);
+            for (int i = 0; i < imageFile.length; ++i) {
+                //调整异常数据
+                if (imageFile[i] < 0) {
+                    imageFile[i] += 256;
+                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
