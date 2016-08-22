@@ -45,7 +45,7 @@
     WHERE pool.id>0 AND pool.taskType=0 AND a.id NOT IN (
       SELECT account.id
       FROM wtm_official_accounts account LEFT JOIN wtm_office_member member ON member.officeAccountId = account.id
-      WHERE member.id > 0 AND member.memberId = #{memberId}
+      WHERE member.id > 0 AND member.memberId = #{memberId} AND member.isAccessNow=1
     )
     ORDER BY a.createTime DESC
     LIMIT 9

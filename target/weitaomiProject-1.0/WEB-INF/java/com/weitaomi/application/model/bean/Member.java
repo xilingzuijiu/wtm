@@ -26,6 +26,11 @@ public class Member extends BaseModel  implements Serializable {
      */
     @Column(name = "telephone")
     private String telephone;
+    /**
+     * 用户地址
+     */
+    @Column(name = "memberAddress")
+    private String memberAddress;
 
     /**
      * 加密盐
@@ -290,5 +295,21 @@ public class Member extends BaseModel  implements Serializable {
      */
     public void setSource(String source) {
         this.source = source;
+    }
+
+    /**
+     * 获取用户地址
+     * @return memberAddress 用户地址
+     */
+    public String getMemberAddress() {
+        return this.memberAddress;
+    }
+
+    /**
+     * 设置用户地址
+     * @param memberAddress 用户地址
+     */
+    public void setMemberAddress(String memberAddress) {
+        this.memberAddress = memberAddress;
     }
 }

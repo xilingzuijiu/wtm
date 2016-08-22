@@ -60,4 +60,13 @@ public class PaymentController extends BaseController{
         paymentService.patchAliPayCustomers(approveList);
         return AjaxResult.getOK();
     }
+    @ResponseBody
+    @RequestMapping(value = "/getMemberWalletInfo", method = RequestMethod.POST)
+    public AjaxResult getMemberWalletInfo(HttpServletRequest request){
+        Long memberId=this.getUserId(request);
+        if (memberId==null){
+            throw new BusinessException("用户ID为空");
+        }
+        return AjaxResult.getOK(paymentService.getMemberWalletInfo(memberId));
+    }
 }

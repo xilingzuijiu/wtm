@@ -45,6 +45,12 @@
     </property>
     <property name="filterChainDefinitions">
       <value>
+        /weitaomi/app/admin/member/login=anon
+        /weitaomi/app/admin/member/register=anon
+        /weitaomi/app/admin/member/thirdPlatLogin=anon
+        /weitaomi/app/admin/member/register=anon
+        /weitaomi/app/admin/member/validateIndetifyCode=anon
+        /weitaomi/app/admin/member/modifyPassWord=anon
         /app/**=stateless
       </value>
     </property>

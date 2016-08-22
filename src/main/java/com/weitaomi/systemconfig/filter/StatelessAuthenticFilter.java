@@ -41,12 +41,12 @@ public class StatelessAuthenticFilter extends AccessControlFilter {
         logger.info("请求路径为 :"+uri);
         Long time=Long.valueOf(httpServletRequest.getHeader("time"));
         Long memberId=Long.valueOf(httpServletRequest.getHeader("memberId"));
-        if (memberId==1){
-            if (!"/weitaomi/app/admin/member/login".equals(uri)&&!"/weitaomi/app/admin/member/register".equals(uri)&&!"/weitaomi/app/admin/member/thirdPlatLogin".equals(uri)) {
-                logger.warn("请求账号为测试账号");
-                throw new InfoException("请求账号为系统账号");
-            }
-        }
+//        if (memberId==1){
+//            if (!"/weitaomi/app/admin/member/login".equals(uri)&&!"/weitaomi/app/admin/member/register".equals(uri)&&!"/weitaomi/app/admin/member/thirdPlatLogin".equals(uri)) {
+//                logger.warn("请求账号为测试账号");
+//                throw new InfoException("请求账号为系统账号");
+//            }
+//        }
         if (StringUtil.isEmpty(authentication)||StringUtil.isEmpty(uri)||time==null){
             throw new BusinessException("非法请求参数");
         }
@@ -56,12 +56,12 @@ public class StatelessAuthenticFilter extends AccessControlFilter {
         }
         Map<String,String> map=this.formLinkedMap(authentication,uri,time);
         String username=URLDecoder.decode(map.get("username"));
-        if (username.equals("guest")){
-            if (!"/weitaomi/app/admin/member/login".equals(uri)&&!"/weitaomi/app/admin/member/register".equals(uri)&&!"/weitaomi/app/admin/member/thirdPlatLogin".equals(uri)) {
-                logger.warn("请求账号为测试账号");
-                throw new InfoException("请求账号为系统账号");
-            }
-        }
+//        if (username.equals("guest")){
+//            if (!"/weitaomi/app/admin/member/login".equals(uri)&&!"/weitaomi/app/admin/member/register".equals(uri)&&!"/weitaomi/app/admin/member/thirdPlatLogin".equals(uri)) {
+//                logger.warn("请求账号为测试账号");
+//                throw new InfoException("请求账号为系统账号");
+//            }
+//        }
         String randomkey=map.get("randomkey");
         String digest=map.get("digest");
         map.remove("digest");

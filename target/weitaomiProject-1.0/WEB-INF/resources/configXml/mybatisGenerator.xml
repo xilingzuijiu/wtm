@@ -109,7 +109,11 @@
             <!--<property name="useActualColumnNames" value="true"/>-->
             <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
         <!--</table>-->
-        <table tableName="wtm_task_pool"  domainObjectName="TaskPool">
+        <!--<table tableName="wtm_task_pool"  domainObjectName="TaskPool">-->
+            <!--<property name="useActualColumnNames" value="true"/>-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+        <table tableName="wtm_member_pay_accounts"  domainObjectName="MemberPayAccounts">
             <property name="useActualColumnNames" value="true"/>
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>

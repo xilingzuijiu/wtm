@@ -9,6 +9,7 @@
     <result column="memberName" property="memberName" jdbcType="VARCHAR" />
     <result column="nickName" property="nickName" jdbcType="VARCHAR" />
     <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+    <result column="memberAddress" property="memberAddress" jdbcType="VARCHAR" />
     <result column="salt" property="salt" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="birth" property="birth" jdbcType="BIGINT" />
@@ -19,14 +20,89 @@
     <result column="source" property="source" jdbcType="VARCHAR" />
     <result column="createTime" property="createTime" jdbcType="BIGINT" />
   </resultMap>
+  <resultMap id="ThridLoginReslutMap" type="com.weitaomi.application.model.bean.ThirdLogin">
+    <result column="third_openId" property="openId" jdbcType="VARCHAR" />
+    <result column="third_unionId" property="unionId" jdbcType="VARCHAR" />
+    <result column="third_type" property="type" jdbcType="INTEGER" />
+    <result column="third_nickname" property="nickname" jdbcType="VARCHAR" />
+    <result column="third_remark" property="remark" jdbcType="VARCHAR" />
+    <result column="third_createTime" property="createTime" jdbcType="BIGINT" />
+  </resultMap>
+  <resultMap id="OfficialAccountResultMap" type="com.weitaomi.application.model.bean.OfficialAccount">
+    <result column="official_sellerTypeId" jdbcType="INTEGER" property="sellerTypeId"/>
+    <result column="official_isOpen" jdbcType="INTEGER" property="isOpen"/>
+    <result column="official_level" jdbcType="INTEGER" property="level"/>
+    <result column="official_openId" jdbcType="VARCHAR" property="openId"/>
+    <result column="official_originId" jdbcType="VARCHAR" property="originId"/>
+    <result column="official_appId" jdbcType="VARCHAR" property="appId"/>
+    <result column="official_appSecret" jdbcType="VARCHAR" property="appSecret"/>
+    <result column="official_userName" jdbcType="VARCHAR" property="userName"/>
+    <result column="official_accessToken" jdbcType="VARCHAR" property="accessToken"/>
+    <result column="official_tokenUpdateTime" jdbcType="VARCHAR" property="tokenUpdateTime"/>
+    <result column="official_accountNumber" jdbcType="INTEGER" property="accountNumber"/>
+    <result column="official_remark" jdbcType="VARCHAR" property="remark"/>
+    <result column="official_addUrl" jdbcType="VARCHAR" property="addUrl"/>
+    <result column="official_imageUrl" jdbcType="VARCHAR" property="imageUrl"/>
+    <result column="official_createTime" jdbcType="BIGINT" property="createTime"/>
+  </resultMap>
+  <resultMap id="MemberPayAccountsResultMap" type="MemberPayAccounts">
+    <result column="pay_payType" property="payType" jdbcType="INTEGER" />
+    <result column="pay_payAccount" property="payAccount" jdbcType="VARCHAR" />
+    <result column="pay_realName" property="realName" jdbcType="VARCHAR" />
+    <result column="pay_createTime" property="createTime" jdbcType="BIGINT" />
+  </resultMap>
+  <resultMap id="MemberResultMap" type="com.weitaomi.application.model.dto.MemberInfoDto" extends="BaseResultMap">
+    <result column="score_memberScore" property="memberScore" />
+    <association property="thirdLogin" javaType="object" resultMap="ThridLoginReslutMap"/>
+    <collection property="officialAccountList" javaType="list" ofType="OfficialAccount" resultMap="OfficialAccountResultMap"/>
+    <collection property="payAccountsList" javaType="list" ofType="MemberPayAccounts" resultMap="MemberPayAccountsResultMap"/>
+  </resultMap>
+  <sql id="thirdLogin">
+    third.openId third_openId,
+    third.unionId third_unionId,
+    third.type third_type,
+    third.nickname third_nickname,
+    third.remark third_remark,
+    third.createTime third_createTime
+  </sql>
+  <sql id="payAccounts">
+    pay.payType pay_payType,
+    pay.payAccount pay_payAccount,
+    pay.realName pay_realName,
+    pay.createTime pay_createTime
+  </sql>
+  <sql id="officialAccount">
+    official.sellerTypeId official_sellerTypeId,
+    official.isOpen official_isOpen,
+    official.level official_level,
+    official.openId official_openId,
+    official.originId official_originId,
+    official.appId official_appId,
+    official.appSecret official_appSecret,
+    official.userName official_userName,
+    official.accessToken official_accessToken,
+    official.tokenUpdateTime official_tokenUpdateTime,
+    official.accountNumber official_accountNumber,
+    official.remark official_remark,
+    official.addUrl official_addUrl,
+    official.imageUrl official_imageUrl,
+    official.createTime official_createTime
+  </sql>
   <update id="upLoadMemberShowImage">
     update wtm_member m  set m.imageUrl  = #{imageUrl}  where m.id=#{memberId}
   </update>
-  <select id="getMemberByTelephone" resultType="com.weitaomi.application.model.dto.MemberInfoDto">
-      select m.*,s.memberScore,login.openId,account.* from wtm_member m LEFT JOIN wtm_member_score s ON s.memberId=m.id LEFT JOIN wtm_third_login login ON login.memberId=m.id
-      LEFT JOIN wtm_official_accounts account ON account.memberId=m.id
+
+  <select id="getMemberByTelephone" resultMap="MemberResultMap">
+      SELECT m.*,score.memberScore score_memberScore,<include refid="officialAccount"/>,<include refid="payAccounts"/>,<include
+          refid="thirdLogin"/>
+        FROM wtm_member m
+          LEFT JOIN wtm_official_accounts official ON m.id=official.memberId
+          LEFT JOIN wtm_member_pay_accounts pay ON pay.memberId=m.id
+          LEFT JOIN wtm_third_login third ON third.memberId=m.id
+          LEFT JOIN wtm_member_score score ON score.memberId=m.id
       WHERE m.telephone=#{telephone}
   </select>
+
   <select id="getByCellphoneAndPassword" resultMap="BaseResultMap">
     select * from wtm_member m WHERE m.telephone=#{cellphone} AND m.password=#{password}
   </select>
@@ -37,9 +113,14 @@
   <select id="getMemberByInviteCode" resultMap="BaseResultMap">
     select * from wtm_member m WHERE m.invitedCode=#{inviteCode}
   </select>
-  <select id="getMemberInfoById" resultType="com.weitaomi.application.model.dto.MemberInfoDto">
-    select m.*,s.memberScore,login.openId,account.* from wtm_member m LEFT JOIN wtm_member_score s ON s.memberId=m.id LEFT JOIN wtm_third_login login ON login.memberId=m.id
-    LEFT JOIN wtm_official_accounts account ON account.memberId=m.id
+  <select id="getMemberInfoById" resultMap="MemberResultMap">
+    SELECT m.*,score.memberScore score_memberScore,<include refid="officialAccount"/>,<include refid="payAccounts"/>,<include
+          refid="thirdLogin"/>
+      FROM wtm_member m
+      LEFT JOIN wtm_official_accounts official ON official.memberId=m.id
+      LEFT JOIN wtm_member_pay_accounts pay ON pay.memberId=m.id
+      LEFT JOIN wtm_third_login third ON third.memberId=m.id
+      LEFT JOIN wtm_member_score score ON score.memberId=m.id
      WHERE m.id=#{memberId}
   </select>
 </mapper>

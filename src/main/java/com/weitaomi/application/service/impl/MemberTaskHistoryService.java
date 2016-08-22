@@ -12,6 +12,7 @@ import com.weitaomi.application.model.mapper.MemberTaskMapper;
 import com.weitaomi.application.service.interf.IMemberScoreService;
 import com.weitaomi.application.service.interf.IMemberTaskHistoryService;
 import com.weitaomi.systemconfig.exception.BusinessException;
+import com.weitaomi.systemconfig.exception.InfoException;
 import com.weitaomi.systemconfig.util.DateUtils;
 import com.weitaomi.systemconfig.util.Page;
 import com.weitaomi.systemconfig.util.UUIDGenerator;
@@ -105,8 +106,8 @@ public class MemberTaskHistoryService implements IMemberTaskHistoryService {
         if (memberTaskWithDetail.getTaskId()!=null){
             memberTaskHistory.setTaskId(memberTaskWithDetail.getTaskId());
         }
-        if (memberTaskWithDetail.getCount()!=null){
-            memberTaskHistory.setCount(memberTaskWithDetail.getCount());
+        if (memberTaskWithDetail.getPointCount()!=null){
+            memberTaskHistory.setPointCount(memberTaskWithDetail.getPointCount());
         }
         if (memberTaskWithDetail.getCreateTime()!=null){
             memberTaskHistory.setCreateTime(DateUtils.getUnixTimestamp());
@@ -127,11 +128,15 @@ public class MemberTaskHistoryService implements IMemberTaskHistoryService {
     @Override
     @Transactional
     public MemberScore addDailyTask(Long memberId, Long typeId) {
-      MemberTask memberTask=memberTaskMapper.selectByPrimaryKey(typeId);
+        List<MemberTaskHistory> memberTaskHistoryList=memberTaskMapper.getIsMemberTaskFinished(memberId,typeId,DateUtils.getTodayZeroSeconds(),DateUtils.getTodayEndSeconds());
+        if (!memberTaskHistoryList.isEmpty()){
+            throw new InfoException("该任务今天已完成");
+        }
+        MemberTask memberTask=memberTaskMapper.selectByPrimaryKey(typeId);
         //增加记录
         MemberTaskWithDetail memberTaskWithDetail=new MemberTaskWithDetail();
-        memberTaskWithDetail.setTaskId(1L);
-        memberTaskWithDetail.setCount(memberTask.getCount());
+        memberTaskWithDetail.setTaskId(typeId);
+        memberTaskWithDetail.setPointCount(memberTask.getPointCount());
         memberTaskWithDetail.setIsFinished(1);
         memberTaskWithDetail.setMemberId(memberId);
         memberTaskWithDetail.setTaskName(memberTask.getTaskName());
@@ -141,13 +146,13 @@ public class MemberTaskHistoryService implements IMemberTaskHistoryService {
         MemberTaskHistoryDetail memberTaskHistoryDetail=new MemberTaskHistoryDetail();
         memberTaskHistoryDetail.setTaskName(memberTask.getTaskName());
         memberTaskHistoryDetail.setTaskDesc(memberTask.getTaskDesc());
-        memberTaskHistoryDetail.setCount(memberTask.getCount());
+        memberTaskHistoryDetail.setPointCount(memberTask.getPointCount());
         memberTaskHistoryDetail.setIsFinished(1);
         memberTaskHistoryDetail.setCreateTime(DateUtils.getUnixTimestamp());
         memberTaskHistoryDetailList.add(memberTaskHistoryDetail);
         memberTaskWithDetail.setMemberTaskHistoryDetailList(memberTaskHistoryDetailList);
         this.addMemberTaskToHistory(memberTaskWithDetail);
-        MemberScore memberScore=memberScoreService.addMemberScore(memberId,3L,Long.valueOf(memberTask.getCount()), UUIDGenerator.generate());
+        MemberScore memberScore=memberScoreService.addMemberScore(memberId,3L,Long.valueOf(memberTask.getPointCount()), UUIDGenerator.generate());
         if (memberScore!=null){
             return memberScore;
         }

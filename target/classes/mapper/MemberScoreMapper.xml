@@ -13,7 +13,26 @@
     <result column="updateTime" jdbcType="BIGINT" property="updateTime" />
     <result column="createTime" jdbcType="BIGINT" property="createTime" />
   </resultMap>
+  <resultMap id="MemberScoreFlowMap" type="com.weitaomi.application.model.dto.MemberScoreFlowDto">
+    <result column="typeName" jdbcType="VARCHAR" property="typeName" />
+    <result column="typeDesc" jdbcType="VARCHAR" property="typeDesc" />
+    <result column="flowCount" jdbcType="BIGINT" property="flowCount" />
+    <result column="flowTime" jdbcType="BIGINT" property="flowTime" />
+  </resultMap>
+  <resultMap id="MyResultMap" type="com.weitaomi.application.model.dto.MyWalletDto">
+    <result column="avaliableBalance" property="avaliableBalance" jdbcType="BIGINT"/>
+    <collection property="memberScoreFlowDtoList" ofType="list" resultMap="MemberScoreFlowMap"/>
+  </resultMap>
   <select id="getMemberScoreByMemberId" resultMap="BaseResultMap">
     select * from wtm_member_score s WHERE s.memberId=#{memberId};
+  </select>
+  <sql id="flowScoreList">
+    flowType.typeName typeName,flowType.typeDesc typeDesc,flow.flowScore flowCount,flow.createTime flowTime
+  </sql>
+  <select id="getMyWalletDtoByMemberId" resultMap="MyResultMap">
+    select score.memberScore avaliableBalance,<include refid="flowScoreList"/>  from
+    wtm_member_score score LEFT JOIN wtm_member_score_flow flow ON score.id=flow.memberScoreId
+    LEFT JOIN wtm_member_score_flow_type flowType ON flowType.id = flow.typeId
+    WHERE flow.typeId IN (1,2) AND score.memberId=#{memberId}
   </select>
 </mapper>

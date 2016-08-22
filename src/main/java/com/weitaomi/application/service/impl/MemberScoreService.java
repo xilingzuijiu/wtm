@@ -60,29 +60,15 @@ public class MemberScoreService implements IMemberScoreService {
                 BigDecimal increaseScore=null;
                 BigDecimal scoreBefore=BigDecimal.ZERO;
                 MemberScore memberScore = memberScoreMapper.getMemberScoreByMemberId(memberId);
-                if (memberScoreFlowType.getFlowCount()!=null&&memberScoreFlowType.getFlowCount().equals(BigDecimal.ZERO)){
-                    increaseScore=BigDecimal.valueOf(score);
-                }else if (memberScoreFlowType.getFlowCount()!=null&&!memberScoreFlowType.getFlowCount().equals(BigDecimal.ZERO)){
+                if (score!=null){
                     BigDecimal rate=BigDecimal.ONE;
                     if (memberScore != null) {
                         scoreBefore=memberScore.getMemberScore();
                         rate=memberScore.getRate();
                     }
-                    increaseScore=memberScoreFlowType.getFlowCount().multiply(rate);
+                    increaseScore=BigDecimal.valueOf(score).multiply(rate);
                 }
-                MemberScoreFlow memberScoreFlow = new MemberScoreFlow();
-                memberScoreFlow.setMemberId(memberId);
-                memberScoreFlow.setTypeId(typeId);
-                memberScoreFlow.setDetail(memberScoreFlowType.getTypeDesc());
-                memberScoreFlow.setFlowScore(increaseScore);
-                memberScoreFlow.setMemberScoreAfter(memberScore.getMemberScore());
-                memberScoreFlow.setMemberScoreBefore(scoreBefore);
-                memberScoreFlow.setMemberScoreId(memberScore.getId());
-                memberScoreFlow.setCreateTime(DateUtils.getUnixTimestamp());
-                Boolean flag= memberScoreFlowMapper.insertSelective(memberScoreFlow)==1?true:false;
-                if (!flag){
-                    throw new BusinessException("积分记录失败");
-                }
+
                 if (memberScore == null) {
                     if (increaseScore.doubleValue()<0){
                         throw new BusinessException("可用积分不足");
@@ -92,6 +78,7 @@ public class MemberScoreService implements IMemberScoreService {
                     memberScore.setMemberScore(increaseScore);
                     memberScore.setValidScore(increaseScore);
                     memberScore.setCreateTime(DateUtils.getUnixTimestamp());
+                    memberScore.setUpdateTime(DateUtils.getUnixTimestamp());
                     memberScoreMapper.insertSelective(memberScore);
                 } else {
                     BigDecimal afterScore=memberScore.getMemberScore().add(increaseScore);
@@ -113,6 +100,20 @@ public class MemberScoreService implements IMemberScoreService {
                     memberScore.setUpdateTime(DateUtils.getUnixTimestamp());
                     memberScoreMapper.updateByPrimaryKeySelective(memberScore);
                 }
+                MemberScoreFlow memberScoreFlow = new MemberScoreFlow();
+                memberScoreFlow.setMemberId(memberId);
+                memberScoreFlow.setTypeId(typeId);
+                memberScoreFlow.setDetail(memberScoreFlowType.getTypeDesc());
+                memberScoreFlow.setFlowScore(increaseScore);
+                memberScoreFlow.setMemberScoreAfter(memberScore.getMemberScore());
+                memberScoreFlow.setMemberScoreBefore(scoreBefore);
+                memberScoreFlow.setMemberScoreId(memberScore.getId());
+                memberScoreFlow.setCreateTime(DateUtils.getUnixTimestamp());
+                Boolean flag= memberScoreFlowMapper.insertSelective(memberScoreFlow)>0?true:false;
+                if (!flag){
+                    throw new BusinessException("积分记录失败");
+                }
+
                 cacheService.setCacheByKey(key,memberScore,60*60);
                 if (typeId!=1&&typeId!=2) {
                     //处理上级奖励问题

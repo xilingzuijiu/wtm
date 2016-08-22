@@ -17,4 +17,29 @@
   <select id="getInvitedRecord" resultType="com.weitaomi.application.model.dto.InvitedRecord">
     select m.id memberId,m.memberName memberName,s.memberScore,FROM_UNIXTIME(r.createTime) invitedTime from wtm_member m LEFT JOIN wtm_member_invited_record r ON r.memberId=m.id LEFT JOIN wtm_member_score s ON s.memberId=m.id WHERE  r.parentId=#{parentID};
   </select>
+  <select id="getInvitedParamsDto" resultType="com.weitaomi.application.model.dto.InvitedParamsDto">
+       SELECT
+        m.id                        memberId,
+        m.memberName                memberName,
+        s.memberScore,
+        FROM_UNIXTIME(r.createTime) invitedTime,
+        his.totalScore,
+        his.sharedCount,
+        his.invitedScore
+      FROM
+        (SELECT
+           sum(history.count)       totalScore,
+           history.memberId         memberId,
+           CASE task.id
+           WHEN 2 OR 4
+             THEN task.count END AS sharedCount,
+           CASE task.id
+           WHEN 3
+             THEN task.count END AS invitedScore
+         FROM wtm_member_task_history history LEFT JOIN wtm_member_task task ON task.id = history.taskId
+         WHERE history.memberId =#{memberId} AND task.id IN (2, 3, 4)
+         GROUP BY history.memberId) his LEFT JOIN wtm_member_invited_record r ON r.parentId = his.memberId
+        LEFT JOIN wtm_member m ON m.id = r.memberId
+        LEFT JOIN wtm_member_score s ON s.memberId = m.id
+  </select>
 </mapper>

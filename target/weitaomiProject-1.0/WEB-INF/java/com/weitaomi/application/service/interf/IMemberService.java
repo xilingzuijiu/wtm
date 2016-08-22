@@ -66,6 +66,14 @@ public interface IMemberService {
        */
      boolean modifyPassWord(Long memberId, ModifyPasswordDto modifyPasswordDto);
 
+    /**
+     * 更新用户地址
+     * @param memberId
+     * @param memberAddress
+     * @return
+     */
+     boolean modifyMemberAddress(Long memberId, String  memberAddress);
+
  /**
       * 上传用户头像
       * @param memberId

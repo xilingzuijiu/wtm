@@ -171,13 +171,26 @@ public class MemberController  extends BaseController {
         return AjaxResult.getOK(memberService.modifyPassWord(memberId,modifyPasswordDto));
     }
     /**
+     * 修改地址
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/modifyMemberAddress", method = RequestMethod.POST)
+    public AjaxResult modifyMemberAddress(HttpServletRequest request,String memberAddress){
+        Long memberId=this.getUserId(request);
+        if (memberId==null){
+            throw new BusinessException("用户ID为空");
+        }
+        return AjaxResult.getOK(memberService.modifyMemberAddress(memberId,memberAddress));
+    }
+    /**
      * 验证验证码
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/validateIndetifyCode", method = RequestMethod.POST)
     public AjaxResult validateIndetifyCode(String mobile,String identifyCode){
-        return AjaxResult.getOK(memberService.validateIndetifyCode(mobile, identifyCode));
+        return AjaxResult.getOK(memberService.validateIndetifyCode(mobile,identifyCode));
     }
 //    /**
 //     * 获取邀请记录

@@ -1,6 +1,7 @@
 package com.weitaomi.application.service.interf;
 
 import com.weitaomi.application.model.bean.PaymentApprove;
+import com.weitaomi.application.model.dto.MyWalletDto;
 
 import java.util.List;
 import java.util.Map;
@@ -13,4 +14,5 @@ public interface IPaymentService {
     String verifyAlipayNotify(Map requestParams);
     String verifyBatchPayNotify(Map requestParams);
     void patchAliPayCustomers(List<PaymentApprove> approveList);
+    public MyWalletDto getMemberWalletInfo(Long memberId);
 }

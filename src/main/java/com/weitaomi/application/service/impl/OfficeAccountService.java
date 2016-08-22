@@ -112,7 +112,7 @@ public class OfficeAccountService implements IOfficeAccountService {
                 MemberTaskWithDetail memberTaskWithDetail=new MemberTaskWithDetail();
                 taskPoolMapper.updateTaskPoolWithScore(officialAccountWithScore.getScore(),taskPool.getId());
                 memberTaskWithDetail.setTaskId(1L);
-                memberTaskWithDetail.setCount(officialAccountWithScore.getScore());
+                memberTaskWithDetail.setPointCount(officialAccountWithScore.getScore());
                 memberTaskWithDetail.setIsFinished(1);
                 MemberTask memberTask=memberTaskMapper.selectByPrimaryKey(1);
                 memberTaskWithDetail.setMemberId(memberId);
@@ -123,7 +123,7 @@ public class OfficeAccountService implements IOfficeAccountService {
                 MemberTaskHistoryDetail memberTaskHistoryDetail=new MemberTaskHistoryDetail();
                 memberTaskHistoryDetail.setTaskName(memberTask.getTaskName());
                 memberTaskHistoryDetail.setTaskDesc(officialAccountWithScore.getUserName());
-                memberTaskHistoryDetail.setCount(officialAccountWithScore.getScore());
+                memberTaskHistoryDetail.setPointCount(officialAccountWithScore.getScore());
                 memberTaskHistoryDetail.setIsFinished(1);
                 memberTaskHistoryDetail.setCreateTime(DateUtils.getUnixTimestamp());
                 memberTaskHistoryDetailList.add(memberTaskHistoryDetail);

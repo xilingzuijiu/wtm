@@ -106,6 +106,8 @@ public class MemberService extends BaseService implements IMemberService {
         if (registerMsg.getFlag()!=null&&registerMsg.getFlag()==0){
             memberMapper.insertSelective(memberTemp);
             newMemberId=memberTemp.getId();
+            memberTemp.setInvitedCode(StringUtil.toSerialNumber(newMemberId));
+            memberMapper.updateByPrimaryKeySelective(memberTemp);
         }else if (registerMsg.getFlag()!=null&&registerMsg.getFlag()==1){
             ThirdLogin thirdLogin=registerMsg.getThirdLogin();
             if (thirdLogin==null){
@@ -269,45 +271,53 @@ public class MemberService extends BaseService implements IMemberService {
     }
 
     @Override
-    public boolean modifyPassWord(Long memberId, ModifyPasswordDto modifyPasswordDto){
-        boolean flag=false;
-        if (modifyPasswordDto==null){
+    public boolean modifyPassWord(Long memberId, ModifyPasswordDto modifyPasswordDto) {
+        boolean flag = false;
+        if (modifyPasswordDto == null) {
             throw new InfoException("密码信息为空，请重新修改或者登录");
         }
-        if ("0".equals(modifyPasswordDto.getFlag())){
-            Member member=memberMapper.getMemberByTelephone(modifyPasswordDto.getMobile());
-            if (member==null){
+        if (modifyPasswordDto.getFlag()==0) {
+            Member member = memberMapper.getMemberByTelephone(modifyPasswordDto.getMobile());
+            if (member == null) {
                 throw new BusinessException("用户不存在");
             }
-            String salt="";
-            if (!StringUtil.isEmpty(member.getSalt())){
-                salt=member.getSalt();
-            }else {
-                salt=StringUtil.random(6);
+            String salt = "";
+            if (!StringUtil.isEmpty(member.getSalt())) {
+                salt = member.getSalt();
+            } else {
+                salt = StringUtil.random(6);
             }
-            member.setPassword(new Sha256Hash(modifyPasswordDto.getNewPassword(),salt).toString());
-            int number=memberMapper.updateByPrimaryKeySelective(member);
-            flag=number>0?true:false;
-        }else if ("1".equals(modifyPasswordDto.getFlag())){
-            Member member=memberMapper.selectByPrimaryKey(memberId);
-            if (member==null){
+            member.setPassword(new Sha256Hash(modifyPasswordDto.getNewPassword(), salt).toString());
+            int number = memberMapper.updateByPrimaryKeySelective(member);
+            flag = number > 0 ? true : false;
+        } else if (modifyPasswordDto.getFlag()==1) {
+            Member member = memberMapper.selectByPrimaryKey(memberId);
+            if (member == null) {
                 throw new BusinessException("用户不存在");
             }
-            if (!new Sha256Hash(modifyPasswordDto.getPassword(),member.getSalt()).toString().equals(member.getPassword())){
+            if (!new Sha256Hash(modifyPasswordDto.getPassword(), member.getSalt()).toString().equals(member.getPassword())) {
                 throw new InfoException("原密码错误");
             }
-            String salt="";
-            if (!StringUtil.isEmpty(member.getSalt())){
-                salt=member.getSalt();
-            }else {
-                salt=StringUtil.random(6);
+            String salt = "";
+            if (!StringUtil.isEmpty(member.getSalt())) {
+                salt = member.getSalt();
+            } else {
+                salt = StringUtil.random(6);
             }
-            member.setPassword(new Sha256Hash(modifyPasswordDto.getNewPassword(),salt).toString());
-            int number=memberMapper.updateByPrimaryKeySelective(member);
-            flag=number>0?true:false;
+            member.setPassword(new Sha256Hash(modifyPasswordDto.getNewPassword(), salt).toString());
+            int number = memberMapper.updateByPrimaryKeySelective(member);
+            flag = number > 0 ? true : false;
         }
 
-        return  flag;
+        return flag;
+    }
+
+    @Override
+    public boolean modifyMemberAddress(Long memberId, String memberAddress) {
+        Member member=memberMapper.selectByPrimaryKey(memberId);
+        member.setMemberAddress(memberAddress);
+        int number = memberMapper.updateByPrimaryKeySelective(member);
+        return number>0?true:false;
     }
 
     @Override

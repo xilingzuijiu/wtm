@@ -9,8 +9,8 @@ public class MemberTask extends BaseModel{
     /**
      * 奖励积分
      */
-    @Column(name = "count")
-    private Long count;
+    @Column(name = "pointCount")
+    private Long pointCount;
 
     /**
      * 任务名称
@@ -38,17 +38,17 @@ public class MemberTask extends BaseModel{
      *
      * @return count - 奖励积分
      */
-    public Long getCount() {
-        return count;
+    public Long getPointCount() {
+        return pointCount;
     }
 
     /**
      * 设置奖励积分
      *
-     * @param count 奖励积分
+     * @param pointCount 奖励积分
      */
-    public void setCount(Long count) {
-        this.count = count;
+    public void setPointCount(Long pointCount) {
+        this.pointCount = pointCount;
     }
 
     /**

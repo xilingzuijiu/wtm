@@ -8,7 +8,7 @@
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="memberId" property="memberId" jdbcType="BIGINT"/>
     <result column="taskId" property="taskId" jdbcType="BIGINT"/>
-    <result column="count" property="count" jdbcType="BIGINT" />
+    <result column="pointCount" property="pointCount" jdbcType="BIGINT" />
     <result column="taskName" property="taskName" jdbcType="VARCHAR" />
     <result column="taskDesc" property="taskDesc" jdbcType="VARCHAR" />
     <result column="isFinished" property="isFinished" jdbcType="INTEGER" />
@@ -16,21 +16,21 @@
   </resultMap>
   <resultMap id="DetailResultMap" type="com.weitaomi.application.model.bean.MemberTaskHistoryDetail">
     <result column="detail_taskHistoryId" property="taskHistoryId" jdbcType="BIGINT" />
-    <result column="detail_count" property="count" jdbcType="BIGINT" />
+    <result column="detail_count" property="pointCount" jdbcType="BIGINT" />
     <result column="detail_taskName" property="taskName" jdbcType="VARCHAR" />
     <result column="detail_taskDesc" property="taskDesc" jdbcType="VARCHAR" />
     <result column="detail_isFinished" property="isFinished" jdbcType="INTEGER" />
     <result column="detail_createTime" property="createTime" jdbcType="BIGINT" />
   </resultMap>
   <resultMap id="MyResultMap" type="com.weitaomi.application.model.dto.MemberTaskHistoryDto" extends="BaseResultMap">
-    <collection property="memberTaskHistoryDetailList" javaType="com.weitaomi.application.model.bean.MemberTaskHistoryDetail" ofType="list" resultMap="DetailResultMap"/>
+    <collection property="memberTaskHistoryDetailList"  ofType="list" resultMap="DetailResultMap"/>
   </resultMap>
   <sql id="detailSql">
-    detail.taskHistoryId detail_taskHistoryId,detail.count detail_count,detail.taskName detail_taskName,
+    detail.taskHistoryId detail_taskHistoryId,detail.pointCount detail_count,detail.taskName detail_taskName,
     detail.taskDesc detail_taskDesc,detail.isFinished detail_isFinished,detail.createTime detail_createTime
   </sql>
-  <select id="getMemberTaskHistoryList" resultType="com.weitaomi.application.model.dto.MemberTaskHistoryDto">
-    select h.id taskHistoryId,h.taskName typeName,h.taskDesc typeDesc,h.createTime createTime, 1 AS taskType,
+  <select id="getMemberTaskHistoryList" resultMap="MyResultMap">
+    select h.*,
      <include refid="detailSql"/>
      from wtm_member_task_history h
         LEFT JOIN wtm_member_task_history_detail detail ON detail.taskHistoryId=h.id

@@ -2,7 +2,9 @@ package com.weitaomi.application.service.impl;
 
 import com.weitaomi.application.model.bean.PaymentApprove;
 import com.weitaomi.application.model.bean.PaymentHistory;
+import com.weitaomi.application.model.dto.MyWalletDto;
 import com.weitaomi.application.model.enums.PayType;
+import com.weitaomi.application.model.mapper.MemberScoreMapper;
 import com.weitaomi.application.model.mapper.PaymentHistoryMapper;
 import com.weitaomi.application.service.interf.ICacheService;
 import com.weitaomi.application.service.interf.IPayStrategyContext;
@@ -33,6 +35,8 @@ public class PaymentService implements IPaymentService {
     private PaymentHistoryMapper paymentHistoryMapper;
     @Autowired
     private IPayStrategyContext payStrategyContext;
+    @Autowired
+    private MemberScoreMapper memberScoreMapper;
     @Override
     public String getPaymentParams(Map<String,Object> params) {
         String payCode=this.getTradeNo();
@@ -196,6 +200,13 @@ public class PaymentService implements IPaymentService {
         }
         cacheService.setCacheByKey(batch_no,batch_no,24*60*60);
     }
+
+    @Override
+    public MyWalletDto getMemberWalletInfo(Long memberId) {
+        MyWalletDto  myWalletDto= memberScoreMapper.getMyWalletDtoByMemberId(memberId);
+        return myWalletDto;
+    }
+
     private String getTradeNo(){
         String key="wtm:orderCode:max";
         String payCode= cacheService.getCacheByKey(key,String.class);

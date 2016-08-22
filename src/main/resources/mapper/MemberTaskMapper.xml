@@ -6,7 +6,7 @@
       WARNING - @mbggenerated
     -->
     <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="count" property="count" jdbcType="BIGINT" />
+    <result column="pointCount" property="pointCount" jdbcType="BIGINT" />
     <result column="isDailyTask" property="isDailyTask" jdbcType="INTEGER" />
     <result column="taskName" property="taskName" jdbcType="VARCHAR" />
     <result column="taskDesc" property="taskDesc" jdbcType="VARCHAR" />
@@ -14,9 +14,13 @@
   </resultMap>
   <select id="getMemberTaskFinished" resultType="com.weitaomi.application.model.bean.MemberTask">
     SELECT task.* FROM wtm_member_task task LEFT JOIN wtm_member_task_history history ON task.id=history.taskId
-      WHERE history.memberId=#{memberId} AND history.createTime >#{start} AND history.createTime $lt; #{end}
+      WHERE history.memberId=#{memberId} AND history.createTime >#{start} AND history.createTime &lt; #{end}
   </select>
   <select id="getAllMemberTask" resultType="com.weitaomi.application.model.bean.MemberTask">
-    select * from wtm_member_task
+    select * from wtm_member_task WHERE isDailyTask=1 ORDER BY createTime DESC
+  </select>
+  <select id="getIsMemberTaskFinished" resultType="com.weitaomi.application.model.bean.MemberTaskHistory">
+    SELECT history.* FROM  wtm_member_task_history history
+      WHERE history.memberId=#{memberId} AND history.createTime >#{start} AND history.createTime &lt; #{end} AND taskId=#{taskId}
   </select>
 </mapper>

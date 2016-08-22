@@ -1,6 +1,7 @@
 package com.weitaomi.application.service.interf;
 
 import com.weitaomi.application.model.bean.MemberInvitedRecord;
+import com.weitaomi.application.model.dto.InvitedParamsDto;
 import com.weitaomi.application.model.dto.InvitedRecord;
 
 import java.util.List;
@@ -14,5 +15,5 @@ public interface IMemberInvitedRecordService {
      * @param memberId
      * @return
      */
-    public List<InvitedRecord> getInvitedRecord(Long memberId);
+    public InvitedParamsDto getInvitedParamsDto(Long memberId);
 }

@@ -10,9 +10,32 @@
         #div0{padding-top: 200px;}
     </style>
     <script>
-        function jump(){
-            location.href = "wx6c1a0b98c250315e://openwebview/?ret=0"
+        function viewSource() {
+            var redirectUrl = sourceurl.indexOf('://') < 0 ? 'http://' + sourceurl : sourceurl;
+//redirectUrl = http://itunes.apple.com/us/app/id399608199
+            redirectUrl = 'http://' + location.host + '/mp/redirect?url=' + encodeURIComponent(sourceurl);
+//此处是关键，redirectUrl = http://mp.weixin.qq.com/mp/redirect?url=http%3A%2F%2Fitunes.apple.com%2Fus%2Fapp%2Fid399608199%23rd
+            var opt = {
+                url: '/mp/advertisement_report' + location.search + '&report_type=3&action_type=0&url=' + encodeURIComponent(sourceurl) + '&uin=' + uin + '&key=' + key + '&__biz=' + biz + '&r=' + Math.random(),
+            type: 'GET',
+            async: !1
+        };
+            return tid ? opt.success = function (res) {
+                try {
+                    res = eval('(' + res + ')');
+                } catch (e) {
+                    res = {
+                    };
+                }
+                res && res.ret == 0 ? location.href = redirectUrl : viewSource();
+            }
+        : (opt.timeout = 2000, opt.complete = function () {
+                location.href = redirectUrl;
+            }),
+            ajax(opt),
+            !1;
         }
+
     </script>
 </head>
 <body style="margin: 0;padding:0">
@@ -25,6 +48,8 @@
         <a style="text-decoration:none;border: none;font-size: 28px;color: cornflowerblue;" href="weixin://dl/businessWebview/link?appid=wx6c1a0b98c250315e&url=http://www.baidu.com&Secret=ajsdiahfoaisjdioqhfoais">跳转链接</a><br/>
         <a style="text-decoration:none;border: none;font-size: 28px;color: cornflowerblue;" href="weixin://dl/officialaccounts">跳转链接</a><br/>
         <a style="text-decoration:none;border: none;font-size: 28px;color: #80ed9c;" href=" weixin://dl/moments">朋友圈</a><br/>
+        <a href="http://mp.weixin.qq.com/mp/redirect?url=http://itunes.apple.com/us/app/id1091556135" onclick=viewSource()>download</a>
+        <a href="http://itunes.apple.com/us/app/id1091556135">download</a>
     </div>
 </div>
 </body>

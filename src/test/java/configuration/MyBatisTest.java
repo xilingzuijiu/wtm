@@ -2,9 +2,13 @@ package configuration;
 
 import com.alibaba.fastjson.JSON;
 import com.weitaomi.application.model.bean.Member;
+import com.weitaomi.application.model.dto.MemberInfoDto;
+import com.weitaomi.application.model.dto.MemberTaskDto;
 import com.weitaomi.application.model.mapper.ArticleMapper;
 import com.weitaomi.application.model.mapper.MemberMapper;
+import com.weitaomi.application.model.mapper.MemberTaskHistoryMapper;
 import com.weitaomi.application.model.mapper.ThirdLoginMapper;
+import com.weitaomi.application.service.interf.IMemberTaskHistoryService;
 import com.weitaomi.systemconfig.util.HttpRequestUtils;
 import com.weitaomi.systemconfig.util.UUIDGenerator;
 import common.BaseContextCase;
@@ -13,6 +17,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by supumall on 2016/7/6.
@@ -24,6 +29,10 @@ public class MyBatisTest extends BaseContextCase{
     ThirdLoginMapper thirdLoginMapper;
     @Autowired
     ArticleMapper articleMapper;
+    @Autowired
+    MemberTaskHistoryMapper memberTaskHistoryMapper;
+    @Autowired
+    IMemberTaskHistoryService memberTaskHistoryService;
     @Test
     public void testAddMember(){
         Member member=new Member();
@@ -68,5 +77,10 @@ public class MyBatisTest extends BaseContextCase{
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    @Test
+    public void testGetMemberInfo(){
+        List<MemberTaskDto> memberInfoDto=  memberTaskHistoryService.getMemberDailyTask(7L);
+        System.out.println("=================>"+JSON.toJSONString(memberInfoDto));
     }
 }

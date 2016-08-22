@@ -10,7 +10,7 @@ public class MemberScoreFlow extends BaseModel{
     /**
      * 用户积分ID
      */
-    @Column(name = "memberId")
+    @Column(name = "memberScoreId")
     private Long memberScoreId;
 
     /**
