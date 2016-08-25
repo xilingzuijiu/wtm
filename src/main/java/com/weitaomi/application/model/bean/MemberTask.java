@@ -5,7 +5,7 @@ import com.weitaomi.application.model.BaseModel;
 import javax.persistence.*;
 
 @Table(name = "wtm_member_task")
-public class MemberTask extends BaseModel{
+public class MemberTask extends BaseModel {
     /**
      * 奖励积分
      */

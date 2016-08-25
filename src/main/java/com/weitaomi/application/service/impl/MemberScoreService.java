@@ -114,7 +114,7 @@ public class MemberScoreService implements IMemberScoreService {
                     throw new BusinessException("积分记录失败");
                 }
 
-                cacheService.setCacheByKey(key,memberScore,60*60);
+                cacheService.setCacheByKey(key,memberScore,60*120);
                 if (typeId!=1&&typeId!=2) {
                     //处理上级奖励问题
                     MemberInvitedRecord memberInvitedRecord = memberInvitedRecordMapper.getMemberInvitedRecordByMemberId(memberId);

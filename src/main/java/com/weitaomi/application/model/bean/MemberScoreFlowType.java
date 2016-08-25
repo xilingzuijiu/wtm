@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Table(name = "wtm_member_score_flow_type")
-public class MemberScoreFlowType  extends BaseModel{
+public class MemberScoreFlowType  extends BaseModel {
     /**
      * 积分数量
      */

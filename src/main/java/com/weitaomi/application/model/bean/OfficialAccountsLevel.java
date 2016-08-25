@@ -5,7 +5,7 @@ import com.weitaomi.application.model.BaseModel;
 import javax.persistence.*;
 
 @Table(name = "wtm_official_accounts_level")
-public class OfficialAccountsLevel extends BaseModel{
+public class OfficialAccountsLevel extends BaseModel {
 
     /**
      * 关注奖励

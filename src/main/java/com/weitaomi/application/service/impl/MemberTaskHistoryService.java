@@ -2,13 +2,12 @@ package com.weitaomi.application.service.impl;
 
 import com.github.pagehelper.PageInfo;
 import com.weitaomi.application.model.bean.*;
-import com.weitaomi.application.model.dto.ArticleShowDto;
 import com.weitaomi.application.model.dto.MemberTaskDto;
-import com.weitaomi.application.model.dto.MemberTaskHistoryDto;
 import com.weitaomi.application.model.dto.MemberTaskWithDetail;
 import com.weitaomi.application.model.mapper.MemberTaskHistoryDetailMapper;
 import com.weitaomi.application.model.mapper.MemberTaskHistoryMapper;
 import com.weitaomi.application.model.mapper.MemberTaskMapper;
+import com.weitaomi.application.model.mapper.OfficeMemberMapper;
 import com.weitaomi.application.service.interf.IMemberScoreService;
 import com.weitaomi.application.service.interf.IMemberTaskHistoryService;
 import com.weitaomi.systemconfig.exception.BusinessException;
@@ -17,6 +16,8 @@ import com.weitaomi.systemconfig.util.DateUtils;
 import com.weitaomi.systemconfig.util.Page;
 import com.weitaomi.systemconfig.util.UUIDGenerator;
 import org.apache.ibatis.session.RowBounds;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +29,8 @@ import java.util.List;
  * Created by Administrator on 2016/8/16.
  */
 @Service
-public class MemberTaskHistoryService implements IMemberTaskHistoryService {
+public class MemberTaskHistoryService  implements IMemberTaskHistoryService {
+    private Logger logger= LoggerFactory.getLogger(MemberTaskHistoryService.class);
     @Autowired
     private MemberTaskHistoryMapper memberTaskHistoryMapper;
     @Autowired
@@ -37,10 +39,12 @@ public class MemberTaskHistoryService implements IMemberTaskHistoryService {
     private MemberTaskHistoryDetailMapper memberTaskHistoryDetailMapper;
     @Autowired
     private IMemberScoreService memberScoreService;
+    @Autowired
+    private OfficeMemberMapper officeMemberMapper;
     @Override
-    public Page<MemberTaskHistoryDto> getMemberTaskInfo(Long memberId,Integer type,Integer pageSize,Integer pageIndex) {
-        List<MemberTaskHistoryDto> memberTaskHistoryDtoList=memberTaskHistoryMapper.getMemberTaskHistoryList(memberId,type,new RowBounds(pageIndex,pageSize));
-        PageInfo<MemberTaskHistoryDto> showDtoPage=new PageInfo<MemberTaskHistoryDto>(memberTaskHistoryDtoList);
+    public Page<MemberTaskWithDetail> getMemberTaskInfo(Long memberId,Integer type,Integer pageSize,Integer pageIndex) {
+        List<MemberTaskWithDetail> memberTaskHistoryDtoList=memberTaskHistoryMapper.getMemberTaskHistoryList(memberId,type,new RowBounds(pageIndex,pageSize));
+        PageInfo<MemberTaskWithDetail> showDtoPage=new PageInfo<MemberTaskWithDetail>(memberTaskHistoryDtoList);
         return Page.trans(showDtoPage);
     }
 
@@ -126,6 +130,11 @@ public class MemberTaskHistoryService implements IMemberTaskHistoryService {
     }
 
     @Override
+    public boolean updateMemberTaskToHistory(Long memberTaskId) {
+        return false;
+    }
+
+    @Override
     @Transactional
     public MemberScore addDailyTask(Long memberId, Long typeId) {
         List<MemberTaskHistory> memberTaskHistoryList=memberTaskMapper.getIsMemberTaskFinished(memberId,typeId,DateUtils.getTodayZeroSeconds(),DateUtils.getTodayEndSeconds());
@@ -157,5 +166,16 @@ public class MemberTaskHistoryService implements IMemberTaskHistoryService {
             return memberScore;
         }
         return null;
+    }
+
+    @Override
+    public void deleteUnFinishedTask() {
+        logger.info("定时任务启动");
+        int number1=officeMemberMapper.deleteOverTimeUnfollowedAccounts();
+        logger.info("删除未关注公众号"+number1+"条");
+        int number2=memberTaskHistoryMapper.deleteUnfinishedTask();
+        logger.info("删除未完成任务"+number2+"条");
+        int number3=memberTaskHistoryMapper.deleteUnfinishedTaskDetail();
+        logger.info("删除未完成任务详情"+number3+"条");
     }
 }

@@ -1,15 +1,8 @@
 package com.weitaomi.application.service.impl;
 
-import com.weitaomi.application.model.bean.Member;
-import com.weitaomi.application.model.bean.MemberInvitedRecord;
-import com.weitaomi.application.model.bean.ThirdLogin;
-import com.weitaomi.application.model.dto.InvitedRecord;
-import com.weitaomi.application.model.dto.MemberInfoDto;
-import com.weitaomi.application.model.dto.ModifyPasswordDto;
-import com.weitaomi.application.model.dto.RegisterMsg;
-import com.weitaomi.application.model.mapper.MemberInvitedRecordMapper;
-import com.weitaomi.application.model.mapper.MemberMapper;
-import com.weitaomi.application.model.mapper.ThirdLoginMapper;
+import com.weitaomi.application.model.bean.*;
+import com.weitaomi.application.model.dto.*;
+import com.weitaomi.application.model.mapper.*;
 import com.weitaomi.application.service.interf.ICacheService;
 import com.weitaomi.application.service.interf.IMemberScoreService;
 import com.weitaomi.application.service.interf.IMemberService;
@@ -51,6 +44,8 @@ public class MemberService extends BaseService implements IMemberService {
     private MemberInvitedRecordMapper memberInvitedRecordMapper;
     @Autowired
     private IMemberScoreService memberScoreService;
+    @Autowired
+    private OfficalAccountMapper officalAccountMapper;
     @Override
     @Transactional
     public Boolean register(RegisterMsg registerMsg) {
@@ -170,6 +165,8 @@ public class MemberService extends BaseService implements IMemberService {
             throw new InfoException("您已经绑定此账号");
         }
         thirdLogin.setCreateTime(DateUtils.getUnixTimestamp());
+        Member member=memberMapper.selectByPrimaryKey(memberId);
+
         Integer num=thirdLoginMapper.insertSelective(thirdLogin);
         return num>0?true:false;
     }
@@ -313,9 +310,23 @@ public class MemberService extends BaseService implements IMemberService {
     }
 
     @Override
+    public boolean modifyBirth(Long memberId, Long birth) {
+        Member member=memberMapper.selectByPrimaryKey(memberId);
+        member.setBirth(birth);
+        int num=memberMapper.updateByPrimaryKeySelective(member);
+        return num>0?true:false;
+    }
+
+    @Override
     public boolean modifyMemberAddress(Long memberId, String memberAddress) {
         Member member=memberMapper.selectByPrimaryKey(memberId);
-        member.setMemberAddress(memberAddress);
+        String[] address=memberAddress.split(",");
+        if (address.length==4){
+            member.setProvince(address[0]);
+            member.setCity(address[1]);
+            member.setArea(address[2]);
+            member.setMemberAddress(address[3]);
+        }
         int number = memberMapper.updateByPrimaryKeySelective(member);
         return number>0?true:false;
     }
@@ -359,5 +370,7 @@ public class MemberService extends BaseService implements IMemberService {
         }
         return false;
     }
+
+
 
 }

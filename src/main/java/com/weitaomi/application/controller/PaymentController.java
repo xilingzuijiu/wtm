@@ -23,7 +23,7 @@ import java.util.Map;
  * Created by supumall on 2016/7/22.
  */
 @Controller
-@RequestMapping(value = "/app/admin/payment")
+@RequestMapping("/app/admin/payment")
 public class PaymentController extends BaseController{
     @Autowired
     private IPaymentService paymentService;
@@ -51,7 +51,12 @@ public class PaymentController extends BaseController{
     }
     @ResponseBody
     @RequestMapping(value = "/getPaymentParams", method = RequestMethod.POST)
-    public AjaxResult getPaymentParams(Map<String,Object> params){
+    public AjaxResult getPaymentParams(HttpServletRequest request,@RequestBody Map<String,Object> params){
+        Long memberId=this.getUserId(request);
+        if (memberId==null){
+            throw new BusinessException("用户ID为空");
+        }
+        params.put("memberId",memberId);
         return AjaxResult.getOK(paymentService.getPaymentParams(params));
     }
     @ResponseBody

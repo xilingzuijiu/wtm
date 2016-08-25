@@ -5,7 +5,7 @@ import com.weitaomi.application.model.BaseModel;
 import javax.persistence.*;
 
 @Table(name = "wtm_third_login")
-public class ThirdLogin extends BaseModel{
+public class ThirdLogin extends BaseModel {
     /**
      * 开放平台ID
      */

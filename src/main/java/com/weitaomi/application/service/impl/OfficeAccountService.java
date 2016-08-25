@@ -38,17 +38,17 @@ public class OfficeAccountService implements IOfficeAccountService {
     @Autowired
     private ICacheService cacheService;
     @Autowired
+    private MemberMapper memberMapper;
+    @Autowired
     private TaskPoolMapper taskPoolMapper;
     @Autowired
     private OfficeMemberMapper officeMemberMapper;
-    @Autowired
-    private IMemberScoreFlowService memberScoreFlowService;
     @Autowired
     private IMemberScoreService memberScoreService;
     @Autowired
     private IMemberTaskHistoryService memberTaskHistoryService;
     @Override
-    public List<UnFollowOfficicalAccountDto> getAccountsByMemberId(Long memberId){
+    public List<OfficicalAccountsDto> getAccountsByMemberId(Long memberId){
         return officalAccountMapper.getAccountsByMemberId(memberId);
     }
     @Override
@@ -61,36 +61,58 @@ public class OfficeAccountService implements IOfficeAccountService {
         if (StringUtil.isEmpty(unionId)){
             throw new BusinessException("用户唯一识别码为空");
         }
-        WtmOfficialMember wtmOfficialMember=wtmOfficialMemberMapper.getWtmOfficialMemberByUnionId(unionId);
-        String nickName="";
-        if (wtmOfficialMember!=null){
-            nickName=wtmOfficialMember.getNickname();
-        }
         List<OfficialAccountMsg> list=addOfficalAccountDto.getLinkList();
         if (list.isEmpty()){
             throw new BusinessException("要关注的公号列表为空");
         }
-        List<Map<String,String>> mapList=new ArrayList<Map<String, String>>();
-        Map<String,Object> params=new HashMap<String, Object>();
-        params.put("unionId",addOfficalAccountDto.getUnionId());
+        List<OfficeMember> officeMemberList=new ArrayList<>();
         for (OfficialAccountMsg officialAccountMsg:list){
             String key=addOfficalAccountDto.getUnionId()+":"+officialAccountMsg.getOriginId();
-            OfficialAccount officalAccount=officalAccountMapper.getOfficalAccountByoriginId(officialAccountMsg.getOriginId());
-            String value=officalAccount.getId().toString();
-            cacheService.setCacheByKey(key,value,60*30);
-            Map<String,String> map=new HashMap<String, String>();
-            map.put("name",officialAccountMsg.getUsername());
-            map.put("addUrl",officialAccountMsg.getAddUrl());
-            mapList.add(map);
+            OfficialAccountWithScore officialAccountWithScore=officalAccountMapper.getOfficialAccountWithScoreById(officialAccountMsg.getOriginId());
+            String value=officialAccountWithScore.getId().toString();
+            String valueTemp = cacheService.getCacheByKey(key,String.class);
+//            if (valueTemp!=null){
+//                throw new InfoException("公众号"+officialAccountWithScore.getUserName()+"的关注未完成，请先完成");
+//            }
+            cacheService.setCacheByKey(key,value,60*120);
+            OfficeMember officeMember=new OfficeMember();
+            officeMember.setMemberId(memberId);
+            officeMember.setOfficeAccountId(officialAccountWithScore.getId());
+            officeMember.setIsAccessNow(0);
+            officeMemberList.add(officeMember);
+            //添加到待完成任务记录中
+            MemberTaskWithDetail memberTaskWithDetail = new MemberTaskWithDetail();
+            memberTaskWithDetail.setTaskId(1L);
+            memberTaskWithDetail.setTaskFlag(officialAccountWithScore.getOriginId());
+            memberTaskWithDetail.setPointCount(officialAccountWithScore.getScore());
+            memberTaskWithDetail.setIsFinished(0);
+            MemberTask memberTask = memberTaskMapper.selectByPrimaryKey(1L);
+            memberTaskWithDetail.setMemberId(memberId);
+            memberTaskWithDetail.setTaskName(memberTask.getTaskName());
+            memberTaskWithDetail.setTaskDesc(memberTask.getTaskDesc());
+            memberTaskWithDetail.setCreateTime(DateUtils.getUnixTimestamp());
+            List<MemberTaskHistoryDetail> memberTaskHistoryDetailList = new ArrayList<MemberTaskHistoryDetail>();
+            MemberTaskHistoryDetail memberTaskHistoryDetail = new MemberTaskHistoryDetail();
+            memberTaskHistoryDetail.setTaskName(memberTask.getTaskName());
+            memberTaskHistoryDetail.setTaskDesc(officialAccountWithScore.getUserName());
+            memberTaskHistoryDetail.setPointCount(officialAccountWithScore.getScore());
+            memberTaskHistoryDetail.setIsFinished(1);
+            memberTaskHistoryDetail.setCreateTime(DateUtils.getUnixTimestamp());
+            memberTaskHistoryDetailList.add(memberTaskHistoryDetail);
+            memberTaskWithDetail.setMemberTaskHistoryDetailList(memberTaskHistoryDetailList);
+            memberTaskHistoryService.addMemberTaskToHistory(memberTaskWithDetail);
         }
-        params.put("linkList",mapList);
-        String param= JSON.toJSONString(params);
-        String url= PropertiesUtil.getValue("server.officialAccount.receiveAddRequest.url");
-        try {
-            HttpRequestUtils.postStringEntity(url,param);
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
+        Long time =DateUtils.getUnixTimestamp();
+        int number=officeMemberMapper.batchAddOfficeMember(officeMemberList,time);
+        if (number>100) {//todo
+            String url = PropertiesUtil.getValue("server.officialAccount.receiveAddRequest.url");
+            String messageUrl = PropertiesUtil.getValue("server.officialAccount.message.url");
+            try {
+                HttpRequestUtils.postStringEntity(url, messageUrl + "?memberId=" + memberId + "&dateTime=" + time);
+                return true;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return false;
     }
@@ -103,43 +125,31 @@ public class OfficeAccountService implements IOfficeAccountService {
         String key=unionId+":"+originId;
         String value=cacheService.getCacheByKey(key,String.class);
         if (value!=null){
-            Long id=Long.valueOf(value);
-            TaskPool taskPool = taskPoolMapper.getTaskPoolByOfficialId(id);
-            OfficialAccountWithScore officialAccountWithScore  =officalAccountMapper.getOfficialAccountWithScoreById(id);
+            Long officeAccountId=Long.valueOf(value);
+            TaskPool taskPool = taskPoolMapper.getTaskPoolByOfficialId(officeAccountId);
+            OfficialAccountWithScore officialAccountWithScore  =officalAccountMapper.getOfficialAccountWithScoreById(originId);
             Long memberId=thirdLoginMapper.getMemberIdByUnionId(unionId);
             if (taskPool!=null&&officialAccountWithScore!=null&&taskPool.getTotalScore()>officialAccountWithScore.getScore()){
-                //增加任务记录
-                MemberTaskWithDetail memberTaskWithDetail=new MemberTaskWithDetail();
-                taskPoolMapper.updateTaskPoolWithScore(officialAccountWithScore.getScore(),taskPool.getId());
-                memberTaskWithDetail.setTaskId(1L);
-                memberTaskWithDetail.setPointCount(officialAccountWithScore.getScore());
-                memberTaskWithDetail.setIsFinished(1);
-                MemberTask memberTask=memberTaskMapper.selectByPrimaryKey(1);
-                memberTaskWithDetail.setMemberId(memberId);
-                memberTaskWithDetail.setTaskName(memberTask.getTaskName());
-                memberTaskWithDetail.setTaskDesc(memberTask.getTaskDesc());
-                memberTaskWithDetail.setCreateTime(DateUtils.getUnixTimestamp());
-                List<MemberTaskHistoryDetail> memberTaskHistoryDetailList=new ArrayList<MemberTaskHistoryDetail>();
-                MemberTaskHistoryDetail memberTaskHistoryDetail=new MemberTaskHistoryDetail();
-                memberTaskHistoryDetail.setTaskName(memberTask.getTaskName());
-                memberTaskHistoryDetail.setTaskDesc(officialAccountWithScore.getUserName());
-                memberTaskHistoryDetail.setPointCount(officialAccountWithScore.getScore());
-                memberTaskHistoryDetail.setIsFinished(1);
-                memberTaskHistoryDetail.setCreateTime(DateUtils.getUnixTimestamp());
-                memberTaskHistoryDetailList.add(memberTaskHistoryDetail);
-                memberTaskWithDetail.setMemberTaskHistoryDetailList(memberTaskHistoryDetailList);
-                memberTaskHistoryService.addMemberTaskToHistory(memberTaskWithDetail);
                 //添加到公众号关注表中
-                OfficeMember officeMember=new OfficeMember();
+                OfficeMember officeMember=officeMemberMapper.getOfficeMember(memberId,officeAccountId);
+                if (officeMember==null){
+                    JpushUtils.buildRequest(JpushUtils.getJpushMessage(memberId,"任务不存在，或者任务已结束"));
+                    throw new InfoException("任务没有加入到列表中");
+                }
                 officeMember.setIsAccessNow(1);
-                officeMember.setMemberId(memberId);
-                officeMember.setOfficeAccountId(id);
-                officeMember.setCreateTime(DateUtils.getUnixTimestamp());
-                officeMemberMapper.insertSelective(officeMember);
-                //增加积分以及积分记录
-                memberScoreService.addMemberScore(memberId,3L,officialAccountWithScore.getScore(), UUIDGenerator.generate());
-                cacheService.delKeyFromRedis(key);
+                officeMember.setFinishedTime(DateUtils.getUnixTimestamp());
+                int num= officeMemberMapper.updateByPrimaryKeySelective(officeMember);
+                if (num>0) {
+                    //任务池中的任务剩余积分更改
+                    taskPoolMapper.updateTaskPoolWithScore(officialAccountWithScore.getScore(), taskPool.getId());
+                    //增加任务记录
+                    int number = memberTaskHistoryMapper.updateMemberTaskUnfinished(memberId,0,officialAccountWithScore.getOriginId());
+                    //增加积分以及积分记录
+                    memberScoreService.addMemberScore(memberId, 3L, officialAccountWithScore.getScore(), UUIDGenerator.generate());
+                    cacheService.delKeyFromRedis(key);
+                }
             }else {
+                JpushUtils.buildRequest(JpushUtils.getJpushMessage(memberId,"任务不存在，或者任务已结束"));
                 throw new InfoException("任务不存在，或者任务已结束");
             }
         }
@@ -147,8 +157,12 @@ public class OfficeAccountService implements IOfficeAccountService {
     }
 
     @Override
-    public List<OfficialAccountMsg> getOfficialAccountMsg(Long memberId) {
-        List<OfficialAccountMsg> officialAccountMsgs=officalAccountMapper.getOfficialAccountMsg(memberId);
+    public List<OfficialAccountMsg> getOfficialAccountMsg(Long memberId,String unionId) {
+        Member member=memberMapper.selectByPrimaryKey(memberId);
+        if (member==null){
+            throw new InfoException("用户信息为空");
+        }
+        List<OfficialAccountMsg> officialAccountMsgs=officalAccountMapper.getOfficialAccountMsg(memberId,unionId,member.getSex(),member.getProvince(),member.getCity());
         if (officialAccountMsgs.isEmpty()){
             return null;
         }

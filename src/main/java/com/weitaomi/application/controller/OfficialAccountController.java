@@ -1,11 +1,17 @@
 package com.weitaomi.application.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.weitaomi.application.controller.baseController.BaseController;
+import com.weitaomi.application.model.bean.ThirdLogin;
 import com.weitaomi.application.model.dto.AddOfficalAccountDto;
+import com.weitaomi.application.model.mapper.MemberMapper;
+import com.weitaomi.application.model.mapper.ThirdLoginMapper;
 import com.weitaomi.application.service.interf.IMemberTaskHistoryService;
 import com.weitaomi.application.service.interf.IOfficeAccountService;
 import com.weitaomi.systemconfig.dataFormat.AjaxResult;
+import com.weitaomi.systemconfig.util.JpushUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.support.ManagedMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +29,8 @@ import java.util.Map;
 public class OfficialAccountController extends BaseController{
     @Autowired
     private IOfficeAccountService officeAccountService;
+    @Autowired
+    private ThirdLoginMapper thirdLoginMapper;
 
     /**
      * 获取用户每日任务
@@ -31,9 +39,9 @@ public class OfficialAccountController extends BaseController{
      */
     @ResponseBody
     @RequestMapping(value = "/getFollowOfficialAccountList",method = RequestMethod.POST)
-    public AjaxResult getFollowOfficialAccountList(HttpServletRequest httpServletRequest){
+    public AjaxResult getFollowOfficialAccountList(HttpServletRequest httpServletRequest,String unionId){
         Long memberId=super.getUserId(httpServletRequest);
-        return AjaxResult.getOK(officeAccountService.getOfficialAccountMsg(memberId));
+        return AjaxResult.getOK(officeAccountService.getOfficialAccountMsg(memberId,unionId));
     }
 
     /**
@@ -57,6 +65,29 @@ public class OfficialAccountController extends BaseController{
     @RequestMapping(value = "/pushAddFinished",method = RequestMethod.POST)
     public AjaxResult pushAddFinished(@RequestBody Map<String,String> params){
         System.out.println(params.get("originId")+"======="+params.get("unionId"));
+        return AjaxResult.getOK();
+    }
+    /**
+     * 加入公众号任务关注列表
+     * @param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/notifyMemberTask",method = RequestMethod.POST)
+    public AjaxResult notifyMemberTask(Map<String,String> params){
+        String unionId=params.get("unionId");
+        String status=params.get("status");
+        if (status.equals("0")) {
+            Long memberId = thirdLoginMapper.getMemberIdByUnionId(unionId);
+            Map<String, String> param = new ManagedMap<>();
+            if (memberId != null) {
+                param.put("memberId", memberId.toString());
+                param.put("message", "任务五分钟之后即将失效，请尽快到服务号完成");
+            }
+            if (param != null) {
+                JpushUtils.buildRequest(JSON.toJSONString(param));
+            }
+        }
         return AjaxResult.getOK();
     }
 }

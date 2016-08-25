@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.weitaomi.application.model.mapper.ProvinceMapper" >
+  <resultMap id="BaseResultMap" type="com.weitaomi.application.model.bean.Province" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="provinceID" property="provinceID" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="CityMap" type="City">
+    <result column="c_cityID" property="cityID" jdbcType="VARCHAR" />
+    <result column="c_city" property="city" jdbcType="VARCHAR" />
+    <result column="c_father" property="father" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="AddressMap" type="com.weitaomi.application.model.dto.Address" extends="BaseResultMap">
+    <collection property="cityList" ofType="list" resultMap="CityMap" />
+  </resultMap>
+  <sql id="citySql">
+    city.city c_city,city.father=c_father
+  </sql>
+  <select id="getAllAddress" resultType="com.weitaomi.application.model.dto.Address">
+    select p.*,<include refid="citySql"/> from wtm_province p LEFT JOIN wmt_city city on  city.father=p.provinceID
+  </select>
+</mapper>

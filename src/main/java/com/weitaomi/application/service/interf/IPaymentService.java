@@ -2,6 +2,7 @@ package com.weitaomi.application.service.interf;
 
 import com.weitaomi.application.model.bean.PaymentApprove;
 import com.weitaomi.application.model.dto.MyWalletDto;
+import com.weitaomi.application.model.dto.RequireFollowerParamsDto;
 
 import java.util.List;
 import java.util.Map;

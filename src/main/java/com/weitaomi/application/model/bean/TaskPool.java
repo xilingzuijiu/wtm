@@ -5,7 +5,7 @@ import com.weitaomi.application.model.BaseModel;
 import javax.persistence.*;
 
 @Table(name = "wtm_task_pool")
-public class TaskPool extends BaseModel{
+public class TaskPool extends BaseModel {
 
     /**
      * 任务类型 0：求粉，1：阅读
@@ -27,7 +27,41 @@ public class TaskPool extends BaseModel{
      */
     @Column(name = "totalScore")
     private Integer totalScore;
+    /**
+     * 单次奖励
+     */
+    @Column(name = "singleScore")
+    private Integer singleScore;
 
+    /**
+     * 请求群体性别
+     */
+    @Column(name = "sex")
+    private Integer sex;
+
+
+    /**
+     * 省级地区
+     */
+    @Column(name = "provinceCode")
+    private String provinceCode;
+
+    /**
+     * 市级地区
+     */
+    @Column(name = "cityCode")
+    private Integer cityCode;
+
+    /**
+     * 现在是否上架
+     */
+    @Column(name = "isPublishNow")
+    private Integer isPublishNow;
+    /**
+     * 需求数量
+     */
+    @Column(name = "isAutoPublishToOthers")
+    private Integer isAutoPublishToOthers;
     /**
      * 需求数量
      */
@@ -142,5 +176,101 @@ public class TaskPool extends BaseModel{
      */
     public void setArticleId(Long articleId) {
         this.articleId = articleId;
+    }
+
+    /**
+     * 获取单次奖励
+     * @return singleScore 单次奖励
+     */
+    public Integer getSingleScore() {
+        return this.singleScore;
+    }
+
+    /**
+     * 设置单次奖励
+     * @param singleScore 单次奖励
+     */
+    public void setSingleScore(Integer singleScore) {
+        this.singleScore = singleScore;
+    }
+
+    /**
+     * 获取请求群体性别
+     * @return sex 请求群体性别
+     */
+    public Integer getSex() {
+        return this.sex;
+    }
+
+    /**
+     * 设置请求群体性别
+     * @param sex 请求群体性别
+     */
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
+
+    /**
+     * 获取省级地区
+     * @return provinceCode 省级地区
+     */
+    public String getProvinceCode() {
+        return this.provinceCode;
+    }
+
+    /**
+     * 设置省级地区
+     * @param provinceCode 省级地区
+     */
+    public void setProvinceCode(String provinceCode) {
+        this.provinceCode = provinceCode;
+    }
+
+    /**
+     * 获取市级地区
+     * @return cityCode 市级地区
+     */
+    public Integer getCityCode() {
+        return this.cityCode;
+    }
+
+    /**
+     * 设置市级地区
+     * @param cityCode 市级地区
+     */
+    public void setCityCode(Integer cityCode) {
+        this.cityCode = cityCode;
+    }
+
+    /**
+     * 获取现在是否上架
+     * @return isPublishNow 现在是否上架
+     */
+    public Integer getIsPublishNow() {
+        return this.isPublishNow;
+    }
+
+    /**
+     * 设置现在是否上架
+     * @param isPublishNow 现在是否上架
+     */
+    public void setIsPublishNow(Integer isPublishNow) {
+        this.isPublishNow = isPublishNow;
+    }
+
+    /**
+     * 获取需求数量
+     * @return isAutoPublishToOthers 需求数量
+     */
+    public Integer getIsAutoPublishToOthers() {
+        return this.isAutoPublishToOthers;
+    }
+
+    /**
+     * 设置需求数量
+     * @param isAutoPublishToOthers 需求数量
+     */
+    public void setIsAutoPublishToOthers(Integer isAutoPublishToOthers) {
+        this.isAutoPublishToOthers = isAutoPublishToOthers;
     }
 }

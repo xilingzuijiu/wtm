@@ -25,8 +25,8 @@
         <module name="weitaomiProject" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="weitaomiProject" target="1.6" />
+    <bytecodeTargetLevel target="1.7">
+      <module name="weitaomiProject" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>

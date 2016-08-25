@@ -1,5 +1,6 @@
 package com.weitaomi.application.service.impl;
 
+import com.weitaomi.application.model.bean.MemberScore;
 import com.weitaomi.application.model.bean.PaymentApprove;
 import com.weitaomi.application.model.bean.PaymentHistory;
 import com.weitaomi.application.model.dto.MyWalletDto;
@@ -17,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.io.UnsupportedEncodingException;
@@ -38,6 +40,7 @@ public class PaymentService implements IPaymentService {
     @Autowired
     private MemberScoreMapper memberScoreMapper;
     @Override
+    @Transactional
     public String getPaymentParams(Map<String,Object> params) {
         String payCode=this.getTradeNo();
         params.put("trade_no", AlipayConfig.payCode_prefix+payCode);
@@ -204,6 +207,15 @@ public class PaymentService implements IPaymentService {
     @Override
     public MyWalletDto getMemberWalletInfo(Long memberId) {
         MyWalletDto  myWalletDto= memberScoreMapper.getMyWalletDtoByMemberId(memberId);
+        if (myWalletDto==null){
+            myWalletDto=new MyWalletDto();
+        }
+        MemberScore memberScore=memberScoreMapper.getMemberScoreByMemberId(memberId);
+        if (memberScore!=null){
+            myWalletDto.setAvaliableBalance(memberScore.getMemberScore().longValue());
+        }else {
+            myWalletDto.setAvaliableBalance(0L);
+        }
         return myWalletDto;
     }
 
@@ -213,15 +225,15 @@ public class PaymentService implements IPaymentService {
         if (StringUtils.isEmpty(payCode)){
             payCode=paymentHistoryMapper.getMaxPayCode();
             if (StringUtils.isEmpty(payCode)){
-                payCode="1000000000000000";
-                Integer orderNumer=Integer.valueOf(payCode)+1;
+                payCode="100000000000";
+                Long orderNumer=Long.valueOf(payCode)+1;
                 cacheService.setCacheByKey(key,orderNumer.toString(),null);
             }else {
-                Integer orderNumer = Integer.valueOf(payCode) + 1;
+                Long orderNumer = Long.valueOf(payCode) + 1;
                 cacheService.setCacheByKey(key, orderNumer.toString(), null);
             }
         }else {
-            Integer orderNumer=Integer.valueOf(payCode)+1;
+            Long orderNumer=Long.valueOf(payCode)+1;
             cacheService.setCacheByKey(key,orderNumer.toString(),null);
         }
         return payCode;

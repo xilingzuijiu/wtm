@@ -12,6 +12,8 @@ import cn.jpush.api.push.model.audience.Audience;
 import cn.jpush.api.push.model.audience.AudienceTarget;
 import cn.jpush.api.push.model.notification.IosNotification;
 import cn.jpush.api.push.model.notification.Notification;
+import com.alibaba.fastjson.JSON;
+import com.weitaomi.application.model.dto.MessageJPushDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -123,4 +125,10 @@ public class JpushUtils {
                 .build();
     }
 
+    public static String getJpushMessage(Long memberId,String message){
+        MessageJPushDto messageJPushDto=new MessageJPushDto();
+        messageJPushDto.setMemberId(memberId);
+        messageJPushDto.setMessage(message);
+        return JSON.toJSONString(messageJPushDto);
+    }
 }

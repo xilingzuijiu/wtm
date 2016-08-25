@@ -27,6 +27,11 @@ public class OfficeMember extends BaseModel implements Serializable{
     private Integer isAccessNow;
 
     /**
+     * 完成时间
+     */
+    @Column(name = "finishedTime")
+    private Long finishedTime;
+    /**
      * 创建日期
      */
     @Column(name = "createTime")
@@ -120,5 +125,21 @@ public class OfficeMember extends BaseModel implements Serializable{
      */
     public void setCreateTime(Long createTime) {
         this.createTime = createTime;
+    }
+
+    /**
+     * 获取完成时间
+     * @return finishedTime 完成时间
+     */
+    public Long getFinishedTime() {
+        return this.finishedTime;
+    }
+
+    /**
+     * 设置完成时间
+     * @param finishedTime 完成时间
+     */
+    public void setFinishedTime(Long finishedTime) {
+        this.finishedTime = finishedTime;
     }
 }

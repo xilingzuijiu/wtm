@@ -9,6 +9,7 @@ import com.weitaomi.application.service.interf.IMemberService;
 import com.weitaomi.systemconfig.dataFormat.AjaxResult;
 import com.weitaomi.systemconfig.exception.BusinessException;
 import com.weitaomi.systemconfig.exception.DBException;
+import com.weitaomi.systemconfig.exception.InfoException;
 import com.weitaomi.systemconfig.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -171,6 +172,19 @@ public class MemberController  extends BaseController {
         return AjaxResult.getOK(memberService.modifyPassWord(memberId,modifyPasswordDto));
     }
     /**
+     * 修改密码
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/modifyBirth", method = RequestMethod.POST)
+    public AjaxResult modifyBirth(HttpServletRequest request,Long birth){
+        Long memberId=this.getUserId(request);
+        if (memberId==null){
+            throw new BusinessException("用户ID为空");
+        }
+        return AjaxResult.getOK(memberService.modifyBirth(memberId,birth));
+    }
+    /**
      * 修改地址
      * @return
      */
@@ -180,6 +194,9 @@ public class MemberController  extends BaseController {
         Long memberId=this.getUserId(request);
         if (memberId==null){
             throw new BusinessException("用户ID为空");
+        }
+        if (StringUtil.isEmpty(memberAddress)){
+            throw new InfoException("定位地址失败");
         }
         return AjaxResult.getOK(memberService.modifyMemberAddress(memberId,memberAddress));
     }

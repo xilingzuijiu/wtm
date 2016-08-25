@@ -5,7 +5,7 @@ import com.weitaomi.application.model.BaseModel;
 import javax.persistence.*;
 
 @Table(name = "wtm_seller_type")
-public class SellerType extends BaseModel{
+public class SellerType extends BaseModel {
 
     /**
      * 商家类型

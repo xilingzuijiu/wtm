@@ -1,10 +1,8 @@
 package com.weitaomi.application.service.interf;
 
 import com.weitaomi.application.model.bean.MemberScore;
-import com.weitaomi.application.model.bean.MemberTask;
 import com.weitaomi.application.model.bean.MemberTaskHistoryDetail;
 import com.weitaomi.application.model.dto.MemberTaskDto;
-import com.weitaomi.application.model.dto.MemberTaskHistoryDto;
 import com.weitaomi.application.model.dto.MemberTaskWithDetail;
 import com.weitaomi.systemconfig.util.Page;
 
@@ -22,7 +20,7 @@ public interface IMemberTaskHistoryService {
      * @param memberId
      * @return
      */
-    public Page<MemberTaskHistoryDto> getMemberTaskInfo(Long memberId, Integer type, Integer pageSize, Integer pageIndex);
+    public Page<MemberTaskWithDetail> getMemberTaskInfo(Long memberId, Integer type, Integer pageSize, Integer pageIndex);
 
     /**
      * 任务ID
@@ -44,6 +42,12 @@ public interface IMemberTaskHistoryService {
      * @return
      */
     public boolean addMemberTaskToHistory(MemberTaskWithDetail memberTaskWithDetail);
+    /**
+     * 增加任务记录
+     * @param
+     * @return
+     */
+    public boolean updateMemberTaskToHistory(Long memberTaskId);
 
     /**
      * 每日任务记录
@@ -52,4 +56,9 @@ public interface IMemberTaskHistoryService {
      * @return
      */
     MemberScore addDailyTask(Long memberId, Long typeId);
+
+    /**
+     * 定时清除未完成的任务
+     */
+    public void deleteUnFinishedTask();
 }

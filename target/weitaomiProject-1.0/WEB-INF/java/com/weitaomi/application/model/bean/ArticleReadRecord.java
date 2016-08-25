@@ -5,7 +5,7 @@ import com.weitaomi.application.model.BaseModel;
 import javax.persistence.*;
 
 @Table(name = "wtm_article_read_record")
-public class ArticleReadRecord extends BaseModel{
+public class ArticleReadRecord extends BaseModel {
 
     /**
      * 用户ID

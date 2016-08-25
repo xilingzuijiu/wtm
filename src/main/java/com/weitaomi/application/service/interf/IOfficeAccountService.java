@@ -1,9 +1,9 @@
 package com.weitaomi.application.service.interf;
 
+import com.weitaomi.application.model.bean.OfficialAccount;
 import com.weitaomi.application.model.dto.AddOfficalAccountDto;
-import com.weitaomi.application.model.dto.AddResponseTaskDto;
 import com.weitaomi.application.model.dto.OfficialAccountMsg;
-import com.weitaomi.application.model.dto.UnFollowOfficicalAccountDto;
+import com.weitaomi.application.model.dto.OfficicalAccountsDto;
 
 import java.util.List;
 import java.util.Map;
@@ -17,7 +17,7 @@ public interface IOfficeAccountService {
      * @param memberId
      * @return
      */
-    public List<UnFollowOfficicalAccountDto> getAccountsByMemberId(Long memberId);
+    public List<OfficicalAccountsDto> getAccountsByMemberId(Long memberId);
 
     /**
      * 推送关注任务
@@ -35,6 +35,6 @@ public interface IOfficeAccountService {
      * @param memberId
      * @return
      */
-    public List<OfficialAccountMsg> getOfficialAccountMsg(Long memberId);
+    public List<OfficialAccountMsg> getOfficialAccountMsg(Long memberId,String unionId);
 
 }

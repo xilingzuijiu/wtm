@@ -20,4 +20,7 @@
   <select id="getMemberIdByUnionId" resultType="java.lang.Long">
     select login.memberId from wtm_third_login login WHERE login.unionId=#{unionId}
   </select>
+  <select id="getUnionIdByMemberId" resultType="com.weitaomi.application.model.bean.ThirdLogin">
+    select * from wtm_third_login login WHERE login.memberId=#{memberId}
+  </select>
 </mapper>

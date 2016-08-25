@@ -11,6 +11,7 @@
     <result column="pointCount" property="pointCount" jdbcType="BIGINT" />
     <result column="taskName" property="taskName" jdbcType="VARCHAR" />
     <result column="taskDesc" property="taskDesc" jdbcType="VARCHAR" />
+    <result column="taskFlag" property="taskFlag" jdbcType="VARCHAR" />
     <result column="isFinished" property="isFinished" jdbcType="INTEGER" />
     <result column="createTime" property="createTime" jdbcType="BIGINT" />
   </resultMap>
@@ -22,18 +23,38 @@
     <result column="detail_isFinished" property="isFinished" jdbcType="INTEGER" />
     <result column="detail_createTime" property="createTime" jdbcType="BIGINT" />
   </resultMap>
-  <resultMap id="MyResultMap" type="com.weitaomi.application.model.dto.MemberTaskHistoryDto" extends="BaseResultMap">
+  <resultMap id="MyResultMap" type="com.weitaomi.application.model.dto.MemberTaskWithDetail" extends="BaseResultMap">
     <collection property="memberTaskHistoryDetailList"  ofType="list" resultMap="DetailResultMap"/>
   </resultMap>
   <sql id="detailSql">
     detail.taskHistoryId detail_taskHistoryId,detail.pointCount detail_count,detail.taskName detail_taskName,
     detail.taskDesc detail_taskDesc,detail.isFinished detail_isFinished,detail.createTime detail_createTime
   </sql>
+  <update id="updateMemberTaskUnfinished">
+    update wtm_member_history  set isFinished = 1 WHERE memberId=#{memberId} AND isFinished=#{type} AND taskFlag=#{originId}
+  </update>
+
+
+  <delete id="deleteUnfinishedTaskDetail">
+    DELETE FROM wtm_member_task_history_detail   WHERE taskHistoryId  IN (
+    select h.id from wtm_member_task_history h WHERE h.isFinished=0 AND unix_timestamp(now())-createTime>7200
+    )
+  </delete>
+  <delete id="deleteUnfinishedTask">
+    DELETE FROM  wtm_member_task_history  WHERE isFinished=0 AND unix_timestamp(now())-createTime>7200
+  </delete>
+
+
   <select id="getMemberTaskHistoryList" resultMap="MyResultMap">
     select h.*,
      <include refid="detailSql"/>
      from wtm_member_task_history h
         LEFT JOIN wtm_member_task_history_detail detail ON detail.taskHistoryId=h.id
           WHERE h.memberId=#{memberId} AND h.isFinished=#{type} ORDER BY h.createTime DESC
+  </select>
+  <select id="getMemberTaskUnfinishedTaskId">
+    select h.id
+    from wtm_member_task_history h
+    WHERE h.memberId=#{memberId} AND h.isFinished=#{type} AND h.taskFlag=#{originId}
   </select>
 </mapper>

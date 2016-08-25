@@ -1,11 +1,9 @@
 package com.weitaomi.application.service.interf;
 
 import com.weitaomi.application.model.bean.Member;
+import com.weitaomi.application.model.bean.TaskPool;
 import com.weitaomi.application.model.bean.ThirdLogin;
-import com.weitaomi.application.model.dto.InvitedRecord;
-import com.weitaomi.application.model.dto.MemberInfoDto;
-import com.weitaomi.application.model.dto.ModifyPasswordDto;
-import com.weitaomi.application.model.dto.RegisterMsg;
+import com.weitaomi.application.model.dto.*;
 
 import java.util.List;
 
@@ -65,6 +63,13 @@ public interface IMemberService {
     * @return
        */
      boolean modifyPassWord(Long memberId, ModifyPasswordDto modifyPasswordDto);
+    /**
+    * 更换密码
+    * @param memberId
+    * @param birth
+    * @return
+       */
+     boolean modifyBirth(Long memberId,Long birth);
 
     /**
      * 更新用户地址
@@ -81,5 +86,8 @@ public interface IMemberService {
          */
     public String uploadShowImage(Long memberId,String imageFiles,String imageType);
 
- Boolean validateIndetifyCode(String mobile, String indentifyCode);
+    Boolean validateIndetifyCode(String mobile, String indentifyCode);
+
+
+
 }

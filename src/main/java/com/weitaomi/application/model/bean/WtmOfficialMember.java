@@ -5,7 +5,7 @@ import com.weitaomi.application.model.BaseModel;
 import javax.persistence.*;
 
 @Table(name = "wtm_weitaomi_official_member")
-public class WtmOfficialMember extends BaseModel{
+public class WtmOfficialMember extends BaseModel {
 
     /**
      * 会员ID

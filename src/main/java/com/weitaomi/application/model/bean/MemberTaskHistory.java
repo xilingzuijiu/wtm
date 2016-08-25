@@ -27,7 +27,11 @@ public class MemberTaskHistory extends BaseModel {
      */
     @Column(name = "taskName")
     private String taskName;
-
+    /**
+     * 任务标识
+     */
+    @Column(name = "taskFlag")
+    private String taskFlag;
     /**
      * 任务描述
      */
@@ -171,5 +175,21 @@ public class MemberTaskHistory extends BaseModel {
      */
     public void setTaskId(Long taskId) {
         this.taskId = taskId;
+    }
+
+    /**
+     * 获取任务标识
+     * @return taskFlag 任务标识
+     */
+    public String getTaskFlag() {
+        return this.taskFlag;
+    }
+
+    /**
+     * 设置任务标识
+     * @param taskFlag 任务标识
+     */
+    public void setTaskFlag(String taskFlag) {
+        this.taskFlag = taskFlag;
     }
 }

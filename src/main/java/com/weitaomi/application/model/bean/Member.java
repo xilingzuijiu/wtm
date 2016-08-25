@@ -7,7 +7,7 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 @Table(name = "wtm_member")
-public class Member extends BaseModel  implements Serializable {
+public class Member extends BaseModel implements Serializable {
 
     /**
      * 会员名称
@@ -31,7 +31,21 @@ public class Member extends BaseModel  implements Serializable {
      */
     @Column(name = "memberAddress")
     private String memberAddress;
-
+    /**
+     * 用户地址省份
+     */
+    @Column(name = "province")
+    private String province;
+    /**
+     * 用户地址城市
+     */
+    @Column(name = "city")
+    private String city;
+    /**
+     * 用户地址区域
+     */
+    @Column(name = "area")
+    private String area;
     /**
      * 加密盐
      */
@@ -50,7 +64,7 @@ public class Member extends BaseModel  implements Serializable {
     @Column(name = "birth")
     private Long birth;
     /**
-     * 会员生日
+     * 性别
      */
     @Column(name = "sex")
     private Integer sex;
@@ -311,5 +325,53 @@ public class Member extends BaseModel  implements Serializable {
      */
     public void setMemberAddress(String memberAddress) {
         this.memberAddress = memberAddress;
+    }
+
+    /**
+     * 获取用户地址省份
+     * @return province 用户地址省份
+     */
+    public String getProvince() {
+        return this.province;
+    }
+
+    /**
+     * 设置用户地址省份
+     * @param province 用户地址省份
+     */
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    /**
+     * 获取用户地址城市
+     * @return city 用户地址城市
+     */
+    public String getCity() {
+        return this.city;
+    }
+
+    /**
+     * 设置用户地址城市
+     * @param city 用户地址城市
+     */
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    /**
+     * 获取用户地址区域
+     * @return area 用户地址区域
+     */
+    public String getArea() {
+        return this.area;
+    }
+
+    /**
+     * 设置用户地址区域
+     * @param area 用户地址区域
+     */
+    public void setArea(String area) {
+        this.area = area;
     }
 }

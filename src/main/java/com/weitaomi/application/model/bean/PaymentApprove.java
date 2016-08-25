@@ -7,7 +7,7 @@ import javax.persistence.Table;
 import java.math.BigDecimal;
 
 @Table(name = "wtm_payment_approve")
-public class PaymentApprove  extends BaseModel{
+public class PaymentApprove  extends BaseModel {
     /**
      * 用户ID
      */

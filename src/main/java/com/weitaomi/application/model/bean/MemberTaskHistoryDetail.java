@@ -149,4 +149,5 @@ public class  MemberTaskHistoryDetail extends BaseModel {
     public void setCreateTime(Long createTime) {
         this.createTime = createTime;
     }
+
 }

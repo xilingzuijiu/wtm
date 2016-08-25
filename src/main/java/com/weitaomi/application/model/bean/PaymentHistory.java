@@ -5,7 +5,7 @@ import com.weitaomi.application.model.BaseModel;
 import javax.persistence.*;
 
 @Table(name = "wtm_payment_history")
-public class PaymentHistory extends BaseModel{
+public class PaymentHistory extends BaseModel {
     /**
      * 支付单号
      */

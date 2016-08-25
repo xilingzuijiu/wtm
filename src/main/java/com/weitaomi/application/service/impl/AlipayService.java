@@ -24,7 +24,7 @@ public class AlipayService implements IPayStrategyService {
         parameters.put("out_trade_no",(String)params.get("trade_no"));
         parameters.put("subject","微淘米在线充值");
         parameters.put("body","微淘米在线充值");
-        Double amount=(Double)params.get("amount");
+        Double amount=Double.valueOf((String)params.get("amount"));
         parameters.put("total_fee",amount.toString());
         parameters.put("notify_url",AlipayConfig.notify_url);
         parameters.put("service",AlipayConfig.service);

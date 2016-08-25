@@ -9,6 +9,19 @@
     <result column="officeAccountId" property="officeAccountId" jdbcType="BIGINT" />
     <result column="memberId" property="memberId" jdbcType="BIGINT" />
     <result column="isAccessNow" property="isAccessNow" jdbcType="INTEGER" />
+    <result column="finishedTime" property="finishedTime" jdbcType="BIGINT" />
     <result column="createTime" property="createTime" jdbcType="BIGINT" />
   </resultMap>
+  <insert id="batchAddOfficeMember">
+    INSERT INTO wtm_office_member  (memberId,officeAccountId,isAccessNow,createTime) VALUES
+    <foreach collection="memberList" close=")" open="(" index="flag" item="item" separator=",">
+      #{item.memberId},#{item.officeAccountId},#{item.isAccessNow},#{dateTime}
+    </foreach>
+  </insert>
+  <delete id="deleteOverTimeUnfollowedAccounts">
+    DELETE FROM wtm_office_member WHERE isAccessNow=0 AND finishedTime is NULL AND unix_timestamp(now())-createTime>7200
+  </delete>
+  <select id="getOfficeMember" resultType="com.weitaomi.application.model.bean.OfficeMember">
+    select * from wtm_office_member m  WHERE m.memberId=#{memberId} AND m.officialAccountId=#{officialAccountId}
+  </select>
 </mapper>
