@@ -7,10 +7,6 @@ import java.util.List;
  */
 public class InvitedParamsDto {
     /**
-     * 分享奖励
-     */
-    private Long sharedCount;
-    /**
      * 邀请奖励
      */
     private Long invitedScore;
@@ -18,26 +14,7 @@ public class InvitedParamsDto {
      * 邀请总奖励
      */
     private Long totalScore;
-    /**
-     * 邀请记录
-     */
-    private List<InvitedRecord> invitedRecordList;
 
-    /**
-     * 获取分享奖励
-     * @return sharedCount 分享奖励
-     */
-    public Long getSharedCount() {
-        return this.sharedCount;
-    }
-
-    /**
-     * 设置分享奖励
-     * @param sharedCount 分享奖励
-     */
-    public void setSharedCount(Long sharedCount) {
-        this.sharedCount = sharedCount;
-    }
 
     /**
      * 获取邀请奖励

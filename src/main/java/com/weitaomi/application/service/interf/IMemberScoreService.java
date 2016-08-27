@@ -17,7 +17,7 @@ public interface IMemberScoreService {
      * @param sessionId
      * @return
      */
-    MemberScore addMemberScore(Long memberId,Long typeId,Long score,String sessionId);
+    MemberScore addMemberScore(Long memberId,Long typeId,Double score,String sessionId);
 
     /**
      * 获取积分历史
@@ -25,4 +25,6 @@ public interface IMemberScoreService {
      * @return
      */
     public List<MemberScoreFlow> getMemberScoreFlowList(Long memberId);
+
+    public MemberScore getMemberScoreById(Long memberId);
 }

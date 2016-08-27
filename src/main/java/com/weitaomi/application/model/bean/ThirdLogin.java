@@ -49,6 +49,8 @@ public class ThirdLogin extends BaseModel {
     private Long createTime;
     @Transient
     private String imageFiles;
+    @Transient
+    private Integer sex;
 
     /**
      * 获取开放平台ID
@@ -184,4 +186,11 @@ public class ThirdLogin extends BaseModel {
         this.imageFiles = imageFiles;
     }
 
+    public Integer getSex() {
+        return this.sex;
+    }
+
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
 }

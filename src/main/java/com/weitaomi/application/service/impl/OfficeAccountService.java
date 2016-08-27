@@ -5,6 +5,7 @@ import com.weitaomi.application.model.bean.*;
 import com.weitaomi.application.model.dto.*;
 import com.weitaomi.application.model.mapper.*;
 import com.weitaomi.application.service.interf.*;
+import com.weitaomi.systemconfig.constant.SystemConfig;
 import com.weitaomi.systemconfig.exception.BusinessException;
 import com.weitaomi.systemconfig.exception.InfoException;
 import com.weitaomi.systemconfig.util.*;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -74,33 +76,15 @@ public class OfficeAccountService implements IOfficeAccountService {
 //            if (valueTemp!=null){
 //                throw new InfoException("公众号"+officialAccountWithScore.getUserName()+"的关注未完成，请先完成");
 //            }
-            cacheService.setCacheByKey(key,value,60*120);
+            cacheService.setCacheByKey(key,value, SystemConfig.TASK_CACHE_TIME);
             OfficeMember officeMember=new OfficeMember();
             officeMember.setMemberId(memberId);
             officeMember.setOfficeAccountId(officialAccountWithScore.getId());
             officeMember.setIsAccessNow(0);
             officeMemberList.add(officeMember);
             //添加到待完成任务记录中
-            MemberTaskWithDetail memberTaskWithDetail = new MemberTaskWithDetail();
-            memberTaskWithDetail.setTaskId(1L);
-            memberTaskWithDetail.setTaskFlag(officialAccountWithScore.getOriginId());
-            memberTaskWithDetail.setPointCount(officialAccountWithScore.getScore());
-            memberTaskWithDetail.setIsFinished(0);
-            MemberTask memberTask = memberTaskMapper.selectByPrimaryKey(1L);
-            memberTaskWithDetail.setMemberId(memberId);
-            memberTaskWithDetail.setTaskName(memberTask.getTaskName());
-            memberTaskWithDetail.setTaskDesc(memberTask.getTaskDesc());
-            memberTaskWithDetail.setCreateTime(DateUtils.getUnixTimestamp());
-            List<MemberTaskHistoryDetail> memberTaskHistoryDetailList = new ArrayList<MemberTaskHistoryDetail>();
-            MemberTaskHistoryDetail memberTaskHistoryDetail = new MemberTaskHistoryDetail();
-            memberTaskHistoryDetail.setTaskName(memberTask.getTaskName());
-            memberTaskHistoryDetail.setTaskDesc(officialAccountWithScore.getUserName());
-            memberTaskHistoryDetail.setPointCount(officialAccountWithScore.getScore());
-            memberTaskHistoryDetail.setIsFinished(1);
-            memberTaskHistoryDetail.setCreateTime(DateUtils.getUnixTimestamp());
-            memberTaskHistoryDetailList.add(memberTaskHistoryDetail);
-            memberTaskWithDetail.setMemberTaskHistoryDetailList(memberTaskHistoryDetailList);
-            memberTaskHistoryService.addMemberTaskToHistory(memberTaskWithDetail);
+            String detail ="关注公众号"+officialAccountWithScore.getUserName()+"，领取"+officialAccountWithScore.getScore()+"米币";
+            memberTaskHistoryService.addMemberTaskToHistory(memberId,1L,officialAccountWithScore.getScore(),0,detail,null);
         }
         Long time =DateUtils.getUnixTimestamp();
         int number=officeMemberMapper.batchAddOfficeMember(officeMemberList,time);
@@ -145,7 +129,7 @@ public class OfficeAccountService implements IOfficeAccountService {
                     //增加任务记录
                     int number = memberTaskHistoryMapper.updateMemberTaskUnfinished(memberId,0,officialAccountWithScore.getOriginId());
                     //增加积分以及积分记录
-                    memberScoreService.addMemberScore(memberId, 3L, officialAccountWithScore.getScore(), UUIDGenerator.generate());
+                    memberScoreService.addMemberScore(memberId, 3L, BigDecimal.valueOf(officialAccountWithScore.getScore()).multiply(taskPool.getRate()).doubleValue(), UUIDGenerator.generate());
                     cacheService.delKeyFromRedis(key);
                 }
             }else {

@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
  * Created by supumall on 2016/7/23.
  */
 @Controller
-@RequestMapping(name = "/app/admin/article")
+@RequestMapping("/app/admin/article")
 public class ArticleController extends BaseController {
     @Autowired
     private IArticleService articleService;
@@ -31,8 +31,9 @@ public class ArticleController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/getAllArticle",method = RequestMethod.POST)
-    public AjaxResult getAllArticle(@RequestBody ArticleSearch articleSearch){
-        return AjaxResult.getOK(articleService.getAllArticle(articleSearch));
+    public AjaxResult getAllArticle(HttpServletRequest request,@RequestBody(required = false) ArticleSearch articleSearch){
+        Long memberId=this.getUserId(request);
+        return AjaxResult.getOK(articleService.getAllArticle(memberId,articleSearch));
     }
 
     /**

@@ -7,11 +7,11 @@ import com.weitaomi.application.model.bean.Article;
  */
 public class ArticleDto extends Article {
     /**
-     * 后台用户ID
+     * 公众号ID
      */
     private Long accountId;
     /**
-     * 文章所属机构名称
+     * 公众号名称
      */
     private String userName;
 

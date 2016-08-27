@@ -38,9 +38,9 @@ public class ArticleService implements IArticleService {
     @Autowired
     private ICacheService cacheService;
     @Override
-    public Page<ArticleShowDto> getAllArticle(ArticleSearch articleSearch) {
+    public Page<ArticleShowDto> getAllArticle(Long memberId,ArticleSearch articleSearch) {
         if (articleSearch.getSearchWay()==0){
-            List<ArticleShowDto> articleShowDtoList=articleMapper.getAtricleList(articleSearch,new RowBounds(articleSearch.getPageIndex(),articleSearch.getPageSize()));
+            List<ArticleShowDto> articleShowDtoList=articleMapper.getAtricleList(memberId,articleSearch,new RowBounds(articleSearch.getPageIndex(),articleSearch.getPageSize()));
 
             PageInfo<ArticleShowDto> showDtoPage=new PageInfo<ArticleShowDto>(articleShowDtoList);
             return Page.trans(showDtoPage);
@@ -65,7 +65,7 @@ public class ArticleService implements IArticleService {
         if (article.getUrl()==null||!article.getUrl().isEmpty()){
             throw new BusinessException("文章地址为空");
         }
-        if (article.getUserId()==null){
+        if (article.getOfficialAccountId()==null){
             throw new BusinessException("文章所属机构为空");
         }
         article.setCreateTime(DateUtils.getUnixTimestamp());
@@ -87,7 +87,7 @@ public class ArticleService implements IArticleService {
         if (article.getUrl()==null||!article.getUrl().isEmpty()){
             throw new BusinessException("文章地址为空");
         }
-        if (article.getUserId()==null){
+        if (article.getOfficialAccountId()==null){
             throw new BusinessException("文章所属机构为空");
         }
         return articleMapper.updateByPrimaryKeySelective(article)>=0?true:false;
@@ -123,7 +123,7 @@ public class ArticleService implements IArticleService {
         if (typeId==0) {
             articleReadRecordMapper.insertSelective(articleReadRecord);
             //TODO 修改typeID
-            memberScoreService.addMemberScore(memberId,3L, 3L, sessionID);
+            memberScoreService.addMemberScore(memberId,3L, 0.03, sessionID);
         }
         articleMapper.updateArticleByRead(articleId,typeId);
         Integer times=45;

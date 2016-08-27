@@ -6,12 +6,10 @@ import com.weitaomi.application.model.mapper.*;
 import com.weitaomi.application.service.interf.ICacheService;
 import com.weitaomi.application.service.interf.IMemberScoreService;
 import com.weitaomi.application.service.interf.IMemberService;
+import com.weitaomi.application.service.interf.IMemberTaskHistoryService;
 import com.weitaomi.systemconfig.exception.BusinessException;
 import com.weitaomi.systemconfig.exception.InfoException;
-import com.weitaomi.systemconfig.util.DateUtils;
-import com.weitaomi.systemconfig.util.PropertiesUtil;
-import com.weitaomi.systemconfig.util.SendMCUtils;
-import com.weitaomi.systemconfig.util.StringUtil;
+import com.weitaomi.systemconfig.util.*;
 import org.apache.ibatis.cache.CacheException;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.slf4j.Logger;
@@ -31,11 +29,13 @@ import java.util.concurrent.TimeUnit;
  */
 @Service
 public class MemberService extends BaseService implements IMemberService {
-    private Logger logger= LoggerFactory.getLogger(MemberService.class);
+    private Logger logger = LoggerFactory.getLogger(MemberService.class);
     @Autowired
     private RedisTemplate redisTemplate;
     @Autowired
     private MemberMapper memberMapper;
+    @Autowired
+    private MemberTaskMapper memberTaskMapper;
     @Autowired
     private ThirdLoginMapper thirdLoginMapper;
     @Autowired
@@ -45,195 +45,210 @@ public class MemberService extends BaseService implements IMemberService {
     @Autowired
     private IMemberScoreService memberScoreService;
     @Autowired
-    private OfficalAccountMapper officalAccountMapper;
+    private IMemberTaskHistoryService memberTaskHistoryService;
+
     @Override
     @Transactional
     public Boolean register(RegisterMsg registerMsg) {
-        if (registerMsg==null||registerMsg.getMember()==null){
+        if (registerMsg == null || registerMsg.getMember() == null) {
             throw new BusinessException("注册参数不能为空");
         }
-        Member member=registerMsg.getMember();
-        if (member.getTelephone()==null||member.getTelephone().isEmpty()){
+        Member member = registerMsg.getMember();
+        if (member.getTelephone() == null || member.getTelephone().isEmpty()) {
             throw new InfoException("手机号不能为空");
         }
-        if (!member.getTelephone().matches("^[1][34578]\\d{9}$")){
+        if (!member.getTelephone().matches("^[1][34578]\\d{9}$")) {
             throw new BusinessException("手机格式不正确");
         }
-        Member memberExist=memberMapper.getMemberByTelephone(member.getTelephone());
-        if (memberExist!=null){
+        Member memberExist = memberMapper.getMemberByTelephone(member.getTelephone());
+        if (memberExist != null) {
             throw new InfoException("手机号已经被注册");
         }
-        String salt= StringUtil.random(6);
-        String password=member.getPassword();
-        Member memberTemp=new Member();
+        String salt = StringUtil.random(6);
+        String password = member.getPassword();
+        Member memberTemp = new Member();
         memberTemp.setTelephone(member.getTelephone());
-        if (password.length()<6){
+        if (password.length() < 6) {
             throw new InfoException("密码长度不能小于六位");
         }
-        if (salt!=null&&!salt.isEmpty()) {
+        if (salt != null && !salt.isEmpty()) {
             memberTemp.setSalt(salt);
             String newSHAPassword = new Sha256Hash(password, salt).toString();
             memberTemp.setPassword(newSHAPassword);
         }
-        String memberName=member.getMemberName();
-        if (memberName==null||memberName.isEmpty()){
+        String memberName = member.getMemberName();
+        if (memberName == null || memberName.isEmpty()) {
             throw new BusinessException("用户名不能为空");
         }
-        Member memberFlag=memberMapper.getMemberByTelephone(memberName);
-        if (memberFlag!=null){
-            throw new BusinessException("用户名已经注册");
+        Member memberFlag = memberMapper.getMemberByMemberName(memberName);
+        if (memberFlag != null) {
+            throw new InfoException("用户名已经注册");
         }
         memberTemp.setMemberName(memberName);
-        if (member.getBirth()!=null){
+        if (member.getBirth() != null) {
             memberTemp.setBirth(member.getBirth());
         }
-        if (member.getEmail()!=null&&member.getEmail().matches("[_a-z\\d\\-\\./]+@[_a-z\\d\\-]+(\\.[_a-z\\d\\-]+)*(\\.(info|biz|com|edu|gov|net|am|bz|cn|cx|hk|jp|tw|vc|vn))$")){
+        if (member.getEmail() != null && member.getEmail().matches("[_a-z\\d\\-\\./]+@[_a-z\\d\\-]+(\\.[_a-z\\d\\-]+)*(\\.(info|biz|com|edu|gov|net|am|bz|cn|cx|hk|jp|tw|vc|vn))$")) {
             memberTemp.setEmail(member.getEmail());
         }
-//TODO
 //       if (!this.validateIndetifyCode(memberTemp.getTelephone(),registerMsg.getIdentifyCode())){
-        if (false){
+        if (false) {
             throw new BusinessException("验证码错误，请重试");
         }
         memberTemp.setSource(member.getSource());
         memberTemp.setCreateTime(DateUtils.getUnixTimestamp());
-        Long newMemberId=null;
-        if (registerMsg.getFlag()!=null&&registerMsg.getFlag()==0){
+        Long newMemberId = null;
+        if (registerMsg.getFlag() != null && registerMsg.getFlag() == 0) {
             memberMapper.insertSelective(memberTemp);
-            newMemberId=memberTemp.getId();
+            newMemberId = memberTemp.getId();
             memberTemp.setInvitedCode(StringUtil.toSerialNumber(newMemberId));
             memberMapper.updateByPrimaryKeySelective(memberTemp);
-        }else if (registerMsg.getFlag()!=null&&registerMsg.getFlag()==1){
-            ThirdLogin thirdLogin=registerMsg.getThirdLogin();
-            if (thirdLogin==null){
+        } else if (registerMsg.getFlag() != null && registerMsg.getFlag() == 1) {
+            ThirdLogin thirdLogin = registerMsg.getThirdLogin();
+            if (thirdLogin == null) {
                 throw new BusinessException("第三方注册信息为空");
             }
-            if (thirdLogin.getOpenId()==null||thirdLogin.getOpenId().isEmpty()){
+            if (thirdLogin.getOpenId() == null || thirdLogin.getOpenId().isEmpty()) {
                 throw new BusinessException("第三方OpenId为空");
             }
             memberMapper.insertSelective(memberTemp);
-            newMemberId =memberTemp.getId();
-            String code=StringUtil.toSerialNumber(newMemberId);
-            if (!StringUtil.isEmpty(thirdLogin.getImageFiles())){
-                String imageUrl=this.uploadShowImage(newMemberId,thirdLogin.getImageFiles(),"jpg");
+            newMemberId = memberTemp.getId();
+            String code = StringUtil.toSerialNumber(newMemberId);
+            if (!StringUtil.isEmpty(thirdLogin.getImageFiles())) {
+                String imageUrl = this.uploadShowImage(newMemberId, thirdLogin.getImageFiles(), "jpg");
                 memberTemp.setImageUrl(imageUrl);
             }
             memberTemp.setInvitedCode(code);
+            memberTemp.setSex(thirdLogin.getSex());
             memberMapper.updateByPrimaryKeySelective(memberTemp);
             thirdLogin.setMemberId(newMemberId);
             thirdLogin.setCreateTime(DateUtils.getUnixTimestamp());
             thirdLoginMapper.insertSelective(thirdLogin);
         }
-        if (registerMsg.getInvitedCode()!=null&&!registerMsg.getInvitedCode().isEmpty()){
-            Member memberInvited=memberMapper.getMemberByInviteCode(registerMsg.getInvitedCode());
-            if (memberInvited!=null) {
-                MemberInvitedRecord memberInvitedRecordTemp=memberInvitedRecordMapper.getMemberInvitedRecordByMemberId(newMemberId);
-                if (memberInvitedRecordTemp==null) {
+        if (registerMsg.getInvitedCode() != null && !registerMsg.getInvitedCode().isEmpty()) {
+            Member memberInvited = memberMapper.getMemberByInviteCode(registerMsg.getInvitedCode());
+            if (memberInvited.getId()==newMemberId){
+                throw new InfoException("亲，你不能邀请自己，真的~");
+            }
+            if (memberInvited != null) {
+                MemberInvitedRecord memberInvitedRecordTemp = memberInvitedRecordMapper.getMemberInvitedRecordByMemberId(newMemberId);
+                if (memberInvitedRecordTemp == null) {
                     MemberInvitedRecord memberInvitedRecord = new MemberInvitedRecord();
                     memberInvitedRecord.setMemberId(newMemberId);
                     memberInvitedRecord.setParentId(memberInvited.getId());
                     memberInvitedRecord.setIsAccessible(1);
                     memberInvitedRecord.setCreateTime(DateUtils.getUnixTimestamp());
-
-                    memberInvitedRecordMapper.insertSelective(memberInvitedRecord);
+                    int num = memberInvitedRecordMapper.insertSelective(memberInvitedRecord);
+                    if (num > 0) {
+                        MemberTask memberTask = memberTaskMapper.selectByPrimaryKey(3L);
+                        memberTaskHistoryService.addMemberTaskToHistory(memberInvitedRecord.getParentId(), 3L, null, 1, null, null);
+                        memberScoreService.addMemberScore(memberInvited.getId(), 3L, memberTask.getPointCount().doubleValue(), UUIDGenerator.generate());
+                    }
                 }
             }
         }
         return true;
     }
+
     @Override
     @Transactional
-    public Boolean bindThirdPlat(Long memberId,ThirdLogin thirdLogin) {
-        if (thirdLogin==null){
+    public Boolean bindThirdPlat(Long memberId, ThirdLogin thirdLogin) {
+        if (thirdLogin == null) {
             throw new BusinessException("第三方注册信息为空");
         }
         thirdLogin.setMemberId(memberId);
-        if (thirdLogin.getOpenId()==null||thirdLogin.getOpenId().isEmpty()){
+        if (thirdLogin.getOpenId() == null || thirdLogin.getOpenId().isEmpty()) {
             throw new BusinessException("第三方OpenId为空");
         }
-        if (thirdLogin.getUnionId()==null||thirdLogin.getOpenId().isEmpty()){
+        if (thirdLogin.getUnionId() == null || thirdLogin.getOpenId().isEmpty()) {
             throw new BusinessException("第三方OpenId为空");
         }
-        if (thirdLogin.getMemberId()==null){
+        if (thirdLogin.getMemberId() == null) {
             throw new BusinessException("绑定的用户Id为空");
         }
-        if (thirdLogin.getType()==null){
+        if (thirdLogin.getType() == null) {
             throw new BusinessException("登陆平台类型为空");
         }
-        ThirdLogin thirdLoginFlag=thirdLoginMapper.getThirdLoginInfo(thirdLogin.getOpenId());
-        if (thirdLoginFlag!=null){
+        ThirdLogin thirdLoginFlag = thirdLoginMapper.getThirdLoginInfo(thirdLogin.getOpenId());
+        if (thirdLoginFlag != null) {
             throw new InfoException("您已经绑定此账号");
         }
         thirdLogin.setCreateTime(DateUtils.getUnixTimestamp());
-        Member member=memberMapper.selectByPrimaryKey(memberId);
-
-        Integer num=thirdLoginMapper.insertSelective(thirdLogin);
-        return num>0?true:false;
+        Member member = memberMapper.selectByPrimaryKey(memberId);
+        if (member==null){
+            throw new InfoException("用户信息为空");
+        }
+        member.setSex(thirdLogin.getSex());
+        memberMapper.updateByPrimaryKeySelective(member);
+        Integer num = thirdLoginMapper.insertSelective(thirdLogin);
+        return num > 0 ? true : false;
     }
 
     @Override
     public MemberInfoDto login(String mobileOrName, String password) {
-        if (mobileOrName!=null) {
-            MemberInfoDto member=null;
+        if (mobileOrName != null) {
+            MemberInfoDto member = null;
             if (mobileOrName.matches("^[1][34578]\\d{9}$")) {
                 logger.info("手机登陆用户");
-                member=memberMapper.getMemberByTelephone(mobileOrName);
-                if (member==null){
+                member = memberMapper.getMemberByTelephone(mobileOrName);
+                if (member == null) {
                     throw new InfoException("手机号未注册，请注册");
                 }
-            }else {
-                member=memberMapper.getMemberByMemberName(mobileOrName);
-                if (member==null){
+            } else {
+                member = memberMapper.getMemberByMemberName(mobileOrName);
+                if (member == null) {
                     throw new InfoException("用户不存在，请注册");
                 }
                 logger.info("用户名登陆用户");
             }
-            if (!member.getPassword().equals(new Sha256Hash(password,member.getSalt()).toString())){
+            if (!member.getPassword().equals(new Sha256Hash(password, member.getSalt()).toString())) {
                 throw new InfoException("用户名或密码错误");
             }
 
-            String key="member:login:"+member.getId();
-            Integer times=60*60*24*30;
-            cacheService.setCacheByKey(key,member,times);
+            String key = "member:login:" + member.getId();
+            Integer times = 60 * 60 * 24 * 30;
+            cacheService.setCacheByKey(key, member, times);
 
             return member;
-        }else{
+        } else {
             throw new InfoException("用户名/密码为空");
         }
     }
 
     @Override
     public MemberInfoDto thirdPlatLogin(String openId, Integer type) {
-        if (openId==null||openId.isEmpty()){
+        if (openId == null || openId.isEmpty()) {
             throw new BusinessException("第三方OpenId为空");
         }
-        ThirdLogin thirdLogin=thirdLoginMapper.getThirdLoginInfo(openId);
-        if (thirdLogin==null){
+        ThirdLogin thirdLogin = thirdLoginMapper.getThirdLoginInfo(openId);
+        if (thirdLogin == null) {
             throw new InfoException("该微信账号未绑定，请登录绑定或者重新注册");
         }
-        if (!thirdLogin.getType().equals(type)){
+        if (!thirdLogin.getType().equals(type)) {
             throw new BusinessException("登录平台与OpenID不匹配");
         }
-        if (thirdLogin.getMemberId()==null){
+        if (thirdLogin.getMemberId() == null) {
             throw new InfoException("该平台账号未绑定，请重新绑定");
         }
-        MemberInfoDto member=memberMapper.getMemberInfoById(thirdLogin.getMemberId());
-        if (member==null){
+        MemberInfoDto member = memberMapper.getMemberInfoById(thirdLogin.getMemberId());
+        if (member == null) {
             throw new InfoException("微信号未绑定，请重新注册");
         }
-        String key="member:login:"+member.getId();
-        Integer times=60*60*24*30;
-        cacheService.setCacheByKey(key,member,times);
+        String key = "member:login:" + member.getId();
+        Integer times = 60 * 60 * 24 * 30;
+        cacheService.setCacheByKey(key, member, times);
         return member;
     }
+
     /**
      * 设置缓存
+     *
      * @param key
      * @param IdentifyCode
      * @param timeout
      * @throws CacheException
      */
-    private void setIndentifyCodeToCache(String key, String IdentifyCode, Long timeout)  {
+    private void setIndentifyCodeToCache(String key, String IdentifyCode, Long timeout) {
         Long timeoutTemp = timeout;
         if (timeout == null) {
             timeoutTemp = 120L;
@@ -244,6 +259,7 @@ public class MemberService extends BaseService implements IMemberService {
 
     /**
      * 获取缓存
+     *
      * @param key
      * @return
      */
@@ -252,16 +268,17 @@ public class MemberService extends BaseService implements IMemberService {
         StringBuilder sb = new StringBuilder();
         String type = null;
         String value = valueOper.get(key);
-        if (value!= null) {
+        if (value != null) {
             return value;
         }
         return "00000000";
     }
+
     @Override
     public Member getMemberDetailById(Long memberId) {
-        String key="member:login:"+memberId;
-        Member member= cacheService.getCacheByKey(key,Member.class);
-        if(member==null){
+        String key = "member:login:" + memberId;
+        Member member = cacheService.getCacheByKey(key, Member.class);
+        if (member == null) {
             throw new InfoException("请先完成登陆");
         }
         return memberMapper.selectByPrimaryKey(memberId);
@@ -273,7 +290,7 @@ public class MemberService extends BaseService implements IMemberService {
         if (modifyPasswordDto == null) {
             throw new InfoException("密码信息为空，请重新修改或者登录");
         }
-        if (modifyPasswordDto.getFlag()==0) {
+        if (modifyPasswordDto.getFlag() == 0) {
             Member member = memberMapper.getMemberByTelephone(modifyPasswordDto.getMobile());
             if (member == null) {
                 throw new BusinessException("用户不存在");
@@ -287,7 +304,7 @@ public class MemberService extends BaseService implements IMemberService {
             member.setPassword(new Sha256Hash(modifyPasswordDto.getNewPassword(), salt).toString());
             int number = memberMapper.updateByPrimaryKeySelective(member);
             flag = number > 0 ? true : false;
-        } else if (modifyPasswordDto.getFlag()==1) {
+        } else if (modifyPasswordDto.getFlag() == 1) {
             Member member = memberMapper.selectByPrimaryKey(memberId);
             if (member == null) {
                 throw new BusinessException("用户不存在");
@@ -311,31 +328,31 @@ public class MemberService extends BaseService implements IMemberService {
 
     @Override
     public boolean modifyBirth(Long memberId, Long birth) {
-        Member member=memberMapper.selectByPrimaryKey(memberId);
+        Member member = memberMapper.selectByPrimaryKey(memberId);
         member.setBirth(birth);
-        int num=memberMapper.updateByPrimaryKeySelective(member);
-        return num>0?true:false;
+        int num = memberMapper.updateByPrimaryKeySelective(member);
+        return num > 0 ? true : false;
     }
 
     @Override
     public boolean modifyMemberAddress(Long memberId, String memberAddress) {
-        Member member=memberMapper.selectByPrimaryKey(memberId);
-        String[] address=memberAddress.split(",");
-        if (address.length==4){
+        Member member = memberMapper.selectByPrimaryKey(memberId);
+        String[] address = memberAddress.split(",");
+        if (address.length == 4) {
             member.setProvince(address[0]);
             member.setCity(address[1]);
             member.setArea(address[2]);
             member.setMemberAddress(address[3]);
         }
         int number = memberMapper.updateByPrimaryKeySelective(member);
-        return number>0?true:false;
+        return number > 0 ? true : false;
     }
 
     @Override
     @Transactional
-    public String uploadShowImage(Long memberId,String imageFiles,String imageType) {
-        String imageUrl="/member/showImage/"+memberId+DateUtils.getUnixTimestamp()+"."+imageType;
-        if (super.uploadImage(imageUrl,imageFiles)) {
+    public String uploadShowImage(Long memberId, String imageFiles, String imageType) {
+        String imageUrl = "/member/showImage/" + memberId + DateUtils.getUnixTimestamp() + "." + imageType;
+        if (super.uploadImage(imageUrl, imageFiles)) {
             memberMapper.upLoadMemberShowImage(memberId, imageUrl);
         }
         return imageUrl;
@@ -346,31 +363,31 @@ public class MemberService extends BaseService implements IMemberService {
         if (!mobile.matches("^[1][34578]\\d{9}$")) {
             throw new BusinessException("手机号码格式不正确");
         }
-        String key="member:indentifyCode:"+mobile;
-        String value= this.getIndentifyCodeFromCache(key);
-        if (value!=null&&!value.equals("00000000")){
+        String key = "member:indentifyCode:" + mobile;
+        String value = this.getIndentifyCodeFromCache(key);
+        if (value != null && !value.equals("00000000")) {
             throw new InfoException("验证码已发送，请120s后重试");
         }
-        String identifyCode=StringUtil.numRandom(6);
-        String content= null;
-        content = MessageFormat.format(new String(PropertiesUtil.getValue("verifycode.msg")),identifyCode);
-        SendMCUtils.sendMessage(mobile,content);
-        this.setIndentifyCodeToCache(key,identifyCode,120L);
+        String identifyCode = StringUtil.numRandom(6);
+        String content = null;
+        content = MessageFormat.format(new String(PropertiesUtil.getValue("verifycode.msg")), identifyCode);
+        SendMCUtils.sendMessage(mobile, content);
+        this.setIndentifyCodeToCache(key, identifyCode, 120L);
         return identifyCode;
     }
+
     @Override
     public Boolean validateIndetifyCode(String mobile, String indentifyCode) {
-        String key="member:indentifyCode:"+mobile;
-        String value =this.getIndentifyCodeFromCache(key);
-        if(value==null){
+        String key = "member:indentifyCode:" + mobile;
+        String value = this.getIndentifyCodeFromCache(key);
+        if (value == null) {
             throw new InfoException("邀请码未发送");
         }
-        if(indentifyCode.equals(value)){
+        if (indentifyCode.equals(value)) {
             return true;
         }
         return false;
     }
-
 
 
 }

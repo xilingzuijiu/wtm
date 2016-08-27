@@ -10,6 +10,6 @@ import java.util.List;
 public interface MemberTaskHistoryMapper extends IBaseMapper<MemberTaskHistory> {
     List<MemberTaskWithDetail> getMemberTaskHistoryList(@Param("memberId") Long memberId, @Param("type") Integer type, @Param("rowBounds") RowBounds rowBounds);
     Integer updateMemberTaskUnfinished(@Param("memberId") Long memberId, @Param("type") Integer type, @Param("originId") String originId);
-    int deleteUnfinishedTask();
-    int deleteUnfinishedTaskDetail();
+    int deleteUnfinishedTask(@Param("time") Integer time);
+    int deleteUnfinishedTaskDetail(@Param("time") Integer time);
 }

@@ -3,6 +3,7 @@ package com.weitaomi.application.model.bean;
 import com.weitaomi.application.model.BaseModel;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Table(name = "wtm_task_pool")
 public class TaskPool extends BaseModel {
@@ -12,6 +13,11 @@ public class TaskPool extends BaseModel {
      */
     @Column(name = "taskType")
     private Integer taskType;
+    /**
+     * 用户ID
+     */
+    @Column(name = "memberId")
+    private Long memberId;
     /**
      * 公众号ID
      */
@@ -27,6 +33,11 @@ public class TaskPool extends BaseModel {
      */
     @Column(name = "totalScore")
     private Integer totalScore;
+    /**
+     * 任务总支出米币
+     */
+    @Column(name = "rate")
+    private BigDecimal rate;
     /**
      * 单次奖励
      */
@@ -272,5 +283,37 @@ public class TaskPool extends BaseModel {
      */
     public void setIsAutoPublishToOthers(Integer isAutoPublishToOthers) {
         this.isAutoPublishToOthers = isAutoPublishToOthers;
+    }
+
+    /**
+     * 获取任务总支出米币
+     * @return rate 任务总支出米币
+     */
+    public BigDecimal getRate() {
+        return this.rate;
+    }
+
+    /**
+     * 设置任务总支出米币
+     * @param rate 任务总支出米币
+     */
+    public void setRate(BigDecimal rate) {
+        this.rate = rate;
+    }
+
+    /**
+     * 获取用户ID
+     * @return memberId 用户ID
+     */
+    public Long getMemberId() {
+        return this.memberId;
+    }
+
+    /**
+     * 设置用户ID
+     * @param memberId 用户ID
+     */
+    public void setMemberId(Long memberId) {
+        this.memberId = memberId;
     }
 }

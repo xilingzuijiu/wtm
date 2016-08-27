@@ -6,35 +6,15 @@ import com.weitaomi.application.model.bean.OfficialAccount;
 /**
  * Created by supumall on 2016/7/7.
  */
-public class ArticleShowDto {
-    /**
-     * 文章信息
-     */
-    private Article article;
+public class ArticleShowDto extends Article{
     /**
      * 用户信息
      */
-    private OfficialAccount user;
+    private String  username;
     /**
      * 是否已经阅读过 0:未阅读，1：已阅读
      */
     private Integer isReadBefore;
-
-    /**
-     * 获取文章信息
-     * @return article 文章信息
-     */
-    public Article getArticle() {
-        return this.article;
-    }
-
-    /**
-     * 设置文章信息
-     * @param article 文章信息
-     */
-    public void setArticle(Article article) {
-        this.article = article;
-    }
     /**
      * 获取是否已经阅读过
      * @return isReadBefore 是否已经阅读过
@@ -51,19 +31,20 @@ public class ArticleShowDto {
         this.isReadBefore = isReadBefore;
     }
 
+
     /**
      * 获取用户信息
-     * @return user 用户信息
+     * @return username 用户信息
      */
-    public OfficialAccount getUser() {
-        return this.user;
+    public String getUsername() {
+        return this.username;
     }
 
     /**
      * 设置用户信息
-     * @param user 用户信息
+     * @param username 用户信息
      */
-    public void setUser(OfficialAccount user) {
-        this.user = user;
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

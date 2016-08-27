@@ -15,8 +15,8 @@
   </resultMap>
   <insert id="insertIntoDetail">
     insert into wtm_member_task_history_detail  (taskHistoryId,pointCount,taskName,taskDesc,isFinished,createTime) values
-    <foreach collection="memberTaskHistoryDetails" close=")" open="(" index="flag" item="item" separator=",">
-      #{taskId},#{item.pointCount},#{item.taskName},#{item.taskDesc},#{item.isFinished},#{createTime}
+    <foreach collection="memberTaskHistoryDetails" index="flag" item="item" separator=",">
+      (#{taskId},#{item.pointCount},#{item.taskName},#{item.taskDesc},#{item.isFinished},#{createTime})
     </foreach>
   </insert>
   <select id="getMemberTaskHistoryDetialList"

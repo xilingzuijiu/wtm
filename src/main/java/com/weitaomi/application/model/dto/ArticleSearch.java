@@ -19,11 +19,7 @@ public class ArticleSearch {
     /**
      * 商家ID
      */
-    private Long userId;
-    /**
-     * 用户ID
-     */
-    private Long memberId;
+    private Long officialAccountId;
     /**
      * 分页默认第一页
      */
@@ -31,7 +27,7 @@ public class ArticleSearch {
     /**
      * 分页默认50
      */
-    private Integer pageSize=20;
+        private Integer pageSize=50;
     /**
      * 查询方式（后续扩展需要）
       */
@@ -87,38 +83,6 @@ public class ArticleSearch {
      */
     public void setEndTime(Long endTime) {
         this.endTime = endTime;
-    }
-
-    /**
-     * 获取商家ID
-     * @return userId 商家ID
-     */
-    public Long getUserId() {
-        return this.userId;
-    }
-
-    /**
-     * 设置商家ID
-     * @param userId 商家ID
-     */
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    /**
-     * 获取用户ID
-     * @return memberId 用户ID
-     */
-    public Long getMemberId() {
-        return this.memberId;
-    }
-
-    /**
-     * 设置用户ID
-     * @param memberId 用户ID
-     */
-    public void setMemberId(Long memberId) {
-        this.memberId = memberId;
     }
 
     /**
@@ -183,5 +147,21 @@ public class ArticleSearch {
      */
     public void setTitleKeyWord(String titleKeyWord) {
         this.titleKeyWord = titleKeyWord;
+    }
+
+    /**
+     * 获取商家ID
+     * @return officialAccountId 商家ID
+     */
+    public Long getOfficialAccountId() {
+        return this.officialAccountId;
+    }
+
+    /**
+     * 设置商家ID
+     * @param officialAccountId 商家ID
+     */
+    public void setOfficialAccountId(Long officialAccountId) {
+        this.officialAccountId = officialAccountId;
     }
 }

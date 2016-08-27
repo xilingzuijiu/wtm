@@ -10,8 +10,8 @@ public class Article extends BaseModel {
     /**
      * 商家ID
      */
-    @Column(name = "userId")
-    private Long userId;
+    @Column(name = "officialAccountId")
+    private Long officialAccountId;
 
     /**
      * 文章地址
@@ -19,6 +19,11 @@ public class Article extends BaseModel {
     @Column(name = "url")
     private String url;
 
+    /**
+     * 文章地址
+     */
+    @Column(name = "imageUrl")
+    private String imageUrl;
     /**
      * 文章标题
      */
@@ -78,17 +83,17 @@ public class Article extends BaseModel {
      *
      * @return userId - 商家ID
      */
-    public Long getUserId() {
-        return userId;
+    public Long getOfficialAccountId() {
+        return officialAccountId;
     }
 
     /**
      * 设置商家ID
      *
-     * @param userId 商家ID
+     * @param officialAccountId 商家ID
      */
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setOfficialAccountId(Long officialAccountId) {
+        this.officialAccountId = officialAccountId;
     }
 
     /**
@@ -269,5 +274,21 @@ public class Article extends BaseModel {
      */
     public void setCreateTime(Long createTime) {
         this.createTime = createTime;
+    }
+
+    /**
+     * 获取文章地址
+     * @return imageUrl 文章地址
+     */
+    public String getImageUrl() {
+        return this.imageUrl;
+    }
+
+    /**
+     * 设置文章地址
+     * @param imageUrl 文章地址
+     */
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

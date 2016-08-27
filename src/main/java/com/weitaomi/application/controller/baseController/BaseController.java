@@ -1,8 +1,11 @@
 package com.weitaomi.application.controller.baseController;
 
+import com.weitaomi.application.model.bean.Member;
 import com.weitaomi.application.model.dto.MobileInfo;
 import com.weitaomi.application.model.dto.RequestFrom;
+import com.weitaomi.application.model.mapper.MemberMapper;
 import com.weitaomi.systemconfig.exception.BusinessException;
+import com.weitaomi.systemconfig.exception.InfoException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,8 @@ public abstract class BaseController {
     private Logger logger = LoggerFactory.getLogger(BaseController.class);
     @Autowired
     protected RedisTemplate redisTemplate;
+    @Autowired
+    protected MemberMapper memberMapper;
     /**
      * 获取用户ID，用户ID可能为NULL,需自行判断
      *
@@ -26,12 +31,17 @@ public abstract class BaseController {
      * @return
      */
     protected Long getUserId(HttpServletRequest request) {
-
         String sId = request.getHeader("memberId");
 
         if (!StringUtils.isEmpty(sId)) {
             try {
                 Long userId = Long.parseLong(sId);
+                Member member=memberMapper.selectByPrimaryKey(userId);
+                if (member==null){
+                    throw new InfoException("用户不存在");
+                }else if (member.getSex()==3){
+                    throw new InfoException("用户已经被禁用，请联系客服人员");
+                }
                 return userId;
             } catch (NumberFormatException e) {
                 logger.warn("请求头memberId参数格式错误:{}", sId);

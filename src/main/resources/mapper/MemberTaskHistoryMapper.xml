@@ -37,11 +37,11 @@
 
   <delete id="deleteUnfinishedTaskDetail">
     DELETE FROM wtm_member_task_history_detail   WHERE taskHistoryId  IN (
-    select h.id from wtm_member_task_history h WHERE h.isFinished=0 AND unix_timestamp(now())-createTime>7200
+    select h.id from wtm_member_task_history h WHERE h.isFinished=0 AND unix_timestamp(now())-createTime>#{time}
     )
   </delete>
   <delete id="deleteUnfinishedTask">
-    DELETE FROM  wtm_member_task_history  WHERE isFinished=0 AND unix_timestamp(now())-createTime>7200
+    DELETE FROM  wtm_member_task_history  WHERE isFinished=0 AND unix_timestamp(now())-createTime>#{time}
   </delete>
 
 

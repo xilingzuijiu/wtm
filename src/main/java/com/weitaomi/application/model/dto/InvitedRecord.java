@@ -6,18 +6,10 @@ import java.math.BigDecimal;
  * Created by supumall on 2016/7/15.
  */
 public class InvitedRecord {
-    private String memberId;
+    private String imageUrl;
     private String memberName;
-    private BigDecimal memberScore;
-    private String invitedTime;
+    private Long invitedTime;
 
-    public String getMemberId() {
-        return this.memberId;
-    }
-
-    public void setMemberId(String memberId) {
-        this.memberId = memberId;
-    }
 
     public String getMemberName() {
         return this.memberName;
@@ -27,19 +19,20 @@ public class InvitedRecord {
         this.memberName = memberName;
     }
 
-    public BigDecimal getMemberScore() {
-        return this.memberScore;
-    }
 
-    public void setMemberScore(BigDecimal memberScore) {
-        this.memberScore = memberScore;
-    }
-
-    public String getInvitedTime() {
+    public Long getInvitedTime() {
         return this.invitedTime;
     }
 
-    public void setInvitedTime(String invitedTime) {
+    public void setInvitedTime(Long invitedTime) {
         this.invitedTime = invitedTime;
+    }
+
+    public String getImageUrl() {
+        return this.imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

@@ -1,11 +1,14 @@
 package com.weitaomi.application.service.impl;
 
+import com.weitaomi.application.model.bean.MemberPayAccounts;
 import com.weitaomi.application.model.bean.MemberScore;
 import com.weitaomi.application.model.bean.PaymentApprove;
 import com.weitaomi.application.model.bean.PaymentHistory;
 import com.weitaomi.application.model.dto.MyWalletDto;
 import com.weitaomi.application.model.enums.PayType;
+import com.weitaomi.application.model.mapper.MemberPayAccountsMapper;
 import com.weitaomi.application.model.mapper.MemberScoreMapper;
+import com.weitaomi.application.model.mapper.PaymentApproveMapper;
 import com.weitaomi.application.model.mapper.PaymentHistoryMapper;
 import com.weitaomi.application.service.interf.ICacheService;
 import com.weitaomi.application.service.interf.IPayStrategyContext;
@@ -13,6 +16,7 @@ import com.weitaomi.application.service.interf.IPaymentService;
 import com.weitaomi.systemconfig.alipay.AlipayConfig;
 import com.weitaomi.systemconfig.alipay.AlipayNotify;
 import com.weitaomi.systemconfig.exception.BusinessException;
+import com.weitaomi.systemconfig.exception.InfoException;
 import com.weitaomi.systemconfig.util.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +43,10 @@ public class PaymentService implements IPaymentService {
     private IPayStrategyContext payStrategyContext;
     @Autowired
     private MemberScoreMapper memberScoreMapper;
+    @Autowired
+    private PaymentApproveMapper approveMapper;
+    @Autowired
+    private MemberPayAccountsMapper memberPayAccountsMapper;
     @Override
     @Transactional
     public String getPaymentParams(Map<String,Object> params) {
@@ -205,6 +213,16 @@ public class PaymentService implements IPaymentService {
     }
 
     @Override
+    public boolean generatorPayParams(Long memberId,PaymentApprove approve) {
+        if (approve!=null){
+            approve.setMemberId(memberId);
+            approve.setCreateTime(DateUtils.getUnixTimestamp());
+            approveMapper.insertSelective(approve);
+        }
+        return false;
+    }
+
+    @Override
     public MyWalletDto getMemberWalletInfo(Long memberId) {
         MyWalletDto  myWalletDto= memberScoreMapper.getMyWalletDtoByMemberId(memberId);
         if (myWalletDto==null){
@@ -218,7 +236,31 @@ public class PaymentService implements IPaymentService {
         }
         return myWalletDto;
     }
-
+    @Override
+    public Boolean savePayAccounts(Long memberId,MemberPayAccounts memberPayAccounts) {
+        if (memberPayAccounts==null){
+            throw new InfoException("支付账号信息为空");
+        }
+        MemberPayAccounts payAccounts=new MemberPayAccounts();
+        payAccounts.setMemberId(memberId);
+        List<MemberPayAccounts> memberPayAccountsList=memberPayAccountsMapper.select(payAccounts);
+        if (memberPayAccountsList.isEmpty()){
+            memberPayAccounts.setMemberId(memberId);
+            memberPayAccounts.setCreateTime(DateUtils.getUnixTimestamp());
+            int num = memberPayAccountsMapper.insertSelective(memberPayAccounts);
+            return num>0?true:false;
+        }
+        for (MemberPayAccounts payAccount:memberPayAccountsList){
+            if (payAccount.getPayType()==memberPayAccounts.getPayType()){
+                payAccount.setPayAccount(memberPayAccounts.getPayAccount());
+                payAccount.setRealName(memberPayAccounts.getRealName());
+                payAccount.setCreateTime(DateUtils.getUnixTimestamp());
+                int number=memberPayAccountsMapper.updateByPrimaryKeySelective(payAccount);
+                return number>0?true:false;
+            }
+        }
+        return false;
+    }
     private String getTradeNo(){
         String key="wtm:orderCode:max";
         String payCode= cacheService.getCacheByKey(key,String.class);

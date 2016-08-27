@@ -15,7 +15,7 @@ public interface IArticleService {
      * @param articleSearch
      * @return
      */
-    public Page<ArticleShowDto> getAllArticle(ArticleSearch articleSearch);
+    public Page<ArticleShowDto> getAllArticle(Long memberId,ArticleSearch articleSearch);
 
     /**
      * 增加文章

@@ -38,10 +38,10 @@ public interface IMemberTaskHistoryService {
 
     /**
      * 增加任务记录
-     * @param memberTaskWithDetail
+     * @param
      * @return
      */
-    public boolean addMemberTaskToHistory(MemberTaskWithDetail memberTaskWithDetail);
+    public boolean addMemberTaskToHistory(Long memberId, Long taskId, Long score, Integer flag,String detail,List<MemberTaskHistoryDetail> detailList);
     /**
      * 增加任务记录
      * @param

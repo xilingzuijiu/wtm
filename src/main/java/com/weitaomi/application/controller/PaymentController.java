@@ -1,6 +1,7 @@
 package com.weitaomi.application.controller;
 
 import com.weitaomi.application.controller.baseController.BaseController;
+import com.weitaomi.application.model.bean.MemberPayAccounts;
 import com.weitaomi.application.model.bean.PaymentApprove;
 import com.weitaomi.application.service.interf.IPaymentService;
 import com.weitaomi.systemconfig.dataFormat.AjaxResult;
@@ -73,5 +74,14 @@ public class PaymentController extends BaseController{
             throw new BusinessException("用户ID为空");
         }
         return AjaxResult.getOK(paymentService.getMemberWalletInfo(memberId));
+    }
+    @ResponseBody
+    @RequestMapping(value = "/savePayAccounts", method = RequestMethod.POST)
+    public AjaxResult savePayAccounts(HttpServletRequest request,@RequestBody MemberPayAccounts memberPayAccounts){
+        Long memberId=this.getUserId(request);
+        if (memberId==null){
+            throw new BusinessException("用户ID为空");
+        }
+        return AjaxResult.getOK(paymentService.savePayAccounts(memberId,memberPayAccounts));
     }
 }

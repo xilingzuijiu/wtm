@@ -1,15 +1,12 @@
 package com.weitaomi.application.service.impl;
 
-import com.weitaomi.application.model.bean.MemberInvitedRecord;
-import com.weitaomi.application.model.bean.MemberScore;
-import com.weitaomi.application.model.bean.MemberScoreFlow;
-import com.weitaomi.application.model.bean.MemberScoreFlowType;
-import com.weitaomi.application.model.mapper.MemberInvitedRecordMapper;
-import com.weitaomi.application.model.mapper.MemberScoreFlowMapper;
-import com.weitaomi.application.model.mapper.MemberScoreFlowTypeMapper;
-import com.weitaomi.application.model.mapper.MemberScoreMapper;
+import com.weitaomi.application.model.bean.*;
+import com.weitaomi.application.model.dto.MemberTaskWithDetail;
+import com.weitaomi.application.model.mapper.*;
 import com.weitaomi.application.service.interf.ICacheService;
 import com.weitaomi.application.service.interf.IMemberScoreService;
+import com.weitaomi.application.service.interf.IMemberTaskHistoryService;
+import com.weitaomi.systemconfig.constant.SystemConfig;
 import com.weitaomi.systemconfig.exception.BusinessException;
 import com.weitaomi.systemconfig.util.DateUtils;
 import com.weitaomi.systemconfig.util.PropertiesUtil;
@@ -20,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,7 +26,7 @@ import java.util.List;
 @Service
 public class MemberScoreService implements IMemberScoreService {
     private final Logger logger = LoggerFactory.getLogger(MemberScoreService.class);
-//    private RuntimeSchema<Member> schema=RuntimeSchema.createFrom(Member.class);
+    //    private RuntimeSchema<Member> schema=RuntimeSchema.createFrom(Member.class);
     @Autowired
     private ICacheService cacheService;
     @Autowired
@@ -39,38 +37,43 @@ public class MemberScoreService implements IMemberScoreService {
     private MemberScoreFlowTypeMapper memberScoreFlowTypeMapper;
     @Autowired
     private MemberInvitedRecordMapper memberInvitedRecordMapper;
+    @Autowired
+    private MemberTaskMapper memberTaskMapper;
+    @Autowired
+    private IMemberTaskHistoryService memberTaskHistoryService;
+
     @Override
     @Transactional
-    public MemberScore addMemberScore(Long memberId, Long typeId, Long score, String sessionId) {
-        if (sessionId==null){
+    public MemberScore addMemberScore(Long memberId, Long typeId, Double score, String sessionId) {
+        if (sessionId == null) {
             throw new BusinessException("幂等性操作，请生成随机数");
         }
-        String key="member:score:"+sessionId;
-        MemberScore memberScoreCache=cacheService.getCacheByKey(key,MemberScore.class);
-        if (memberScoreCache!=null){
+        String key = "member:score:" + sessionId;
+        MemberScore memberScoreCache = cacheService.getCacheByKey(key, MemberScore.class);
+        if (memberScoreCache != null) {
             throw new BusinessException("重复操作");
-        }else {
+        } else {
             if (typeId == null) {
                 throw new BusinessException("积分类型ID为空");
             } else {
-                MemberScoreFlowType memberScoreFlowType=memberScoreFlowTypeMapper.selectByPrimaryKey(typeId);
-                if (memberScoreFlowType==null){
+                MemberScoreFlowType memberScoreFlowType = memberScoreFlowTypeMapper.selectByPrimaryKey(typeId);
+                if (memberScoreFlowType == null) {
                     throw new BusinessException("查无此积分流动类型");
                 }
-                BigDecimal increaseScore=null;
-                BigDecimal scoreBefore=BigDecimal.ZERO;
+                BigDecimal increaseScore = null;
+                BigDecimal scoreBefore = BigDecimal.ZERO;
                 MemberScore memberScore = memberScoreMapper.getMemberScoreByMemberId(memberId);
-                if (score!=null){
-                    BigDecimal rate=BigDecimal.ONE;
+                if (score != null) {
+                    BigDecimal rate = BigDecimal.ONE;
                     if (memberScore != null) {
-                        scoreBefore=memberScore.getMemberScore();
-                        rate=memberScore.getRate();
+                        scoreBefore = memberScore.getMemberScore();
+                        rate = memberScore.getRate();
                     }
-                    increaseScore=BigDecimal.valueOf(score).multiply(rate);
+                    increaseScore = BigDecimal.valueOf(score).multiply(rate);
                 }
 
                 if (memberScore == null) {
-                    if (increaseScore.doubleValue()<0){
+                    if (increaseScore.doubleValue() < 0) {
                         throw new BusinessException("可用积分不足");
                     }
                     memberScore = new MemberScore();
@@ -81,19 +84,19 @@ public class MemberScoreService implements IMemberScoreService {
                     memberScore.setUpdateTime(DateUtils.getUnixTimestamp());
                     memberScoreMapper.insertSelective(memberScore);
                 } else {
-                    BigDecimal afterScore=memberScore.getMemberScore().add(increaseScore);
-                    if (afterScore.doubleValue()<0){
+                    BigDecimal afterScore = memberScore.getMemberScore().add(increaseScore);
+                    if (afterScore.doubleValue() < 0) {
                         throw new BusinessException("可用积分不足");
                     }
                     memberScore.setMemberScore(afterScore);
-                    if (afterScore.doubleValue()>= Double.valueOf(PropertiesUtil.getValue("score.level.one"))){
+                    if (afterScore.doubleValue() >= Double.valueOf(PropertiesUtil.getValue("score.level.one"))) {
                         memberScore.setRate(BigDecimal.valueOf(2.00));
-                    } else if (afterScore.doubleValue()<= Double.valueOf(PropertiesUtil.getValue("score.level.one.one"))){
+                    } else if (afterScore.doubleValue() <= Double.valueOf(PropertiesUtil.getValue("score.level.one.one"))) {
                         memberScore.setRate(BigDecimal.valueOf(1.00));
                     } else {
-                        Double levelOne=Double.valueOf(PropertiesUtil.getValue("score.level.one"));
-                        Double rateBase=Double.valueOf(PropertiesUtil.getValue("score.level.one.base"));
-                        BigDecimal rateIncrease = afterScore.subtract(BigDecimal.valueOf(rateBase)).divide(BigDecimal.valueOf(levelOne),1,BigDecimal.ROUND_FLOOR);
+                        Double levelOne = Double.valueOf(PropertiesUtil.getValue("score.level.one"));
+                        Double rateBase = Double.valueOf(PropertiesUtil.getValue("score.level.one.base"));
+                        BigDecimal rateIncrease = afterScore.subtract(BigDecimal.valueOf(rateBase)).divide(BigDecimal.valueOf(levelOne), 1, BigDecimal.ROUND_FLOOR);
                         memberScore.setRate(rateIncrease.add(BigDecimal.ONE));
                     }
                     memberScore.setValidScore(memberScore.getValidScore().add(increaseScore));
@@ -109,37 +112,61 @@ public class MemberScoreService implements IMemberScoreService {
                 memberScoreFlow.setMemberScoreBefore(scoreBefore);
                 memberScoreFlow.setMemberScoreId(memberScore.getId());
                 memberScoreFlow.setCreateTime(DateUtils.getUnixTimestamp());
-                Boolean flag= memberScoreFlowMapper.insertSelective(memberScoreFlow)>0?true:false;
-                if (!flag){
+                Boolean flag = memberScoreFlowMapper.insertSelective(memberScoreFlow) > 0 ? true : false;
+                if (!flag) {
                     throw new BusinessException("积分记录失败");
                 }
 
-                cacheService.setCacheByKey(key,memberScore,60*120);
-                if (typeId!=1&&typeId!=2) {
+                cacheService.setCacheByKey(key, memberScore, SystemConfig.TASK_CACHE_TIME);
+                if (typeId != 1 && typeId != 2&&increaseScore.doubleValue()>0) {
                     //处理上级奖励问题
                     MemberInvitedRecord memberInvitedRecord = memberInvitedRecordMapper.getMemberInvitedRecordByMemberId(memberId);
                     if (memberInvitedRecord != null) {
-                        MemberScore memberScore1=memberScoreMapper.getMemberScoreByMemberId(memberInvitedRecord.getParentId());
-                        BigDecimal beforeAmount=memberScore1.getMemberScore();
-                        BigDecimal afterScore=memberScore1.getMemberScore().add(increaseScore.multiply(BigDecimal.valueOf(0.1)));
-                        if (afterScore.doubleValue()<0){
-                            throw new BusinessException("可用积分不足");
+                        Long rewardScore=increaseScore.multiply(BigDecimal.valueOf(0.1)).longValue();
+                        MemberScore memberScore1 = memberScoreMapper.getMemberScoreByMemberId(memberInvitedRecord.getParentId());
+                        BigDecimal beforeAmount = BigDecimal.ZERO;
+                        if (memberScore1 != null) {
+                            beforeAmount = memberScore1.getMemberScore();
+                            BigDecimal afterScore = beforeAmount.add(increaseScore.multiply(BigDecimal.valueOf(0.1)));
+                            if (afterScore.doubleValue() < 0) {
+                                throw new BusinessException("可用积分不足");
+                            }
+                            memberScore1.setMemberScore(afterScore);
+                            if (afterScore.doubleValue() >= Double.valueOf(PropertiesUtil.getValue("score.level.one"))) {
+                                memberScore1.setRate(BigDecimal.valueOf(2.00));
+                            } else if (afterScore.doubleValue() <= Double.valueOf(PropertiesUtil.getValue("score.level.one.one"))) {
+                                memberScore1.setRate(BigDecimal.valueOf(1.00));
+                            } else {
+                                Double levelOne = Double.valueOf(PropertiesUtil.getValue("score.level.one"));
+                                Double rateBase = Double.valueOf(PropertiesUtil.getValue("score.level.one.base"));
+                                BigDecimal rateIncrease = afterScore.subtract(BigDecimal.valueOf(rateBase)).divide(BigDecimal.valueOf(levelOne), 1, BigDecimal.ROUND_FLOOR);
+                                memberScore1.setRate(rateIncrease.add(BigDecimal.ONE));
+                            }
+                            memberScore1.setValidScore(afterScore);
+                            memberScore1.setUpdateTime(DateUtils.getUnixTimestamp());
+                            memberScoreMapper.updateByPrimaryKeySelective(memberScore1);
+                        }else {
+                            memberScore1=new MemberScore();
+                            BigDecimal afterScore = beforeAmount.add(increaseScore.multiply(BigDecimal.valueOf(0.1)));
+                            if (afterScore.doubleValue() >= Double.valueOf(PropertiesUtil.getValue("score.level.one"))) {
+                                memberScore1.setRate(BigDecimal.valueOf(2.00));
+                            } else if (afterScore.doubleValue() <= Double.valueOf(PropertiesUtil.getValue("score.level.one.one"))) {
+                                memberScore1.setRate(BigDecimal.valueOf(1.00));
+                            } else {
+                                Double levelOne = Double.valueOf(PropertiesUtil.getValue("score.level.one"));
+                                Double rateBase = Double.valueOf(PropertiesUtil.getValue("score.level.one.base"));
+                                BigDecimal rateIncrease = afterScore.subtract(BigDecimal.valueOf(rateBase)).divide(BigDecimal.valueOf(levelOne), 1, BigDecimal.ROUND_FLOOR);
+                                memberScore1.setRate(rateIncrease.add(BigDecimal.ONE));
+                            }
+                            memberScore1.setMemberId(memberInvitedRecord.getParentId());
+                            memberScore1.setMemberScore(afterScore);
+                            memberScore1.setValidScore(afterScore);
+                            memberScore1.setUpdateTime(DateUtils.getUnixTimestamp());
+                            memberScore1.setCreateTime(DateUtils.getUnixTimestamp());
+                            memberScoreMapper.insertSelective(memberScore1);
                         }
-                        memberScore.setMemberScore(afterScore);
-                        if (afterScore.doubleValue()>= Double.valueOf(PropertiesUtil.getValue("score.level.one"))){
-                            memberScore1.setRate(BigDecimal.valueOf(2.00));
-                        } else if (afterScore.doubleValue()<= Double.valueOf(PropertiesUtil.getValue("score.level.one.one"))){
-                            memberScore1.setRate(BigDecimal.valueOf(1.00));
-                        } else {
-                            Double levelOne=Double.valueOf(PropertiesUtil.getValue("score.level.one"));
-                            Double rateBase=Double.valueOf(PropertiesUtil.getValue("score.level.one.base"));
-                            BigDecimal rateIncrease = afterScore.subtract(BigDecimal.valueOf(rateBase)).divide(BigDecimal.valueOf(levelOne),1,BigDecimal.ROUND_FLOOR);
-                            memberScore1.setRate(rateIncrease.add(BigDecimal.ONE));
-                        }
-                        memberScore1.setValidScore(memberScore1.getValidScore().add(increaseScore.multiply(BigDecimal.valueOf(0.1))));
-                        memberScore1.setUpdateTime(DateUtils.getUnixTimestamp());
-                        memberScoreMapper.updateByPrimaryKeySelective(memberScore1);
-                        MemberScoreFlowType memberScoreFlowType1=memberScoreFlowTypeMapper.selectByPrimaryKey(3L);
+
+                        MemberScoreFlowType memberScoreFlowType1 = memberScoreFlowTypeMapper.selectByPrimaryKey(3L);
                         MemberScoreFlow memberScoreFlow1 = new MemberScoreFlow();
                         memberScoreFlow1.setMemberId(memberInvitedRecord.getParentId());
                         memberScoreFlow1.setTypeId(3L);
@@ -150,6 +177,9 @@ public class MemberScoreService implements IMemberScoreService {
                         memberScoreFlow1.setMemberScoreId(memberScore1.getId());
                         memberScoreFlow1.setCreateTime(DateUtils.getUnixTimestamp());
                         memberScoreFlowMapper.insertSelective(memberScoreFlow1);
+
+                        //处理任务记录问题
+                        memberTaskHistoryService.addMemberTaskToHistory(memberInvitedRecord.getParentId(), 7L, rewardScore, 1, null, null);
                     }
                 }
                 return memberScore;
@@ -160,6 +190,11 @@ public class MemberScoreService implements IMemberScoreService {
     @Override
     public List<MemberScoreFlow> getMemberScoreFlowList(Long memberId) {
         return memberScoreFlowMapper.getMemberScoreFlowListByMemberId(memberId);
+    }
+
+    @Override
+    public MemberScore getMemberScoreById(Long memberId) {
+        return memberScoreMapper.getMemberScoreByMemberId(memberId);
     }
 
 }

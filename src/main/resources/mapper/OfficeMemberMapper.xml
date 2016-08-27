@@ -14,12 +14,12 @@
   </resultMap>
   <insert id="batchAddOfficeMember">
     INSERT INTO wtm_office_member  (memberId,officeAccountId,isAccessNow,createTime) VALUES
-    <foreach collection="memberList" close=")" open="(" index="flag" item="item" separator=",">
-      #{item.memberId},#{item.officeAccountId},#{item.isAccessNow},#{dateTime}
+    <foreach collection="memberList" index="flag" item="item" separator=",">
+      (#{item.memberId},#{item.officeAccountId},#{item.isAccessNow},#{dateTime})
     </foreach>
   </insert>
   <delete id="deleteOverTimeUnfollowedAccounts">
-    DELETE FROM wtm_office_member WHERE isAccessNow=0 AND finishedTime is NULL AND unix_timestamp(now())-createTime>7200
+    DELETE FROM wtm_office_member WHERE isAccessNow=0 AND finishedTime is NULL AND unix_timestamp(now())-createTime>#{time}
   </delete>
   <select id="getOfficeMember" resultType="com.weitaomi.application.model.bean.OfficeMember">
     select * from wtm_office_member m  WHERE m.memberId=#{memberId} AND m.officialAccountId=#{officialAccountId}

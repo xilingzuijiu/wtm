@@ -10,12 +10,15 @@ import com.weitaomi.application.model.mapper.MemberTaskMapper;
 import com.weitaomi.application.model.mapper.OfficeMemberMapper;
 import com.weitaomi.application.service.interf.IMemberScoreService;
 import com.weitaomi.application.service.interf.IMemberTaskHistoryService;
+import com.weitaomi.systemconfig.constant.SystemConfig;
 import com.weitaomi.systemconfig.exception.BusinessException;
 import com.weitaomi.systemconfig.exception.InfoException;
 import com.weitaomi.systemconfig.util.DateUtils;
 import com.weitaomi.systemconfig.util.Page;
+import com.weitaomi.systemconfig.util.StringUtil;
 import com.weitaomi.systemconfig.util.UUIDGenerator;
 import org.apache.ibatis.session.RowBounds;
+import org.apache.ibatis.type.IntegerTypeHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,35 +99,39 @@ public class MemberTaskHistoryService  implements IMemberTaskHistoryService {
     }
 
     @Override
-    public boolean addMemberTaskToHistory(MemberTaskWithDetail memberTaskWithDetail) {
-        if (memberTaskWithDetail==null){
-            throw new BusinessException("任务内容为空");
+    public boolean addMemberTaskToHistory(Long memberId, Long taskId, Long score, Integer flag,String detail,List<MemberTaskHistoryDetail> detailList) {
+        MemberTask memberTask = memberTaskMapper.selectByPrimaryKey(taskId);
+        if (score==null||score==0){
+            score=memberTask.getPointCount();
         }
-        MemberTaskHistory memberTaskHistory=new MemberTaskHistory();
-        if (memberTaskWithDetail.getTaskName()!=null){
-            memberTaskHistory.setTaskName(memberTaskWithDetail.getTaskName());
+        if (StringUtil.isEmpty(detail)){
+            detail=memberTask.getTaskDesc();
         }
-        if (memberTaskWithDetail.getTaskDesc()!=null){
-            memberTaskHistory.setTaskDesc(memberTaskWithDetail.getTaskDesc());
+        MemberTaskWithDetail memberTaskWithDetail = new MemberTaskWithDetail();
+        memberTaskWithDetail.setTaskId(taskId);
+        memberTaskWithDetail.setPointCount(score);
+        memberTaskWithDetail.setIsFinished(flag);
+        memberTaskWithDetail.setMemberId(memberId);
+        memberTaskWithDetail.setTaskName(memberTask.getTaskName());
+        memberTaskWithDetail.setTaskDesc(memberTask.getTaskDesc());
+        memberTaskWithDetail.setCreateTime(DateUtils.getUnixTimestamp());
+        List<MemberTaskHistoryDetail> memberTaskHistoryDetailList = new ArrayList<MemberTaskHistoryDetail>();
+        if (detailList!=null){
+            //// TODO: 2016/8/25
+        }else {
+            MemberTaskHistoryDetail memberTaskHistoryDetail = new MemberTaskHistoryDetail();
+            memberTaskHistoryDetail.setTaskName(memberTask.getTaskName());
+            memberTaskHistoryDetail.setTaskDesc(detail);
+            memberTaskHistoryDetail.setPointCount(score);
+            memberTaskHistoryDetail.setIsFinished(1);
+            memberTaskHistoryDetail.setCreateTime(DateUtils.getUnixTimestamp());
+            memberTaskHistoryDetailList.add(memberTaskHistoryDetail);
         }
-        if (memberTaskWithDetail.getTaskId()!=null){
-            memberTaskHistory.setTaskId(memberTaskWithDetail.getTaskId());
-        }
-        if (memberTaskWithDetail.getPointCount()!=null){
-            memberTaskHistory.setPointCount(memberTaskWithDetail.getPointCount());
-        }
-        if (memberTaskWithDetail.getCreateTime()!=null){
-            memberTaskHistory.setCreateTime(DateUtils.getUnixTimestamp());
-        }
-        if (memberTaskWithDetail.getMemberId()!=null){
-            memberTaskHistory.setMemberId(memberTaskWithDetail.getMemberId());
-        }
-        if (memberTaskWithDetail.getIsFinished()!=null){
-            memberTaskHistory.setIsFinished(memberTaskWithDetail.getIsFinished());
-        }
-        memberTaskHistoryMapper.insertSelective(memberTaskHistory);
+        memberTaskWithDetail.setMemberTaskHistoryDetailList(memberTaskHistoryDetailList);
+        memberTaskHistoryMapper.insertSelective((MemberTaskHistory) memberTaskWithDetail);
         if (!memberTaskWithDetail.getMemberTaskHistoryDetailList().isEmpty()){
-            memberTaskHistoryDetailMapper.insertIntoDetail(memberTaskWithDetail.getMemberTaskHistoryDetailList(),memberTaskHistory.getId(),DateUtils.getUnixTimestamp());
+            memberTaskHistoryDetailMapper.insertIntoDetail(memberTaskWithDetail.getMemberTaskHistoryDetailList(),memberTaskWithDetail.getId(),DateUtils.getUnixTimestamp());
+            return true;
         }
         return false;
     }
@@ -142,26 +149,8 @@ public class MemberTaskHistoryService  implements IMemberTaskHistoryService {
             throw new InfoException("该任务今天已完成");
         }
         MemberTask memberTask=memberTaskMapper.selectByPrimaryKey(typeId);
-        //增加记录
-        MemberTaskWithDetail memberTaskWithDetail=new MemberTaskWithDetail();
-        memberTaskWithDetail.setTaskId(typeId);
-        memberTaskWithDetail.setPointCount(memberTask.getPointCount());
-        memberTaskWithDetail.setIsFinished(1);
-        memberTaskWithDetail.setMemberId(memberId);
-        memberTaskWithDetail.setTaskName(memberTask.getTaskName());
-        memberTaskWithDetail.setTaskDesc(memberTask.getTaskDesc());
-        memberTaskWithDetail.setCreateTime(DateUtils.getUnixTimestamp());
-        List<MemberTaskHistoryDetail> memberTaskHistoryDetailList=new ArrayList<MemberTaskHistoryDetail>();
-        MemberTaskHistoryDetail memberTaskHistoryDetail=new MemberTaskHistoryDetail();
-        memberTaskHistoryDetail.setTaskName(memberTask.getTaskName());
-        memberTaskHistoryDetail.setTaskDesc(memberTask.getTaskDesc());
-        memberTaskHistoryDetail.setPointCount(memberTask.getPointCount());
-        memberTaskHistoryDetail.setIsFinished(1);
-        memberTaskHistoryDetail.setCreateTime(DateUtils.getUnixTimestamp());
-        memberTaskHistoryDetailList.add(memberTaskHistoryDetail);
-        memberTaskWithDetail.setMemberTaskHistoryDetailList(memberTaskHistoryDetailList);
-        this.addMemberTaskToHistory(memberTaskWithDetail);
-        MemberScore memberScore=memberScoreService.addMemberScore(memberId,3L,Long.valueOf(memberTask.getPointCount()), UUIDGenerator.generate());
+        this.addMemberTaskToHistory(memberId,typeId,null,1,null,null);
+        MemberScore memberScore=memberScoreService.addMemberScore(memberId,3L,memberTask.getPointCount().doubleValue(), UUIDGenerator.generate());
         if (memberScore!=null){
             return memberScore;
         }
@@ -171,11 +160,11 @@ public class MemberTaskHistoryService  implements IMemberTaskHistoryService {
     @Override
     public void deleteUnFinishedTask() {
         logger.info("定时任务启动");
-        int number1=officeMemberMapper.deleteOverTimeUnfollowedAccounts();
+        int number1=officeMemberMapper.deleteOverTimeUnfollowedAccounts(SystemConfig.TASK_CACHE_TIME);
         logger.info("删除未关注公众号"+number1+"条");
-        int number2=memberTaskHistoryMapper.deleteUnfinishedTask();
+        int number2=memberTaskHistoryMapper.deleteUnfinishedTask(SystemConfig.TASK_CACHE_TIME);
         logger.info("删除未完成任务"+number2+"条");
-        int number3=memberTaskHistoryMapper.deleteUnfinishedTaskDetail();
+        int number3=memberTaskHistoryMapper.deleteUnfinishedTaskDetail(SystemConfig.TASK_CACHE_TIME);
         logger.info("删除未完成任务详情"+number3+"条");
     }
 }
