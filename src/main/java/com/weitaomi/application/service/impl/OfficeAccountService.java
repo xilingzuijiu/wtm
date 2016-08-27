@@ -1,6 +1,5 @@
 package com.weitaomi.application.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.weitaomi.application.model.bean.*;
 import com.weitaomi.application.model.dto.*;
 import com.weitaomi.application.model.mapper.*;
@@ -12,8 +11,6 @@ import com.weitaomi.systemconfig.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.support.ManagedList;
-import org.springframework.beans.factory.support.ManagedMap;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,7 +47,7 @@ public class OfficeAccountService implements IOfficeAccountService {
     @Autowired
     private IMemberTaskHistoryService memberTaskHistoryService;
     @Override
-    public List<OfficicalAccountsDto> getAccountsByMemberId(Long memberId){
+    public List<OfficialAccountsDto> getAccountsByMemberId(Long memberId){
         return officalAccountMapper.getAccountsByMemberId(memberId);
     }
     @Override

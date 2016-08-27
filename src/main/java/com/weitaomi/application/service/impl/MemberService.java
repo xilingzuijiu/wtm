@@ -194,6 +194,9 @@ public class MemberService extends BaseService implements IMemberService {
                 if (member == null) {
                     throw new InfoException("手机号未注册，请注册");
                 }
+                if(member.getSex()==3){
+                    throw new InfoException("用户已经被禁用，请联系客服人员");
+                }
             } else {
                 member = memberMapper.getMemberByMemberName(mobileOrName);
                 if (member == null) {
@@ -222,10 +225,10 @@ public class MemberService extends BaseService implements IMemberService {
         }
         ThirdLogin thirdLogin = thirdLoginMapper.getThirdLoginInfo(openId);
         if (thirdLogin == null) {
-            throw new InfoException("该微信账号未绑定，请登录绑定或者重新注册");
+            throw new BusinessException("该微信账号未绑定，请登录绑定或者重新注册");
         }
         if (!thirdLogin.getType().equals(type)) {
-            throw new BusinessException("登录平台与OpenID不匹配");
+            throw new InfoException("登录平台与OpenID不匹配");
         }
         if (thirdLogin.getMemberId() == null) {
             throw new InfoException("该平台账号未绑定，请重新绑定");
@@ -233,6 +236,9 @@ public class MemberService extends BaseService implements IMemberService {
         MemberInfoDto member = memberMapper.getMemberInfoById(thirdLogin.getMemberId());
         if (member == null) {
             throw new InfoException("微信号未绑定，请重新注册");
+        }
+        if(member.getSex()==3){
+            throw new InfoException("用户已经被禁用，请联系客服人员");
         }
         String key = "member:login:" + member.getId();
         Integer times = 60 * 60 * 24 * 30;

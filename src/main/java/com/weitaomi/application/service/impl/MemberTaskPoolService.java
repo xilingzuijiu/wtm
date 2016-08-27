@@ -2,7 +2,7 @@ package com.weitaomi.application.service.impl;
 
 import com.weitaomi.application.model.bean.TaskPool;
 import com.weitaomi.application.model.dto.Address;
-import com.weitaomi.application.model.dto.OfficicalAccountsDto;
+import com.weitaomi.application.model.dto.OfficialAccountsDto;
 import com.weitaomi.application.model.dto.RequireFollowerParamsDto;
 import com.weitaomi.application.model.mapper.OfficalAccountMapper;
 import com.weitaomi.application.model.mapper.ProvinceMapper;
@@ -36,7 +36,7 @@ public class MemberTaskPoolService implements IMemberTaskPoolService{
     @Override
     public RequireFollowerParamsDto getRequireFollowerParamsDto(Long memberId, Long time) {
         RequireFollowerParamsDto requireFollowerParamsDto=new RequireFollowerParamsDto();
-        List<OfficicalAccountsDto> accountList=officalAccountMapper.getAccountsByMemberId(memberId);
+        List<OfficialAccountsDto> accountList=officalAccountMapper.getAccountsByMemberId(memberId);
         if (accountList.isEmpty()){
             throw new BusinessException("公众号列表为空");
         }

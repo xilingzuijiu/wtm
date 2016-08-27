@@ -1,7 +1,5 @@
 package com.weitaomi.application.model.dto;
 
-import com.weitaomi.application.model.bean.OfficialAccount;
-
 import java.util.List;
 
 /**
@@ -11,7 +9,7 @@ public class RequireFollowerParamsDto {
     /**
      * 用户公众号列表
      */
-    private List<OfficicalAccountsDto> officialAccountList;
+    private List<OfficialAccountsDto> officialAccountList;
     /**
      * 地址列表
      */
@@ -21,7 +19,7 @@ public class RequireFollowerParamsDto {
      * 获取用户公众号列表
      * @return officialAccountList 用户公众号列表
      */
-    public List<OfficicalAccountsDto> getOfficialAccountList() {
+    public List<OfficialAccountsDto> getOfficialAccountList() {
         return this.officialAccountList;
     }
 
@@ -29,7 +27,7 @@ public class RequireFollowerParamsDto {
      * 设置用户公众号列表
      * @param officialAccountList 用户公众号列表
      */
-    public void setOfficialAccountList(List<OfficicalAccountsDto> officialAccountList) {
+    public void setOfficialAccountList(List<OfficialAccountsDto> officialAccountList) {
         this.officialAccountList = officialAccountList;
     }
 

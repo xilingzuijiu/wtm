@@ -24,7 +24,7 @@
         <result column="createTime" jdbcType="BIGINT" property="createTime"/>
     </resultMap>
     <select id="getAccountsByMemberId"
-            resultType="com.weitaomi.application.model.dto.OfficicalAccountsDto">
+            resultType="com.weitaomi.application.model.dto.OfficialAccountsDto">
     select fa.id,fa.userName from wtm_official_accounts fa
         WHERE fa.memberId=#{memberId} AND fa.isOpen=1
   </select>

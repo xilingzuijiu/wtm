@@ -3,7 +3,7 @@ package com.weitaomi.application.model.dto;
 /**
  * Created by supumall on 2016/8/9.
  */
-public class OfficicalAccountsDto {
+public class OfficialAccountsDto {
     /**
      * 公号原始ID
      */
