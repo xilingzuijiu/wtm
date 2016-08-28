@@ -5,6 +5,10 @@ package com.weitaomi.application.model.dto;
  */
 public class MemberScoreFlowDto {
     /**
+     * 类型id
+     */
+    private Long typeId;
+    /**
      * 名字
      */
     private String typeName;
@@ -21,6 +25,10 @@ public class MemberScoreFlowDto {
      */
     private Long flowTime;
 
+    /**
+     * 是否完成
+     */
+    private Integer isFinished;
 
     /**
      * 获取流动几分
@@ -84,5 +92,37 @@ public class MemberScoreFlowDto {
      */
     public void setTypeDesc(String typeDesc) {
         this.typeDesc = typeDesc;
+    }
+
+    /**
+     * 获取是否完成
+     * @return isFinished 是否完成
+     */
+    public Integer getIsFinished() {
+        return this.isFinished;
+    }
+
+    /**
+     * 设置是否完成
+     * @param isFinished 是否完成
+     */
+    public void setIsFinished(Integer isFinished) {
+        this.isFinished = isFinished;
+    }
+
+    /**
+     * 获取类型id
+     * @return typeId 类型id
+     */
+    public Long getTypeId() {
+        return this.typeId;
+    }
+
+    /**
+     * 设置类型id
+     * @param typeId 类型id
+     */
+    public void setTypeId(Long typeId) {
+        this.typeId = typeId;
     }
 }

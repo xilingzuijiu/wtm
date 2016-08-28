@@ -21,10 +21,10 @@ public class MemberScore extends BaseModel {
     private BigDecimal memberScore;
 
     /**
-     * 可用积分
+     * 不可用积分
      */
-    @Column(name = "validScore")
-    private BigDecimal validScore;
+    @Column(name = "inValidScore")
+    private BigDecimal inValidScore;
     /**
      * 可用倍率
      */
@@ -82,17 +82,17 @@ public class MemberScore extends BaseModel {
      *
      * @return validScore - 可用积分
      */
-    public BigDecimal getValidScore() {
-        return validScore;
+    public BigDecimal getInValidScore() {
+        return inValidScore;
     }
 
     /**
      * 设置可用积分
      *
-     * @param validScore 可用积分
+     * @param inValidScore 可用积分
      */
-    public void setValidScore(BigDecimal validScore) {
-        this.validScore = validScore;
+    public void setInValidScore(BigDecimal inValidScore) {
+        this.inValidScore = inValidScore;
     }
 
     /**

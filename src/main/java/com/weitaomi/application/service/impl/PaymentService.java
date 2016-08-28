@@ -1,9 +1,12 @@
 package com.weitaomi.application.service.impl;
 
+import com.github.pagehelper.PageInfo;
 import com.weitaomi.application.model.bean.MemberPayAccounts;
 import com.weitaomi.application.model.bean.MemberScore;
 import com.weitaomi.application.model.bean.PaymentApprove;
 import com.weitaomi.application.model.bean.PaymentHistory;
+import com.weitaomi.application.model.dto.MemberScoreFlowDto;
+import com.weitaomi.application.model.dto.MemberTaskWithDetail;
 import com.weitaomi.application.model.dto.MyWalletDto;
 import com.weitaomi.application.model.enums.PayType;
 import com.weitaomi.application.model.mapper.MemberPayAccountsMapper;
@@ -11,6 +14,7 @@ import com.weitaomi.application.model.mapper.MemberScoreMapper;
 import com.weitaomi.application.model.mapper.PaymentApproveMapper;
 import com.weitaomi.application.model.mapper.PaymentHistoryMapper;
 import com.weitaomi.application.service.interf.ICacheService;
+import com.weitaomi.application.service.interf.IMemberScoreService;
 import com.weitaomi.application.service.interf.IPayStrategyContext;
 import com.weitaomi.application.service.interf.IPaymentService;
 import com.weitaomi.systemconfig.alipay.AlipayConfig;
@@ -18,6 +22,9 @@ import com.weitaomi.systemconfig.alipay.AlipayNotify;
 import com.weitaomi.systemconfig.exception.BusinessException;
 import com.weitaomi.systemconfig.exception.InfoException;
 import com.weitaomi.systemconfig.util.DateUtils;
+import com.weitaomi.systemconfig.util.Page;
+import com.weitaomi.systemconfig.util.UUIDGenerator;
+import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +50,8 @@ public class PaymentService implements IPaymentService {
     private IPayStrategyContext payStrategyContext;
     @Autowired
     private MemberScoreMapper memberScoreMapper;
+    @Autowired
+    private IMemberScoreService memberScoreService;
     @Autowired
     private PaymentApproveMapper approveMapper;
     @Autowired
@@ -195,9 +204,9 @@ public class PaymentService implements IPaymentService {
         params.put("pay_date",DateUtils.formatYYYY());
         String batch_no=DateUtils.formatYYYYMMddHHmmssSSS();
         params.put("batch_no",AlipayConfig.payCode_prefix+batch_no);
-        String detail=detail_data.substring(0,approveList.size()-1);
-        params.put("detail_data",detail);
-        String result=payStrategyContext.getBatchPayParams(params, PayType.ALIPAY_WEB.getValue());
+        String detail=detail_data.substring(0,detail_data.length()-1);
+        params.put("detail_data",detail_data.toString());
+        String result=payStrategyContext.getBatchPayParams(params, PayType.ALIPAY_APP.getValue());
         //TODO  处理result
         if (paymentHistoryList!=null) {
             for (PaymentHistory paymentHistory : paymentHistoryList) {
@@ -213,53 +222,66 @@ public class PaymentService implements IPaymentService {
     }
 
     @Override
-    public boolean generatorPayParams(Long memberId,PaymentApprove approve) {
+    @Transactional
+    public MemberScore generatorPayParams(Long memberId,PaymentApprove approve) {
         if (approve!=null){
+            MemberScore memberScore=memberScoreMapper.getMemberScoreByMemberId(memberId);
+            if (memberScore==null){
+                throw new InfoException("没有可用提现金额");
+            }
+            if (memberScore.getMemberScore().longValue()<approve.getAmount().longValue()){
+                throw new InfoException("提现金额大于可用金额");
+            }
             approve.setMemberId(memberId);
             approve.setCreateTime(DateUtils.getUnixTimestamp());
-            approveMapper.insertSelective(approve);
+            int number=approveMapper.insertSelective(approve);
+            boolean flag= number>0?true:false;
+            if (flag){
+                memberScore.setInValidScore(approve.getAmount().multiply(BigDecimal.valueOf(100)).add(memberScore.getInValidScore()));
+                memberScoreMapper.updateByPrimaryKeySelective(memberScore);
+                return memberScoreService.addMemberScore(memberId,2L,0,-approve.getAmount().multiply(BigDecimal.valueOf(100)).doubleValue(), UUIDGenerator.generate());
+            }
         }
-        return false;
+        return null;
     }
 
     @Override
-    public MyWalletDto getMemberWalletInfo(Long memberId) {
-        MyWalletDto  myWalletDto= memberScoreMapper.getMyWalletDtoByMemberId(memberId);
+    public Page<MemberScoreFlowDto> getMemberWalletInfo(Long memberId, Integer paygeSize, Integer pageIndex) {
+        List<MemberScoreFlowDto>  myWalletDto= memberScoreMapper.getMyWalletDtoByMemberId(memberId,new RowBounds(pageIndex,paygeSize));
         if (myWalletDto==null){
-            myWalletDto=new MyWalletDto();
+            return null;
         }
-        MemberScore memberScore=memberScoreMapper.getMemberScoreByMemberId(memberId);
-        if (memberScore!=null){
-            myWalletDto.setAvaliableBalance(memberScore.getMemberScore().longValue());
-        }else {
-            myWalletDto.setAvaliableBalance(0L);
-        }
-        return myWalletDto;
+        PageInfo<MemberScoreFlowDto> showDtoPage=new PageInfo<MemberScoreFlowDto>(myWalletDto);
+        return Page.trans(showDtoPage);
     }
     @Override
-    public Boolean savePayAccounts(Long memberId,MemberPayAccounts memberPayAccounts) {
-        if (memberPayAccounts==null){
+    public Boolean savePayAccounts(Long memberId,Integer payType,String payAccount,String realName) {
+        if (payAccount==null){
             throw new InfoException("支付账号信息为空");
         }
         MemberPayAccounts payAccounts=new MemberPayAccounts();
         payAccounts.setMemberId(memberId);
+        payAccounts.setPayType(payType);
+        MemberPayAccounts memberPayAccounts=new MemberPayAccounts();
+        memberPayAccounts.setMemberId(memberId);
+        memberPayAccounts.setPayAccount(payAccount);
+        memberPayAccounts.setPayType(payType);
+        memberPayAccounts.setRealName(realName);
+        memberPayAccounts.setCreateTime(DateUtils.getUnixTimestamp());
         List<MemberPayAccounts> memberPayAccountsList=memberPayAccountsMapper.select(payAccounts);
         if (memberPayAccountsList.isEmpty()){
-            memberPayAccounts.setMemberId(memberId);
-            memberPayAccounts.setCreateTime(DateUtils.getUnixTimestamp());
             int num = memberPayAccountsMapper.insertSelective(memberPayAccounts);
             return num>0?true:false;
         }
-        for (MemberPayAccounts payAccount:memberPayAccountsList){
-            if (payAccount.getPayType()==memberPayAccounts.getPayType()){
-                payAccount.setPayAccount(memberPayAccounts.getPayAccount());
-                payAccount.setRealName(memberPayAccounts.getRealName());
-                payAccount.setCreateTime(DateUtils.getUnixTimestamp());
-                int number=memberPayAccountsMapper.updateByPrimaryKeySelective(payAccount);
-                return number>0?true:false;
-            }
+        if (memberPayAccountsList.size()>1){
+            throw new InfoException("绑定微信或支付宝账户过多");
         }
-        return false;
+        MemberPayAccounts pay=memberPayAccountsList.get(0);
+        pay.setPayAccount(memberPayAccounts.getPayAccount());
+        pay.setRealName(memberPayAccounts.getRealName());
+        pay.setCreateTime(DateUtils.getUnixTimestamp());
+        int number=memberPayAccountsMapper.updateByPrimaryKeySelective(pay);
+        return number>0?true:false;
     }
     private String getTradeNo(){
         String key="wtm:orderCode:max";

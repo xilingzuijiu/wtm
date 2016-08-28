@@ -1,5 +1,6 @@
 package com.weitaomi.application.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.weitaomi.application.model.bean.*;
 import com.weitaomi.application.model.dto.*;
 import com.weitaomi.application.model.mapper.*;
@@ -85,11 +86,15 @@ public class OfficeAccountService implements IOfficeAccountService {
         }
         Long time =DateUtils.getUnixTimestamp();
         int number=officeMemberMapper.batchAddOfficeMember(officeMemberList,time);
-        if (number>100) {//todo
+        if (number>100) {
             String url = PropertiesUtil.getValue("server.officialAccount.receiveAddRequest.url");
             String messageUrl = PropertiesUtil.getValue("server.officialAccount.message.url");
+            Map<String,String>  map=new HashMap<>();
+            map.put("unionId",unionId);
+            map.put("url",messageUrl + "?memberId=" + memberId + "&dateTime=" +time);
+            map.put("flag","1");
             try {
-                HttpRequestUtils.postStringEntity(url, messageUrl + "?memberId=" + memberId + "&dateTime=" + time);
+                HttpRequestUtils.postStringEntity(url, JSON.toJSONString(map));
                 return true;
             } catch (IOException e) {
                 e.printStackTrace();
@@ -103,6 +108,7 @@ public class OfficeAccountService implements IOfficeAccountService {
     public Boolean pushAddFinished(Map<String,String> params) {
         String unionId=params.get("unionId");
         String originId=params.get("originId");
+        JpushUtils.buildRequest("受到消息了"+unionId+"      "+originId);
         String key=unionId+":"+originId;
         String value=cacheService.getCacheByKey(key,String.class);
         if (value!=null){
@@ -126,7 +132,7 @@ public class OfficeAccountService implements IOfficeAccountService {
                     //增加任务记录
                     int number = memberTaskHistoryMapper.updateMemberTaskUnfinished(memberId,0,officialAccountWithScore.getOriginId());
                     //增加积分以及积分记录
-                    memberScoreService.addMemberScore(memberId, 3L, BigDecimal.valueOf(officialAccountWithScore.getScore()).multiply(taskPool.getRate()).doubleValue(), UUIDGenerator.generate());
+                    memberScoreService.addMemberScore(memberId, 3L,1, BigDecimal.valueOf(officialAccountWithScore.getScore()).multiply(taskPool.getRate()).doubleValue(), UUIDGenerator.generate());
                     cacheService.delKeyFromRedis(key);
                 }
             }else {

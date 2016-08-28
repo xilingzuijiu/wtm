@@ -8,7 +8,7 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="memberId" jdbcType="BIGINT" property="memberId" />
     <result column="memberScore" jdbcType="DECIMAL" property="memberScore" />
-    <result column="validScore" jdbcType="DECIMAL" property="validScore" />
+    <result column="inValidScore" jdbcType="DECIMAL" property="inValidScore" />
     <result column="rate" jdbcType="DECIMAL" property="rate" />
     <result column="updateTime" jdbcType="BIGINT" property="updateTime" />
     <result column="createTime" jdbcType="BIGINT" property="createTime" />
@@ -18,6 +18,8 @@
     <result column="typeDesc" jdbcType="VARCHAR" property="typeDesc" />
     <result column="flowCount" jdbcType="BIGINT" property="flowCount" />
     <result column="flowTime" jdbcType="BIGINT" property="flowTime" />
+    <result column="typeId" jdbcType="BIGINT" property="typeId" />
+    <result column="isFinished" jdbcType="INTEGER" property="isFinished" />
   </resultMap>
   <resultMap id="MyResultMap" type="com.weitaomi.application.model.dto.MyWalletDto">
     <result column="avaliableBalance" property="avaliableBalance" jdbcType="BIGINT"/>
@@ -27,10 +29,10 @@
     select * from wtm_member_score s WHERE s.memberId=#{memberId};
   </select>
   <sql id="flowScoreList">
-    flowType.typeName typeName,flowType.typeDesc typeDesc,flow.flowScore flowCount,flow.createTime flowTime
+    flowType.typeName typeName,flowType.typeDesc typeDesc,flow.flowScore flowCount,flow.createTime flowTime,flow.isFinished isFinished,flow.typeId typeId
   </sql>
-  <select id="getMyWalletDtoByMemberId" resultMap="MyResultMap">
-    select score.memberScore avaliableBalance,<include refid="flowScoreList"/>  from
+  <select id="getMyWalletDtoByMemberId" resultMap="MemberScoreFlowMap">
+    select <include refid="flowScoreList"/>  from
     wtm_member_score score LEFT JOIN wtm_member_score_flow flow ON score.id=flow.memberScoreId
     LEFT JOIN wtm_member_score_flow_type flowType ON flowType.id = flow.typeId
     WHERE flow.typeId IN (1,2) AND score.memberId=#{memberId}

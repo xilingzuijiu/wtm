@@ -7,14 +7,14 @@ import com.weitaomi.application.model.dto.ArticleSearch;
 import com.weitaomi.application.service.interf.IArticleService;
 import com.weitaomi.systemconfig.dataFormat.AjaxResult;
 import com.weitaomi.systemconfig.exception.BusinessException;
+import com.weitaomi.systemconfig.util.UUIDGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by supumall on 2016/7/23.
@@ -72,17 +72,19 @@ public class ArticleController extends BaseController {
 
     /**
      * 用户点击阅读/点赞文章
-     * @param articleId
+     * @param params
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/readArticle",method = RequestMethod.POST)
-    public AjaxResult readArticle(HttpServletRequest request,Long articleId, Integer typeId, String sessionmdID){
+    public AjaxResult readArticle(HttpServletRequest request, @RequestBody Map<String,Object> params){
+        List<Long> articleId = (List<Long>)params.get("articleId");
+        String unionId = (String) params.get("unionId");
         Long memberId=this.getUserId(request);
         if (memberId==null){
             throw new BusinessException("用户ID为空");
         }
-        return AjaxResult.getOK(articleService.readArticle(memberId, articleId, typeId, sessionmdID));
+        return AjaxResult.getOK(articleService.readArticle(memberId,unionId,articleId));
     }
 
 }

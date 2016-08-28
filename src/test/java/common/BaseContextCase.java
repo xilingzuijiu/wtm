@@ -19,7 +19,7 @@ import org.springframework.web.context.WebApplicationContext;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"/configXml/spring-dao.xml"})
+@ContextConfiguration(locations = {"/configXml/spring-*.xml"})
 public class BaseContextCase extends
         AbstractJUnit4SpringContextTests
 //        AbstractTransactionalJUnit4SpringContextTests

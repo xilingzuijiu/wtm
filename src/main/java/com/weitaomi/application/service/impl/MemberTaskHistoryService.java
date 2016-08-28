@@ -150,7 +150,7 @@ public class MemberTaskHistoryService  implements IMemberTaskHistoryService {
         }
         MemberTask memberTask=memberTaskMapper.selectByPrimaryKey(typeId);
         this.addMemberTaskToHistory(memberId,typeId,null,1,null,null);
-        MemberScore memberScore=memberScoreService.addMemberScore(memberId,3L,memberTask.getPointCount().doubleValue(), UUIDGenerator.generate());
+        MemberScore memberScore=memberScoreService.addMemberScore(memberId,3L,1,memberTask.getPointCount().doubleValue(), UUIDGenerator.generate());
         if (memberScore!=null){
             return memberScore;
         }

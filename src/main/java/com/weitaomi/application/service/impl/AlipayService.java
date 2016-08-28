@@ -50,7 +50,7 @@ public class AlipayService implements IPayStrategyService {
         params.put("account_name",AlipayConfig.seller_name);
         params.put("email",AlipayConfig.seller_id);
         try {
-            String result=AlipaySubmit.buildRequest("","",params);
+            String result=AlipaySubmit.buildRequest(params,"get","确认");
         } catch (Exception e) {
             e.printStackTrace();
         }

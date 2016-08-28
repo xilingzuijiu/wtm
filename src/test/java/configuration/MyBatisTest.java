@@ -2,6 +2,7 @@ package configuration;
 
 import com.alibaba.fastjson.JSON;
 import com.weitaomi.application.model.bean.Member;
+import com.weitaomi.application.model.bean.PaymentApprove;
 import com.weitaomi.application.model.dto.MemberInfoDto;
 import com.weitaomi.application.model.dto.MemberTaskDto;
 import com.weitaomi.application.model.mapper.ArticleMapper;
@@ -9,6 +10,8 @@ import com.weitaomi.application.model.mapper.MemberMapper;
 import com.weitaomi.application.model.mapper.MemberTaskHistoryMapper;
 import com.weitaomi.application.model.mapper.ThirdLoginMapper;
 import com.weitaomi.application.service.interf.IMemberTaskHistoryService;
+import com.weitaomi.application.service.interf.IPaymentService;
+import com.weitaomi.systemconfig.util.DateUtils;
 import com.weitaomi.systemconfig.util.HttpRequestUtils;
 import com.weitaomi.systemconfig.util.UUIDGenerator;
 import common.BaseContextCase;
@@ -18,6 +21,8 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,6 +37,8 @@ public class MyBatisTest extends BaseContextCase {
     ArticleMapper articleMapper;
     @Autowired
     MemberTaskHistoryMapper memberTaskHistoryMapper;
+    @Autowired
+    private IPaymentService paymentService;
 
     //    @Autowired
 //    IMemberTaskHistoryService memberTaskHistoryService;
@@ -87,6 +94,34 @@ public class MyBatisTest extends BaseContextCase {
     @Test
     public void testGetMemberInfo(){
         System.out.println(new Sha256Hash("123456", "HIrUyH").toString());
+    }
+    @Test
+    public void testJson(){
+        List<Long> longs=new ArrayList<>();
+        longs.add(1L);
+        longs.add(2L);
+        longs.add(3L);
+        longs.add(4L);
+        longs.add(5L);
+        System.out.println(JSON.toJSONString(longs));
+    }
+    @Test
+    public void testApprove(){
+
+        PaymentApprove approve=new PaymentApprove();
+        approve.setAccountNumber("294200690@qq.com");
+        approve.setAccountName("宁凡荣");
+        approve.setAmount(BigDecimal.valueOf(0.01));
+        approve.setCreateTime(DateUtils.getUnixTimestamp());
+        approve.setIsPaid(0);
+        List<PaymentApprove> approves=new ArrayList<>();
+        approves.add(approve);
+
+
+
+        paymentService.patchAliPayCustomers(approves);
+
+
     }
 }
 

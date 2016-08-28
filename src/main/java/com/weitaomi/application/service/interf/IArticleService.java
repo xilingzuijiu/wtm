@@ -6,6 +6,8 @@ import com.weitaomi.application.model.dto.ArticleSearch;
 import com.weitaomi.application.model.dto.ArticleShowDto;
 import com.weitaomi.systemconfig.util.Page;
 
+import java.util.List;
+
 /**
  * Created by supumall on 2016/7/7.
  */
@@ -45,5 +47,5 @@ public interface IArticleService {
      * @param articleId
      * @return
      */
-    public Boolean readArticle(Long memberId,Long articleId,Integer typeId,String sessionmdID);
+    public Boolean readArticle(Long memberId,String unionId, List<Long> articleId);
 }

@@ -9,10 +9,7 @@ import com.weitaomi.systemconfig.exception.BusinessException;
 import com.weitaomi.systemconfig.exception.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -67,21 +64,27 @@ public class PaymentController extends BaseController{
         return AjaxResult.getOK();
     }
     @ResponseBody
+    @RequestMapping(value = "/generatorPayParams", method = RequestMethod.POST)
+    public AjaxResult generatorPayParams(HttpServletRequest request,@RequestBody PaymentApprove approve){
+        Long memberId=this.getUserId(request);
+        return AjaxResult.getOK(paymentService.generatorPayParams(memberId,approve));
+    }
+    @ResponseBody
     @RequestMapping(value = "/getMemberWalletInfo", method = RequestMethod.POST)
-    public AjaxResult getMemberWalletInfo(HttpServletRequest request){
+    public AjaxResult getMemberWalletInfo(HttpServletRequest request, @RequestParam(required = false,defaultValue ="20") Integer paygeSize, @RequestParam(required = false,defaultValue ="0")Integer pageIndex){
         Long memberId=this.getUserId(request);
         if (memberId==null){
             throw new BusinessException("用户ID为空");
         }
-        return AjaxResult.getOK(paymentService.getMemberWalletInfo(memberId));
+        return AjaxResult.getOK(paymentService.getMemberWalletInfo(memberId,paygeSize,pageIndex));
     }
     @ResponseBody
     @RequestMapping(value = "/savePayAccounts", method = RequestMethod.POST)
-    public AjaxResult savePayAccounts(HttpServletRequest request,@RequestBody MemberPayAccounts memberPayAccounts){
+    public AjaxResult savePayAccounts(HttpServletRequest request,Integer payType,String payAccount,String realName){
         Long memberId=this.getUserId(request);
         if (memberId==null){
             throw new BusinessException("用户ID为空");
         }
-        return AjaxResult.getOK(paymentService.savePayAccounts(memberId,memberPayAccounts));
+        return AjaxResult.getOK(paymentService.savePayAccounts(memberId,payType,payAccount,realName));
     }
 }

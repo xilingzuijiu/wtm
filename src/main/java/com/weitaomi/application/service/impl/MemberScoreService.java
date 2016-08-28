@@ -44,7 +44,7 @@ public class MemberScoreService implements IMemberScoreService {
 
     @Override
     @Transactional
-    public MemberScore addMemberScore(Long memberId, Long typeId, Double score, String sessionId) {
+    public MemberScore addMemberScore(Long memberId, Long typeId,Integer isFinished, Double score, String sessionId) {
         if (sessionId == null) {
             throw new BusinessException("幂等性操作，请生成随机数");
         }
@@ -69,6 +69,9 @@ public class MemberScoreService implements IMemberScoreService {
                         scoreBefore = memberScore.getMemberScore();
                         rate = memberScore.getRate();
                     }
+                    if (typeId==1||typeId==2){
+                        rate= BigDecimal.ONE;
+                    }
                     increaseScore = BigDecimal.valueOf(score).multiply(rate);
                 }
 
@@ -79,7 +82,6 @@ public class MemberScoreService implements IMemberScoreService {
                     memberScore = new MemberScore();
                     memberScore.setMemberId(memberId);
                     memberScore.setMemberScore(increaseScore);
-                    memberScore.setValidScore(increaseScore);
                     memberScore.setCreateTime(DateUtils.getUnixTimestamp());
                     memberScore.setUpdateTime(DateUtils.getUnixTimestamp());
                     memberScoreMapper.insertSelective(memberScore);
@@ -99,13 +101,13 @@ public class MemberScoreService implements IMemberScoreService {
                         BigDecimal rateIncrease = afterScore.subtract(BigDecimal.valueOf(rateBase)).divide(BigDecimal.valueOf(levelOne), 1, BigDecimal.ROUND_FLOOR);
                         memberScore.setRate(rateIncrease.add(BigDecimal.ONE));
                     }
-                    memberScore.setValidScore(memberScore.getValidScore().add(increaseScore));
                     memberScore.setUpdateTime(DateUtils.getUnixTimestamp());
                     memberScoreMapper.updateByPrimaryKeySelective(memberScore);
                 }
                 MemberScoreFlow memberScoreFlow = new MemberScoreFlow();
                 memberScoreFlow.setMemberId(memberId);
                 memberScoreFlow.setTypeId(typeId);
+                memberScoreFlow.setIsFinished(isFinished);
                 memberScoreFlow.setDetail(memberScoreFlowType.getTypeDesc());
                 memberScoreFlow.setFlowScore(increaseScore);
                 memberScoreFlow.setMemberScoreAfter(memberScore.getMemberScore());
@@ -142,7 +144,6 @@ public class MemberScoreService implements IMemberScoreService {
                                 BigDecimal rateIncrease = afterScore.subtract(BigDecimal.valueOf(rateBase)).divide(BigDecimal.valueOf(levelOne), 1, BigDecimal.ROUND_FLOOR);
                                 memberScore1.setRate(rateIncrease.add(BigDecimal.ONE));
                             }
-                            memberScore1.setValidScore(afterScore);
                             memberScore1.setUpdateTime(DateUtils.getUnixTimestamp());
                             memberScoreMapper.updateByPrimaryKeySelective(memberScore1);
                         }else {
@@ -160,7 +161,6 @@ public class MemberScoreService implements IMemberScoreService {
                             }
                             memberScore1.setMemberId(memberInvitedRecord.getParentId());
                             memberScore1.setMemberScore(afterScore);
-                            memberScore1.setValidScore(afterScore);
                             memberScore1.setUpdateTime(DateUtils.getUnixTimestamp());
                             memberScore1.setCreateTime(DateUtils.getUnixTimestamp());
                             memberScoreMapper.insertSelective(memberScore1);
@@ -170,6 +170,7 @@ public class MemberScoreService implements IMemberScoreService {
                         MemberScoreFlow memberScoreFlow1 = new MemberScoreFlow();
                         memberScoreFlow1.setMemberId(memberInvitedRecord.getParentId());
                         memberScoreFlow1.setTypeId(3L);
+                        memberScoreFlow.setIsFinished(isFinished);
                         memberScoreFlow1.setDetail(memberScoreFlowType1.getTypeDesc());
                         memberScoreFlow1.setFlowScore(increaseScore.multiply(BigDecimal.valueOf(0.1)));
                         memberScoreFlow1.setMemberScoreAfter(memberScore1.getMemberScore());

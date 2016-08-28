@@ -24,6 +24,11 @@ public class MemberScoreFlow extends BaseModel {
      */
     @Column(name = "typeId")
     private Long typeId;
+    /**
+     * 是否已经完成
+     */
+    @Column(name = "isFinished")
+    private Integer isFinished;
 
     /**
      * 用户流动前积分
@@ -215,5 +220,21 @@ public class MemberScoreFlow extends BaseModel {
      */
     public void setCreateTime(Long createTime) {
         this.createTime = createTime;
+    }
+
+    /**
+     * 获取积分变动类型
+     * @return isFinished 积分变动类型
+     */
+    public Integer getIsFinished() {
+        return this.isFinished;
+    }
+
+    /**
+     * 设置积分变动类型
+     * @param isFinished 积分变动类型
+     */
+    public void setIsFinished(Integer isFinished) {
+        this.isFinished = isFinished;
     }
 }

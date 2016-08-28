@@ -43,7 +43,7 @@ public class HmacSHA256Utils {
                 s.append(values);
             }
         }
-        System.out.println("加密可以:"+key+"  params:"+s.toString());
+        System.out.println("加密key:"+key+"  params:"+s.toString());
         return digest(key, s.toString());
     }
 
