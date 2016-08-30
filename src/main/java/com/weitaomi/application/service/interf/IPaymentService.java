@@ -34,5 +34,5 @@ public interface IPaymentService {
      * @param
      * @return
      */
-    Boolean savePayAccounts(Long memberId,Integer payType,String payAccount,String realName);
+    MemberPayAccounts savePayAccounts(Long memberId,Integer payType,String payAccount,String realName);
 }

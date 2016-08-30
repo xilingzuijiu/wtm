@@ -1,5 +1,6 @@
 package com.weitaomi.application.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import com.weitaomi.application.model.bean.Article;
 import com.weitaomi.application.model.bean.ArticleReadRecord;
@@ -13,7 +14,9 @@ import com.weitaomi.application.service.interf.ICacheService;
 import com.weitaomi.application.service.interf.IMemberScoreService;
 import com.weitaomi.systemconfig.exception.BusinessException;
 import com.weitaomi.systemconfig.util.DateUtils;
+import com.weitaomi.systemconfig.util.HttpRequestUtils;
 import com.weitaomi.systemconfig.util.Page;
+import com.weitaomi.systemconfig.util.PropertiesUtil;
 import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +24,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by supumall on 2016/7/7.
@@ -103,31 +109,30 @@ public class ArticleService implements IArticleService {
 
     @Override
     @Transactional
-    public Boolean readArticle(Long memberId, Long articleId,Integer typeId,String sessionID) {
+    public Boolean readArticle(Long memberId,String unionId,List<Long> articleId) {
         if(memberId==null){
             throw new BusinessException("用户ID为空");
         }
-        if(articleId==null){
+        if(articleId.isEmpty()){
             throw new BusinessException("文章ID为空");
         }
-        String key="member:score:"+sessionID;
-        String value= cacheService.getCacheByKey(key,String.class);
-        if (value!=null){
-            throw new BusinessException("请勿重复操作");
+        Long time=DateUtils.getUnixTimestamp();
+        int number = articleReadRecordMapper.insertReadArticleRecord(memberId,articleId,0,time);
+        boolean flag= number>0?true:false;
+        if (flag){
+            String url = PropertiesUtil.getValue("server.officialAccount.receiveAddRequest.url");
+            String messageUrl = PropertiesUtil.getValue("server.officialAccount.message.url");
+            Map<String,String>  map=new HashMap<>();
+            map.put("unionId",unionId);
+            map.put("url",messageUrl + "?memberId=" + memberId + "&dateTime=" +time);
+            map.put("flag","0");
+            try {
+                HttpRequestUtils.postStringEntity(url, JSON.toJSONString(map));
+                return true;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        ArticleReadRecord articleReadRecord=new ArticleReadRecord();
-        articleReadRecord.setArticleId(articleId);
-        articleReadRecord.setMemberId(memberId);
-        articleReadRecord.setType(typeId);
-        articleReadRecord.setCreateTime(DateUtils.getUnixTimestamp());
-        if (typeId==0) {
-            articleReadRecordMapper.insertSelective(articleReadRecord);
-            //TODO 修改typeID
-            memberScoreService.addMemberScore(memberId,3L, 0.03, sessionID);
-        }
-        articleMapper.updateArticleByRead(articleId,typeId);
-        Integer times=45;
-        cacheService.setCacheByKey(key,memberId.toString(),times);
-        return true;
+        return false;
     }
 }

@@ -9,6 +9,7 @@
     <result column="memberScoreId" jdbcType="BIGINT" property="memberScoreId" />
     <result column="memberId" jdbcType="BIGINT" property="memberId" />
     <result column="typeId" jdbcType="BIGINT" property="typeId" />
+    <result column="isFinished" jdbcType="INTEGER" property="isFinished" />
     <result column="memberScoreBefore" jdbcType="DECIMAL" property="memberScoreBefore" />
     <result column="memberScoreAfter" jdbcType="DECIMAL" property="memberScoreAfter" />
     <result column="flowScore" jdbcType="DECIMAL" property="flowScore" />

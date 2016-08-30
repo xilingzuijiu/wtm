@@ -255,7 +255,7 @@ public class PaymentService implements IPaymentService {
         return Page.trans(showDtoPage);
     }
     @Override
-    public Boolean savePayAccounts(Long memberId,Integer payType,String payAccount,String realName) {
+    public MemberPayAccounts savePayAccounts(Long memberId,Integer payType,String payAccount,String realName) {
         if (payAccount==null){
             throw new InfoException("支付账号信息为空");
         }
@@ -271,7 +271,7 @@ public class PaymentService implements IPaymentService {
         List<MemberPayAccounts> memberPayAccountsList=memberPayAccountsMapper.select(payAccounts);
         if (memberPayAccountsList.isEmpty()){
             int num = memberPayAccountsMapper.insertSelective(memberPayAccounts);
-            return num>0?true:false;
+            return num>0?memberPayAccounts:null;
         }
         if (memberPayAccountsList.size()>1){
             throw new InfoException("绑定微信或支付宝账户过多");
@@ -281,7 +281,7 @@ public class PaymentService implements IPaymentService {
         pay.setRealName(memberPayAccounts.getRealName());
         pay.setCreateTime(DateUtils.getUnixTimestamp());
         int number=memberPayAccountsMapper.updateByPrimaryKeySelective(pay);
-        return number>0?true:false;
+        return number>0?pay:null;
     }
     private String getTradeNo(){
         String key="wtm:orderCode:max";

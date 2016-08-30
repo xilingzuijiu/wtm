@@ -84,7 +84,7 @@ public class MyBatisTest extends BaseContextCase {
     @Test
     public void testPushAddAccounts() {
         String url = "http://www.yuyinggzs.com/index.php/home/js/index";
-        String msg = "{\"unionId\":\"oaPViwbX7W-ddS5BKHk7PtSZxHDM\",\"url\":\"http://192.168.0.77:8001/weitaomi/frontPage/index.html\",\"flag\":\"1\"}";
+        String msg = "{\"unionId\":\"oaPViwd0R6XQW4MrQ2LaQTXuOTvc\",\"url\":\"http://192.168.0.77:8001/weitaomi/frontPage/index.html\",\"flag\":\"1\"}";
         try {
             HttpRequestUtils.postStringEntity(url, msg);
         } catch (IOException e) {

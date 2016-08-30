@@ -71,12 +71,12 @@ public class PaymentController extends BaseController{
     }
     @ResponseBody
     @RequestMapping(value = "/getMemberWalletInfo", method = RequestMethod.POST)
-    public AjaxResult getMemberWalletInfo(HttpServletRequest request, @RequestParam(required = false,defaultValue ="20") Integer paygeSize, @RequestParam(required = false,defaultValue ="0")Integer pageIndex){
+    public AjaxResult getMemberWalletInfo(HttpServletRequest request, @RequestParam(required = false,defaultValue ="20") Integer pageSize, @RequestParam(required = false,defaultValue ="0")Integer pageIndex){
         Long memberId=this.getUserId(request);
         if (memberId==null){
             throw new BusinessException("用户ID为空");
         }
-        return AjaxResult.getOK(paymentService.getMemberWalletInfo(memberId,paygeSize,pageIndex));
+        return AjaxResult.getOK(paymentService.getMemberWalletInfo(memberId,pageSize,pageIndex));
     }
     @ResponseBody
     @RequestMapping(value = "/savePayAccounts", method = RequestMethod.POST)

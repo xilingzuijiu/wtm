@@ -55,6 +55,6 @@
     <if test="articleSearch.titleKeyWord!=null">
       AND a.title like concat('%',#{articleSearch.titleKeyWord},'%')
     </if>
-    ORDER BY a.isTop DESC,a.createTime DESC) p WHERE p.isReadBefore=0
+    ORDER BY a.isTop DESC,a.createTime DESC) p WHERE p.isReadBefore=0 ORDER BY p.isTop DESC,createTime DESC
   </select>
 </mapper>

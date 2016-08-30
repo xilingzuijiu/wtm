@@ -7,12 +7,14 @@ import com.weitaomi.systemconfig.exception.BusinessException;
 import com.weitaomi.systemconfig.exception.InfoException;
 import com.weitaomi.systemconfig.token.StatelessToken;
 import com.weitaomi.systemconfig.util.DateUtils;
+import com.weitaomi.systemconfig.util.IpUtils;
 import com.weitaomi.systemconfig.util.StringUtil;
 import jodd.servlet.URLDecoder;
 import org.apache.shiro.web.filter.AccessControlFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import sun.net.util.IPAddressUtil;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -37,7 +39,9 @@ public class StatelessAuthenticFilter extends AccessControlFilter {
         HttpServletRequest httpServletRequest=(HttpServletRequest) servletRequest;
         //authentication = username:randomkey:digest      digest=time+username+randomkey+url;
         String authentication=httpServletRequest.getHeader(ActionConstants.PARAM_AUTHENTICATION);
+        logger.info("用户请求Ip地址为{}",IpUtils.getIpAddr(httpServletRequest));
         String uri=httpServletRequest.getRequestURI();
+        httpServletRequest.getRequestURL();
         logger.info("请求路径为 :"+uri);
         Long time=Long.valueOf(httpServletRequest.getHeader("time"));
         Long memberId=Long.valueOf(httpServletRequest.getHeader("memberId"));
