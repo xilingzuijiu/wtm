@@ -25,6 +25,7 @@ import com.weitaomi.systemconfig.exception.InfoException;
 import com.weitaomi.systemconfig.util.DateUtils;
 import com.weitaomi.systemconfig.util.Page;
 import com.weitaomi.systemconfig.util.UUIDGenerator;
+import com.weitaomi.systemconfig.wechat.WechatNotifyParams;
 import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -154,8 +155,8 @@ public class PaymentService implements IPaymentService {
         return "fail";
     }
     @Override
-    public String verifyWechatNotify(Map requestParams) {
-        logger.info("微信支付回调开始{}", JSON.toJSONString(requestParams));
+    public String verifyWechatNotify(WechatNotifyParams wechatNotifyParams) {
+        logger.info("微信支付回调开始{}", JSON.toJSONString(wechatNotifyParams));
         return "";
     }
     @Override

@@ -1,8 +1,16 @@
 package com.weitaomi.application.controller;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.Dom4JDriver;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
 import com.weitaomi.application.service.interf.IPaymentService;
 import com.weitaomi.systemconfig.exception.BusinessException;
 import com.weitaomi.systemconfig.exception.SystemException;
+import com.weitaomi.systemconfig.util.StreamUtils;
+import com.weitaomi.systemconfig.wechat.WechatBatchPayParams;
+import com.weitaomi.systemconfig.wechat.WechatNotifyParams;
+import org.dom4j.io.OutputFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,14 +43,10 @@ public class PaymemberCallBackController {
     }
     @ResponseBody
     @RequestMapping(value = "/verifyWechatNotify", method = RequestMethod.POST)
-    public void  verifyWechatNotify(HttpServletRequest request, HttpServletResponse response) throws SystemException,BusinessException{
+    public String  verifyWechatNotify(String params) throws SystemException,BusinessException{
         System.out.println("beginning...");
-        Map map=request.getParameterMap();
-        String code=paymentService.verifyWechatNotify(map);
-        try {
-            response.getOutputStream().println(code);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        WechatNotifyParams wechatNotifyParams= StreamUtils.toBean(params,WechatNotifyParams.class);
+        String code=paymentService.verifyWechatNotify(wechatNotifyParams);
+        return "SUCCESS";
     }
 }

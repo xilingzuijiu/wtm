@@ -8,10 +8,7 @@ import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
 import com.weitaomi.application.service.interf.IPayStrategyContext;
 import com.weitaomi.application.service.interf.IPayStrategyService;
 import com.weitaomi.systemconfig.alipay.AlipaySubmit;
-import com.weitaomi.systemconfig.util.DateUtils;
-import com.weitaomi.systemconfig.util.HttpRequestUtils;
-import com.weitaomi.systemconfig.util.StringUtil;
-import com.weitaomi.systemconfig.util.UUIDGenerator;
+import com.weitaomi.systemconfig.util.*;
 import com.weitaomi.systemconfig.wechat.WechatConfig;
 import com.weitaomi.systemconfig.wechat.WechatPayParams;
 import com.weitaomi.systemconfig.wechat.WechatPayRequestParams;
@@ -56,7 +53,7 @@ public class WechatPayService implements IPayStrategyService {
         try {
             String value=HttpRequestUtils.postString(WechatConfig.PRE_PAY_URL,requestParams);
             if (!StringUtil.isEmpty(value)){
-                WechatResultParams wechatResultParams= this.toBean(value,WechatResultParams.class);
+                WechatResultParams wechatResultParams= StreamUtils.toBean(value,WechatResultParams.class);
                 if (wechatResultParams.getResult_code().equals(WechatConfig.SUCCESS)&&wechatResultParams.getReturn_code().equals(WechatConfig.SUCCESS)){
                     Map<String,String> parameters=new HashMap<>();
                     parameters.put("appid",wechatPayParams.getAppid());
@@ -105,11 +102,5 @@ public class WechatPayService implements IPayStrategyService {
         return result;
     }
 
-    private <T> T toBean(String xmlStr, Class<T> cls) {
-        XStream xstream = new XStream(new DomDriver());
-        xstream.processAnnotations(cls);
-        @SuppressWarnings("unchecked")
-        T t = (T) xstream.fromXML(xmlStr);
-        return t;
-    }
+
 }

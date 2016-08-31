@@ -1,6 +1,8 @@
 package com.weitaomi.systemconfig.util;
 
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 import jodd.io.StringInputStream;
 
 import java.io.*;
@@ -273,6 +275,14 @@ public class StreamUtils {
 	}
 	public static ByteArrayOutputStream getByteArrayOutputStream() {
 		return new ByteArrayOutputStream();
+	}
+
+	public static  <T> T toBean(String xmlStr, Class<T> cls) {
+		XStream xstream = new XStream(new DomDriver());
+		xstream.processAnnotations(cls);
+		@SuppressWarnings("unchecked")
+		T t = (T) xstream.fromXML(xmlStr);
+		return t;
 	}
 
 }

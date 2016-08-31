@@ -7,6 +7,7 @@ import com.weitaomi.application.model.dto.MemberScoreFlowDto;
 import com.weitaomi.application.model.dto.MyWalletDto;
 import com.weitaomi.application.model.dto.RequireFollowerParamsDto;
 import com.weitaomi.systemconfig.util.Page;
+import com.weitaomi.systemconfig.wechat.WechatNotifyParams;
 
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,7 @@ public interface IPaymentService {
 
     String verifyAlipayNotify(Map requestParams);
 
-    String verifyWechatNotify(Map requestParams);
+    String verifyWechatNotify(WechatNotifyParams wechatNotifyParams);
 
     String verifyBatchPayNotify(Map requestParams);
 
