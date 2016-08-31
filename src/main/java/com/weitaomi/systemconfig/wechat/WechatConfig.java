@@ -16,7 +16,7 @@ public class WechatConfig {
     //预支付接口
     public static final String PRE_PAY_URL= "https://api.mch.weixin.qq.com/pay/unifiedorder";
     //微信回调地址
-    public static final String NOTIFY_URL= "http://121.42.196.236:8018/weitaomi/app/admin/paymemberCallBack/verifyWechatNotify";
+    public static final String NOTIFY_URL= "http://121.42.196.236:8018/weitaomi/pc/admin/paymemberCallBack/verifyWechatNotify";
     public static final String SUCCESS= "SUCCESS";
     public static final String FAIL= "FAILURE";
 

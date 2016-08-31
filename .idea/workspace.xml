@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="cc7b2d14-bf42-4e36-b023-825da18870c6" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymemberCallBackController.java" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymemberCallBackController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/wechat/WechatConfig.java" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/wechat/WechatConfig.java" />
     </list>
     <ignored path="weitaomiProject.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -53,21 +53,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="WechatConfig.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="WechatConfig.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/wechat/WechatConfig.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="18" column="107" selection-start-line="18" selection-start-column="90" selection-end-line="18" selection-end-column="107" />
+            <state vertical-scroll-proportion="1.4229249">
+              <caret line="18" column="88" selection-start-line="18" selection-start-column="88" selection-end-line="18" selection-end-column="88" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PaymemberCallBackController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="PaymemberCallBackController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymemberCallBackController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.1383399">
-              <caret line="31" column="42" selection-start-line="31" selection-start-column="42" selection-end-line="31" selection-end-column="42" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="30" column="20" selection-start-line="30" selection-start-column="18" selection-end-line="30" selection-end-column="20" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -196,7 +196,6 @@
         <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/wechat/WechatBatchPayParams.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/wechat/WechatResultParams.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/wechat/WechatPayRequestParams.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/wechat/WechatConfig.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymentController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/wechat/WechatNotifyParams.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/WechatPayService.java" />
@@ -204,6 +203,7 @@
         <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/interf/IPaymentService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/PaymentService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymemberCallBackController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/wechat/WechatConfig.java" />
       </list>
     </option>
   </component>
@@ -1681,7 +1681,7 @@
       <workItem from="1471741016064" duration="62585000" />
       <workItem from="1471884328794" duration="52835000" />
       <workItem from="1472089266456" duration="115810000" />
-      <workItem from="1472546975210" duration="25179000" />
+      <workItem from="1472546975210" duration="25268000" />
     </task>
     <task id="LOCAL-00001" summary="F[任务] 增加任务相关CRUD">
       <created>1471344681918</created>
@@ -1755,7 +1755,13 @@
       <option name="project" value="LOCAL" />
       <updated>1472630450493</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="B[支付 ] 修改支付接口">
+      <created>1472630574540</created>
+      <option name="number" value="00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1472630574540</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1791,7 +1797,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="387922000" />
+    <option name="totallyTimeSpent" value="388011000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -2345,14 +2351,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/wechat/WechatConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="18" column="107" selection-start-line="18" selection-start-column="90" selection-end-line="18" selection-end-column="107" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/WechatPayService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2398,11 +2396,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymemberCallBackController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.1383399">
-          <caret line="31" column="42" selection-start-line="31" selection-start-column="42" selection-end-line="31" selection-end-column="42" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="30" column="20" selection-start-line="30" selection-start-column="18" selection-end-line="30" selection-end-column="20" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/wechat/WechatConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.4229249">
+          <caret line="18" column="88" selection-start-line="18" selection-start-column="88" selection-end-line="18" selection-end-column="88" />
+          <folding />
         </state>
       </provider>
     </entry>
