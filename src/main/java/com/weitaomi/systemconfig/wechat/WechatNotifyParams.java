@@ -22,6 +22,7 @@ public class WechatNotifyParams {
     private String sub_mch_id;
     private String time_end;
     private String total_fee;
+    private String cash_fee;
     private String trade_type;
     private String transaction_id;
 
@@ -160,5 +161,13 @@ public class WechatNotifyParams {
 
     public void setTransaction_id(String transaction_id) {
         this.transaction_id = transaction_id;
+    }
+
+    public String getCash_fee() {
+        return this.cash_fee;
+    }
+
+    public void setCash_fee(String cash_fee) {
+        this.cash_fee = cash_fee;
     }
 }
