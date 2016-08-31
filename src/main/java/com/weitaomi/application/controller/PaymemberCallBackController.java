@@ -7,6 +7,7 @@ import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
 import com.weitaomi.application.service.interf.IPaymentService;
 import com.weitaomi.systemconfig.exception.BusinessException;
 import com.weitaomi.systemconfig.exception.SystemException;
+import com.weitaomi.systemconfig.util.HttpRequestUtils;
 import com.weitaomi.systemconfig.util.StreamUtils;
 import com.weitaomi.systemconfig.wechat.WechatBatchPayParams;
 import com.weitaomi.systemconfig.wechat.WechatNotifyParams;
@@ -21,7 +22,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 
 /**
@@ -46,8 +49,15 @@ public class PaymemberCallBackController {
     }
     @ResponseBody
     @RequestMapping(value = "/verifyWechatNotify", method = RequestMethod.POST)
-    public String  verifyWechatNotify(String params) throws SystemException,BusinessException{
-        logger.info("beginning...{}",params);
+    public String  verifyWechatNotify(HttpServletRequest request,HttpServletResponse response) throws SystemException,BusinessException{
+        String params="";
+        try {
+            InputStream inputStream=request.getInputStream();
+            params= HttpRequestUtils.readInstream(inputStream,"UTF-8");
+            logger.info("beginning...{}",params);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         WechatNotifyParams wechatNotifyParams= StreamUtils.toBean(params,WechatNotifyParams.class);
         String code=paymentService.verifyWechatNotify(wechatNotifyParams);
         return "SUCCESS";
