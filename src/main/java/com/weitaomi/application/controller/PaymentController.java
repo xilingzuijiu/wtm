@@ -29,29 +29,6 @@ public class PaymentController extends BaseController{
     @Autowired
     private IPaymentService paymentService;
     @ResponseBody
-    @RequestMapping(value = "/verifyAlipayNotify", method = RequestMethod.POST)
-    public void  verifyAlipayNotify(HttpServletRequest request, HttpServletResponse response) throws SystemException,BusinessException{
-        Map map=request.getParameterMap();
-        String code=paymentService.verifyAlipayNotify(map);
-        try {
-            response.getOutputStream().println(code);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    @ResponseBody
-    @RequestMapping(value = "/verifyWechatNotify", method = RequestMethod.POST)
-    public void  verifyWechatNotify(HttpServletRequest request, HttpServletResponse response) throws SystemException,BusinessException{
-        System.out.println("beginning...");
-        Map map=request.getParameterMap();
-        String code=paymentService.verifyWechatNotify(map);
-        try {
-            response.getOutputStream().println(code);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    @ResponseBody
     @RequestMapping(value = "/verifyBatchPayNotify", method = RequestMethod.POST)
     public void  verifyBatchPayNotify(HttpServletRequest request, HttpServletResponse response) throws SystemException,BusinessException{
         Map map=request.getParameterMap();
