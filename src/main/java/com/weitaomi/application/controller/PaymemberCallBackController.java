@@ -28,7 +28,7 @@ import java.util.Map;
  * Created by Administrator on 2016/8/31.
  */
 @Controller
-@RequestMapping("/app/admin/paymemberCallBack")
+@RequestMapping("/pc/admin/paymemberCallBack")
 public class PaymemberCallBackController {
     private Logger logger= LoggerFactory.getLogger(PaymemberCallBackController.class);
     @Autowired

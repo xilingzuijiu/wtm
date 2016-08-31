@@ -66,8 +66,8 @@
       <file leaf-file-name="PaymemberCallBackController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymemberCallBackController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="2.8774703">
-              <caret line="49" column="45" selection-start-line="49" selection-start-column="45" selection-end-line="49" selection-end-column="45" />
+            <state vertical-scroll-proportion="1.1383399">
+              <caret line="31" column="42" selection-start-line="31" selection-start-column="42" selection-end-line="31" selection-end-column="42" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -1681,7 +1681,7 @@
       <workItem from="1471741016064" duration="62585000" />
       <workItem from="1471884328794" duration="52835000" />
       <workItem from="1472089266456" duration="115810000" />
-      <workItem from="1472546975210" duration="25053000" />
+      <workItem from="1472546975210" duration="25179000" />
     </task>
     <task id="LOCAL-00001" summary="F[任务] 增加任务相关CRUD">
       <created>1471344681918</created>
@@ -1749,7 +1749,13 @@
       <option name="project" value="LOCAL" />
       <updated>1472628681670</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="B[支付 ] 修改支付接口">
+      <created>1472630450493</created>
+      <option name="number" value="00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1472630450493</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1785,7 +1791,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="387796000" />
+    <option name="totallyTimeSpent" value="387922000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -2392,8 +2398,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymemberCallBackController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.8774703">
-          <caret line="49" column="45" selection-start-line="49" selection-start-column="45" selection-end-line="49" selection-end-column="45" />
+        <state vertical-scroll-proportion="1.1383399">
+          <caret line="31" column="42" selection-start-line="31" selection-start-column="42" selection-end-line="31" selection-end-column="42" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
