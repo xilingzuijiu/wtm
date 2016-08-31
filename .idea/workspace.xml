@@ -2,16 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cc7b2d14-bf42-4e36-b023-825da18870c6" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/wechat/WechatNotifyParams.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/weitaomi/systemconfig/util/StreamUtils.class" afterPath="$PROJECT_DIR$/target/classes/com/weitaomi/systemconfig/util/StreamUtils.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/weitaomiProject-1.0/WEB-INF/classes/com/weitaomi/systemconfig/util/StreamUtils.class" afterPath="$PROJECT_DIR$/target/weitaomiProject-1.0/WEB-INF/classes/com/weitaomi/systemconfig/util/StreamUtils.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymemberCallBackController.java" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymemberCallBackController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/PaymentService.java" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/PaymentService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/WechatPayService.java" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/WechatPayService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/interf/IPaymentService.java" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/interf/IPaymentService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/util/StreamUtils.java" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/util/StreamUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/weitaomiProject-1.0/WEB-INF/java/com/weitaomi/systemconfig/util/StreamUtils.java" afterPath="$PROJECT_DIR$/target/weitaomiProject-1.0/WEB-INF/java/com/weitaomi/systemconfig/util/StreamUtils.java" />
     </list>
     <ignored path="weitaomiProject.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -65,7 +57,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/wechat/WechatConfig.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="18" column="107" selection-start-line="18" selection-start-column="107" selection-end-line="18" selection-end-column="107" />
+              <caret line="18" column="107" selection-start-line="18" selection-start-column="90" selection-end-line="18" selection-end-column="107" />
               <folding />
             </state>
           </provider>
@@ -75,7 +67,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymemberCallBackController.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="2.8774703">
-              <caret line="50" column="5" selection-start-line="50" selection-start-column="5" selection-end-line="50" selection-end-column="5" />
+              <caret line="49" column="45" selection-start-line="49" selection-start-column="45" selection-end-line="49" selection-end-column="45" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -87,7 +79,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/WechatPayService.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="55" column="73" selection-start-line="55" selection-start-column="67" selection-end-line="55" selection-end-column="73" />
+              <caret line="71" column="13" selection-start-line="54" selection-start-column="43" selection-end-line="71" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#4083#4099#0" expanded="true" />
@@ -130,7 +122,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/PaymentService.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="158" column="70" selection-start-line="158" selection-start-column="70" selection-end-line="158" selection-end-column="70" />
+              <caret line="42" column="3" selection-start-line="42" selection-start-column="3" selection-end-line="42" selection-end-column="3" />
               <folding />
             </state>
           </provider>
@@ -801,7 +793,7 @@
     <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../批量付款到支付宝账户有密接口-batch_trans_notify(20150528)/batch_trans_notify-JAVA-UTF-8" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="SearchEverywhereHistoryKey" value="wechatser&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/impl/WechatPayService.java&#10;WEcha&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/systemconfig/wechat/WechatConfig.java&#10;Pay&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/controller/PaymentController.java&#10;Wecha&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/systemconfig/wechat/WechatConfig.java&#10;pom&#9;FILE&#9;file://D:/program/wtm/pom.xml&#10;Alipa&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/systemconfig/alipay/AlipayConfig.java&#10;PayController&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/controller/PaymentController.java&#10;Alipay&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/impl/AlipayService.java&#10;We&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/systemconfig/wechat/WechatConfig.java&#10;Mybat&#9;FILE&#9;file://D:/program/wtm/src/test/java/configuration/MyBatisTest.java&#10;alipay&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/systemconfig/alipay/AlipayConfig.java&#10;AlipaySu&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/systemconfig/alipay/AlipaySubmit.java&#10;AlipayC&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/systemconfig/alipay/AlipayConfig.java&#10;pay&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/impl/PaymentService.java&#10;State&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/systemconfig/filter/StatelessAuthenticFilter.java&#10;Wech&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/systemconfig/wechat/WechatConfig.java&#10;Offic&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/impl/OfficeAccountService.java&#10;mybat&#9;FILE&#9;file://D:/program/wtm/src/test/java/configuration/MyBatisTest.java&#10;PageHe&#9;PSI&#9;JAVA://com.github.pagehelper.PageHelper&#10;MyBat&#9;FILE&#9;file://D:/program/wtm/src/test/java/configuration/MyBatisTest.java&#10;Hma&#9;PSI&#9;JAVA://com.weitaomi.systemconfig.util.HmacSHA256Utils&#10;stat&#9;PSI&#9;JAVA://com.weitaomi.systemconfig.filter.StatelessAuthenticFilter&#10;MemberTas&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/impl/MemberTaskHistoryService.java&#10;MemberScore&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/impl/MemberScoreService.java&#10;Mem&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/impl/MemberScoreService.java&#10;MemberSer&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/impl/MemberService.java&#10;wecha&#9;PSI&#9;JAVA://com.weitaomi.systemconfig.wechat.WechatConfig&#10;PaymentC&#9;PSI&#9;JAVA://com.weitaomi.application.controller.PaymentController&#10;Myba&#9;FILE&#9;file://D:/program/wtm/src/test/java/configuration/MyBatisTest.java&#10;article&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/impl/ArticleService.java&#10;account&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/impl/OfficeAccountService.java&#10;accounts&#9;FILE&#9;file://D:/program/wtm/src/main/webapp/frontPage/publishAccounts.html&#10;Mybati&#9;FILE&#9;file://D:/program/wtm/src/test/java/configuration/MyBatisTest.java&#10;OfficicalAccountsDto&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/model/dto/OfficicalAccountsDto.java&#10;BaseC&#9;PSI&#9;JAVA://com.weitaomi.application.controller.baseController.BaseController&#10;Article&#9;FILE&#9;file://D:/program/wtm/src/main/resources/mapper/ArticleMapper.xml&#10;upload&#9;FILE&#9;file://D:/program/wtm/src/test/java/configuration/ImageUpLoadTest.java&#10;memberInv&#9;FILE&#9;file://D:/program/wtm/src/main/resources/mapper/MemberInvitedRecordMapper.xml&#10;realm&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/systemconfig/realm/MyImplementRealm.java&#10;state&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/systemconfig/filter/StatelessAuthenticFilter.java&#10;MemberTask&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/impl/MemberTaskHistoryService.java&#10;Sys&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/systemconfig/constant/SystemConfig.java&#10;off&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/impl/OfficeAccountService.java&#10;invi&#9;FILE&#9;file://D:/program/wtm/src/main/resources/mapper/MemberInvitedRecordMapper.xml&#10;poo&#9;FILE&#9;file://D:/program/wtm/src/main/resources/mapper/TaskPoolMapper.xml&#10;Tas&#9;FILE&#9;file://D:/program/wtm/src/main/resources/mapper/MemberTaskHistoryMapper.xml&#10;task&#9;PSI&#9;JAVA://com.weitaomi.application.service.interf.IMemberTaskHistoryService&#10;sta&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/systemconfig/filter/StatelessAuthenticFilter.java&#10;Up&#9;PSI&#9;JAVA://configuration.ImageUpLoadTest&#10;MemberInv&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/interf/IMemberInvitedRecordService.java" />
+    <property name="SearchEverywhereHistoryKey" value="Wechatc&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/systemconfig/wechat/WechatConfig.java&#10;wechatser&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/impl/WechatPayService.java&#10;WEcha&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/systemconfig/wechat/WechatConfig.java&#10;Pay&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/controller/PaymentController.java&#10;Wecha&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/systemconfig/wechat/WechatConfig.java&#10;pom&#9;FILE&#9;file://D:/program/wtm/pom.xml&#10;Alipa&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/systemconfig/alipay/AlipayConfig.java&#10;PayController&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/controller/PaymentController.java&#10;Alipay&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/impl/AlipayService.java&#10;We&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/systemconfig/wechat/WechatConfig.java&#10;Mybat&#9;FILE&#9;file://D:/program/wtm/src/test/java/configuration/MyBatisTest.java&#10;alipay&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/systemconfig/alipay/AlipayConfig.java&#10;AlipaySu&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/systemconfig/alipay/AlipaySubmit.java&#10;AlipayC&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/systemconfig/alipay/AlipayConfig.java&#10;pay&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/impl/PaymentService.java&#10;State&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/systemconfig/filter/StatelessAuthenticFilter.java&#10;Wech&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/systemconfig/wechat/WechatConfig.java&#10;Offic&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/impl/OfficeAccountService.java&#10;mybat&#9;FILE&#9;file://D:/program/wtm/src/test/java/configuration/MyBatisTest.java&#10;PageHe&#9;PSI&#9;JAVA://com.github.pagehelper.PageHelper&#10;MyBat&#9;FILE&#9;file://D:/program/wtm/src/test/java/configuration/MyBatisTest.java&#10;Hma&#9;PSI&#9;JAVA://com.weitaomi.systemconfig.util.HmacSHA256Utils&#10;stat&#9;PSI&#9;JAVA://com.weitaomi.systemconfig.filter.StatelessAuthenticFilter&#10;MemberTas&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/impl/MemberTaskHistoryService.java&#10;MemberScore&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/impl/MemberScoreService.java&#10;Mem&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/impl/MemberScoreService.java&#10;MemberSer&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/impl/MemberService.java&#10;wecha&#9;PSI&#9;JAVA://com.weitaomi.systemconfig.wechat.WechatConfig&#10;PaymentC&#9;PSI&#9;JAVA://com.weitaomi.application.controller.PaymentController&#10;Myba&#9;FILE&#9;file://D:/program/wtm/src/test/java/configuration/MyBatisTest.java&#10;article&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/impl/ArticleService.java&#10;account&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/impl/OfficeAccountService.java&#10;accounts&#9;FILE&#9;file://D:/program/wtm/src/main/webapp/frontPage/publishAccounts.html&#10;Mybati&#9;FILE&#9;file://D:/program/wtm/src/test/java/configuration/MyBatisTest.java&#10;OfficicalAccountsDto&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/model/dto/OfficicalAccountsDto.java&#10;BaseC&#9;PSI&#9;JAVA://com.weitaomi.application.controller.baseController.BaseController&#10;Article&#9;FILE&#9;file://D:/program/wtm/src/main/resources/mapper/ArticleMapper.xml&#10;upload&#9;FILE&#9;file://D:/program/wtm/src/test/java/configuration/ImageUpLoadTest.java&#10;memberInv&#9;FILE&#9;file://D:/program/wtm/src/main/resources/mapper/MemberInvitedRecordMapper.xml&#10;realm&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/systemconfig/realm/MyImplementRealm.java&#10;state&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/systemconfig/filter/StatelessAuthenticFilter.java&#10;MemberTask&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/impl/MemberTaskHistoryService.java&#10;Sys&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/systemconfig/constant/SystemConfig.java&#10;off&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/impl/OfficeAccountService.java&#10;invi&#9;FILE&#9;file://D:/program/wtm/src/main/resources/mapper/MemberInvitedRecordMapper.xml&#10;poo&#9;FILE&#9;file://D:/program/wtm/src/main/resources/mapper/TaskPoolMapper.xml&#10;Tas&#9;FILE&#9;file://D:/program/wtm/src/main/resources/mapper/MemberTaskHistoryMapper.xml&#10;task&#9;PSI&#9;JAVA://com.weitaomi.application.service.interf.IMemberTaskHistoryService&#10;sta&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/systemconfig/filter/StatelessAuthenticFilter.java&#10;Up&#9;PSI&#9;JAVA://configuration.ImageUpLoadTest" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -1689,7 +1681,7 @@
       <workItem from="1471741016064" duration="62585000" />
       <workItem from="1471884328794" duration="52835000" />
       <workItem from="1472089266456" duration="115810000" />
-      <workItem from="1472546975210" duration="23573000" />
+      <workItem from="1472546975210" duration="25053000" />
     </task>
     <task id="LOCAL-00001" summary="F[任务] 增加任务相关CRUD">
       <created>1471344681918</created>
@@ -1751,7 +1743,13 @@
       <option name="project" value="LOCAL" />
       <updated>1472626698466</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="B[支付 ] 修改支付接口">
+      <created>1472628681670</created>
+      <option name="number" value="00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1472628681670</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1787,7 +1785,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="386316000" />
+    <option name="totallyTimeSpent" value="387796000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -2264,22 +2262,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/wechat/WechatConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="18" column="107" selection-start-line="18" selection-start-column="107" selection-end-line="18" selection-end-column="107" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymentController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="31" column="50" selection-start-line="31" selection-start-column="30" selection-end-line="31" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/wechat/WechatNotifyParams.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.14513788">
@@ -2357,10 +2339,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/wechat/WechatConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="18" column="107" selection-start-line="18" selection-start-column="90" selection-end-line="18" selection-end-column="107" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/WechatPayService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="55" column="73" selection-start-line="55" selection-start-column="67" selection-end-line="55" selection-end-column="73" />
+          <caret line="71" column="13" selection-start-line="54" selection-start-column="43" selection-end-line="71" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#4083#4099#0" expanded="true" />
@@ -2376,6 +2366,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymentController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="31" column="50" selection-start-line="31" selection-start-column="30" selection-end-line="31" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/interf/IPaymentService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2387,7 +2385,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/PaymentService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="158" column="70" selection-start-line="158" selection-start-column="70" selection-end-line="158" selection-end-column="70" />
+          <caret line="42" column="3" selection-start-line="42" selection-start-column="3" selection-end-line="42" selection-end-column="3" />
           <folding />
         </state>
       </provider>
@@ -2395,7 +2393,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymemberCallBackController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="2.8774703">
-          <caret line="50" column="5" selection-start-line="50" selection-start-column="5" selection-end-line="50" selection-end-column="5" />
+          <caret line="49" column="45" selection-start-line="49" selection-start-column="45" selection-end-line="49" selection-end-column="45" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

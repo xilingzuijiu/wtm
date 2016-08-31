@@ -11,6 +11,8 @@ import com.weitaomi.systemconfig.util.StreamUtils;
 import com.weitaomi.systemconfig.wechat.WechatBatchPayParams;
 import com.weitaomi.systemconfig.wechat.WechatNotifyParams;
 import org.dom4j.io.OutputFormat;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +30,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/app/admin/paymemberCallBack")
 public class PaymemberCallBackController {
+    private Logger logger= LoggerFactory.getLogger(PaymemberCallBackController.class);
     @Autowired
     private IPaymentService paymentService;
     @ResponseBody
@@ -44,7 +47,7 @@ public class PaymemberCallBackController {
     @ResponseBody
     @RequestMapping(value = "/verifyWechatNotify", method = RequestMethod.POST)
     public String  verifyWechatNotify(String params) throws SystemException,BusinessException{
-        System.out.println("beginning...");
+        logger.info("beginning...{}",params);
         WechatNotifyParams wechatNotifyParams= StreamUtils.toBean(params,WechatNotifyParams.class);
         String code=paymentService.verifyWechatNotify(wechatNotifyParams);
         return "SUCCESS";
