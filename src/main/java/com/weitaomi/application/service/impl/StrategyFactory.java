@@ -14,7 +14,7 @@ public class StrategyFactory {
     private static Map<Integer, IPayStrategyService> map = new HashMap<Integer, IPayStrategyService>();
     static {
         map.put(PayType.ALIPAY_APP.getValue(),new AlipayService());
-        map.put(PayType.WECHAT_APP.getValue(),new AlipayService());
+        map.put(PayType.WECHAT_APP.getValue(),new WechatPayService());
     }
 
     public static StrategyFactory getFactory() {

@@ -3,10 +3,13 @@ package com.weitaomi.application.controller;
 import com.weitaomi.application.controller.baseController.BaseController;
 import com.weitaomi.application.model.bean.MemberPayAccounts;
 import com.weitaomi.application.model.bean.PaymentApprove;
+import com.weitaomi.application.model.enums.PayType;
 import com.weitaomi.application.service.interf.IPaymentService;
+import com.weitaomi.systemconfig.alipay.AlipayConfig;
 import com.weitaomi.systemconfig.dataFormat.AjaxResult;
 import com.weitaomi.systemconfig.exception.BusinessException;
 import com.weitaomi.systemconfig.exception.SystemException;
+import com.weitaomi.systemconfig.util.IpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +40,18 @@ public class PaymentController extends BaseController{
         }
     }
     @ResponseBody
+    @RequestMapping(value = "/verifyWechatNotify", method = RequestMethod.POST)
+    public void  verifyWechatNotify(HttpServletRequest request, HttpServletResponse response) throws SystemException,BusinessException{
+        System.out.println("beginning...");
+        Map map=request.getParameterMap();
+        String code=paymentService.verifyWechatNotify(map);
+        try {
+            response.getOutputStream().println(code);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @ResponseBody
     @RequestMapping(value = "/verifyBatchPayNotify", method = RequestMethod.POST)
     public void  verifyBatchPayNotify(HttpServletRequest request, HttpServletResponse response) throws SystemException,BusinessException{
         Map map=request.getParameterMap();
@@ -49,17 +64,26 @@ public class PaymentController extends BaseController{
     }
     @ResponseBody
     @RequestMapping(value = "/getPaymentParams", method = RequestMethod.POST)
-    public AjaxResult getPaymentParams(HttpServletRequest request,@RequestBody Map<String,Object> params){
+    public String getPaymentParams(HttpServletRequest request,@RequestBody Map<String,Object> params){
         Long memberId=this.getUserId(request);
         if (memberId==null){
             throw new BusinessException("用户ID为空");
         }
         params.put("memberId",memberId);
-        return AjaxResult.getOK(paymentService.getPaymentParams(params));
+        if ((Integer)params.get("payType")==(PayType.WECHAT_APP.getValue())){
+            params.put("spbill_create_ip", IpUtils.getIpAddr(request));
+        }
+        return paymentService.getPaymentParams(params);
     }
     @ResponseBody
     @RequestMapping(value = "/patchAliPayCustomers", method = RequestMethod.POST)
     public AjaxResult patchAliPayCustomers(@RequestBody List<PaymentApprove> approveList){
+        paymentService.patchAliPayCustomers(approveList);
+        return AjaxResult.getOK();
+    }
+    @ResponseBody
+    @RequestMapping(value = "/patchWechatCustomers", method = RequestMethod.POST)
+    public AjaxResult patchWechatCustomers(@RequestBody List<PaymentApprove> approveList){
         paymentService.patchAliPayCustomers(approveList);
         return AjaxResult.getOK();
     }

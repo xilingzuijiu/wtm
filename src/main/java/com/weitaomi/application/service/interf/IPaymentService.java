@@ -15,10 +15,19 @@ import java.util.Map;
  * Created by supumall on 2016/7/22.
  */
 public interface IPaymentService {
+
     String getPaymentParams(Map<String,Object> params);
+
     String verifyAlipayNotify(Map requestParams);
+
+    String verifyWechatNotify(Map requestParams);
+
     String verifyBatchPayNotify(Map requestParams);
+
     void patchAliPayCustomers(List<PaymentApprove> approveList);
+
+    void patchWechatCustomers(List<PaymentApprove> approveList);
+
     MemberScore generatorPayParams(Long memberId, PaymentApprove approve);
 
     /**

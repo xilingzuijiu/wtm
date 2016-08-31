@@ -17,10 +17,6 @@ public class WechatBatchPayParams {
      */
     private String nonce_str;
     /**
-     * 随机字符串
-     */
-    private String device_info;
-    /**
      * 签名
      */
     private String sign;
@@ -36,10 +32,6 @@ public class WechatBatchPayParams {
      * 校验用户姓名选项
      */
     private String check_nam="NO_CHECK";
-    /**
-     * 收款用户姓名
-     */
-    private String re_user_name;
     /**
      * 金额
      */
@@ -99,22 +91,6 @@ public class WechatBatchPayParams {
      */
     public void setNonce_str(String nonce_str) {
         this.nonce_str = nonce_str;
-    }
-
-    /**
-     * 获取随机字符串
-     * @return device_info 随机字符串
-     */
-    public String getDevice_info() {
-        return this.device_info;
-    }
-
-    /**
-     * 设置随机字符串
-     * @param device_info 随机字符串
-     */
-    public void setDevice_info(String device_info) {
-        this.device_info = device_info;
     }
 
     /**
@@ -179,22 +155,6 @@ public class WechatBatchPayParams {
      */
     public void setCheck_nam(String check_nam) {
         this.check_nam = check_nam;
-    }
-
-    /**
-     * 获取收款用户姓名
-     * @return re_user_name 收款用户姓名
-     */
-    public String getRe_user_name() {
-        return this.re_user_name;
-    }
-
-    /**
-     * 设置收款用户姓名
-     * @param re_user_name 收款用户姓名
-     */
-    public void setRe_user_name(String re_user_name) {
-        this.re_user_name = re_user_name;
     }
 
     /**

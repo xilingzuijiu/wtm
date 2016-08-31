@@ -1,6 +1,8 @@
 package configuration;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.thoughtworks.xstream.XStream;
 import com.weitaomi.application.model.bean.Member;
 import com.weitaomi.application.model.bean.PaymentApprove;
 import com.weitaomi.application.model.dto.MemberInfoDto;
@@ -13,7 +15,10 @@ import com.weitaomi.application.service.interf.IMemberTaskHistoryService;
 import com.weitaomi.application.service.interf.IPaymentService;
 import com.weitaomi.systemconfig.util.DateUtils;
 import com.weitaomi.systemconfig.util.HttpRequestUtils;
+import com.weitaomi.systemconfig.util.StringUtil;
 import com.weitaomi.systemconfig.util.UUIDGenerator;
+import com.weitaomi.systemconfig.wechat.WechatConfig;
+import com.weitaomi.systemconfig.wechat.WechatPayParams;
 import common.BaseContextCase;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.shiro.crypto.hash.Sha256Hash;
@@ -23,7 +28,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by supumall on 2016/7/6.
@@ -122,6 +129,49 @@ public class MyBatisTest extends BaseContextCase {
         paymentService.patchAliPayCustomers(approves);
 
 
+    }
+
+    @Test
+    public void  test2(){
+        Map<String,String> params=new HashMap<>();
+        params.put("appid", WechatConfig.APP_ID);
+        params.put("mch_id",WechatConfig.MCH_APPID);
+        params.put("nonce_str", UUIDGenerator.generate());
+        params.put("out_trade_no", UUIDGenerator.generate());
+        params.put("body","微淘米会员充值");
+        params.put("notify_url","123456");
+        params.put("trade_type","APP");
+        params.put("total_fee","10");
+        params.put("spbill_create_ip","10");
+//        params=this.paraFilter(params);
+        String pre_sign= StringUtil.formatParaMap(params);
+        pre_sign=pre_sign+"key="+WechatConfig.API_KEY;
+        String sign= DigestUtils.md5Hex(pre_sign).toUpperCase();
+        params.put("sign",sign);
+        String value=JSON.toJSONString(params);
+        System.out.println(value);
+        WechatPayParams wechatPayParams=JSONObject.parseObject(value,WechatPayParams.class);
+        XStream xStream=new XStream();
+        xStream.autodetectAnnotations(true);
+        String requestParams=xStream.toXML(wechatPayParams);
+
+        System.out.println(requestParams);
+    }
+
+    private XStream getXStream(){
+        XStream xStream = new XStream();
+//        xStream.autodetectAnnotations(true);
+        //设置xml节点属性信息
+        xStream.useAttributeFor(WechatPayParams.class,"appid");
+        xStream.useAttributeFor(WechatPayParams.class,"mch_id");
+        xStream.useAttributeFor(WechatPayParams.class,"nonce_str");
+        xStream.useAttributeFor(WechatPayParams.class,"body");
+        xStream.useAttributeFor(WechatPayParams.class,"notify_url");
+        xStream.useAttributeFor(WechatPayParams.class,"trade_type");
+        xStream.useAttributeFor(WechatPayParams.class,"total_fee");
+        xStream.useAttributeFor(WechatPayParams.class,"spbill_create_ip");
+        xStream.useAttributeFor(WechatPayParams.class,"sign");
+        return xStream;
     }
 }
 

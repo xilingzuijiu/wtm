@@ -1,5 +1,6 @@
 package com.weitaomi.application.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import com.weitaomi.application.model.bean.MemberPayAccounts;
 import com.weitaomi.application.model.bean.MemberScore;
@@ -60,15 +61,21 @@ public class PaymentService implements IPaymentService {
     @Transactional
     public String getPaymentParams(Map<String,Object> params) {
         String payCode=this.getTradeNo();
-        params.put("trade_no", AlipayConfig.payCode_prefix+payCode);
+        if ((Integer)params.get("payType")==(PayType.WECHAT_APP.getValue())){
+            params.put("out_trade_no", AlipayConfig.payCode_prefix+payCode);
+        }
+        if ((Integer)params.get("payType")==(PayType.ALIPAY_APP.getValue())){
+            params.put("trade_no", AlipayConfig.payCode_prefix+payCode);
+        }
         String requestParam=payStrategyContext.getPaymentParams(params);
         PaymentHistory paymentHistory=new PaymentHistory();
         paymentHistory.setMemberId((Long)params.get("memberId"));
         paymentHistory.setPayCode(payCode);
-        paymentHistory.setPlatform((String)params.get("payPlatform"));
+        paymentHistory.setPlatform(PayType.getValue((Integer)params.get("payType")).getDesc());
         paymentHistory.setParams(requestParam);
         paymentHistory.setIsPaySuccess(0);
         paymentHistory.setPayType(0);
+        paymentHistory.setCreateTime(DateUtils.getUnixTimestamp());
         paymentHistoryMapper.insertSelective(paymentHistory);
         if (!StringUtils.isEmpty(requestParam)){
             return requestParam;
@@ -146,7 +153,11 @@ public class PaymentService implements IPaymentService {
         }
         return "fail";
     }
-
+    @Override
+    public String verifyWechatNotify(Map requestParams) {
+        logger.info("微信支付回调开始{}", JSON.toJSONString(requestParams));
+        return "";
+    }
     @Override
     public String verifyBatchPayNotify(Map requestParams) {
         String patchTradeNo=(String)requestParams.get("batch_no");
@@ -220,7 +231,10 @@ public class PaymentService implements IPaymentService {
         }
         cacheService.setCacheByKey(batch_no,batch_no,24*60*60);
     }
+    @Override
+    public void patchWechatCustomers(List<PaymentApprove> approveList) {
 
+    }
     @Override
     @Transactional
     public MemberScore generatorPayParams(Long memberId,PaymentApprove approve) {

@@ -78,6 +78,23 @@ public class HttpRequestUtils {
         InputStream inputStream=resEntity.getContent();
         return readInstream(inputStream,"UTF-8");
     }
+
+    public static String postString(String url, String entityString) throws IOException {
+        StringEntity entityRequest = new StringEntity(entityString,"utf-8");
+        HttpPost httpPost = new HttpPost(url);
+        httpPost.setEntity(entityRequest);
+//        httpPost.setHeader("Content-Type", "application/json");//; charset=utf-8
+        HttpClient httpClient = HttpClients.createDefault();
+        HttpResponse response = httpClient.execute(httpPost);
+
+        if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+            throw new RuntimeException("请求失败");
+        }
+        HttpEntity resEntity = response.getEntity();
+        InputStream inputStream=resEntity.getContent();
+        return readInstream(inputStream,"UTF-8");
+    }
+
     public static String cancelPost(String url, NameValuePair... params) throws IOException {
         try {
             // 编码参数
