@@ -31,7 +31,7 @@ public class JpushUtils {
         JPushClient jpushClient = new JPushClient("4081bded186173ba62a4c2b9", "f8a12e0714dc3c2d9e7a8154");
 
         // For push, all you need do is to build PushPayload object.
-        PushPayload payload = buildPushObject_all_all_alert(message);
+        PushPayload payload = buildPushObject_ios_tagAnd_alertWithExtrasAndMessage(null,message);
 
         try {
             PushResult result = jpushClient.sendPush(payload);
@@ -53,13 +53,18 @@ public class JpushUtils {
     /**
      * 向客户端推送消息
      * @param alert
-     * @param content
+     * @param memberId
      */
-    public static void buildRequest(String alert,String content){
+    public static void buildRequest(String alert,Long memberId){
         JPushClient jpushClient = new JPushClient("4081bded186173ba62a4c2b9", "f8a12e0714dc3c2d9e7a8154");
 
         // For push, all you need do is to build PushPayload object.
-        PushPayload payload = buildPushObject_ios_tagAnd_alertWithExtrasAndMessage(alert, content);
+        PushPayload payload =null;
+        if (memberId==0){
+            payload=buildPushObject_all_all_alert(alert);
+        }else {
+            buildPushObject_tag_alertWithTitle(alert, memberId);
+        }
 
         try {
             PushResult result = jpushClient.sendPush(payload);
@@ -90,23 +95,18 @@ public class JpushUtils {
                 .build();
     }
 
-    public static PushPayload buildPushObject_android_tag_alertWithTitle(String alert,String title) {
+    public static PushPayload buildPushObject_tag_alertWithTitle(String alert,Long memberId) {
         return PushPayload.newBuilder()
-                .setPlatform(Platform.android())
-                .setAudience(Audience.tag("tag1"))
-                .setNotification(Notification.android(alert, title, null))
+                .setPlatform(Platform.all())
+                .setAudience(Audience.tag(memberId.toString()))
+                .setNotification(Notification.alert(alert))
                 .build();
     }
     public static PushPayload buildPushObject_ios_tagAnd_alertWithExtrasAndMessage(String alert,String msgContent) {
         return PushPayload.newBuilder()
                 .setPlatform(Platform.all())
                 .setAudience(Audience.all())
-                .setNotification(Notification.newBuilder()
-                        .addPlatformNotification(IosNotification.newBuilder()
-                                .setAlert(alert)
-                                .setBadge(5)
-                                .build())
-                        .build())
+//                .setNotification(Notification.alert(alert))
                 .setMessage(Message.content(msgContent))
                 .setOptions(Options.newBuilder()
                         .setApnsProduction(true)

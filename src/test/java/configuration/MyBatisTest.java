@@ -116,11 +116,11 @@ public class MyBatisTest extends BaseContextCase {
     public void testApprove(){
 
         PaymentApprove approve=new PaymentApprove();
-        approve.setAccountNumber("294200690@qq.com");
+        approve.setAccountNumber("oKfbJvqbJ4PlaFj-ajkrVoMaYllU");
         approve.setAccountName("宁凡荣");
-        approve.setAmount(BigDecimal.valueOf(0.01));
+        approve.setAmount(BigDecimal.valueOf(0.1));
         approve.setCreateTime(DateUtils.getUnixTimestamp());
-        approve.setIsPaid(0);
+        approve.setIsPaid(1);
         List<PaymentApprove> approves=new ArrayList<>();
         approves.add(approve);
 

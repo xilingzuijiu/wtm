@@ -16,6 +16,8 @@ public class WechatBatchPayResult {
     private String partner_trade_no;
     private String payment_no;
     private String payment_time;
+    private String err_code;
+    private String err_code_des;
 
     public String getReturn_code() {
         return this.return_code;
@@ -87,5 +89,21 @@ public class WechatBatchPayResult {
 
     public void setPayment_time(String payment_time) {
         this.payment_time = payment_time;
+    }
+
+    public String getErr_code() {
+        return this.err_code;
+    }
+
+    public void setErr_code(String err_code) {
+        this.err_code = err_code;
+    }
+
+    public String getErr_code_des() {
+        return this.err_code_des;
+    }
+
+    public void setErr_code_des(String err_code_des) {
+        this.err_code_des = err_code_des;
     }
 }

@@ -277,7 +277,8 @@ public class PaymentService implements IPaymentService {
             String sign= DigestUtils.md5Hex(pre_sign).toUpperCase();
 
             WechatBatchPayParams wechatBatchPayParams=new WechatBatchPayParams();
-            wechatBatchPayParams.setAmount(approve.getAmount().toString());
+            Long amount=approve.getAmount().multiply(BigDecimal.valueOf(100)).longValue();
+            wechatBatchPayParams.setAmount(amount.toString());
             wechatBatchPayParams.setCheck_name("NO_CHECK");
             wechatBatchPayParams.setDesc("付款到个人账户");
             wechatBatchPayParams.setMch_appid(WechatConfig.MCH_APPID);
@@ -291,6 +292,7 @@ public class PaymentService implements IPaymentService {
             xStream.autodetectAnnotations(true);
             String xml=xStream.toXML(wechatBatchPayParams);
             try {
+                ClientCustomSSL.connectKeyStore();
                 String result= HttpRequestUtils.postString(WechatConfig.BATCH_PAY_URL,xml);
                 WechatBatchPayResult wechat=StreamUtils.toBean(result,WechatBatchPayResult.class);
                 if (wechat!=null){
@@ -311,7 +313,7 @@ public class PaymentService implements IPaymentService {
                         number++;
                     }
                 }
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

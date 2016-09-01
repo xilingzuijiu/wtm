@@ -65,6 +65,6 @@ public class PaymemberCallBackController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "SUCCESS";
+        return code;
     }
 }
