@@ -1,8 +1,11 @@
 package com.weitaomi.systemconfig.wechat;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 /**
  * Created by Administrator on 2016/8/30.
  */
+@XStreamAlias("xml")
 public class WechatBatchPayParams {
     /**
      * 公众账号appid
@@ -31,7 +34,7 @@ public class WechatBatchPayParams {
     /**
      * 校验用户姓名选项
      */
-    private String check_nam="NO_CHECK";
+    private String check_name="NO_CHECK";
     /**
      * 金额
      */
@@ -141,21 +144,6 @@ public class WechatBatchPayParams {
         this.openid = openid;
     }
 
-    /**
-     * 获取校验用户姓名选项
-     * @return check_nam 校验用户姓名选项
-     */
-    public String getCheck_nam() {
-        return this.check_nam;
-    }
-
-    /**
-     * 设置校验用户姓名选项
-     * @param check_nam 校验用户姓名选项
-     */
-    public void setCheck_nam(String check_nam) {
-        this.check_nam = check_nam;
-    }
 
     /**
      * 获取金额
@@ -203,5 +191,21 @@ public class WechatBatchPayParams {
      */
     public void setSpbill_create_ip(String spbill_create_ip) {
         this.spbill_create_ip = spbill_create_ip;
+    }
+
+    /**
+     * 获取校验用户姓名选项
+     * @return check_name 校验用户姓名选项
+     */
+    public String getCheck_name() {
+        return this.check_name;
+    }
+
+    /**
+     * 设置校验用户姓名选项
+     * @param check_name 校验用户姓名选项
+     */
+    public void setCheck_name(String check_name) {
+        this.check_name = check_name;
     }
 }

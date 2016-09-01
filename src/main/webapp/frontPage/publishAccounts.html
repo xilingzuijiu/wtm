@@ -27,6 +27,7 @@
         var time;
         window.onload=function(){
             memberId=GetQueryString("memberId");
+            alert(memberId)
             time=GetQueryString("time");
             $.ajax({
                 type: 'post',
@@ -61,7 +62,7 @@
     <div class="form-group">
         <label class="col-sm-4 control-label">要发布任务的公众号：</label>
         <div class="col-sm-8">
-            <select name="" class="form-control">
+            <select name="" class="form-control" id="select1">
                 <option value="1">半岛城市生活</option>
                 <option value="2">创意社</option>
             </select>

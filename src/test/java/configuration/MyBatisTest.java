@@ -126,7 +126,7 @@ public class MyBatisTest extends BaseContextCase {
 
 
 
-        paymentService.patchAliPayCustomers(approves);
+        paymentService.patchWechatCustomers(approves,"192.168.0.77");
 
 
     }

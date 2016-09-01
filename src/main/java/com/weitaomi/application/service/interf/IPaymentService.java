@@ -27,7 +27,7 @@ public interface IPaymentService {
 
     void patchAliPayCustomers(List<PaymentApprove> approveList);
 
-    void patchWechatCustomers(List<PaymentApprove> approveList);
+    String patchWechatCustomers(List<PaymentApprove> approveList,String ip);
 
     MemberScore generatorPayParams(Long memberId, PaymentApprove approve);
 

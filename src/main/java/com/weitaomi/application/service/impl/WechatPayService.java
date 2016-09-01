@@ -5,14 +5,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
+import com.weitaomi.application.model.bean.PaymentApprove;
+import com.weitaomi.application.model.mapper.PaymentApproveMapper;
 import com.weitaomi.application.service.interf.IPayStrategyContext;
 import com.weitaomi.application.service.interf.IPayStrategyService;
 import com.weitaomi.systemconfig.alipay.AlipaySubmit;
 import com.weitaomi.systemconfig.util.*;
-import com.weitaomi.systemconfig.wechat.WechatConfig;
-import com.weitaomi.systemconfig.wechat.WechatPayParams;
-import com.weitaomi.systemconfig.wechat.WechatPayRequestParams;
-import com.weitaomi.systemconfig.wechat.WechatResultParams;
+import com.weitaomi.systemconfig.wechat.*;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +24,7 @@ import java.util.Map;
  */
 @Service
 public class WechatPayService implements IPayStrategyService {
-
+    private PaymentApproveMapper paymentApproveMapper;
     @Override
     public String getPaymentParams(Map<String, Object> param) {
         Map<String,String> params=new HashMap<>();
@@ -79,7 +78,13 @@ public class WechatPayService implements IPayStrategyService {
 
     @Override
     public String getBatchPayParams(Map<String, String> params) {
-        return null;
+        if (!params.isEmpty()) {
+            for (Map.Entry<String, String> param : params.entrySet()) {
+
+
+            }
+        }
+return null;
     }
 
     private Map<String, String> paraFilter(Map<String, String> sArray) {

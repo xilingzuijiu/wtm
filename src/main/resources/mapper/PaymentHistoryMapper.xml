@@ -9,6 +9,7 @@
     <result column="payCode" property="payCode" jdbcType="VARCHAR" />
     <result column="memberId" property="memberId" jdbcType="BIGINT" />
     <result column="platform" property="platform" jdbcType="VARCHAR" />
+    <result column="serialNumber" property="serialNumber" jdbcType="VARCHAR" />
     <result column="params" property="params" jdbcType="VARCHAR" />
     <result column="batchPayNo" property="batchPayNo" jdbcType="VARCHAR" />
     <result column="isPaySuccess" property="isPaySuccess" jdbcType="INTEGER" />

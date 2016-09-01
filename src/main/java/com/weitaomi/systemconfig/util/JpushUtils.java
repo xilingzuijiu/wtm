@@ -77,9 +77,11 @@ public class JpushUtils {
             LOG.info("Error Message: " + e.getErrorMessage());
         }
     }
+
     public static PushPayload buildPushObject_all_all_alert(String content) {
         return PushPayload.alertAll(content);
     }
+
     public static PushPayload buildPushObject_all_alias_alert(String alias,String content) {
         return PushPayload.newBuilder()
                 .setPlatform(Platform.all())

@@ -60,6 +60,11 @@ public class PaymemberCallBackController {
         }
         WechatNotifyParams wechatNotifyParams= StreamUtils.toBean(params,WechatNotifyParams.class);
         String code=paymentService.verifyWechatNotify(wechatNotifyParams);
+        try {
+            response.getOutputStream().print(code);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return "SUCCESS";
     }
 }

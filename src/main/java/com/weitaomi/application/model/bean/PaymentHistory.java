@@ -23,6 +23,13 @@ public class PaymentHistory extends BaseModel {
      */
     @Column(name = "platform")
     private String platform;
+
+    /**
+     * 序列号
+     */
+    @Column(name = "serialNumber")
+    private String serialNumber;
+
     /**
      * 批量付款批次号，payType=1时 使用
      */
@@ -189,5 +196,22 @@ public class PaymentHistory extends BaseModel {
      */
     public void setPayType(Integer payType) {
         this.payType = payType;
+    }
+
+
+    /**
+     * 获取序列号
+     * @return serialNumber 序列号
+     */
+    public String getSerialNumber() {
+        return this.serialNumber;
+    }
+
+    /**
+     * 设置序列号
+     * @param serialNumber 序列号
+     */
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
     }
 }

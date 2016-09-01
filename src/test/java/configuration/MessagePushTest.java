@@ -9,8 +9,13 @@ import org.junit.Test;
 public class MessagePushTest {
     @Test
     public void testPushMessage(){
-        String value="{\"id\":1,\"message\":\"hello World\"}";
+        String value="{\"id\":7,\"message\":\"hello World\"}";
         for (int i = 0; i < 5; i++) {
+            try {
+                Thread.sleep(2000L);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             JpushUtils.buildRequest(value);
         }
     }
