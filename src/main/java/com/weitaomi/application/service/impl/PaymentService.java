@@ -1,7 +1,6 @@
 package com.weitaomi.application.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.IntegerCodec;
 import com.github.pagehelper.PageInfo;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
@@ -11,8 +10,6 @@ import com.weitaomi.application.model.bean.MemberScore;
 import com.weitaomi.application.model.bean.PaymentApprove;
 import com.weitaomi.application.model.bean.PaymentHistory;
 import com.weitaomi.application.model.dto.MemberScoreFlowDto;
-import com.weitaomi.application.model.dto.MemberTaskWithDetail;
-import com.weitaomi.application.model.dto.MyWalletDto;
 import com.weitaomi.application.model.enums.PayType;
 import com.weitaomi.application.model.mapper.MemberPayAccountsMapper;
 import com.weitaomi.application.model.mapper.MemberScoreMapper;
@@ -27,10 +24,7 @@ import com.weitaomi.systemconfig.alipay.AlipayNotify;
 import com.weitaomi.systemconfig.exception.BusinessException;
 import com.weitaomi.systemconfig.exception.InfoException;
 import com.weitaomi.systemconfig.util.*;
-import com.weitaomi.systemconfig.wechat.WechatBatchPayParams;
-import com.weitaomi.systemconfig.wechat.WechatBatchPayResult;
-import com.weitaomi.systemconfig.wechat.WechatConfig;
-import com.weitaomi.systemconfig.wechat.WechatNotifyParams;
+import com.weitaomi.systemconfig.wechat.*;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
@@ -40,7 +34,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.util.*;
@@ -260,16 +253,17 @@ public class PaymentService implements IPaymentService {
         List<PaymentHistory> paymentHistoryList=new ArrayList<PaymentHistory>();
         Integer number=0;
         for (PaymentApprove approve:approveList){
+            Long amount=approve.getAmount().multiply(BigDecimal.valueOf(100)).longValue();
             String randomkey=UUIDGenerator.generate();
             String code=this.getTradeNo();
             Map<String,String> params=new HashMap<>();
-            params.put("mch_appid",WechatConfig.MCH_APPID);
+            params.put("mch_appid",WechatConfig.APP_ID);
             params.put("mchid",WechatConfig.MCHID);
             params.put("nonce_str",randomkey);
             params.put("partner_trade_no",code);
             params.put("openid",approve.getAccountNumber());
             params.put("check_name","NO_CHECK");
-            params.put("amount",approve.getAmount().toString());
+            params.put("amount",amount.toString());
             params.put("desc","付款到个人账户");
             params.put("spbill_create_ip",ip);
             String pre_sign= StringUtil.formatParaMap(params);
@@ -277,11 +271,10 @@ public class PaymentService implements IPaymentService {
             String sign= DigestUtils.md5Hex(pre_sign).toUpperCase();
 
             WechatBatchPayParams wechatBatchPayParams=new WechatBatchPayParams();
-            Long amount=approve.getAmount().multiply(BigDecimal.valueOf(100)).longValue();
             wechatBatchPayParams.setAmount(amount.toString());
             wechatBatchPayParams.setCheck_name("NO_CHECK");
             wechatBatchPayParams.setDesc("付款到个人账户");
-            wechatBatchPayParams.setMch_appid(WechatConfig.MCH_APPID);
+            wechatBatchPayParams.setMch_appid(WechatConfig.APP_ID);
             wechatBatchPayParams.setMchid(WechatConfig.MCHID);
             wechatBatchPayParams.setNonce_str(randomkey);
             wechatBatchPayParams.setOpenid(approve.getAccountNumber());
@@ -292,8 +285,7 @@ public class PaymentService implements IPaymentService {
             xStream.autodetectAnnotations(true);
             String xml=xStream.toXML(wechatBatchPayParams);
             try {
-                ClientCustomSSL.connectKeyStore();
-                String result= HttpRequestUtils.postString(WechatConfig.BATCH_PAY_URL,xml);
+                String result= ClientCustomSSL.connectKeyStore(WechatConfig.BATCH_PAY_URL,xml);
                 WechatBatchPayResult wechat=StreamUtils.toBean(result,WechatBatchPayResult.class);
                 if (wechat!=null){
                     if (wechat.getResult_code().equals(WechatConfig.SUCCESS)&&wechat.getReturn_code().equals(WechatConfig.SUCCESS)){
@@ -317,9 +309,11 @@ public class PaymentService implements IPaymentService {
                 e.printStackTrace();
             }
         }
-        int num= paymentHistoryMapper.batchInsertPayHistory(paymentHistoryList);
-        if (num==number&&number==approveList.size()){
-            return "所有用户均提现成功";
+        if (number==approveList.size()){
+            int num= paymentHistoryMapper.batchInsertPayHistory(paymentHistoryList);
+            if (num==number)
+              return "所有用户均提现成功";
+            else return "提现失败";
         }else {
             return "部分用户提现失败，请查看失败列表，重新审批";
         }

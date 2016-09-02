@@ -63,7 +63,7 @@ public class JpushUtils {
         if (memberId==0){
             payload=buildPushObject_all_all_alert(alert);
         }else {
-            buildPushObject_tag_alertWithTitle(alert, memberId);
+            payload=buildPushObject_tag_alertWithTitle(alert, memberId);
         }
 
         try {

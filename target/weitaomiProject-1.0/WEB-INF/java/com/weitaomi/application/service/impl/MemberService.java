@@ -91,8 +91,8 @@ public class MemberService extends BaseService implements IMemberService {
         if (member.getEmail() != null && member.getEmail().matches("[_a-z\\d\\-\\./]+@[_a-z\\d\\-]+(\\.[_a-z\\d\\-]+)*(\\.(info|biz|com|edu|gov|net|am|bz|cn|cx|hk|jp|tw|vc|vn))$")) {
             memberTemp.setEmail(member.getEmail());
         }
-//       if (!this.validateIndetifyCode(memberTemp.getTelephone(),registerMsg.getIdentifyCode())){
-        if (false) {
+       if (!this.validateIndetifyCode(memberTemp.getTelephone(),registerMsg.getIdentifyCode())){
+//        if (false) {
             throw new BusinessException("验证码错误，请重试");
         }
         memberTemp.setSource(member.getSource());
@@ -299,7 +299,7 @@ public class MemberService extends BaseService implements IMemberService {
         if (modifyPasswordDto.getFlag() == 0) {
             Member member = memberMapper.getMemberByTelephone(modifyPasswordDto.getMobile());
             if (member == null) {
-                throw new BusinessException("用户不存在");
+                throw new InfoException("用户不存在");
             }
             String salt = "";
             if (!StringUtil.isEmpty(member.getSalt())) {
@@ -313,7 +313,7 @@ public class MemberService extends BaseService implements IMemberService {
         } else if (modifyPasswordDto.getFlag() == 1) {
             Member member = memberMapper.selectByPrimaryKey(memberId);
             if (member == null) {
-                throw new BusinessException("用户不存在");
+                throw new InfoException("用户不存在");
             }
             if (!new Sha256Hash(modifyPasswordDto.getPassword(), member.getSalt()).toString().equals(member.getPassword())) {
                 throw new InfoException("原密码错误");

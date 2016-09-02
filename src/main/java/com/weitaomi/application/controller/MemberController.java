@@ -165,7 +165,11 @@ public class MemberController  extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/modifyPassWord", method = RequestMethod.POST)
     public AjaxResult modifyPassWord(HttpServletRequest request,@RequestBody ModifyPasswordDto modifyPasswordDto){
-        Long memberId=this.getUserId(request);
+
+        Long memberId=0L;
+        if (modifyPasswordDto.getFlag()==1) {
+            memberId = this.getUserId(request);
+        }
         if (memberId==null){
             throw new BusinessException("用户ID为空");
         }

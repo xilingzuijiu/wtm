@@ -24,21 +24,24 @@
  * <http://www.apache.org/>.
  *
  */
-package com.weitaomi.systemconfig.util;
+package com.weitaomi.systemconfig.wechat;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.security.KeyStore;
 
 import javax.net.ssl.SSLContext;
 
+import com.weitaomi.systemconfig.util.HttpRequestUtils;
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ssl.SSLContexts;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
@@ -49,18 +52,18 @@ import org.apache.http.util.EntityUtils;
  */
 public class ClientCustomSSL {
 
-    public static void connectKeyStore() throws Exception{
+    public static String connectKeyStore(String url,String xml) throws Exception{
         KeyStore keyStore  = KeyStore.getInstance("PKCS12");
-        FileInputStream instream = new FileInputStream(new File("D:/10016225.p12"));
+        FileInputStream instream = new FileInputStream(new File("src\\main\\java\\com\\weitaomi\\systemconfig\\wechat\\apiclient_cert.p12"));
         try {
-            keyStore.load(instream, "10016225".toCharArray());
+            keyStore.load(instream, WechatConfig.MCHID.toCharArray());
         } finally {
             instream.close();
         }
 
         // Trust own CA and all self-signed certs
         SSLContext sslcontext = SSLContexts.custom()
-                .loadKeyMaterial(keyStore, "10016225".toCharArray())
+                .loadKeyMaterial(keyStore, WechatConfig.MCHID.toCharArray())
                 .build();
         // Allow TLSv1 protocol only
         SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
@@ -71,5 +74,20 @@ public class ClientCustomSSL {
         CloseableHttpClient httpclient = HttpClients.custom()
                 .setSSLSocketFactory(sslsf)
                 .build();
-    }
+
+        StringEntity entityRequest = new StringEntity(xml,"utf-8");
+        HttpPost httpPost = new HttpPost(url);
+        httpPost.setEntity(entityRequest);
+//        httpPost.setHeader("Content-Type", "application/json");//; charset=utf-8
+        HttpResponse response = httpclient.execute(httpPost);
+
+        if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+            throw new RuntimeException("请求失败");
+        }
+        HttpEntity resEntity = response.getEntity();
+        InputStream inputStream=resEntity.getContent();
+        return HttpRequestUtils.readInstream(inputStream,"UTF-8");
+        }
+
+
 }
