@@ -2,14 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cc7b2d14-bf42-4e36-b023-825da18870c6" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/weitaomi/application/controller/MemberController.class" afterPath="$PROJECT_DIR$/target/classes/com/weitaomi/application/controller/MemberController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/weitaomi/application/service/impl/MemberService.class" afterPath="$PROJECT_DIR$/target/classes/com/weitaomi/application/service/impl/MemberService.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/weitaomiProject-1.0/WEB-INF/classes/com/weitaomi/application/controller/MemberController.class" afterPath="$PROJECT_DIR$/target/weitaomiProject-1.0/WEB-INF/classes/com/weitaomi/application/controller/MemberController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/weitaomiProject-1.0/WEB-INF/classes/com/weitaomi/application/service/impl/MemberService.class" afterPath="$PROJECT_DIR$/target/weitaomiProject-1.0/WEB-INF/classes/com/weitaomi/application/service/impl/MemberService.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymemberCallBackController.java" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymemberCallBackController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/weitaomiProject-1.0/WEB-INF/java/com/weitaomi/application/controller/MemberController.java" afterPath="$PROJECT_DIR$/target/weitaomiProject-1.0/WEB-INF/java/com/weitaomi/application/controller/MemberController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/weitaomiProject-1.0/WEB-INF/java/com/weitaomi/application/service/impl/MemberService.java" afterPath="$PROJECT_DIR$/target/weitaomiProject-1.0/WEB-INF/java/com/weitaomi/application/service/impl/MemberService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/PaymentService.java" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/PaymentService.java" />
     </list>
     <ignored path="weitaomiProject.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -71,24 +66,34 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PaymentService.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="PaymentService.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/PaymentService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="308" column="36" selection-start-line="308" selection-start-column="36" selection-end-line="308" selection-end-column="36" />
+            <state vertical-scroll-proportion="0.66367716">
+              <caret line="171" column="33" selection-start-line="171" selection-start-column="33" selection-end-line="171" selection-end-column="33" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PaymemberCallBackController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="PaymemberCallBackController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymemberCallBackController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.632287">
-              <caret line="68" column="20" selection-start-line="68" selection-start-column="20" selection-end-line="68" selection-end-column="20" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="61" column="48" selection-start-line="61" selection-start-column="48" selection-end-line="61" selection-end-column="48" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IPaymentService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/interf/IPaymentService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="23" column="11" selection-start-line="23" selection-start-column="11" selection-end-line="23" selection-end-column="11" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -207,8 +212,8 @@
         <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/MemberController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/util/ClientCustomSSL.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/wechat/ClientCustomSSL.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/PaymentService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymemberCallBackController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/PaymentService.java" />
       </list>
     </option>
   </component>
@@ -1620,7 +1625,7 @@
       <workItem from="1471884328794" duration="52835000" />
       <workItem from="1472089266456" duration="115810000" />
       <workItem from="1472546975210" duration="52279000" />
-      <workItem from="1472777841426" duration="6103000" />
+      <workItem from="1472777841426" duration="7441000" />
     </task>
     <task id="LOCAL-00001" summary="F[任务] 增加任务相关CRUD">
       <created>1471344681918</created>
@@ -1736,7 +1741,13 @@
       <option name="project" value="LOCAL" />
       <updated>1472784684349</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="B[支付 ] 修改支付接口1">
+      <created>1472784762407</created>
+      <option name="number" value="00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1472784762407</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1772,7 +1783,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="421125000" />
+    <option name="totallyTimeSpent" value="422463000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="0" />
@@ -1861,7 +1872,8 @@
     <MESSAGE value="F[阅读] 阅读文章修改" />
     <MESSAGE value="B[名称] 修改model名称" />
     <MESSAGE value="B[支付 ] 修改支付接口" />
-    <option name="LAST_COMMIT_MESSAGE" value="B[支付 ] 修改支付接口" />
+    <MESSAGE value="B[支付 ] 修改支付接口1" />
+    <option name="LAST_COMMIT_MESSAGE" value="B[支付 ] 修改支付接口1" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1997,6 +2009,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="31" column="50" selection-start-line="31" selection-start-column="30" selection-end-line="31" selection-end-column="50" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2004,6 +2017,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.5337838">
           <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+          <folding>
+            <element signature="e#3564#3565#0" expanded="false" />
+            <element signature="e#3600#3601#0" expanded="false" />
+            <element signature="e#3648#3649#0" expanded="false" />
+            <element signature="e#3688#3689#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2062,6 +2081,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="10" column="11" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2069,6 +2089,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="22" column="41" selection-start-line="22" selection-start-column="41" selection-end-line="22" selection-end-column="41" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2108,6 +2129,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="8" column="61" selection-start-line="8" selection-start-column="55" selection-end-line="8" selection-end-column="61" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2148,13 +2170,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3575">
           <caret line="189" column="63" selection-start-line="189" selection-start-column="63" selection-end-line="189" selection-end-column="76" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/interf/IPaymentService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="23" column="29" selection-start-line="23" selection-start-column="11" selection-end-line="23" selection-end-column="29" />
         </state>
       </provider>
     </entry>
@@ -2275,21 +2290,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/PaymentService.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymemberCallBackController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="308" column="36" selection-start-line="308" selection-start-column="36" selection-end-line="308" selection-end-column="36" />
+          <caret line="61" column="48" selection-start-line="61" selection-start-column="48" selection-end-line="61" selection-end-column="48" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/interf/IPaymentService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="23" column="11" selection-start-line="23" selection-start-column="11" selection-end-line="23" selection-end-column="11" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymemberCallBackController.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/PaymentService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.632287">
-          <caret line="68" column="20" selection-start-line="68" selection-start-column="20" selection-end-line="68" selection-end-column="20" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.66367716">
+          <caret line="171" column="33" selection-start-line="171" selection-start-column="33" selection-end-line="171" selection-end-column="33" />
+          <folding />
         </state>
       </provider>
     </entry>

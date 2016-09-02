@@ -62,7 +62,7 @@ public class PaymemberCallBackController {
         String code=paymentService.verifyWechatNotify(wechatNotifyParams);
         logger.info("反馈给微信的接过为："+code);
         try {
-            response.getWriter().write(code);
+            response.getOutputStream().println(code);
         } catch (IOException e) {
             e.printStackTrace();
         }

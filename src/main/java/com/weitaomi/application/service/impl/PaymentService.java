@@ -169,7 +169,7 @@ public class PaymentService implements IPaymentService {
                 paymentHistory.setCreateTime(DateUtils.getUnixTimestamp());
                 paymentHistoryMapper.updateByPrimaryKeySelective(paymentHistory);
                 memberScoreService.addMemberScore(paymentHistory.getMemberId(),1L,1,Double.valueOf(amount),UUIDGenerator.generate());
-                return this.getXMLString("SUCCESS","OK");
+                return "SUCCESS";
             }
         }
 
