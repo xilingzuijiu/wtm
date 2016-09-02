@@ -60,6 +60,7 @@ public class PaymemberCallBackController {
         }
         WechatNotifyParams wechatNotifyParams= StreamUtils.toBean(params,WechatNotifyParams.class);
         String code=paymentService.verifyWechatNotify(wechatNotifyParams);
+        logger.info("反馈给微信的接过为："+code);
         try {
             response.getWriter().write(code);
         } catch (IOException e) {
