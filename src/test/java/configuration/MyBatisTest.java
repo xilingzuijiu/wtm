@@ -21,10 +21,12 @@ import com.weitaomi.systemconfig.wechat.WechatConfig;
 import com.weitaomi.systemconfig.wechat.WechatPayParams;
 import common.BaseContextCase;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -111,6 +113,10 @@ public class MyBatisTest extends BaseContextCase {
         longs.add(4L);
         longs.add(5L);
         System.out.println(JSON.toJSONString(longs));
+
+        ServletFileUpload servletFileUpload=new ServletFileUpload();
+        File file=new File("");
+
     }
     @Test
     public void testApprove(){

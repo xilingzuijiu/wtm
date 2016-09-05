@@ -21,8 +21,8 @@ public class TaskPool extends BaseModel {
     /**
      * 公众号ID
      */
-    @Column(name = "officeAccountId")
-    private Long officeAccountId;
+    @Column(name = "officialAccountsId")
+    private Long officialAccountsId;
     /**
      * 文章Id
      */
@@ -61,7 +61,7 @@ public class TaskPool extends BaseModel {
      * 市级地区
      */
     @Column(name = "cityCode")
-    private Integer cityCode;
+    private String cityCode;
 
     /**
      * 现在是否上架
@@ -161,16 +161,16 @@ public class TaskPool extends BaseModel {
      * 获取公众号ID
      * @return officeAccountId 公众号ID
      */
-    public Long getOfficeAccountId() {
-        return this.officeAccountId;
+    public Long getOfficialAccountsId() {
+        return this.officialAccountsId;
     }
 
     /**
      * 设置公众号ID
-     * @param officeAccountId 公众号ID
+     * @param officialAccountsId 公众号ID
      */
-    public void setOfficeAccountId(Long officeAccountId) {
-        this.officeAccountId = officeAccountId;
+    public void setOfficialAccountsId(Long officialAccountsId) {
+        this.officialAccountsId = officialAccountsId;
     }
 
     /**
@@ -241,7 +241,7 @@ public class TaskPool extends BaseModel {
      * 获取市级地区
      * @return cityCode 市级地区
      */
-    public Integer getCityCode() {
+    public String getCityCode() {
         return this.cityCode;
     }
 
@@ -249,7 +249,7 @@ public class TaskPool extends BaseModel {
      * 设置市级地区
      * @param cityCode 市级地区
      */
-    public void setCityCode(Integer cityCode) {
+    public void setCityCode(String cityCode) {
         this.cityCode = cityCode;
     }
 

@@ -2,6 +2,7 @@ package com.weitaomi.application.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.weitaomi.application.controller.baseController.BaseController;
+import com.weitaomi.application.model.bean.OfficialAccount;
 import com.weitaomi.application.model.bean.ThirdLogin;
 import com.weitaomi.application.model.dto.AddOfficalAccountDto;
 import com.weitaomi.application.model.mapper.MemberMapper;
@@ -57,7 +58,7 @@ public class OfficialAccountController extends BaseController{
         return AjaxResult.getOK();
     }
     /**
-     * 加入公众号任务关注列表
+     * 完成关注
      * @param
      * @return
      */
@@ -68,7 +69,7 @@ public class OfficialAccountController extends BaseController{
         return AjaxResult.getOK();
     }
     /**
-     * 加入公众号任务关注列表
+     * 提醒用户任务即将到期
      * @param
      * @return
      */
@@ -79,15 +80,31 @@ public class OfficialAccountController extends BaseController{
         String status=params.get("status");
         if (status.equals("0")) {
             Long memberId = thirdLoginMapper.getMemberIdByUnionId(unionId);
-            Map<String, String> param = new ManagedMap<>();
-            if (memberId != null) {
-                param.put("memberId", memberId.toString());
-                param.put("message", "任务五分钟之后即将失效，请尽快到服务号完成");
-            }
-            if (param != null) {
-                JpushUtils.buildRequest(JSON.toJSONString(param));
-            }
+                JpushUtils.buildRequest("任务五分钟之后即将失效，请尽快到服务号完成",memberId);
         }
         return AjaxResult.getOK();
     }
+
+    /**
+     * 获取公众号列表
+     * @param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getOfficialAccountList",method = RequestMethod.POST)
+    public AjaxResult getOfficialAccountList(HttpServletRequest request){
+        Long memberId=super.getUserId(request);
+        return AjaxResult.getOK(officeAccountService.getOfficialAccountList(memberId));
+    }
+    /**
+     * 更新公众号
+     * @param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/updateOfficialAccountList",method = RequestMethod.POST)
+    public AjaxResult updateOfficialAccountList(Long accountId,Integer isOpen){
+        return AjaxResult.getOK(officeAccountService.updateOfficialAccountList(accountId,isOpen));
+    }
+
 }

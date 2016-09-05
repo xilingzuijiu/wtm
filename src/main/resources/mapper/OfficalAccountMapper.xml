@@ -25,7 +25,7 @@
     </resultMap>
     <select id="getAccountsByMemberId"
             resultType="com.weitaomi.application.model.dto.OfficialAccountsDto">
-    select fa.id,fa.userName from wtm_official_accounts fa
+    select fa.id,fa.userName ofiicialAccountName,score.memberScore memberScore from wtm_official_accounts fa LEFT JOIN wtm_member_score score ON score.memberId=fa.memberId
         WHERE fa.memberId=#{memberId} AND fa.isOpen=1
   </select>
     <select id="getOfficalAccountByoriginId" resultType="com.weitaomi.application.model.bean.OfficialAccount">
@@ -37,6 +37,7 @@
       a.originId      originId,
       a.userName      username,
       a.addUrl        addUrl,
+      a.imageUrl      imageUrl,
       a.accountNumber followNumber,
       pool.singleScore  rewardCount
     FROM wtm_official_accounts a LEFT JOIN wtm_official_accounts_level l ON a.level = l.id LEFT JOIN wtm_task_pool pool
@@ -58,7 +59,7 @@
         AND pool.cityCode IN (#{cityCode},'')
     </if>
     ORDER BY a.createTime DESC
-    LIMIT 9
+    LIMIT 12
 </select>
 
 
@@ -69,4 +70,7 @@
   LEFT JOIN wtm_task_pool pool ON pool.officialAccountsId=account.id
   WHERE account.originId=#{originId}
 </select>
+    <select id="getOfficialAccountList" resultType="com.weitaomi.application.model.bean.OfficialAccount">
+        select * from wtm_official_accounts a WHERE a.memberId=#{memberId}
+    </select>
 </mapper>

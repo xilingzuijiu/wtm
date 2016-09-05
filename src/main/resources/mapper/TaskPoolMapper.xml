@@ -16,7 +16,7 @@
     <result column="isAutoPublishToOthers" property="isAutoPublishToOthers" jdbcType="INTEGER" />
     <result column="provinceCode" property="provinceCode" jdbcType="VARCHAR" />
     <result column="cityCode" property="cityCode" jdbcType="VARCHAR" />
-    <result column="officeAccountId" property="officeAccountId" jdbcType="BIGINT" />
+    <result column="officialAccountsId" property="officialAccountsId" jdbcType="BIGINT" />
     <result column="articleId" property="articleId" jdbcType="BIGINT" />
     <result column="needNumber" property="needNumber" jdbcType="INTEGER" />
     <result column="createTime" property="createTime" jdbcType="BIGINT" />

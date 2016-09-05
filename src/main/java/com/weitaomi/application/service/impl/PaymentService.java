@@ -172,8 +172,6 @@ public class PaymentService implements IPaymentService {
                 return "SUCCESS";
             }
         }
-
-
         return "";
     }
     @Override
@@ -295,6 +293,7 @@ public class PaymentService implements IPaymentService {
                         PaymentHistory paymentHistory = new PaymentHistory();
                         paymentHistory.setIsPaySuccess(1);
                         paymentHistory.setPayType(1);
+                        paymentHistory.setParams(JSON.toJSONString(wechatBatchPayParams));
                         paymentHistory.setMemberId(approve.getMemberId());
                         paymentHistory.setPlatform(PayType.ALIPAY_WEB.getDesc());
                         paymentHistory.setPayCode(wechat.getPayment_no());

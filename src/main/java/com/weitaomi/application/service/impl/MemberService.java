@@ -43,6 +43,8 @@ public class MemberService extends BaseService implements IMemberService {
     @Autowired
     private MemberInvitedRecordMapper memberInvitedRecordMapper;
     @Autowired
+    private OfficalAccountMapper officalAccountMapper;
+    @Autowired
     private IMemberScoreService memberScoreService;
     @Autowired
     private IMemberTaskHistoryService memberTaskHistoryService;
@@ -91,8 +93,8 @@ public class MemberService extends BaseService implements IMemberService {
         if (member.getEmail() != null && member.getEmail().matches("[_a-z\\d\\-\\./]+@[_a-z\\d\\-]+(\\.[_a-z\\d\\-]+)*(\\.(info|biz|com|edu|gov|net|am|bz|cn|cx|hk|jp|tw|vc|vn))$")) {
             memberTemp.setEmail(member.getEmail());
         }
-       if (!this.validateIndetifyCode(memberTemp.getTelephone(),registerMsg.getIdentifyCode())){
-//        if (false) {
+//       if (!this.validateIndetifyCode(memberTemp.getTelephone(),registerMsg.getIdentifyCode())){
+        if (false) {
             throw new BusinessException("验证码错误，请重试");
         }
         memberTemp.setSource(member.getSource());
@@ -172,6 +174,10 @@ public class MemberService extends BaseService implements IMemberService {
         ThirdLogin thirdLoginFlag = thirdLoginMapper.getThirdLoginInfo(thirdLogin.getOpenId());
         if (thirdLoginFlag != null) {
             throw new InfoException("您已经绑定此账号");
+        }
+        ThirdLogin thirdLogins = thirdLoginMapper.getUnionIdByMemberId(memberId);
+        if (thirdLogins!=null){
+            throw new InfoException("该账号已经绑定一个微信号，微信昵称为："+thirdLogins.getNickname());
         }
         thirdLogin.setCreateTime(DateUtils.getUnixTimestamp());
         Member member = memberMapper.selectByPrimaryKey(memberId);
@@ -394,6 +400,7 @@ public class MemberService extends BaseService implements IMemberService {
         }
         return false;
     }
+
 
 
 }

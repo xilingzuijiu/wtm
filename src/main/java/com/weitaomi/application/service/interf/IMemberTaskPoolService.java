@@ -12,7 +12,7 @@ public interface IMemberTaskPoolService {
      * @param taskPool
      * @return
      */
-    public boolean uploadTaskPool(TaskPool taskPool);
+    public String uploadTaskPool(TaskPool taskPool);
     /**
      * 获取求粉页相关信息
      * @param memberId

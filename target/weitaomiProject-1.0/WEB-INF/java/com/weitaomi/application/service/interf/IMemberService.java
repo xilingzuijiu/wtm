@@ -89,5 +89,4 @@ public interface IMemberService {
     Boolean validateIndetifyCode(String mobile, String indentifyCode);
 
 
-
 }

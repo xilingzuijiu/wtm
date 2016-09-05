@@ -21,6 +21,10 @@ public class OfficialAccountMsg {
      */
     private String addUrl;
     /**
+     * 头像地址
+     */
+    private String imageUrl;
+    /**
      * 关注人数
      */
     private Integer followNumber;
@@ -124,5 +128,21 @@ public class OfficialAccountMsg {
      */
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    /**
+     * 获取头像地址
+     * @return imageUrl 头像地址
+     */
+    public String getImageUrl() {
+        return this.imageUrl;
+    }
+
+    /**
+     * 设置头像地址
+     * @param imageUrl 头像地址
+     */
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

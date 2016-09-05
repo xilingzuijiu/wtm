@@ -16,27 +16,29 @@
             color: #c12e2a;
         }
     </style>
+    <script src="../code/js/jquery.min.js" ></script>
+    <script src="../code/js/bootstrap.min.js" ></script>
+    <script src="../code/js/publishAccounts.js"></script>
     <script>
-        function GetQueryString(name)
-        {
-            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-            var r = window.location.search.substr(1).match(reg);
-            if(r!=null)return  unescape(r[2]); return null;
-        }
         var memberId;
         var time;
-        window.onload=function(){
+        var addressArr;
+        $(function(){
             memberId=GetQueryString("memberId");
-            alert(memberId)
+            $("#div0 input").val(memberId);
             time=GetQueryString("time");
             $.ajax({
                 type: 'post',
                 dataType: 'json',
-                url: '/weitaomi/pc/admin/member/getMemberMsg',
+                url: '/weitaomi/pc/admin/member/getMemberAccountPublishMsg',
                 data: {memberId:memberId,time:time},
                 success: function (params) {
                     var json = eval(params); //数组
-                    alert(json.message)
+                    if (json!=null&&json.errorCode==0){
+                        var data=eval(json.data);
+                        deal(data)
+                    }else alert("获取微信公众号列表失败")
+
                 },
                 error:function (data){
                     alert("页面加载错误，请重试");
@@ -48,24 +50,50 @@
 //                }
             });
         }
+        )
+
+        function publish(){
+            var jsonobj=$("#form").serializeObject();
+            var requestParams=JSON.stringify(jsonobj)
+            $.ajax({
+                type: 'post',
+                dataType: 'json',
+                contentType: "application/json",
+                url: '/weitaomi/pc/admin/member/publishAddRequest',
+                data: requestParams,
+                success: function (params) {
+                    var json = eval(params); //数组
+                    if (json!=null&&json.errorCode==0){
+                        alert(json.data);
+                        location.reload()
+                    }
+                    else {
+                        alert("提交失败")
+                    }
+                },
+                error:function (params){
+                    alert("页面加载错误，请重试");
+                }
+            })
+        }
 
     </script>
 </head>
 <body style="margin: 50px">
-<form action="" class="form-horizontal">
+<form id="form" method="post">
     <div class="form-group">
         <label class="col-sm-4 control-label">账户可用余额：</label>
-        <div class="col-sm-8">
-            -190米币
+        <div class="col-sm-8" id="amount">
+            0
         </div>
     </div>
     <div class="form-group">
         <label class="col-sm-4 control-label">要发布任务的公众号：</label>
-        <div class="col-sm-8">
-            <select name="" class="form-control" id="select1">
+        <div class="col-sm-8" id="div0">
+            <select name="officialAccountsId" class="form-control" id="select1">
                 <option value="1">半岛城市生活</option>
-                <option value="2">创意社</option>
             </select>
+            <input name="memberId" type="hidden" value="1" />
         </div>
 
     </div>
@@ -73,18 +101,18 @@
         <label class="col-sm-4 control-label">单次关注奖励：</label>
 
         <div class="col-sm-8 ">
-            <div class="input-group ">
-                <input type="text" class="form-control"/>
+            <div class="input-group">
+                <input type="text" class="form-control" onchange="changeScore(this.value)" name="singleScore" id="input1"/>
                 <div class="input-group-addon">米币</div>
             </div>
-            <span class="info">（不大于话费总比米总额和拥有的米币总额）</span>
+            <span class="info">（单次关注消费米币额度乘以关注数量，不得大于拥有米币总额度）</span>
         </div>
 
     </div>
     <div class="form-group">
         <label class="col-sm-4 control-label">单次关注需扣除：</label>
-        <div class="col-sm-8">
-            15 米币
+        <div class="col-sm-8"  id="div1">
+
         </div>
     </div>
     <div class="form-group">
@@ -92,24 +120,21 @@
 
         <div class="col-sm-8 " >
             <div class="input-group">
-                <input type="text" class="form-control"/>
+                <input type="text" class="form-control" name="needNumber" id="input2" onchange="checkAmount(this.value)"/>
                 <div class="input-group-addon">次</div>
             </div>
-            <span class="info">0则为不限制次数</span>
+            <span class="info">0则为不限制次数,直到账户剩余额度不足一次关注奖励</span>
         </div>
 
     </div>
     <div class="form-group">
         <label class="col-sm-4 control-label">任务投放区域：</label>
         <div class="col-sm-8">
-            <select name="prov" class="form-control">
-                <option value="00000000">--请选择--</option>
-                <option value="1">山东省</option>v
+            <select name="provinceCode" class="form-control" id="prov" onchange="chooseProvince(this.value)">
+                <option value="">--请选择--</option>
             </select>
-            <select name="city" class="form-control">
-                <option value="">城市</option>
-                <option value="">青岛</option>
-
+            <select name="cityCode" class="form-control" id="city">
+                <option value="">--请选择--</option>
             </select>
             <span class="info">请注意所在区域是否活跃，建议发布到全国</span>
         </div>
@@ -134,32 +159,26 @@
     <div class="form-group">
         <label class="col-sm-4 control-label">执行状态：</label>
         <div class="col-sm-8">
-            <select name="" class="form-control">
-                <option value="">1</option>
-                <option value="">2</option>
-                <option value="">3</option>
-                <option value="">4</option>
+            <select name="isPublishNow" class="form-control">
+                <option value="1">立即执行</option>
+                <option value="0">保存稍后执行</option>
             </select>
         </div>
     </div>
-    <div class="form-group">
-        <label class="col-sm-4 control-label">自动设置：</label>
+    <!--<div class="form-group">-->
+        <!--<label class="col-sm-4 control-label">自动设置：</label>-->
 
-        <div class="col-sm-8">
-            <div class="checkbox-inline">
-                <label>
-                    <input type="checkbox" />  <span class="red">一有粉币自动切换到求关注</span>
-                </label>
-            </div>
-        </div>
-    </div>
+        <!--<div class="col-sm-8">-->
+            <!--<div class="checkbox-inline">-->
+                <!--<label>-->
+                    <!--<input type="checkbox" name="" />  <span class="red">一有粉币自动切换到求关注</span>-->
+                <!--</label>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
     <div style="text-align: center">
-        <button class="btn btn-primary">提交任务</button>
+        <button class="btn btn-primary" id="button" onclick="publish()">提交任务</button>
     </div>
-
 </form>
-
-<script src="../code/js/jquery.min.js"></script>
-<script src="../code/js/bootstrap.min.js"></script>
 </body>
 </html>

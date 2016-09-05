@@ -156,4 +156,14 @@ public class OfficeAccountService implements IOfficeAccountService {
         return officialAccountMsgs;
     }
 
+    @Override
+    public List<OfficialAccount> getOfficialAccountList(Long memberId) {
+        return officalAccountMapper.getOfficialAccountList(memberId);
+    }
+    @Override
+    public boolean updateOfficialAccountList(Long accountId, Integer isOpen) {
+        OfficialAccount officialAccount=officalAccountMapper.selectByPrimaryKey(accountId);
+        officialAccount.setIsOpen(isOpen);
+        return officalAccountMapper.updateByPrimaryKeySelective(officialAccount)==1?true:false;
+    }
 }

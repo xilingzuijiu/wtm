@@ -18,9 +18,9 @@
     <collection property="cityList" ofType="list" resultMap="CityMap" />
   </resultMap>
   <sql id="citySql">
-    city.city c_city,city.father=c_father
+    city.city c_city,city.father c_father
   </sql>
-  <select id="getAllAddress" resultType="com.weitaomi.application.model.dto.Address">
-    select p.*,<include refid="citySql"/> from wtm_province p LEFT JOIN wmt_city city on  city.father=p.provinceID
+  <select id="getAllAddress" resultMap="AddressMap">
+    select p.*,<include refid="citySql"/> from wtm_province p LEFT JOIN wtm_city city on  city.father=p.provinceID
   </select>
 </mapper>

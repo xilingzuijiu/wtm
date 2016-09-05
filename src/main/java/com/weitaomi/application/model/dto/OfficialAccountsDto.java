@@ -12,6 +12,10 @@ public class OfficialAccountsDto {
      * 公号名字
      */
     private String ofiicialAccountName;
+    /**
+     * 可用余额
+     */
+    private double memberScore;
 
 
     /**
@@ -44,5 +48,21 @@ public class OfficialAccountsDto {
      */
     public void setOfiicialAccountName(String ofiicialAccountName) {
         this.ofiicialAccountName = ofiicialAccountName;
+    }
+
+    /**
+     * 获取可用余额
+     * @return memberScore 可用余额
+     */
+    public double getMemberScore() {
+        return this.memberScore;
+    }
+
+    /**
+     * 设置可用余额
+     * @param memberScore 可用余额
+     */
+    public void setMemberScore(double memberScore) {
+        this.memberScore = memberScore;
     }
 }

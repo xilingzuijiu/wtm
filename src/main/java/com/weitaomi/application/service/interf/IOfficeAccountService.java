@@ -1,5 +1,6 @@
 package com.weitaomi.application.service.interf;
 
+import com.weitaomi.application.model.bean.OfficialAccount;
 import com.weitaomi.application.model.dto.AddOfficalAccountDto;
 import com.weitaomi.application.model.dto.OfficialAccountMsg;
 import com.weitaomi.application.model.dto.OfficialAccountsDto;
@@ -36,4 +37,12 @@ public interface IOfficeAccountService {
      */
     public List<OfficialAccountMsg> getOfficialAccountMsg(Long memberId,String unionId);
 
+    /**
+     * 获取公众号列表
+     * @param memberId
+     * @return
+     */
+    public List<OfficialAccount> getOfficialAccountList(Long memberId);
+
+    boolean updateOfficialAccountList(Long accountId,Integer isOpen);
 }

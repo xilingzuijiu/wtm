@@ -8,6 +8,7 @@ import com.weitaomi.application.service.interf.IMemberScoreService;
 import com.weitaomi.application.service.interf.IMemberTaskHistoryService;
 import com.weitaomi.systemconfig.constant.SystemConfig;
 import com.weitaomi.systemconfig.exception.BusinessException;
+import com.weitaomi.systemconfig.exception.InfoException;
 import com.weitaomi.systemconfig.util.DateUtils;
 import com.weitaomi.systemconfig.util.PropertiesUtil;
 import org.slf4j.Logger;
@@ -58,7 +59,7 @@ public class MemberScoreService implements IMemberScoreService {
             } else {
                 MemberScoreFlowType memberScoreFlowType = memberScoreFlowTypeMapper.selectByPrimaryKey(typeId);
                 if (memberScoreFlowType == null) {
-                    throw new BusinessException("查无此积分流动类型");
+                    throw new InfoException("查无此积分流动类型");
                 }
                 BigDecimal increaseScore = null;
                 BigDecimal scoreBefore = BigDecimal.ZERO;
@@ -69,7 +70,7 @@ public class MemberScoreService implements IMemberScoreService {
                         scoreBefore = memberScore.getMemberScore();
                         rate = memberScore.getRate();
                     }
-                    if (typeId==1||typeId==2){
+                    if (typeId!=3){
                         rate= BigDecimal.ONE;
                     }
                     increaseScore = BigDecimal.valueOf(score).multiply(rate);
@@ -120,7 +121,7 @@ public class MemberScoreService implements IMemberScoreService {
                 }
 
                 cacheService.setCacheByKey(key, memberScore, SystemConfig.TASK_CACHE_TIME);
-                if (typeId != 1 && typeId != 2&&increaseScore.doubleValue()>0) {
+                if (typeId==3&&increaseScore.doubleValue()>0) {
                     //处理上级奖励问题
                     MemberInvitedRecord memberInvitedRecord = memberInvitedRecordMapper.getMemberInvitedRecordByMemberId(memberId);
                     if (memberInvitedRecord != null) {
