@@ -13,10 +13,10 @@
         <result column="openId" jdbcType="VARCHAR" property="openId"/>
         <result column="originId" jdbcType="VARCHAR" property="originId"/>
         <result column="appId" jdbcType="VARCHAR" property="appId"/>
-        <result column="appSecret" jdbcType="VARCHAR" property="appSecret"/>
+        <result column="qrcodeUrl" jdbcType="VARCHAR" property="qrcodeUrl"/>
         <result column="userName" jdbcType="VARCHAR" property="userName"/>
         <result column="accessToken" jdbcType="VARCHAR" property="accessToken"/>
-        <result column="tokenUpdateTime" jdbcType="VARCHAR" property="tokenUpdateTime"/>
+        <result column="authorizationInfo" jdbcType="VARCHAR" property="authorizationInfo"/>
         <result column="accountNumber" jdbcType="INTEGER" property="accountNumber"/>
         <result column="remark" jdbcType="VARCHAR" property="remark"/>
         <result column="addUrl" jdbcType="VARCHAR" property="addUrl"/>
@@ -70,7 +70,10 @@
   LEFT JOIN wtm_task_pool pool ON pool.officialAccountsId=account.id
   WHERE account.originId=#{originId}
 </select>
-    <select id="getOfficialAccountList" resultType="com.weitaomi.application.model.bean.OfficialAccount">
-        select * from wtm_official_accounts a WHERE a.memberId=#{memberId}
+<select id="getOfficialAccountList" resultType="com.weitaomi.application.model.bean.OfficialAccount">
+    select * from wtm_official_accounts a WHERE a.memberId=#{memberId}
+</select>
+    <select id="getOriginIdByAppId" resultType="java.lang.String">
+        select a.originId from wtm_official_accounts a WHERE a.appId=#{appId}
     </select>
 </mapper>

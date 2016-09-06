@@ -1,11 +1,13 @@
 package com.weitaomi.application.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageInfo;
 import com.weitaomi.application.model.bean.MemberScore;
 import com.weitaomi.application.model.bean.TaskPool;
 import com.weitaomi.application.model.dto.Address;
 import com.weitaomi.application.model.dto.OfficialAccountsDto;
 import com.weitaomi.application.model.dto.RequireFollowerParamsDto;
+import com.weitaomi.application.model.dto.TaskPoolDto;
 import com.weitaomi.application.model.mapper.MemberScoreMapper;
 import com.weitaomi.application.model.mapper.OfficalAccountMapper;
 import com.weitaomi.application.model.mapper.ProvinceMapper;
@@ -14,7 +16,10 @@ import com.weitaomi.application.service.interf.IMemberScoreService;
 import com.weitaomi.application.service.interf.IMemberTaskHistoryService;
 import com.weitaomi.application.service.interf.IMemberTaskPoolService;
 import com.weitaomi.systemconfig.exception.BusinessException;
+import com.weitaomi.systemconfig.exception.InfoException;
+import com.weitaomi.systemconfig.util.Page;
 import com.weitaomi.systemconfig.util.UUIDGenerator;
+import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,8 +65,11 @@ public class MemberTaskPoolService implements IMemberTaskPoolService{
             }
             int num =taskPoolMapper.insertSelective(taskPool);
             memberScoreService.addMemberScore(taskPool.getMemberId(),4L,1,-Double.valueOf(taskPool.getTotalScore()), UUIDGenerator.generate());
-            memberTaskHistoryService.addMemberTaskToHistory(taskPool.getMemberId(),8L,-taskPool.getTotalScore().longValue(),1,null,null);
-            return "SUCCESS";
+            boolean flag=memberTaskHistoryService.addMemberTaskToHistory(taskPool.getMemberId(),8L,-taskPool.getTotalScore().longValue(),1,null,null);
+            if (flag){
+                logger.info("处理成功");
+                return "任务提交成功";
+            }
         }
         return "FAIL";
     }
@@ -80,5 +88,29 @@ public class MemberTaskPoolService implements IMemberTaskPoolService{
         requireFollowerParamsDto.setAddressList(addressList);
 //        logger.info(JSON.toJSONString(requireFollowerParamsDto));
         return requireFollowerParamsDto;
+    }
+
+    @Override
+    public Page<TaskPoolDto> getTaskPoolDto(Long officialAccountId, Integer type, int pageSize, int pageIndex) {
+        List<TaskPoolDto> taskPoolDtoList=null;
+        if (type==1) {
+            taskPoolDtoList= taskPoolMapper.getTaskPoolArticleDto(officialAccountId,new RowBounds(pageIndex,pageIndex));
+        }
+        if (type==0) {
+            taskPoolDtoList= taskPoolMapper.getTaskPoolAccountDto(officialAccountId,new RowBounds(pageIndex,pageIndex));
+        }
+        PageInfo<TaskPoolDto> taskPoolDtoPageInfo=new PageInfo<TaskPoolDto>(taskPoolDtoList);
+        return Page.trans(taskPoolDtoPageInfo);
+    }
+
+    @Override
+    public Boolean updateTaskPoolDto(Long taskPoolId, int isPublishNow) {
+        TaskPool taskPool=taskPoolMapper.selectByPrimaryKey(taskPoolId);
+        if (taskPool==null){
+            throw new InfoException("修改失败,没有此任务");
+        }
+        taskPool.setIsPublishNow(isPublishNow);
+        int num = taskPoolMapper.updateByPrimaryKeySelective(taskPool);
+        return num>0?true:false;
     }
 }

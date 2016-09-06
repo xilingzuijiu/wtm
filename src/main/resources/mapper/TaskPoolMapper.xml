@@ -27,4 +27,15 @@
   <select id="getTaskPoolByOfficialId" resultType="com.weitaomi.application.model.bean.TaskPool">
     select * from wtm_task_pool pool WHERE pool.officialAccountsId=#{officialAccountId}
   </select>
+  <select id="getTaskPoolArticleDto" resultType="com.weitaomi.application.model.dto.TaskPoolDto">
+    select
+      p.id taskId,p.taskType,p.totalScore,p.singleScore,p.isPublishNow,a.title articleTitle,p.createTime,p.needNumber
+    from wtm_task_pool p LEFT JOIN wtm_article a ON a.id=p.articleId LEFT JOIN wtm_official_accounts account ON account.id=a.officialAccountId
+    WHERE account.id>0 AND p.id>0 AND a.id>0 AND account.id=#{officialAccount} AND p.taskType=1
+  </select>
+  <select id="getTaskPoolAccountDto" resultType="com.weitaomi.application.model.dto.TaskPoolDto">
+    select
+      p.id taskId,p.taskType,p.totalScore,p.singleScore,p.isPublishNow,p.createTime,p.needNumber
+    from wtm_task_pool p WHERE p.officialAccountsId=#{officialAccount}
+  </select>
 </mapper>

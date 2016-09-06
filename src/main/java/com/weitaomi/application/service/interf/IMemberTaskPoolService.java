@@ -1,7 +1,10 @@
 package com.weitaomi.application.service.interf;
 
+import java.util.List;
 import com.weitaomi.application.model.bean.TaskPool;
 import com.weitaomi.application.model.dto.RequireFollowerParamsDto;
+import com.weitaomi.application.model.dto.TaskPoolDto;
+import com.weitaomi.systemconfig.util.Page;
 
 /**
  * Created by Administrator on 2016/8/24.
@@ -20,4 +23,12 @@ public interface IMemberTaskPoolService {
      * @return
      */
     public RequireFollowerParamsDto getRequireFollowerParamsDto(Long memberId, Long time);
+
+    /**
+     * 获取公众号任务
+     * @param officialAccountId
+     * @return
+     */
+    public Page<TaskPoolDto> getTaskPoolDto(Long officialAccountId, Integer type, int pageSize, int pageIndex);
+    public Boolean updateTaskPoolDto(Long taskPoolId,int isPublishNow);
 }

@@ -9,4 +9,5 @@ public interface OfficeMemberMapper extends IBaseMapper<OfficeMember> {
     int batchAddOfficeMember(@Param("memberList") List<OfficeMember> memberList, @Param("dateTime") Long dateTime);
     OfficeMember getOfficeMember(@Param("memberId") Long memberId, @Param("officialAccountId") Long officialAccountId);
     int deleteOverTimeUnfollowedAccounts(@Param("time") Integer time);
+    List<OfficeMember> getOfficeMemberList(@Param("memberId") Long memberId);
 }

@@ -38,10 +38,10 @@
     <result column="official_openId" jdbcType="VARCHAR" property="openId"/>
     <result column="official_originId" jdbcType="VARCHAR" property="originId"/>
     <result column="official_appId" jdbcType="VARCHAR" property="appId"/>
-    <result column="official_appSecret" jdbcType="VARCHAR" property="appSecret"/>
+    <result column="official_qrcodeUrl" jdbcType="VARCHAR" property="qrcodeUrl"/>
     <result column="official_userName" jdbcType="VARCHAR" property="userName"/>
     <result column="official_accessToken" jdbcType="VARCHAR" property="accessToken"/>
-    <result column="official_tokenUpdateTime" jdbcType="VARCHAR" property="tokenUpdateTime"/>
+    <result column="official_authorizationInfo" jdbcType="VARCHAR" property="authorizationInfo"/>
     <result column="official_accountNumber" jdbcType="INTEGER" property="accountNumber"/>
     <result column="official_remark" jdbcType="VARCHAR" property="remark"/>
     <result column="official_addUrl" jdbcType="VARCHAR" property="addUrl"/>
@@ -81,10 +81,10 @@
     official.openId official_openId,
     official.originId official_originId,
     official.appId official_appId,
-    official.appSecret official_appSecret,
+    official.qrcodeUrl official_qrcodeUrl,
     official.userName official_userName,
     official.accessToken official_accessToken,
-    official.tokenUpdateTime official_tokenUpdateTime,
+    official.authorizationInfo official_authorizationInfo,
     official.accountNumber official_accountNumber,
     official.remark official_remark,
     official.addUrl official_addUrl,

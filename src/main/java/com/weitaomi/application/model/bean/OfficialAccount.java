@@ -47,8 +47,8 @@ public class OfficialAccount extends BaseModel {
     /**
      * 公号appId
      */
-    @Column(name = "appSecret")
-    private String appSecret;
+    @Column(name = "qrcodeUrl")
+    private String qrcodeUrl;
     /**
      * 公号名称
      */
@@ -84,8 +84,8 @@ public class OfficialAccount extends BaseModel {
     /**
      * 创建日期
      */
-    @Column(name = "tokenUpdateTime")
-    private String tokenUpdateTime;
+    @Column(name = "authorizationInfo")
+    private String authorizationInfo;
     /**
      * 创建日期
      */
@@ -317,22 +317,6 @@ public class OfficialAccount extends BaseModel {
     }
 
     /**
-     * 获取公号appId
-     * @return appSecret 公号appId
-     */
-    public String getAppSecret() {
-        return this.appSecret;
-    }
-
-    /**
-     * 设置公号appId
-     * @param appSecret 公号appId
-     */
-    public void setAppSecret(String appSecret) {
-        this.appSecret = appSecret;
-    }
-
-    /**
      * 获取公号token
      * @return accessToken 公号token
      */
@@ -367,17 +351,33 @@ public class OfficialAccount extends BaseModel {
 
     /**
      * 获取创建日期
-     * @return tokenUpdateTime 创建日期
+     * @return authorizationInfo 创建日期
      */
-    public String getTokenUpdateTime() {
-        return this.tokenUpdateTime;
+    public String getAuthorizationInfo() {
+        return this.authorizationInfo;
     }
 
     /**
      * 设置创建日期
-     * @param tokenUpdateTime 创建日期
+     * @param authorizationInfo 创建日期
      */
-    public void setTokenUpdateTime(String tokenUpdateTime) {
-        this.tokenUpdateTime = tokenUpdateTime;
+    public void setAuthorizationInfo(String authorizationInfo) {
+        this.authorizationInfo = authorizationInfo;
+    }
+
+    /**
+     * 获取公号appId
+     * @return qrcodeUrl 公号appId
+     */
+    public String getQrcodeUrl() {
+        return this.qrcodeUrl;
+    }
+
+    /**
+     * 设置公号appId
+     * @param qrcodeUrl 公号appId
+     */
+    public void setQrcodeUrl(String qrcodeUrl) {
+        this.qrcodeUrl = qrcodeUrl;
     }
 }

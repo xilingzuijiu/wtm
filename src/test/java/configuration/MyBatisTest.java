@@ -114,9 +114,6 @@ public class MyBatisTest extends BaseContextCase {
         longs.add(5L);
         System.out.println(JSON.toJSONString(longs));
 
-        ServletFileUpload servletFileUpload=new ServletFileUpload();
-        File file=new File("");
-
     }
     @Test
     public void testApprove(){

@@ -19,7 +19,7 @@ function GetQueryString(name) {
     if(r!=null)return  unescape(r[2]); return null;
 };
 function chooseProvince(value){
-    var cityArea='<option value="00000000">--请选择--</option>';
+    var cityArea='<option value="">--请选择--</option>';
 //            var value = $('#prov').options[$('#prov').selectedIndex].;
     addressArr.forEach(function(province){
         if (province.province==value){
@@ -64,7 +64,7 @@ function deal(obj){
     $("#select1").append(elements)
     $("#amount").empty()
     $("#amount").append(amount)
-    var provinces='<option value="00000000">--请选择--</option>';
+    var provinces='<option value="">--请选择--</option>';
     addressArr=obj.addressList;
     addressArr.forEach(function(province){
         provinces +='<option value="'+province.province+'">'+province.province+'</option>';

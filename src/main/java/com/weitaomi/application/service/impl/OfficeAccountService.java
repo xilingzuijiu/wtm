@@ -54,6 +54,11 @@ public class OfficeAccountService implements IOfficeAccountService {
     @Override
     @Transactional
     public boolean pushAddRequest(Long memberId,AddOfficalAccountDto addOfficalAccountDto) {
+        List<OfficeMember> officeMembers=officeMemberMapper.getOfficeMemberList(memberId);
+        if (!officeMembers.isEmpty()){
+            String info="您还有未完成的任务，请先到微淘米APP服务号内完成，\n未完成任务将会在24小时内删除，请尽快完成,\n如有事宜，请联系客服~";
+            throw new InfoException(info);
+        }
         if (addOfficalAccountDto==null){
             throw new BusinessException("任务列表为空");
         }
@@ -66,6 +71,7 @@ public class OfficeAccountService implements IOfficeAccountService {
             throw new BusinessException("要关注的公号列表为空");
         }
         List<OfficeMember> officeMemberList=new ArrayList<>();
+        List<Long> idList=new ArrayList<>();
         for (OfficialAccountMsg officialAccountMsg:list){
             String key=addOfficalAccountDto.getUnionId()+":"+officialAccountMsg.getOriginId();
             OfficialAccountWithScore officialAccountWithScore=officalAccountMapper.getOfficialAccountWithScoreById(officialAccountMsg.getOriginId());
@@ -83,15 +89,15 @@ public class OfficeAccountService implements IOfficeAccountService {
             //添加到待完成任务记录中
             String detail ="关注公众号"+officialAccountWithScore.getUserName()+"，领取"+officialAccountWithScore.getScore()+"米币";
             memberTaskHistoryService.addMemberTaskToHistory(memberId,1L,officialAccountWithScore.getScore(),0,detail,null);
+            idList.add(officialAccountWithScore.getId());
         }
         Long time =DateUtils.getUnixTimestamp();
         int number=officeMemberMapper.batchAddOfficeMember(officeMemberList,time);
         if (number>100) {
             String url = PropertiesUtil.getValue("server.officialAccount.receiveAddRequest.url");
-            String messageUrl = PropertiesUtil.getValue("server.officialAccount.message.url");
-            Map<String,String>  map=new HashMap<>();
+            Map<String,Object>  map=new HashMap<>();
             map.put("unionId",unionId);
-            map.put("url",messageUrl + "?memberId=" + memberId + "&dateTime=" +time);
+            map.put("officialAccountIdList",idList);
             map.put("flag","1");
             try {
                 HttpRequestUtils.postStringEntity(url, JSON.toJSONString(map));
@@ -107,8 +113,9 @@ public class OfficeAccountService implements IOfficeAccountService {
     @Transactional
     public Boolean pushAddFinished(Map<String,String> params) {
         String unionId=params.get("unionId");
-        String originId=params.get("originId");
-        JpushUtils.buildRequest("受到消息了"+unionId+"      "+originId);
+        String appid=params.get("appId");
+        String originId=officalAccountMapper.getOriginIdByAppId(appid);
+//        JpushUtils.buildRequest("受到消息了"+unionId+"      "+originId);
         String key=unionId+":"+originId;
         String value=cacheService.getCacheByKey(key,String.class);
         if (value!=null){

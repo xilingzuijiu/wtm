@@ -58,5 +58,14 @@ public class MemberPCController extends BaseController {
         taskPool.setTotalScore(taskPool.getNeedNumber()*taskPool.getSingleScore());
         return AjaxResult.getOK(memberTaskPoolService.uploadTaskPool(taskPool));
     }
-
+    /**
+     * 邀请码邀请
+     * @throws ParseException    the parse exception
+     * @see
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getInvitedCode", method = RequestMethod.POST)
+    public String getInvitedCode(Long memberId){
+        return memberService.getMemberDetailById(memberId).getInvitedCode();
+    }
 }

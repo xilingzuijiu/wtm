@@ -24,4 +24,7 @@
   <select id="getOfficeMember" resultType="com.weitaomi.application.model.bean.OfficeMember">
     select * from wtm_office_member m  WHERE m.memberId=#{memberId} AND m.officialAccountId=#{officialAccountId}
   </select>
+  <select id="getOfficeMemberList" resultType="com.weitaomi.application.model.bean.OfficeMember">
+    select * from wtm_office_member m WHERE m.memberId=#{memberId} AND m.isAccessNow=0
+  </select>
 </mapper>

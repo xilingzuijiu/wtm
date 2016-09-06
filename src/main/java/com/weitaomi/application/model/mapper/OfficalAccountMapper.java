@@ -14,4 +14,5 @@ public interface OfficalAccountMapper extends IBaseMapper<OfficialAccount> {
     List<OfficialAccountMsg> getOfficialAccountMsg(@Param("memberId") Long memberId, @Param("unionId") String unionId, @Param("sex") Integer sex, @Param("provinceCode") String provinceCode, @Param("cityCode") String cityCode);
     OfficialAccountWithScore getOfficialAccountWithScoreById(@Param("originId") String originId);
     List<OfficialAccount> getOfficialAccountList(@Param("memberId") Long memberId);
+    String getOriginIdByAppId(@Param("appId") String appId);
 }
