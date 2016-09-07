@@ -14,8 +14,7 @@ html{}
 .focuslist li p span{font-size:12px;color:#f66866;}
 .focuslist li button{height:25px !important;padding:0 15px !important;background:#39aff0 !important;
     border:#0f95e0 1px solid;}
-
-.ivwrap{background:url("../img/bgone.jpg") no-repeat left top;background-size:cover;}
+#inviteby{background:url("../img/bgone.jpg") no-repeat left center;background-size:cover;}
 .ivwrap .ivbanner{width:100%;padding-bottom:5px;}
 .ivwrap .ivintroduce,.ivusage{font-size:15px;color:#333;width:90%;line-height:22px;margin:auto;text-align:center;}
 .ivwrap .ivintroduce span{color:#f94b16;}
