@@ -9,7 +9,6 @@
     <title>邀请页</title>
     <!-- 新 Bootstrap 核心 CSS 文件 -->
     <link rel="stylesheet" href="../code/css/bootstrap.min.css">
-
     <!-- 可选的Bootstrap主题文件（一般不用引入） -->
     <link rel="stylesheet" href="../code/css/bootstrap-theme.min.css">
     <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
@@ -21,8 +20,8 @@
     <!--[if lt IE 9]>
     <script src="../code/js/html5shiv.min.js"></script>
     <script src="../code/js/respond.min.js"></script>
-    <script src="../code/js/ZeroClipboard.js"></script>
     <![endif]-->
+    <script src="../code/js/ZeroClipboard.js"></script>
     <script>
         var u = navigator.userAgent;
         var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;//android终端
@@ -61,18 +60,17 @@
 
             });
 
-            if (window.clipboardData) {
+            if ( window.clipboardData ) {
                 $('#invitecode').click(function() {
-                    console.log("click")
                     window.clipboardData.setData("Text", $(this).html());
                     alert('复制成功！');
                 });
             } else {
-//                $("#invitecode").zclip({
-//                    path:'http://img3.job1001.com/js/ZeroClipboard/ZeroClipboard.swf',
-//                    copy:function(){return $(this).html();},
-//                    afterCopy:function(){alert('复制成功！');}
-//                });
+                $("#invitecode").zclip({
+                    path:'http://img3.job1001.com/js/ZeroClipboard/ZeroClipboard.swf',
+                    copy:function(){return $(this).html();},
+                    afterCopy:function(){alert('复制成功！');}
+                });
             }
 
 
