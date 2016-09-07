@@ -24,6 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -51,7 +52,6 @@ public class MemberTaskPoolService implements IMemberTaskPoolService{
             TaskPool taskPoolTemp=new TaskPool();
             taskPoolTemp.setOfficialAccountsId(taskPool.getOfficialAccountsId());
             taskPoolTemp.setTaskType(0);
-            taskPoolTemp.setIsPublishNow(1);
             List<TaskPool> taskPools=taskPoolMapper.select(taskPoolTemp);
             if (!taskPools.isEmpty()){
                 return "您已发布过此任务，请在公众号详情中查看";
@@ -104,10 +104,28 @@ public class MemberTaskPoolService implements IMemberTaskPoolService{
     }
 
     @Override
+    @Transactional
     public Boolean updateTaskPoolDto(Long taskPoolId, int isPublishNow) {
         TaskPool taskPool=taskPoolMapper.selectByPrimaryKey(taskPoolId);
         if (taskPool==null){
             throw new InfoException("修改失败,没有此任务");
+        }
+        TaskPool taskPoolTemp=new TaskPool();
+        taskPoolTemp.setIsPublishNow(1);
+        if (taskPool.getTaskType()==0){
+            taskPoolTemp.setOfficialAccountsId(taskPool.getOfficialAccountsId());
+        }
+        if (taskPool.getTaskType()==1){
+            taskPoolTemp.setArticleId(taskPool.getArticleId());
+        }
+        List<TaskPool> taskPoolList=taskPoolMapper.select(taskPoolTemp);
+        if (isPublishNow==1){
+            if (taskPoolList.size()>=1){
+                throw new InfoException("您还有一个相同的任务正在进行中，请将该任务下架后再上架新任务，或者等任务结束");
+            }
+        }
+        if (taskPool.getTotalScore()<taskPool.getSingleScore()){
+            throw new InfoException("剩余总米币不足以支付单次关注奖励，请重新发布关注任务~");
         }
         taskPool.setIsPublishNow(isPublishNow);
         int num = taskPoolMapper.updateByPrimaryKeySelective(taskPool);

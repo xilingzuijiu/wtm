@@ -30,6 +30,10 @@ public class TaskPoolDto {
      */
     private Integer isPublishNow;
     /**
+     * 是否允许下架操作
+     */
+    private Integer isAccessUndercarriage;
+    /**
      * 文章标题
      */
     private String articleTitle;
@@ -156,5 +160,21 @@ public class TaskPoolDto {
      */
     public void setNeedNumber(Integer needNumber) {
         this.needNumber = needNumber;
+    }
+
+    /**
+     * 获取是否允许下架操作
+     * @return isAccessUndercarriage 是否允许下架操作
+     */
+    public Integer getIsAccessUndercarriage() {
+        return this.isAccessUndercarriage;
+    }
+
+    /**
+     * 设置是否允许下架操作
+     * @param isAccessUndercarriage 是否允许下架操作
+     */
+    public void setIsAccessUndercarriage(Integer isAccessUndercarriage) {
+        this.isAccessUndercarriage = isAccessUndercarriage;
     }
 }

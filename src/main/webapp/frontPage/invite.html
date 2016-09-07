@@ -1,0 +1,110 @@
+<!--<!DOCTYPE html>-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0" name="viewport" />
+    <link href="../code/css/base.css" rel="stylesheet" type="text/css"/>
+    <link href="../code/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>邀请页</title>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="../code/css/bootstrap.min.css">
+
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="../code/css/bootstrap-theme.min.css">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="../code/js/jquery.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="../code/js/bootstrap.min.js"></script>
+    <link href="../code/js/demo.css">
+    <link href="../code/js/iconfont.css" >
+    <!--[if lt IE 9]>
+    <script src="../code/js/html5shiv.min.js"></script>
+    <script src="../code/js/respond.min.js"></script>
+    <script src="../code/js/ZeroClipboard.js"></script>
+    <![endif]-->
+    <script>
+        var u = navigator.userAgent;
+        var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;//android终端
+        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);// ios终端
+
+        var memberId;
+        function GetQueryString(name)
+        {
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if(r!=null)return  unescape(r[2]); return null;
+        }
+        $(function(){
+            memberId=GetQueryString("memberId");
+            console.log("获取的的数据为："+memberId)
+            $.ajax({
+                type: 'post',
+                dataType: 'json',
+                url: '/weitaomi/pc/admin/member/getInvitedCode',
+                data: {memberId:memberId},
+                header:{
+                    "Access-Control-Allow-Origin":"true"
+                },
+                success: function (params) {
+                    var json = eval(params); //数组
+                    console.log("json数据为："+params)
+                    if (json!=null&&json.errorCode==0){
+                        $("#invitecode").empty()
+                        $("#invitecode").append(json.data)
+                    }else alert("获取邀请码失败")
+                },
+                error:function (data){
+                    console.log(data)
+                    alert("页面加载错误，请重试");
+                }
+
+            });
+
+            if (window.clipboardData) {
+                $('#invitecode').click(function() {
+                    console.log("click")
+                    window.clipboardData.setData("Text", $(this).html());
+                    alert('复制成功！');
+                });
+            } else {
+//                $("#invitecode").zclip({
+//                    path:'http://img3.job1001.com/js/ZeroClipboard/ZeroClipboard.swf',
+//                    copy:function(){return $(this).html();},
+//                    afterCopy:function(){alert('复制成功！');}
+//                });
+            }
+
+
+       })
+
+
+        $("#ivload").click(function () {
+            if(isAndroid==true){
+                $("#ivload").attr("href","https://www.hao123.com/?tn=97065446_hao_pg")
+            }else if(isiOS==true) {
+                $("#ivload").attr("href", "https://www.tmall.com/?ali_trackid=2:mm_26632322_6858406_23810104:1473152976_253_2087021154")
+            }
+        })
+    </script>
+</head>
+<body>
+<div id="wrapbg" style="position:absolute; width:100%; height:100%;z-index:-1;">
+    <img src="../code/img/bgone.jpg" height="100%" width="100%" />
+</div>
+<div class="ivwrap">
+        <img class="ivbanner"src="../code/img/banner.png"/>
+    <p class="ivintroduce">新注册用户通过您的邀请码注册,即送<span>150米币</span>,另外通过您的邀请码注册的用户完成任务,您还能获取<span>额外10%的米币</span>奖励,邀请好友，即刻出发~</p>
+    <div class="invite">
+        <img src="../code/img/invite.png"/>
+        <div id="invitecode">dvFgba</div>
+    </div>
+    <p class="ivusage">邀请码使用方式：<br/>APP注册页面-输入邀请码即可</p>
+    <div class="ivlogo">
+        <img src="../code/img/76pt-2x.png"/>
+        <h5>微淘米一款<br/>会赚钱的APP</h5>
+    </div>
+    <a id="ivload" href="#">下载最新APP></a>
+</div>
+</body>
+</html>

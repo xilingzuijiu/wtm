@@ -120,26 +120,41 @@ public class OfficeAccountService implements IOfficeAccountService {
         String value=cacheService.getCacheByKey(key,String.class);
         if (value!=null){
             Long officeAccountId=Long.valueOf(value);
-            TaskPool taskPool = taskPoolMapper.getTaskPoolByOfficialId(officeAccountId);
+            TaskPool taskPool = taskPoolMapper.getTaskPoolByOfficialId(officeAccountId,1);
             OfficialAccountWithScore officialAccountWithScore  =officalAccountMapper.getOfficialAccountWithScoreById(originId);
             Long memberId=thirdLoginMapper.getMemberIdByUnionId(unionId);
-            if (taskPool!=null&&officialAccountWithScore!=null&&taskPool.getTotalScore()>officialAccountWithScore.getScore()){
+            if (taskPool==null){
+                JpushUtils.buildRequest("您关注的公众号任务："+officialAccountWithScore.getUserName()+"已经结束",memberId);
+                return false;
+            }
+            Integer score=taskPool.getTotalScore()-taskPool.getSingleScore();
+            if (taskPool!=null&&officialAccountWithScore!=null&&score>=0){
                 //添加到公众号关注表中
                 OfficeMember officeMember=officeMemberMapper.getOfficeMember(memberId,officeAccountId);
                 if (officeMember==null){
-                    JpushUtils.buildRequest(JpushUtils.getJpushMessage(memberId,"任务不存在，或者任务已结束"));
-                    throw new InfoException("任务没有加入到列表中");
+                    JpushUtils.buildRequest("您关注的公众号任务："+officialAccountWithScore.getUserName()+"，不存在或者已经结束",memberId);
+                    return false;
+                }
+                if (officeMember.getIsAccessNow()==1){
+                    JpushUtils.buildRequest("您已关注过公众号："+officialAccountWithScore.getUserName()+"，该任务失效",memberId);
+                    return false;
                 }
                 officeMember.setIsAccessNow(1);
                 officeMember.setFinishedTime(DateUtils.getUnixTimestamp());
                 int num= officeMemberMapper.updateByPrimaryKeySelective(officeMember);
                 if (num>0) {
                     //任务池中的任务剩余积分更改
-                    taskPoolMapper.updateTaskPoolWithScore(officialAccountWithScore.getScore(), taskPool.getId());
+                    if (score>=taskPool.getSingleScore()){
+                        taskPoolMapper.updateTaskPoolWithScore(score, taskPool.getId());
+                    } else {
+                        taskPool.setTotalScore(score.intValue());
+                        taskPool.setIsPublishNow(0);
+                        taskPoolMapper.updateByPrimaryKeySelective(taskPool);
+                    }
                     //增加任务记录
                     int number = memberTaskHistoryMapper.updateMemberTaskUnfinished(memberId,0,officialAccountWithScore.getOriginId());
                     //增加积分以及积分记录
-                    memberScoreService.addMemberScore(memberId, 3L,1, BigDecimal.valueOf(officialAccountWithScore.getScore()).multiply(taskPool.getRate()).doubleValue(), UUIDGenerator.generate());
+                    memberScoreService.addMemberScore(memberId, 3L,1,officialAccountWithScore.getScore().doubleValue(), UUIDGenerator.generate());
                     cacheService.delKeyFromRedis(key);
                 }
             }else {

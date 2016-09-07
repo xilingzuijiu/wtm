@@ -31,14 +31,14 @@ public interface IOfficeAccountService {
     public Boolean pushAddFinished(Map<String,String> params);
 
     /**
-     * 获取公众号关注列表
+     * 获取用户待关注公众号列表
      * @param memberId
      * @return
      */
     public List<OfficialAccountMsg> getOfficialAccountMsg(Long memberId,String unionId);
 
     /**
-     * 获取公众号列表
+     * 获取商户公众号列表
      * @param memberId
      * @return
      */

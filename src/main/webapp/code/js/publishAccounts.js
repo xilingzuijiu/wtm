@@ -71,4 +71,10 @@ function deal(obj){
     })
     $("#prov").empty();
     $("#prov").append(provinces)
+    var eles="";
+    for(i=1;i<=100;i++){
+        eles += '<option value="'+i+'">'+i+'</option>';
+    }
+    $("#select2").empty();
+    $("#select2").append(eles)
 };

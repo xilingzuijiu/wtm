@@ -19,6 +19,11 @@ public class TaskPool extends BaseModel {
     @Column(name = "memberId")
     private Long memberId;
     /**
+     * 时间限制
+     */
+    @Column(name = "limitDay")
+    private Long limitDay;
+    /**
      * 公众号ID
      */
     @Column(name = "officialAccountsId")
@@ -315,5 +320,21 @@ public class TaskPool extends BaseModel {
      */
     public void setMemberId(Long memberId) {
         this.memberId = memberId;
+    }
+
+    /**
+     * 获取时间限制
+     * @return limitDay 时间限制
+     */
+    public Long getLimitDay() {
+        return this.limitDay;
+    }
+
+    /**
+     * 设置时间限制
+     * @param limitDay 时间限制
+     */
+    public void setLimitDay(Long limitDay) {
+        this.limitDay = limitDay;
     }
 }

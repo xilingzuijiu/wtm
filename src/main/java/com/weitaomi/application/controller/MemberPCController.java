@@ -65,7 +65,7 @@ public class MemberPCController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/getInvitedCode", method = RequestMethod.POST)
-    public String getInvitedCode(Long memberId){
-        return memberService.getMemberDetailById(memberId).getInvitedCode();
+    public AjaxResult getInvitedCode(Long memberId){
+        return AjaxResult.getOK(memberService.getMemberDetailById(memberId).getInvitedCode());
     }
 }

@@ -30,5 +30,12 @@ public interface IMemberTaskPoolService {
      * @return
      */
     public Page<TaskPoolDto> getTaskPoolDto(Long officialAccountId, Integer type, int pageSize, int pageIndex);
+
+    /**
+     * 控制任务发布与否
+     * @param taskPoolId
+     * @param isPublishNow
+     * @return
+     */
     public Boolean updateTaskPoolDto(Long taskPoolId,int isPublishNow);
 }

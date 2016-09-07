@@ -7,6 +7,7 @@
     -->
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="memberId" property="memberId" jdbcType="BIGINT" />
+    <result column="limitDay" property="limitDay" jdbcType="BIGINT" />
     <result column="taskType" property="taskType" jdbcType="INTEGER" />
     <result column="totalScore" property="totalScore" jdbcType="INTEGER" />
     <result column="sex" property="sex" jdbcType="INTEGER" />
@@ -22,14 +23,15 @@
     <result column="createTime" property="createTime" jdbcType="BIGINT" />
   </resultMap>
   <update id="updateTaskPoolWithScore">
-    update wtm_task_pool pool set pool.totalScore =pool.totalScore-#{score}  where pool.id=#{taskId}
+    update wtm_task_pool pool set pool.totalScore =#{score}  where pool.id=#{taskId}
   </update>
   <select id="getTaskPoolByOfficialId" resultType="com.weitaomi.application.model.bean.TaskPool">
-    select * from wtm_task_pool pool WHERE pool.officialAccountsId=#{officialAccountId}
+    select * from wtm_task_pool pool WHERE pool.officialAccountsId=#{officialAccountId} AND pool.isPublishNow=#{isPublishNow}
   </select>
   <select id="getTaskPoolArticleDto" resultType="com.weitaomi.application.model.dto.TaskPoolDto">
     select
-      p.id taskId,p.taskType,p.totalScore,p.singleScore,p.isPublishNow,a.title articleTitle,p.createTime,p.needNumber
+      p.id taskId,p.taskType,p.totalScore,p.singleScore,p.isPublishNow,a.title articleTitle,p.createTime,p.needNumber,
+      CASE WHEN unix_timestamp(now())-p.createTime>p.limitDay*24*60*60 THEN 1 ELSE 0 END AS isAccessUndercarriage
     from wtm_task_pool p LEFT JOIN wtm_article a ON a.id=p.articleId LEFT JOIN wtm_official_accounts account ON account.id=a.officialAccountId
     WHERE account.id>0 AND p.id>0 AND a.id>0 AND account.id=#{officialAccount} AND p.taskType=1
   </select>
