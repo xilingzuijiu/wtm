@@ -7,22 +7,9 @@
     <link href="../code/css/base.css" rel="stylesheet" type="text/css"/>
     <link href="../code/css/style.css" rel="stylesheet" type="text/css"/>
     <title>邀请页</title>
-    <!-- 新 Bootstrap 核心 CSS 文件 -->
-    <link rel="stylesheet" href="../code/css/bootstrap.min.css">
-    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
-    <link rel="stylesheet" href="../code/css/bootstrap-theme.min.css">
-    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
     <script src="../code/js/jquery.min.js"></script>
-    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-    <script src="../code/js/bootstrap.min.js"></script>
-    <link href="../code/js/demo.css">
-    <link href="../code/js/iconfont.css" >
-    <!--[if lt IE 9]>
-    <script src="../code/js/html5shiv.min.js"></script>
-    <script src="../code/js/respond.min.js"></script>
-    <![endif]-->
-    <script src="../code/js/ZeroClipboard.js"></script>
-    <script src="../code/js/clipboard.js"></script>
+    <script type="text/javascript" src="../code/js/ZeroClipboard.js"></script>
+    <script type="text/javascript" src="../code/js/clipboard.js"></script>
     <script>
         var u = navigator.userAgent;
         var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;//android终端
@@ -33,8 +20,7 @@
         {
             var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
             var r = window.location.search.substr(1).match(reg);
-            if(r!=null)return  unescape(r[2]);
-            return null;
+            if(r!=null)return  unescape(r[2]);return null;
         }
         $(function(){
              memberId=GetQueryString("memberId");
@@ -51,6 +37,7 @@
                     var json = eval(params); //数组
                     console.log("json数据为："+params)
                     if (json!=null&&json.errorCode==0){
+                        var data=eval(json.data);
                         $("#invitecode").empty()
                         $("#invitecode").append(json.data)
                     }else{ alert("获取邀请码失败")}

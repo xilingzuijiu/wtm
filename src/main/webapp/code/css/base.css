@@ -2,7 +2,7 @@
 /* CSS Document */
 @font-face{
 	font-family:fangzheng;
-	src:url(../font/fangzheng.ttf)
+	src:url(../fonts/fangzheng.ttf)
 }
 html,body{
 	margin:0;
@@ -23,7 +23,7 @@ a:link {
 }
 a:visited {
  color: #353535;
- text-decoration: none
+ text-decoration: none;
 }
 a:hover {
  color: #f00;
