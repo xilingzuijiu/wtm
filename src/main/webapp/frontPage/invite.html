@@ -22,6 +22,7 @@
     <script src="../code/js/respond.min.js"></script>
     <![endif]-->
     <script src="../code/js/ZeroClipboard.js"></script>
+    <script src="../code/js/clipboard.js"></script>
     <script>
         var u = navigator.userAgent;
         var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;//android终端
@@ -36,7 +37,7 @@
             return null;
         }
         $(function(){
-            memberId=GetQueryString("memberId");
+             memberId=GetQueryString("memberId");
             console.log("获取的的数据为："+memberId)
             $.ajax({
                 type: 'post',
@@ -52,7 +53,7 @@
                     if (json!=null&&json.errorCode==0){
                         $("#invitecode").empty()
                         $("#invitecode").append(json.data)
-                    }else alert("获取邀请码失败")
+                    }else{ alert("获取邀请码失败")}
                 },
                 error:function (data){
                     console.log(data)
@@ -61,7 +62,7 @@
 
             });
 
-            if ( window.clipboardData ) {
+            /*if ( window.clipboardData ) {
                 $('#invitecode').click(function() {
                     window.clipboardData.setData("Text", $(this).html());
                     alert('复制成功！');
@@ -72,19 +73,32 @@
                     copy:function(){return $(this).html();},
                     afterCopy:function(){alert('复制成功！');}
                 });
-            }
+            }*/
+
+            $("#ivload").click(function () {
+                if(isAndroid==true){
+                    $("#ivload").attr("href","https://www.hao123.com/?tn=97065446_hao_pg")
+                }else if(isiOS==true) {
+                    $("#ivload").attr("href", "https://www.tmall.com/?ali_trackid=2:mm_26632322_6858406_23810104:1473152976_253_2087021154")
+                }else{
+                    $("#ivload").attr("href","https://www.baidu.com/?tn=39042058_19_oem_dg")
+                }
+            })
 
 
-       })
+            /*var targettext=$("#target").html();
+            var clipboard = new Clipboard('#invitecode');
+
+            clipboard.on('success', function(e) {
+                console.info('Action:', e.action);
+                console.info('Text:', e.html);
+                console.info('Trigger:', e.trigger);
+                alert("复制成功");
+                e.clearSelection();
+            });*/
 
 
-        $("#ivload").click(function () {
-            if(isAndroid==true){
-                $("#ivload").attr("href","https://www.hao123.com/?tn=97065446_hao_pg")
-            }else if(isiOS==true) {
-                $("#ivload").attr("href", "https://www.tmall.com/?ali_trackid=2:mm_26632322_6858406_23810104:1473152976_253_2087021154")
-            }
-        })
+    })
     </script>
 </head>
 <body id="inviteby">
@@ -96,7 +110,7 @@
     <p class="ivintroduce">新注册用户通过您的邀请码注册,即送<span>150米币</span>,另外通过您的邀请码注册的用户完成任务,您还能获取<span>额外10%的米币</span>奖励,邀请好友，即刻出发~</p>
     <div class="invite">
         <img src="../code/img/invite.png"/>
-        <div id="invitecode">dvFgba</div>
+        <div id="invitecode"  data-clipboard-action="copy" data-clipboard-target="#target"><span id="target">dvFgba</span></div>
     </div>
     <p class="ivusage">邀请码使用方式：<br/>APP注册页面-输入邀请码即可</p>
     <div class="ivlogo">
@@ -106,4 +120,5 @@
     <a id="ivload" href="#">下载最新APP></a>
 </div>
 </body>
+
 </html>
