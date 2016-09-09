@@ -31,6 +31,14 @@ html{}
     border:#f94b16 1px solid;border-radius:7px;-moz-border-radius:7px;-o-border-radius:7px;-ms-border-radius:7px;
     -webkit-border-radius:7px;margin:auto;text-align:center;font-size:20px;margin-top:0.8em;padding:3px 0;}
 
+
+#readtitle{background:#f94b16;color:#fff;height:98px;text-align:center;line-height:98px;font-size:40px;}
+.readlist li{padding:14px 23px 14px 30px;overflow:hidden;}
+.readlist li img{width:75px;height:75px;display:block;float:left;margin-right:3.5%}
+.readcont{float:left;display:table;vertical-align: middle;}
+.readcont h3{font-size:30px;}
+.readcont p{}
+
 @media screen and (max-width:320px){
     .focuslist li h3{font-size:18px;width:5em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
     .focuslist li p{font-size:12px;width:9em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
