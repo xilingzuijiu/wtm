@@ -8,7 +8,7 @@
     <link href="../code/css/style.css" rel="stylesheet" type="text/css"/>
     <title>邀请页</title>
     <script src="../code/js/jquery.min.js"></script>
-    <script type="text/javascript" src="../code/js/ZeroClipboard.js"></script>
+    <script type="text/javascript" src="../code/js/jquery.zclip.min.js"></script>
     <script type="text/javascript" src="../code/js/clipboard.js"></script>
     <script>
         var u = navigator.userAgent;
@@ -23,10 +23,10 @@
             if(r!=null)return  unescape(r[2]);return null;
         }
         $(function(){
-             memberId=GetQueryString("memberId");
+            memberId=GetQueryString("memberId");
             console.log("获取的的数据为："+memberId)
             $.ajax({
-                type: 'post',
+                type: 'get',
                 dataType: 'json',
                 url: '/weitaomi/pc/admin/member/getInvitedCode',
                 data: {memberId:memberId},
@@ -37,9 +37,8 @@
                     var json = eval(params); //数组
                     console.log("json数据为："+params)
                     if (json!=null&&json.errorCode==0){
-                        var data=eval(json.data);
-                        $("#invitecode").empty()
-                        $("#invitecode").append(json.data)
+                        $("#target").empty()
+                        $("#target").append(json.data)
                     }else{ alert("获取邀请码失败")}
                 },
                 error:function (data){
@@ -48,44 +47,17 @@
                 }
 
             });
-
-            /*if ( window.clipboardData ) {
-                $('#invitecode').click(function() {
-                    window.clipboardData.setData("Text", $(this).html());
-                    alert('复制成功！');
-                });
-            } else {
-                $("#invitecode").zclip({
-                    path:'http://img3.job1001.com/js/ZeroClipboard/ZeroClipboard.swf',
-                    copy:function(){return $(this).html();},
-                    afterCopy:function(){alert('复制成功！');}
-                });
-            }*/
-
-            $("#ivload").click(function () {
+            $("#ivload").click(function() {
                 if(isAndroid==true){
-                    $("#ivload").attr("href","https://www.hao123.com/?tn=97065446_hao_pg")
+                    $("#ivload").attr("href","http://a.app.qq.com/o/simple.jsp?pkgname=com.woyun.weitaomi")
                 }else if(isiOS==true) {
-                    $("#ivload").attr("href", "https://www.tmall.com/?ali_trackid=2:mm_26632322_6858406_23810104:1473152976_253_2087021154")
+                    $("#ivload").attr("href", "http://a.app.qq.com/o/simple.jsp?pkgname=com.woyun.weitaomi")
                 }else{
-                    $("#ivload").attr("href","https://www.baidu.com/?tn=39042058_19_oem_dg")
+                    $("#ivload").attr("href","http://a.app.qq.com/o/simple.jsp?pkgname=com.woyun.weitaomi")
                 }
             })
-
-
-            /*var targettext=$("#target").html();
-            var clipboard = new Clipboard('#invitecode');
-
-            clipboard.on('success', function(e) {
-                console.info('Action:', e.action);
-                console.info('Text:', e.html);
-                console.info('Trigger:', e.trigger);
-                alert("复制成功");
-                e.clearSelection();
-            });*/
-
-
     })
+
     </script>
 </head>
 <body id="inviteby">
