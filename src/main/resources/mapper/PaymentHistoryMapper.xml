@@ -17,7 +17,7 @@
     <result column="createTime" property="createTime" jdbcType="BIGINT" />
   </resultMap>
   <insert id="batchInsertPayHistory">
-    insert into wtm_payment_history (payCode, memberId, platform, params, isPaySuccess, serialNumber, createTime) values
+    insert into wtm_payment_history (payCode, memberId, platform, params,batchPayNo, isPaySuccess, serialNumber, createTime) values
     <foreach collection="paymentHistoryList" index="index" item="item" separator=",">
       (#{item.payCode},#{item.memberId},#{item.platform},#{item.params},#{item.batchPayNo},#{item.isPaySuccess},#{item.payType},#{item.createTime})
     </foreach>

@@ -47,7 +47,6 @@ public class ArticleService implements IArticleService {
     public Page<ArticleShowDto> getAllArticle(Long memberId,ArticleSearch articleSearch) {
         if (articleSearch.getSearchWay()==0){
             List<ArticleShowDto> articleShowDtoList=articleMapper.getAtricleList(memberId,articleSearch,new RowBounds(articleSearch.getPageIndex(),articleSearch.getPageSize()));
-
             PageInfo<ArticleShowDto> showDtoPage=new PageInfo<ArticleShowDto>(articleShowDtoList);
             return Page.trans(showDtoPage);
         }else{

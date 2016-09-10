@@ -29,6 +29,12 @@ public interface IPaymentService {
 
     String patchWechatCustomers(List<PaymentApprove> approveList,String ip);
 
+    /**
+     * 申请提现
+     * @param memberId
+     * @param approve
+     * @return
+     */
     MemberScore generatorPayParams(Long memberId, PaymentApprove approve);
 
     /**

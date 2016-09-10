@@ -20,4 +20,9 @@
           resultType="com.weitaomi.application.model.bean.MemberScoreFlow">
     select * from wtm_member_score_flow flow  WHERE flow.memberId=#{memberId}
   </select>
+  <select id="getMemberScoreFlow"
+          resultType="com.weitaomi.application.model.bean.MemberScoreFlow">
+    select * from wtm_member_score_flow flow  WHERE flow.memberId=#{memberId} AND flow.createTime >=#{createTime} AND flow.createTime &lt;= #{createTime}+10
+      AND flow.isFinished=#{isFinished} AND flow.flowScore=#{score}
+  </select>
 </mapper>

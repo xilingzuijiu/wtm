@@ -31,7 +31,7 @@ public class OfficialAccountMsg {
     /**
      * 关注奖励
      */
-    private Integer rewardCount;
+    private Double rewardCount;
 
     /**
      * 获取开放平台分配给公众号的appId
@@ -102,7 +102,7 @@ public class OfficialAccountMsg {
      * 获取关注奖励
      * @return rewardCount 关注奖励
      */
-    public Integer getRewardCount() {
+    public Double getRewardCount() {
         return this.rewardCount;
     }
 
@@ -110,7 +110,7 @@ public class OfficialAccountMsg {
      * 设置关注奖励
      * @param rewardCount 关注奖励
      */
-    public void setRewardCount(Integer rewardCount) {
+    public void setRewardCount(Double rewardCount) {
         this.rewardCount = rewardCount;
     }
 

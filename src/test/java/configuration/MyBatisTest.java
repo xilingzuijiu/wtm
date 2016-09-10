@@ -4,13 +4,11 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.thoughtworks.xstream.XStream;
 import com.weitaomi.application.model.bean.Member;
+import com.weitaomi.application.model.bean.MemberScoreFlow;
 import com.weitaomi.application.model.bean.PaymentApprove;
 import com.weitaomi.application.model.dto.MemberInfoDto;
 import com.weitaomi.application.model.dto.MemberTaskDto;
-import com.weitaomi.application.model.mapper.ArticleMapper;
-import com.weitaomi.application.model.mapper.MemberMapper;
-import com.weitaomi.application.model.mapper.MemberTaskHistoryMapper;
-import com.weitaomi.application.model.mapper.ThirdLoginMapper;
+import com.weitaomi.application.model.mapper.*;
 import com.weitaomi.application.service.interf.IMemberTaskHistoryService;
 import com.weitaomi.application.service.interf.IPaymentService;
 import com.weitaomi.systemconfig.util.DateUtils;
@@ -48,6 +46,8 @@ public class MyBatisTest extends BaseContextCase {
     MemberTaskHistoryMapper memberTaskHistoryMapper;
     @Autowired
     private IPaymentService paymentService;
+    @Autowired
+    private MemberScoreFlowMapper memberScoreFlowMapper;
 
     //    @Autowired
 //    IMemberTaskHistoryService memberTaskHistoryService;
@@ -102,7 +102,9 @@ public class MyBatisTest extends BaseContextCase {
     }
     @Test
     public void testGetMemberInfo(){
-        System.out.println(new Sha256Hash("123456", "HIrUyH").toString());
+//        List<MemberScoreFlow> flow=memberScoreFlowMapper.getMemberScoreFlowListByMemberId(7L);
+        MemberScoreFlow memberScoreFlow= memberScoreFlowMapper.getMemberScoreFlow(7L,-100.00D,1473392373L,2L,0);
+        System.out.println(JSON.toJSONString(memberScoreFlow));
     }
     @Test
     public void testJson(){
@@ -119,11 +121,12 @@ public class MyBatisTest extends BaseContextCase {
     public void testApprove(){
 
         PaymentApprove approve=new PaymentApprove();
-        approve.setAccountNumber("oKfbJvqbJ4PlaFj-ajkrVoMaYllU");
+        approve.setAccountNumber("oKfbJvp1_Bb-Xy1aqw6o4L5H55Y0");
         approve.setAccountName("宁凡荣");
-        approve.setAmount(BigDecimal.valueOf(0.1));
-        approve.setCreateTime(DateUtils.getUnixTimestamp());
+        approve.setAmount(BigDecimal.valueOf(1));
+        approve.setCreateTime(1473393865L);
         approve.setIsPaid(1);
+        approve.setMemberId(7L);
         List<PaymentApprove> approves=new ArrayList<>();
         approves.add(approve);
 

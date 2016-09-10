@@ -12,4 +12,5 @@ public interface ArticleMapper extends IBaseMapper<Article> {
     List<ArticleShowDto> getAtricleList(@Param("memberId") Long memberId, @Param("articleSearch")ArticleSearch articleSearch, @Param("rowBounds")RowBounds rowBounds);
     Integer putArticleToTop(@Param("articleId") Long articleId,@Param("isTop") Integer isTop);
     Integer updateArticleByRead(@Param("articleId") Long articleId,@Param("typeId")Integer typeId);
+    Article getArticleByUrl(@Param("url") String url);
 }

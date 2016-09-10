@@ -14,7 +14,10 @@
         <result column="originId" jdbcType="VARCHAR" property="originId"/>
         <result column="appId" jdbcType="VARCHAR" property="appId"/>
         <result column="qrcodeUrl" jdbcType="VARCHAR" property="qrcodeUrl"/>
+        <result column="expire_in" jdbcType="VARCHAR" property="expire_in"/>
+        <result column="expire_in" jdbcType="BIGINT" property="expire_in"/>
         <result column="userName" jdbcType="VARCHAR" property="userName"/>
+        <result column="tokenUpdate" jdbcType="VARCHAR" property="tokenUpdate"/>
         <result column="accessToken" jdbcType="VARCHAR" property="accessToken"/>
         <result column="authorizationInfo" jdbcType="VARCHAR" property="authorizationInfo"/>
         <result column="accountNumber" jdbcType="INTEGER" property="accountNumber"/>

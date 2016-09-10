@@ -2,6 +2,7 @@ package com.weitaomi.application.service.interf;
 
 import java.util.List;
 import com.weitaomi.application.model.bean.TaskPool;
+import com.weitaomi.application.model.dto.PublishReadRequestDto;
 import com.weitaomi.application.model.dto.RequireFollowerParamsDto;
 import com.weitaomi.application.model.dto.TaskPoolDto;
 import com.weitaomi.systemconfig.util.Page;
@@ -15,7 +16,13 @@ public interface IMemberTaskPoolService {
      * @param taskPool
      * @return
      */
-    public String uploadTaskPool(TaskPool taskPool);
+    public String uploadAddTaskPool(TaskPool taskPool);
+    /**
+     * 发布阅读任务
+     * @param publishReadRequestDto
+     * @return
+     */
+    public String uploadReadTaskPool(PublishReadRequestDto publishReadRequestDto);
     /**
      * 获取求粉页相关信息
      * @param memberId
@@ -37,5 +44,5 @@ public interface IMemberTaskPoolService {
      * @param isPublishNow
      * @return
      */
-    public Boolean updateTaskPoolDto(Long taskPoolId,int isPublishNow);
+    public Boolean updateTaskPoolDto(Long memberId,Long taskPoolId, Integer isPublishNow,Integer needNumber,Integer singScore,Integer limitDay);
 }

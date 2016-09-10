@@ -36,10 +36,10 @@
     a.id,a.officialAccountId,a.url,a.title,a.articleAbstract,a.readNumber,a.agreeNumber,a.agreeIncreaseNumber,a.readIncreaseNumber,a.validNumber,a.isTop,a.createTime
     </sql>
   <select id="getAtricleList" resultType="com.weitaomi.application.model.dto.ArticleShowDto">
-    select * from (select a.*,u.username username ,CASE WHEN rr.id>0 THEN 1 ELSE 0 END AS isReadBefore
-    from wtm_article a LEFT JOIN wtm_official_accounts u ON a.officialAccountId=u.id LEFT JOIN wtm_task_pool pool ON pool.articleId = a.id LEFT JOIN
-    (select r.id,r.articleId from wtm_article_read_record r WHERE r.memberId=#{memberId}) rr ON rr.articleId=a.id
-    WHERE pool.isPublishNow=1 AND pool.totalScore>=pool.singleScore AND pool.id>0
+   select a.*,u.username username
+    from wtm_article a LEFT JOIN wtm_official_accounts u ON a.officialAccountId=u.id LEFT JOIN wtm_task_pool pool ON pool.articleId = a.id
+    WHERE pool.isPublishNow=1 AND pool.totalScore>=pool.singleScore AND pool.id>0 AND pool.articleId NOT IN
+    (select r.articleId from wtm_article_read_record r WHERE r.memberId=#{memberId})
     <if test="articleSearch.articleId!=null">
       AND a.id=#{articleSearch.articleId}
     </if>
@@ -55,6 +55,9 @@
     <if test="articleSearch.titleKeyWord!=null">
       AND a.title like concat('%',#{articleSearch.titleKeyWord},'%')
     </if>
-    ORDER BY a.isTop DESC,a.createTime DESC) p WHERE p.isReadBefore=0 ORDER BY p.isTop DESC,createTime DESC
+    ORDER BY a.isTop DESC,a.createTime DESC
+  </select>
+  <select id="getArticleByUrl" resultType="com.weitaomi.application.model.bean.Article">
+      select * from wtm_article a WHERE a.url=#{url}
   </select>
 </mapper>

@@ -24,7 +24,10 @@ public class TaskPoolDto {
      * 需求数量
      */
     private Integer needNumber;
-
+    /**
+     * 剩余天数
+     */
+    private Integer remainDays;
     /**
      * 现在是否上架
      */
@@ -176,5 +179,21 @@ public class TaskPoolDto {
      */
     public void setIsAccessUndercarriage(Integer isAccessUndercarriage) {
         this.isAccessUndercarriage = isAccessUndercarriage;
+    }
+
+    /**
+     * 获取剩余天数
+     * @return remainDays 剩余天数
+     */
+    public Integer getRemainDays() {
+        return this.remainDays;
+    }
+
+    /**
+     * 设置剩余天数
+     * @param remainDays 剩余天数
+     */
+    public void setRemainDays(Integer remainDays) {
+        this.remainDays = remainDays;
     }
 }

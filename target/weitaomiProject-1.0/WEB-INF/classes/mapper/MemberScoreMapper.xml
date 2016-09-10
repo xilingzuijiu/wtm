@@ -35,6 +35,6 @@
     select <include refid="flowScoreList"/>  from
     wtm_member_score score LEFT JOIN wtm_member_score_flow flow ON score.id=flow.memberScoreId
     LEFT JOIN wtm_member_score_flow_type flowType ON flowType.id = flow.typeId
-    WHERE flow.typeId IN (1,2) AND score.memberId=#{memberId} order by flow.createTime Desc
+    WHERE flow.typeId IN (1,2,6) AND score.memberId=#{memberId} order by flow.createTime Desc
   </select>
 </mapper>

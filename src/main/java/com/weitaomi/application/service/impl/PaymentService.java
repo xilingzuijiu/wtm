@@ -5,16 +5,10 @@ import com.github.pagehelper.PageInfo;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
-import com.weitaomi.application.model.bean.MemberPayAccounts;
-import com.weitaomi.application.model.bean.MemberScore;
-import com.weitaomi.application.model.bean.PaymentApprove;
-import com.weitaomi.application.model.bean.PaymentHistory;
+import com.weitaomi.application.model.bean.*;
 import com.weitaomi.application.model.dto.MemberScoreFlowDto;
 import com.weitaomi.application.model.enums.PayType;
-import com.weitaomi.application.model.mapper.MemberPayAccountsMapper;
-import com.weitaomi.application.model.mapper.MemberScoreMapper;
-import com.weitaomi.application.model.mapper.PaymentApproveMapper;
-import com.weitaomi.application.model.mapper.PaymentHistoryMapper;
+import com.weitaomi.application.model.mapper.*;
 import com.weitaomi.application.service.interf.ICacheService;
 import com.weitaomi.application.service.interf.IMemberScoreService;
 import com.weitaomi.application.service.interf.IPayStrategyContext;
@@ -52,6 +46,8 @@ public class PaymentService implements IPaymentService {
     private IPayStrategyContext payStrategyContext;
     @Autowired
     private MemberScoreMapper memberScoreMapper;
+    @Autowired
+    private MemberScoreFlowMapper memberScoreFlowMapper;
     @Autowired
     private IMemberScoreService memberScoreService;
     @Autowired
@@ -247,6 +243,7 @@ public class PaymentService implements IPaymentService {
         cacheService.setCacheByKey(batch_no,batch_no,24*60*60);
     }
     @Override
+    @Transactional
     public String patchWechatCustomers(List<PaymentApprove> approveList,String ip) {
         List<PaymentHistory> paymentHistoryList=new ArrayList<PaymentHistory>();
         Integer number=0;
@@ -288,14 +285,21 @@ public class PaymentService implements IPaymentService {
                 if (wechat!=null){
                     if (wechat.getResult_code().equals(WechatConfig.SUCCESS)&&wechat.getReturn_code().equals(WechatConfig.SUCCESS)){
                         approve.setIsPaid(1);
-                        approve.setCreateTime(DateUtils.getUnixTimestamp());
+                        MemberScoreFlow memberScoreFlow=memberScoreFlowMapper.getMemberScoreFlow(approve.getMemberId(),-approve.getAmount().multiply(BigDecimal.valueOf(100)).doubleValue(),approve.getCreateTime(),2L,0);
+                    approve.setCreateTime(DateUtils.getUnixTimestamp());
+                    if (memberScoreFlow==null){
+                            throw new InfoException("获取待提现记录失败");
+                        }
+                        memberScoreFlow.setIsFinished(1);
+                        memberScoreFlow.setCreateTime(DateUtils.getUnixTimestamp());
+                        memberScoreFlowMapper.updateByPrimaryKeySelective(memberScoreFlow);
                         approveMapper.updateByPrimaryKeySelective(approve);
                         PaymentHistory paymentHistory = new PaymentHistory();
                         paymentHistory.setIsPaySuccess(1);
                         paymentHistory.setPayType(1);
                         paymentHistory.setParams(JSON.toJSONString(wechatBatchPayParams));
                         paymentHistory.setMemberId(approve.getMemberId());
-                        paymentHistory.setPlatform(PayType.ALIPAY_WEB.getDesc());
+                        paymentHistory.setPlatform(PayType.WECHAT_APP.getDesc());
                         paymentHistory.setPayCode(wechat.getPayment_no());
                         paymentHistory.setCreateTime(DateUtils.getUnixTimestamp());
                         paymentHistory.setBatchPayNo(code);

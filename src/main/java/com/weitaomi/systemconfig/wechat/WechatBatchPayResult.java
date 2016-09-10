@@ -8,6 +8,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 @XStreamAlias("xml")
 public class WechatBatchPayResult {
     private String return_code;
+    private String device_info;
     private String return_msg;
     private String mch_appid;
     private String mchid;
@@ -105,5 +106,13 @@ public class WechatBatchPayResult {
 
     public void setErr_code_des(String err_code_des) {
         this.err_code_des = err_code_des;
+    }
+
+    public String getDevice_info() {
+        return this.device_info;
+    }
+
+    public void setDevice_info(String device_info) {
+        this.device_info = device_info;
     }
 }

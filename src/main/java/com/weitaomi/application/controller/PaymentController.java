@@ -1,5 +1,6 @@
 package com.weitaomi.application.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.weitaomi.application.controller.baseController.BaseController;
 import com.weitaomi.application.model.bean.MemberPayAccounts;
 import com.weitaomi.application.model.bean.PaymentApprove;
@@ -41,7 +42,7 @@ public class PaymentController extends BaseController{
     }
     @ResponseBody
     @RequestMapping(value = "/getPaymentParams", method = RequestMethod.POST)
-    public String getPaymentParams(HttpServletRequest request,@RequestBody Map<String,Object> params){
+    public AjaxResult getPaymentParams(HttpServletRequest request,@RequestBody Map<String,Object> params){
         Long memberId=this.getUserId(request);
         if (memberId==null){
             throw new BusinessException("用户ID为空");
@@ -50,7 +51,12 @@ public class PaymentController extends BaseController{
         if ((Integer)params.get("payType")==(PayType.WECHAT_APP.getValue())){
             params.put("spbill_create_ip", IpUtils.getIpAddr(request));
         }
-        return paymentService.getPaymentParams(params);
+        String paramString=paymentService.getPaymentParams(params);
+        if ((Integer)params.get("payType")==(PayType.WECHAT_APP.getValue())){
+            Map map= JSON.parseObject(paramString);
+            return AjaxResult.getOK(map);
+        }
+        return AjaxResult.getOK(paramString);
     }
     @ResponseBody
     @RequestMapping(value = "/patchAliPayCustomers", method = RequestMethod.POST)

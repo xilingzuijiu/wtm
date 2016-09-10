@@ -33,7 +33,7 @@ public class OfficialAccount extends BaseModel {
      * 用户ID
      */
     @Column(name = "memberId")
-    private String memberId;
+    private Long memberId;
     /**
      * 公号原始ID
      */
@@ -50,6 +50,11 @@ public class OfficialAccount extends BaseModel {
     @Column(name = "qrcodeUrl")
     private String qrcodeUrl;
     /**
+     * 过期时间
+     */
+    @Column(name = "expire_in")
+    private Long expire_in;
+    /**
      * 公号名称
      */
     @Column(name = "userName")
@@ -59,6 +64,11 @@ public class OfficialAccount extends BaseModel {
      */
     @Column(name = "accessToken")
     private String accessToken;
+    /**
+     * 公众号令牌
+     */
+    @Column(name = "tokenUpdate")
+    private String tokenUpdate;
 
     /**
      * 粉丝数量
@@ -239,7 +249,7 @@ public class OfficialAccount extends BaseModel {
      * 获取用户ID
      * @return memberId 用户ID
      */
-    public String getMemberId() {
+    public Long getMemberId() {
         return this.memberId;
     }
 
@@ -247,7 +257,7 @@ public class OfficialAccount extends BaseModel {
      * 设置用户ID
      * @param memberId 用户ID
      */
-    public void setMemberId(String memberId) {
+    public void setMemberId(Long memberId) {
         this.memberId = memberId;
     }
 
@@ -379,5 +389,37 @@ public class OfficialAccount extends BaseModel {
      */
     public void setQrcodeUrl(String qrcodeUrl) {
         this.qrcodeUrl = qrcodeUrl;
+    }
+
+    /**
+     * 获取过期时间
+     * @return expire_in 过期时间
+     */
+    public Long getExpire_in() {
+        return this.expire_in;
+    }
+
+    /**
+     * 设置过期时间
+     * @param expire_in 过期时间
+     */
+    public void setExpire_in(Long expire_in) {
+        this.expire_in = expire_in;
+    }
+
+    /**
+     * 获取公众号令牌
+     * @return tokenUpdate 公众号令牌
+     */
+    public String getTokenUpdate() {
+        return this.tokenUpdate;
+    }
+
+    /**
+     * 设置公众号令牌
+     * @param tokenUpdate 公众号令牌
+     */
+    public void setTokenUpdate(String tokenUpdate) {
+        this.tokenUpdate = tokenUpdate;
     }
 }

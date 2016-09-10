@@ -147,9 +147,13 @@ public class OfficeAccountService implements IOfficeAccountService {
                     if (score>=taskPool.getSingleScore()){
                         taskPoolMapper.updateTaskPoolWithScore(score, taskPool.getId());
                     } else {
-                        taskPool.setTotalScore(score.intValue());
+                        taskPool.setTotalScore(0);
+                        taskPool.setLimitDay(0L);
+                        taskPool.setNeedNumber(0);
+                        taskPool.setSingleScore(0);
                         taskPool.setIsPublishNow(0);
                         taskPoolMapper.updateByPrimaryKeySelective(taskPool);
+                        memberScoreService.addMemberScore(officialAccountWithScore.getMemberId(), 6L,1,score.doubleValue(), UUIDGenerator.generate());
                     }
                     //增加任务记录
                     int number = memberTaskHistoryMapper.updateMemberTaskUnfinished(memberId,0,officialAccountWithScore.getOriginId());

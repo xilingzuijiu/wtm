@@ -40,8 +40,12 @@ public class TaskPoolController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/updateTaskPoolDto", method = RequestMethod.POST)
-    public AjaxResult updateTaskPoolDto(Long taskPoolId,int isPublishNow){
-        return AjaxResult.getOK(memberTaskPoolService.updateTaskPoolDto(taskPoolId,isPublishNow));
+    public AjaxResult updateTaskPoolDto(HttpServletRequest request,Long taskPoolId, Integer isPublishNow,
+                                        @RequestParam(required = false) Integer needNumber,
+                                        @RequestParam(required = false) Integer singScore,
+                                        @RequestParam(required = false) Integer limitDay){
+        Long memberId=this.getUserId(request);
+        return AjaxResult.getOK(memberTaskPoolService.updateTaskPoolDto(memberId,taskPoolId, isPublishNow, needNumber, singScore,limitDay));
     }
     /**
      * 申请积分退回
