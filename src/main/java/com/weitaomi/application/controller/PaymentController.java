@@ -56,7 +56,10 @@ public class PaymentController extends BaseController{
             Map map= JSON.parseObject(paramString);
             return AjaxResult.getOK(map);
         }
-        return AjaxResult.getOK(paramString);
+        if ((Integer)params.get("payType")==(PayType.ALIPAY_APP.getValue())){
+            return AjaxResult.getOK(paramString);
+        }
+        return AjaxResult.getError();
     }
     @ResponseBody
     @RequestMapping(value = "/patchAliPayCustomers", method = RequestMethod.POST)

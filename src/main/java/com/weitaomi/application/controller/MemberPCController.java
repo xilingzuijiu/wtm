@@ -5,6 +5,7 @@ import com.weitaomi.application.model.bean.Member;
 import com.weitaomi.application.model.bean.TaskPool;
 import com.weitaomi.application.model.dto.PublishReadRequestDto;
 import com.weitaomi.application.model.dto.RegisterMsg;
+import com.weitaomi.application.service.interf.IArticleService;
 import com.weitaomi.application.service.interf.IMemberService;
 import com.weitaomi.application.service.interf.IMemberTaskPoolService;
 import com.weitaomi.systemconfig.dataFormat.AjaxResult;
@@ -38,6 +39,8 @@ public class MemberPCController extends BaseController {
     private IMemberService memberService;
     @Autowired
     private IMemberTaskPoolService memberTaskPoolService;
+    @Autowired
+    private IArticleService articleService;
     /**
      * 获取用户信息
      * @throws ParseException    the parse exception
@@ -93,11 +96,9 @@ public class MemberPCController extends BaseController {
      * @throws ParseException    the parse exception
      * @see
      */
-//    @ResponseBody
-    @RequestMapping(value = "/getInvitedCodes", method = RequestMethod.GET)
-    public ModelAndView getInvitedCodes(ModelAndView modelAndView){
-        modelAndView.setViewName("officialAccountList");
-        modelAndView.addObject("");
-        return modelAndView;
+    @ResponseBody
+    @RequestMapping(value = "/getArticleList", method = RequestMethod.GET)
+    public AjaxResult getArticleList(Long memberId,Long time){
+        return AjaxResult.getOK(articleService.getArticleReadRecordDto(memberId, time));
     }
 }

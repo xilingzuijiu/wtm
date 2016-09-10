@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.weitaomi.application.model.bean.Article;
 import com.weitaomi.application.model.bean.ArticleReadRecord;
 import com.weitaomi.application.model.dto.ArticleDto;
+import com.weitaomi.application.model.dto.ArticleReadRecordDto;
 import com.weitaomi.application.model.dto.ArticleSearch;
 import com.weitaomi.application.model.dto.ArticleShowDto;
 import com.weitaomi.application.model.mapper.ArticleMapper;
@@ -133,5 +134,10 @@ public class ArticleService implements IArticleService {
             }
         }
         return false;
+    }
+
+    @Override
+    public List<ArticleReadRecordDto> getArticleReadRecordDto(Long memberId, Long createTime) {
+        return articleReadRecordMapper.getArticleReadRecordDto(memberId, createTime);
     }
 }
