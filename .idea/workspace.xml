@@ -4,8 +4,6 @@
     <list default="true" id="cc7b2d14-bf42-4e36-b023-825da18870c6" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymemberCallBackController.java" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymemberCallBackController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/alipay/AlipayNotify.java" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/alipay/AlipayNotify.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/alipay/sign/RSA.java" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/alipay/sign/RSA.java" />
     </list>
     <ignored path="weitaomiProject.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -115,10 +113,10 @@
       <file leaf-file-name="PaymemberCallBackController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymemberCallBackController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.20235756">
-              <caret line="90" column="35" selection-start-line="90" selection-start-column="35" selection-end-line="90" selection-end-column="35" />
+            <state vertical-scroll-proportion="0.7917485">
+              <caret line="57" column="53" selection-start-line="57" selection-start-column="53" selection-end-line="57" selection-end-column="53" />
               <folding>
-                <element signature="e#2219#2234#0" expanded="true" />
+                <element signature="e#2250#2265#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1725,7 +1723,7 @@
       <workItem from="1473064299109" duration="29756000" />
       <workItem from="1473148202324" duration="61871000" />
       <workItem from="1473320962248" duration="41449000" />
-      <workItem from="1473474331808" duration="37921000" />
+      <workItem from="1473474331808" duration="38522000" />
     </task>
     <task id="LOCAL-00001" summary="F[任务] 增加任务相关CRUD">
       <created>1471344681918</created>
@@ -1931,7 +1929,13 @@
       <option name="project" value="LOCAL" />
       <updated>1473653338092</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="F【支付】支付宝支付公网测试">
+      <created>1473661036630</created>
+      <option name="number" value="00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1473661036630</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1967,7 +1971,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="651998000" />
+    <option name="totallyTimeSpent" value="652599000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -2068,7 +2072,8 @@
     <MESSAGE value="F【阅读】阅读文章回调" />
     <MESSAGE value="B【阅读】阅读文章回调修改" />
     <MESSAGE value="B【阅读】阅读文章用户积分处理模块" />
-    <option name="LAST_COMMIT_MESSAGE" value="B【阅读】阅读文章用户积分处理模块" />
+    <MESSAGE value="F【支付】支付宝支付公网测试" />
+    <option name="LAST_COMMIT_MESSAGE" value="F【支付】支付宝支付公网测试" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -2538,10 +2543,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymemberCallBackController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.20235756">
-          <caret line="90" column="35" selection-start-line="90" selection-start-column="35" selection-end-line="90" selection-end-column="35" />
+        <state vertical-scroll-proportion="0.7917485">
+          <caret line="57" column="53" selection-start-line="57" selection-start-column="53" selection-end-line="57" selection-end-column="53" />
           <folding>
-            <element signature="e#2219#2234#0" expanded="true" />
+            <element signature="e#2250#2265#0" expanded="true" />
           </folding>
         </state>
       </provider>

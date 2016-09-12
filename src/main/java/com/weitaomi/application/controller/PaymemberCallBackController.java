@@ -48,6 +48,7 @@ public class PaymemberCallBackController {
     @RequestMapping(value = "/verifyAlipayNotify", method = RequestMethod.POST)
     public void  verifyAlipayNotify(HttpServletRequest request, HttpServletResponse response) throws Exception {
         //获取支付宝POST过来反馈信息
+        logger.info("支付回调开始");
         Map<String,String> params = new HashMap<String,String>();
         Map requestParams = request.getParameterMap();
         for (Iterator iter = requestParams.keySet().iterator(); iter.hasNext();) {
