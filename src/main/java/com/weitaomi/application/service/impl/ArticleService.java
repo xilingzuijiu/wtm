@@ -161,7 +161,7 @@ public class ArticleService implements IArticleService {
         articleReadRecord=articleReadRecordList.get(0);
         articleReadRecord.setType(1);
         articleReadRecordMapper.updateByPrimaryKeySelective(articleReadRecord);
-        TaskPool taskPool=taskPoolMapper.getTaskPoolByOfficialId(articleId,1);
+        TaskPool taskPool=taskPoolMapper.getTaskPoolByArticleId(articleId,1);
         if (taskPool==null){
             throw new InfoException("任务池中没有该文章");
         }
