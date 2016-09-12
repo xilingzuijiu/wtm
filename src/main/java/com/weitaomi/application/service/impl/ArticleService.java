@@ -4,20 +4,21 @@ import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import com.weitaomi.application.model.bean.Article;
 import com.weitaomi.application.model.bean.ArticleReadRecord;
+import com.weitaomi.application.model.bean.TaskPool;
 import com.weitaomi.application.model.dto.ArticleDto;
 import com.weitaomi.application.model.dto.ArticleReadRecordDto;
 import com.weitaomi.application.model.dto.ArticleSearch;
 import com.weitaomi.application.model.dto.ArticleShowDto;
 import com.weitaomi.application.model.mapper.ArticleMapper;
 import com.weitaomi.application.model.mapper.ArticleReadRecordMapper;
+import com.weitaomi.application.model.mapper.TaskPoolMapper;
 import com.weitaomi.application.service.interf.IArticleService;
 import com.weitaomi.application.service.interf.ICacheService;
 import com.weitaomi.application.service.interf.IMemberScoreService;
+import com.weitaomi.application.service.interf.IMemberTaskHistoryService;
 import com.weitaomi.systemconfig.exception.BusinessException;
-import com.weitaomi.systemconfig.util.DateUtils;
-import com.weitaomi.systemconfig.util.HttpRequestUtils;
-import com.weitaomi.systemconfig.util.Page;
-import com.weitaomi.systemconfig.util.PropertiesUtil;
+import com.weitaomi.systemconfig.exception.InfoException;
+import com.weitaomi.systemconfig.util.*;
 import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +45,11 @@ public class ArticleService implements IArticleService {
     @Autowired
     private IMemberScoreService memberScoreService;
     @Autowired
+    private IMemberTaskHistoryService memberTaskHistoryService;
+    @Autowired
     private ICacheService cacheService;
+    @Autowired
+    private TaskPoolMapper taskPoolMapper;
     @Override
     public Page<ArticleShowDto> getAllArticle(Long memberId,ArticleSearch articleSearch) {
         if (articleSearch.getSearchWay()==0){
@@ -139,5 +145,44 @@ public class ArticleService implements IArticleService {
     @Override
     public List<ArticleReadRecordDto> getArticleReadRecordDto(Long memberId, Long createTime) {
         return articleReadRecordMapper.getArticleReadRecordDto(memberId, createTime);
+    }
+
+    @Override
+    @Transactional
+    public Boolean readArticleRequest(Long memberId, Long time, Long articleId) {
+        ArticleReadRecord articleReadRecord=new ArticleReadRecord();
+        articleReadRecord.setArticleId(articleId);
+        articleReadRecord.setMemberId(memberId);
+        articleReadRecord.setCreateTime(time);
+        List<ArticleReadRecord> articleReadRecordList=articleReadRecordMapper.select(articleReadRecord);
+        if (articleReadRecordList.isEmpty()||articleReadRecordList.size()>1){
+            throw new InfoException("文章记录为空或者发现多于一条");
+        }
+        articleReadRecord=articleReadRecordList.get(0);
+        articleReadRecord.setType(1);
+        articleReadRecordMapper.updateByPrimaryKeySelective(articleReadRecord);
+        TaskPool taskPool=taskPoolMapper.getTaskPoolByOfficialId(articleId,1);
+        if (taskPool==null){
+            throw new InfoException("任务池中没有该文章");
+        }
+        Integer score = taskPool.getTotalScore()-taskPool.getSingleScore();
+        if (score<0){
+            throw new InfoException("任务池中该文章的剩余米币不足以支付阅读任务");
+        }
+        taskPool.setTotalScore(score);
+        if (score<taskPool.getSingleScore()){
+            taskPool.setTotalScore(0);
+            taskPool.setLimitDay(0L);
+            taskPool.setNeedNumber(0);
+            taskPool.setSingleScore(0);
+            taskPool.setIsPublishNow(0);
+            memberScoreService.addMemberScore(taskPool.getMemberId(), 6L,1,score.doubleValue(), UUIDGenerator.generate());
+            JpushUtils.buildRequest("您发布的任务积分已不足，任务终止",taskPool.getMemberId());
+        }
+        Article article=articleMapper.selectByPrimaryKey(articleId);
+        taskPoolMapper.updateByPrimaryKeySelective(taskPool);
+        memberTaskHistoryService.addMemberTaskToHistory(memberId,6L, BigDecimal.valueOf(taskPool.getSingleScore()).multiply(taskPool.getRate()).doubleValue(),1,"阅读文章"+article.getTitle(),null);
+        memberScoreService.addMemberScore(memberId,3L,1,BigDecimal.valueOf(taskPool.getSingleScore()).multiply(taskPool.getRate()).doubleValue(),UUIDGenerator.generate());
+        return true;
     }
 }

@@ -8,7 +8,7 @@
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="memberId" property="memberId" jdbcType="BIGINT"/>
     <result column="taskId" property="taskId" jdbcType="BIGINT"/>
-    <result column="pointCount" property="pointCount" jdbcType="BIGINT" />
+    <result column="pointCount" property="pointCount" jdbcType="DOUBLE" />
     <result column="taskName" property="taskName" jdbcType="VARCHAR" />
     <result column="taskDesc" property="taskDesc" jdbcType="VARCHAR" />
     <result column="taskFlag" property="taskFlag" jdbcType="VARCHAR" />
@@ -17,7 +17,7 @@
   </resultMap>
   <resultMap id="DetailResultMap" type="com.weitaomi.application.model.bean.MemberTaskHistoryDetail">
     <result column="detail_taskHistoryId" property="taskHistoryId" jdbcType="BIGINT" />
-    <result column="detail_count" property="pointCount" jdbcType="BIGINT" />
+    <result column="detail_count" property="pointCount" jdbcType="DOUBLE" />
     <result column="detail_taskName" property="taskName" jdbcType="VARCHAR" />
     <result column="detail_taskDesc" property="taskDesc" jdbcType="VARCHAR" />
     <result column="detail_isFinished" property="isFinished" jdbcType="INTEGER" />

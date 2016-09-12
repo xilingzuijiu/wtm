@@ -9,13 +9,13 @@ public class OfficialAccountWithScore extends OfficialAccount{
     /**
      * 积分
      */
-    private Long score;
+    private Double score;
 
     /**
      * 获取积分
      * @return score 积分
      */
-    public Long getScore() {
+    public Double getScore() {
         return this.score;
     }
 
@@ -23,7 +23,7 @@ public class OfficialAccountWithScore extends OfficialAccount{
      * 设置积分
      * @param score 积分
      */
-    public void setScore(Long score) {
+    public void setScore(Double score) {
         this.score = score;
     }
 }

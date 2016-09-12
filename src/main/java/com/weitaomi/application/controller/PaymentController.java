@@ -50,7 +50,6 @@ public class PaymentController extends BaseController{
             throw new BusinessException("用户ID为空");
         }
         params.put("memberId",memberId);
-        params.put("platForm",requestFrom.getId());
         if ((Integer)params.get("payType")==(PayType.WECHAT_APP.getValue())){
             params.put("spbill_create_ip", IpUtils.getIpAddr(request));
         }
@@ -59,12 +58,8 @@ public class PaymentController extends BaseController{
             Map map= JSON.parseObject(paramString);
             return AjaxResult.getOK(map);
         }
-        if ((Integer)params.get("payType")==(PayType.ALIPAY_APP.getValue())&&requestFrom.getId()==RequestFrom.ANDROID.getId()){
+        if ((Integer)params.get("payType")==(PayType.ALIPAY_APP.getValue())){
             return AjaxResult.getOK(paramString);
-        }
-        if ((Integer)params.get("payType")==(PayType.ALIPAY_APP.getValue())&&requestFrom.getId()==RequestFrom.IOS.getId()){
-            Map map= JSON.parseObject(paramString);
-            return AjaxResult.getOK(map);
         }
         return AjaxResult.getOK();
     }

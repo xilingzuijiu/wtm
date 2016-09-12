@@ -57,4 +57,13 @@ public interface IArticleService {
      * @return
      */
     public List<ArticleReadRecordDto> getArticleReadRecordDto(Long memberId,Long createTime);
+
+    /**
+     * 阅读文章
+     * @param memberId
+     * @param time
+     * @param articleId
+     * @return
+     */
+    public Boolean readArticleRequest(Long memberId,Long time,Long articleId);
 }

@@ -99,10 +99,10 @@ public class MemberTaskHistoryService  implements IMemberTaskHistoryService {
     }
 
     @Override
-    public boolean addMemberTaskToHistory(Long memberId, Long taskId, Long score, Integer flag,String detail,List<MemberTaskHistoryDetail> detailList) {
+    public boolean addMemberTaskToHistory(Long memberId, Long taskId, Double score, Integer flag,String detail,List<MemberTaskHistoryDetail> detailList) {
         MemberTask memberTask = memberTaskMapper.selectByPrimaryKey(taskId);
         if (score==null||score==0){
-            score=memberTask.getPointCount();
+            score=memberTask.getPointCount().doubleValue();
         }
         if (StringUtil.isEmpty(detail)){
             detail=memberTask.getTaskDesc();

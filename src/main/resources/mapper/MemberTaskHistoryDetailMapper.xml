@@ -7,7 +7,7 @@
     -->
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="taskHistoryId" property="taskHistoryId" jdbcType="BIGINT" />
-    <result column="pointCount" property="pointCount" jdbcType="BIGINT" />
+    <result column="pointCount" property="pointCount" jdbcType="DOUBLE" />
     <result column="taskName" property="taskName" jdbcType="VARCHAR" />
     <result column="taskDesc" property="taskDesc" jdbcType="VARCHAR" />
     <result column="isFinished" property="isFinished" jdbcType="INTEGER" />

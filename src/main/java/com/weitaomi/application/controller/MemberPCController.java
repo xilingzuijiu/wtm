@@ -101,4 +101,14 @@ public class MemberPCController extends BaseController {
     public AjaxResult getArticleList(Long memberId,Long time){
         return AjaxResult.getOK(articleService.getArticleReadRecordDto(memberId, time));
     }
+    /**
+     * 阅读文章
+     * @throws ParseException    the parse exception
+     * @see
+     */
+    @ResponseBody
+    @RequestMapping(value = "/readArticleRequest", method = RequestMethod.GET)
+    public AjaxResult getArticleList(Long memberId,Long time,Long articleId){
+        return AjaxResult.getOK(articleService.readArticleRequest(memberId, time,articleId));
+    }
 }

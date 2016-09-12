@@ -19,7 +19,7 @@ public interface IPaymentService {
 
     String getPaymentParams(Map<String,Object> params);
 
-    String verifyAlipayNotify(Map requestParams);
+    void verifyAlipayNotify(Map requestParams);
 
     String verifyWechatNotify(WechatNotifyParams wechatNotifyParams);
 

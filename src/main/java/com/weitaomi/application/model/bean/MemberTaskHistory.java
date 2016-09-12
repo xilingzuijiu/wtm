@@ -20,7 +20,7 @@ public class MemberTaskHistory extends BaseModel {
      * 奖励积分
      */
     @Column(name = "pointCount")
-    private Long pointCount;
+    private Double pointCount;
 
     /**
      * 任务名称
@@ -59,7 +59,7 @@ public class MemberTaskHistory extends BaseModel {
      *
      * @return count - 奖励积分
      */
-    public Long getPointCount() {
+    public Double getPointCount() {
         return pointCount;
     }
 
@@ -68,7 +68,7 @@ public class MemberTaskHistory extends BaseModel {
      *
      * @param pointCount 奖励积分
      */
-    public void setPointCount(Long pointCount) {
+    public void setPointCount(Double pointCount) {
         this.pointCount = pointCount;
     }
 

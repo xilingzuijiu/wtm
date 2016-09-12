@@ -34,15 +34,13 @@ public class AlipayService implements IPayStrategyService {
         parameters.put("it_b_pay","15m");
         Integer plat=(Integer) params.get("platForm");
         String requestParam="";
-        if (plat.equals(RequestFrom.ANDROID.getId())){
-            parameters.put("seller_id",AlipayConfig.seller_id);
-            requestParam= AlipaySubmit.buildRequestParams(parameters);
-        }
-        if (plat.equals(RequestFrom.IOS.getId())) {
-            parameters.put("seller_id",AlipayConfig.partner);
-            parameters.put("private_key",AlipayConfig.private_key);
-            requestParam= JSON.toJSONString(parameters);
-        }
+        parameters.put("seller_id",AlipayConfig.seller_id);
+        requestParam= AlipaySubmit.buildRequestParams(parameters);
+//        if (plat.equals(RequestFrom.IOS.getId())) {
+//            parameters.put("seller_id",AlipayConfig.partner);
+//            parameters.put("private_key",AlipayConfig.private_key);
+//            requestParam= JSON.toJSONString(parameters);
+//        }
         if (!StringUtils.isEmpty(requestParam)){
             return requestParam;
         }

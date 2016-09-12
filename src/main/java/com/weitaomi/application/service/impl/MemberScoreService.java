@@ -125,7 +125,7 @@ public class MemberScoreService implements IMemberScoreService {
                     //处理上级奖励问题
                     MemberInvitedRecord memberInvitedRecord = memberInvitedRecordMapper.getMemberInvitedRecordByMemberId(memberId);
                     if (memberInvitedRecord != null) {
-                        Long rewardScore=increaseScore.multiply(BigDecimal.valueOf(0.1)).longValue();
+                        Double rewardScore=increaseScore.multiply(BigDecimal.valueOf(0.1)).doubleValue();
                         MemberScore memberScore1 = memberScoreMapper.getMemberScoreByMemberId(memberInvitedRecord.getParentId());
                         BigDecimal beforeAmount = BigDecimal.ZERO;
                         if (memberScore1 != null) {
