@@ -45,7 +45,7 @@ public class PaymemberCallBackController {
     @ResponseBody
     @RequestMapping(value = "/verifyAlipayNotify", method = RequestMethod.POST)
     public void  verifyAlipayNotify(HttpServletRequest request,HttpServletResponse response) throws SystemException,BusinessException {
-        Map<String, String> underScoreKeyMap = RequestUtils.getStringParams(request);
+        Map<String, String> underScoreKeyMap = request.getParameterMap();
         Map<String, String> camelCaseKeyMap = RequestUtils.convertKeyToCamelCase(underScoreKeyMap);
 
         //首先验证调用是否来自支付宝

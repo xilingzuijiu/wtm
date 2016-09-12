@@ -1,40 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cc7b2d14-bf42-4e36-b023-825da18870c6" name="Default" comment="F【】支付宝支付log补全">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/alipay/AlipayNotification.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/alipay/RequestUtils.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/alipay/StringUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/weitaomi/application/service/impl/ArticleService.class" afterPath="$PROJECT_DIR$/target/classes/com/weitaomi/application/service/impl/ArticleService.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/weitaomi/application/service/impl/MemberScoreService.class" afterPath="$PROJECT_DIR$/target/classes/com/weitaomi/application/service/impl/MemberScoreService.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/weitaomi/application/service/impl/MemberService.class" afterPath="$PROJECT_DIR$/target/classes/com/weitaomi/application/service/impl/MemberService.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/weitaomi/application/service/interf/IArticleService.class" afterPath="$PROJECT_DIR$/target/classes/com/weitaomi/application/service/interf/IArticleService.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/weitaomiProject-1.0/WEB-INF/classes/com/weitaomi/application/service/impl/ArticleService.class" afterPath="$PROJECT_DIR$/target/weitaomiProject-1.0/WEB-INF/classes/com/weitaomi/application/service/impl/ArticleService.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/weitaomiProject-1.0/WEB-INF/classes/com/weitaomi/application/service/impl/MemberService.class" afterPath="$PROJECT_DIR$/target/weitaomiProject-1.0/WEB-INF/classes/com/weitaomi/application/service/impl/MemberService.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/weitaomiProject-1.0/WEB-INF/classes/com/weitaomi/application/service/interf/IArticleService.class" afterPath="$PROJECT_DIR$/target/weitaomiProject-1.0/WEB-INF/classes/com/weitaomi/application/service/interf/IArticleService.class" />
+    <list default="true" id="cc7b2d14-bf42-4e36-b023-825da18870c6" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/MemberPCController.java" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/MemberPCController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymemberCallBackController.java" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymemberCallBackController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymentController.java" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymentController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/model/bean/MemberTaskHistory.java" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/model/bean/MemberTaskHistory.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/model/bean/MemberTaskHistoryDetail.java" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/model/bean/MemberTaskHistoryDetail.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/model/dto/OfficialAccountWithScore.java" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/model/dto/OfficialAccountWithScore.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/model/mapper/TaskPoolMapper.java" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/model/mapper/TaskPoolMapper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/AlipayService.java" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/AlipayService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/ArticleService.java" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/ArticleService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/MemberScoreService.java" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/MemberScoreService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/MemberTaskHistoryService.java" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/MemberTaskHistoryService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/MemberTaskPoolService.java" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/MemberTaskPoolService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/PaymentService.java" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/PaymentService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/interf/IArticleService.java" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/interf/IArticleService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/interf/IMemberTaskHistoryService.java" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/interf/IMemberTaskHistoryService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/interf/IPaymentService.java" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/interf/IPaymentService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/mapper/MemberTaskHistoryDetailMapper.xml" afterPath="$PROJECT_DIR$/src/main/resources/mapper/MemberTaskHistoryDetailMapper.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/mapper/MemberTaskHistoryMapper.xml" afterPath="$PROJECT_DIR$/src/main/resources/mapper/MemberTaskHistoryMapper.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/mapper/TaskPoolMapper.xml" afterPath="$PROJECT_DIR$/src/main/resources/mapper/TaskPoolMapper.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/frontPage/publishArticle.html" afterPath="$PROJECT_DIR$/src/main/webapp/frontPage/publishArticle.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/weitaomiProject-1.0/WEB-INF/java/com/weitaomi/application/service/impl/ArticleService.java" afterPath="$PROJECT_DIR$/target/weitaomiProject-1.0/WEB-INF/java/com/weitaomi/application/service/impl/ArticleService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/weitaomiProject-1.0/WEB-INF/java/com/weitaomi/application/service/interf/IArticleService.java" afterPath="$PROJECT_DIR$/target/weitaomiProject-1.0/WEB-INF/java/com/weitaomi/application/service/interf/IArticleService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/model/mapper/ArticleReadRecordMapper.java" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/model/mapper/ArticleReadRecordMapper.java" />
     </list>
     <ignored path="weitaomiProject.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -84,11 +54,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="PaymentService.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="PaymentService.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/PaymentService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7229862">
-              <caret line="98" column="0" selection-start-line="98" selection-start-column="0" selection-end-line="98" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="99" column="0" selection-start-line="99" selection-start-column="0" selection-end-line="100" selection-end-column="0" />
               <folding>
                 <element signature="e#7370#7386#0" expanded="true" />
                 <element signature="e#7552#7568#0" expanded="true" />
@@ -121,7 +91,31 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymemberCallBackController.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="66" column="49" selection-start-line="66" selection-start-column="49" selection-end-line="66" selection-end-column="49" />
+              <caret line="61" column="17" selection-start-line="61" selection-start-column="17" selection-end-line="61" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ArticleReadRecordMapper.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/mapper/ArticleReadRecordMapper.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-14.793103">
+              <caret line="22" column="93" selection-start-line="22" selection-start-column="93" selection-end-line="22" selection-end-column="93" />
+              <folding>
+                <marker date="1473495658714" expanded="true" signature="1119:1477" placeholder="select * fro... wtm_article_read_record" />
+                <marker date="1473495658714" expanded="true" signature="1119:1488" placeholder="select a.id wtm_article_read_record" />
+                <marker date="1473495658714" expanded="true" signature="1119:1501" placeholder="select a.id wtm_article_read_record" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ArticleReadRecordMapper.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/model/mapper/ArticleReadRecordMapper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.27504912">
+              <caret line="12" column="1" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -170,7 +164,6 @@
         <option value="$PROJECT_DIR$/src/main/webapp/code/js/backDealPage.js" />
         <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/application/model/mapper/PaymentApproveMapper.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/application/model/dto/ArticleReadRecordDto.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/application/model/mapper/ArticleReadRecordMapper.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/WechatPayService.java" />
         <option value="$PROJECT_DIR$/src/test/java/configuration/SignTest.java" />
@@ -200,9 +193,10 @@
         <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/alipay/RequestUtils.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/alipay/StringUtils.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/alipay/AlipayNotification.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymemberCallBackController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/interf/IPaymentService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/PaymentService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymemberCallBackController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/application/model/mapper/ArticleReadRecordMapper.java" />
       </list>
     </option>
   </component>
@@ -776,7 +770,7 @@
     <property name="settings.editor.selected.configurable" value="debugger.hotswap" />
     <property name="last_opened_file_path" value="D:/Documents/Downloads/AlipayServerDemo-master" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="SearchEverywhereHistoryKey" value="Alipay&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/impl/AlipayService.java&#10;Payment&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/controller/PaymentController.java&#10;RequestF&#9;PSI&#9;JAVA://com.weitaomi.application.model.dto.RequestFrom&#10;MemberPC&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/controller/MemberPCController.java&#10;publish&#9;FILE&#9;file://D:/program/wtm/src/main/webapp/frontPage/publishArticle.html&#10;Myba&#9;FILE&#9;file://D:/program/wtm/src/test/java/configuration/MyBatisTest.java&#10;PayC&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/controller/PaymentController.java&#10;core&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/systemconfig/alipay/AlipayCore.java&#10;ReadRe&#9;FILE&#9;file://D:/program/wtm/src/main/resources/mapper/ArticleReadRecordMapper.xml&#10;mybatis&#9;PSI&#9;JAVA://configuration.MyBatisTest&#10;pom&#9;FILE&#9;file://D:/program/wtm/pom.xml&#10;Mem&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/controller/MemberPCController.java&#10;art&#9;FILE&#9;file://D:/program/wtm/src/main/resources/mapper/ArticleReadRecordMapper.xml&#10;Ali&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/systemconfig/alipay/AlipayConfig.java&#10;Alip&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/systemconfig/alipay/AlipayConfig.java&#10;web&#9;FILE&#9;file://D:/program/wtm/src/main/webapp/WEB-INF/web.xml&#10;MemberPc&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/controller/MemberPCController.java&#10;conf&#9;PSI&#9;JAVA://com.weitaomi.systemconfig.alipay.AlipayConfig&#10;PayMent&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/impl/PaymentService.java&#10;appro&#9;PSI&#9;JAVA://com.weitaomi.application.model.mapper.PaymentApproveMapper&#10;Task&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/controller/TaskPoolController.java&#10;pool&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/impl/MemberTaskPoolService.java&#10;pay&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/interf/IPaymentService.java&#10;member&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/controller/MemberPCController.java&#10;pub&#9;FILE&#9;file://D:/program/wtm/src/main/webapp/frontPage/publishArticle.html&#10;ImemberTas&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/interf/IMemberTaskPoolService.java&#10;publi&#9;FILE&#9;file://D:/program/wtm/src/main/webapp/frontPage/publishAccounts.html&#10;Member&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/controller/MemberPCController.java&#10;Tas&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/controller/TaskPoolController.java&#10;off&#9;FILE&#9;file://D:/program/wtm/src/main/resources/mapper/OfficalAccountMapper.xml&#10;mvc&#9;FILE&#9;file://D:/program/wtm/src/main/resources/configXml/spring-mvc.xml&#10;Artic&#9;PSI&#9;JAVA://com.weitaomi.application.controller.ArticleController&#10;invite&#9;FILE&#9;file://D:/program/wtm/src/main/webapp/frontPage/invite.html&#10;Off&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/model/bean/OfficialAccount.java&#10;Mybatis&#9;FILE&#9;file://D:/program/wtm/src/test/java/configuration/MyBatisTest.java&#10;MemberHist&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/impl/MemberTaskHistoryService.java&#10;pcC&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/controller/MemberPCController.java&#10;My&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/systemconfig/realm/MyImplementRealm.java&#10;Paymen&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/impl/PaymentService.java&#10;MemberSc&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/interf/IMemberScoreService.java&#10;Offi&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/impl/OfficeAccountService.java&#10;Pay&#9;PSI&#9;JAVA://com.weitaomi.application.controller.PaymentController&#10;offi&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/impl/OfficeAccountService.java&#10;index&#9;FILE&#9;file://D:/program/wtm/src/main/webapp/frontPage/index.html&#10;state&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/systemconfig/filter/StatelessAuthenticFilter.java&#10;MyR&#9;PSI&#9;JAVA://com.weitaomi.systemconfig.realm.MyImplementRealm&#10;Article&#9;PSI&#9;JAVA://com.weitaomi.application.model.bean.Article&#10;MemberMapper&#9;FILE&#9;file://D:/program/wtm/src/main/resources/mapper/MemberMapper.xml&#10;taskpool&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/model/bean/TaskPool.java&#10;OfficialA&#9;PSI&#9;JAVA://com.weitaomi.application.model.bean.OfficialAccount" />
+    <property name="SearchEverywhereHistoryKey" value="Ar&#9;FILE&#9;file://D:/program/wtm/src/main/resources/mapper/ArticleReadRecordMapper.xml&#10;Alipay&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/impl/AlipayService.java&#10;Payment&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/controller/PaymentController.java&#10;RequestF&#9;PSI&#9;JAVA://com.weitaomi.application.model.dto.RequestFrom&#10;MemberPC&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/controller/MemberPCController.java&#10;publish&#9;FILE&#9;file://D:/program/wtm/src/main/webapp/frontPage/publishArticle.html&#10;Myba&#9;FILE&#9;file://D:/program/wtm/src/test/java/configuration/MyBatisTest.java&#10;PayC&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/controller/PaymentController.java&#10;core&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/systemconfig/alipay/AlipayCore.java&#10;ReadRe&#9;FILE&#9;file://D:/program/wtm/src/main/resources/mapper/ArticleReadRecordMapper.xml&#10;mybatis&#9;PSI&#9;JAVA://configuration.MyBatisTest&#10;pom&#9;FILE&#9;file://D:/program/wtm/pom.xml&#10;Mem&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/controller/MemberPCController.java&#10;art&#9;FILE&#9;file://D:/program/wtm/src/main/resources/mapper/ArticleReadRecordMapper.xml&#10;Ali&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/systemconfig/alipay/AlipayConfig.java&#10;Alip&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/systemconfig/alipay/AlipayConfig.java&#10;web&#9;FILE&#9;file://D:/program/wtm/src/main/webapp/WEB-INF/web.xml&#10;MemberPc&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/controller/MemberPCController.java&#10;conf&#9;PSI&#9;JAVA://com.weitaomi.systemconfig.alipay.AlipayConfig&#10;PayMent&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/impl/PaymentService.java&#10;appro&#9;PSI&#9;JAVA://com.weitaomi.application.model.mapper.PaymentApproveMapper&#10;Task&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/controller/TaskPoolController.java&#10;pool&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/impl/MemberTaskPoolService.java&#10;pay&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/interf/IPaymentService.java&#10;member&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/controller/MemberPCController.java&#10;pub&#9;FILE&#9;file://D:/program/wtm/src/main/webapp/frontPage/publishArticle.html&#10;ImemberTas&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/interf/IMemberTaskPoolService.java&#10;publi&#9;FILE&#9;file://D:/program/wtm/src/main/webapp/frontPage/publishAccounts.html&#10;Member&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/controller/MemberPCController.java&#10;Tas&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/controller/TaskPoolController.java&#10;off&#9;FILE&#9;file://D:/program/wtm/src/main/resources/mapper/OfficalAccountMapper.xml&#10;mvc&#9;FILE&#9;file://D:/program/wtm/src/main/resources/configXml/spring-mvc.xml&#10;Artic&#9;PSI&#9;JAVA://com.weitaomi.application.controller.ArticleController&#10;invite&#9;FILE&#9;file://D:/program/wtm/src/main/webapp/frontPage/invite.html&#10;Off&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/model/bean/OfficialAccount.java&#10;Mybatis&#9;FILE&#9;file://D:/program/wtm/src/test/java/configuration/MyBatisTest.java&#10;MemberHist&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/impl/MemberTaskHistoryService.java&#10;pcC&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/controller/MemberPCController.java&#10;My&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/systemconfig/realm/MyImplementRealm.java&#10;Paymen&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/impl/PaymentService.java&#10;MemberSc&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/interf/IMemberScoreService.java&#10;Offi&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/impl/OfficeAccountService.java&#10;Pay&#9;PSI&#9;JAVA://com.weitaomi.application.controller.PaymentController&#10;offi&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/service/impl/OfficeAccountService.java&#10;index&#9;FILE&#9;file://D:/program/wtm/src/main/webapp/frontPage/index.html&#10;state&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/systemconfig/filter/StatelessAuthenticFilter.java&#10;MyR&#9;PSI&#9;JAVA://com.weitaomi.systemconfig.realm.MyImplementRealm&#10;Article&#9;PSI&#9;JAVA://com.weitaomi.application.model.bean.Article&#10;MemberMapper&#9;FILE&#9;file://D:/program/wtm/src/main/resources/mapper/MemberMapper.xml&#10;taskpool&#9;FILE&#9;file://D:/program/wtm/src/main/java/com/weitaomi/application/model/bean/TaskPool.java" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -1680,7 +1674,7 @@
       <workItem from="1473064299109" duration="29756000" />
       <workItem from="1473148202324" duration="61871000" />
       <workItem from="1473320962248" duration="41449000" />
-      <workItem from="1473474331808" duration="33030000" />
+      <workItem from="1473474331808" duration="33407000" />
     </task>
     <task id="LOCAL-00001" summary="F[任务] 增加任务相关CRUD">
       <created>1471344681918</created>
@@ -1862,7 +1856,13 @@
       <option name="project" value="LOCAL" />
       <updated>1473643132210</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="F【阅读】阅读文章回调">
+      <created>1473651482575</created>
+      <option name="number" value="00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1473651482575</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1898,7 +1898,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="647107000" />
+    <option name="totallyTimeSpent" value="647484000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -1925,7 +1925,7 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35908598" sideWeight="0.49412394" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3405876" sideWeight="0.49412394" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1996,7 +1996,8 @@
     <MESSAGE value="F【文章】获取文章列表" />
     <MESSAGE value="F【支付】支付宝支付回调处理" />
     <MESSAGE value="F【支付】支付宝支付log补全" />
-    <option name="LAST_COMMIT_MESSAGE" value="F【支付】支付宝支付log补全" />
+    <MESSAGE value="F【阅读】阅读文章回调" />
+    <option name="LAST_COMMIT_MESSAGE" value="F【阅读】阅读文章回调" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -2007,11 +2008,17 @@
           <properties />
           <option name="timeStamp" value="372" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymemberCallBackController.java</url>
+          <line>51</line>
+          <properties />
+          <option name="timeStamp" value="403" />
+        </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="402" />
+      <option name="time" value="404" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -2101,26 +2108,6 @@
           <folding>
             <element signature="e#999#1000#0" expanded="true" />
             <element signature="e#1051#1052#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/model/mapper/ArticleReadRecordMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.11261261">
-          <caret line="10" column="23" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/mapper/ArticleReadRecordMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7457627">
-          <caret line="22" column="93" selection-start-line="22" selection-start-column="93" selection-end-line="22" selection-end-column="93" />
-          <folding>
-            <marker date="1473495658714" expanded="true" signature="1119:1477" placeholder="select * fro... wtm_article_read_record" />
-            <marker date="1473495658714" expanded="true" signature="1119:1488" placeholder="select a.id wtm_article_read_record" />
-            <marker date="1473495658714" expanded="true" signature="1119:1501" placeholder="select a.id wtm_article_read_record" />
           </folding>
         </state>
       </provider>
@@ -2441,14 +2428,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymemberCallBackController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="66" column="49" selection-start-line="66" selection-start-column="49" selection-end-line="66" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/interf/IPaymentService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2459,12 +2438,40 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/PaymentService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7229862">
-          <caret line="98" column="0" selection-start-line="98" selection-start-column="0" selection-end-line="98" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="99" column="0" selection-start-line="99" selection-start-column="0" selection-end-line="100" selection-end-column="0" />
           <folding>
             <element signature="e#7370#7386#0" expanded="true" />
             <element signature="e#7552#7568#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymemberCallBackController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="61" column="17" selection-start-line="61" selection-start-column="17" selection-end-line="61" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/mapper/ArticleReadRecordMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-14.793103">
+          <caret line="22" column="93" selection-start-line="22" selection-start-column="93" selection-end-line="22" selection-end-column="93" />
+          <folding>
+            <marker date="1473495658714" expanded="true" signature="1119:1477" placeholder="select * fro... wtm_article_read_record" />
+            <marker date="1473495658714" expanded="true" signature="1119:1488" placeholder="select a.id wtm_article_read_record" />
+            <marker date="1473495658714" expanded="true" signature="1119:1501" placeholder="select a.id wtm_article_read_record" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/model/mapper/ArticleReadRecordMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.27504912">
+          <caret line="12" column="1" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
+          <folding />
         </state>
       </provider>
     </entry>
