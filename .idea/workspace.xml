@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cc7b2d14-bf42-4e36-b023-825da18870c6" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/weitaomi/application/model/mapper/ArticleReadRecordMapper.class" afterPath="$PROJECT_DIR$/target/classes/com/weitaomi/application/model/mapper/ArticleReadRecordMapper.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/weitaomiProject-1.0/WEB-INF/classes/com/weitaomi/application/model/mapper/ArticleReadRecordMapper.class" afterPath="$PROJECT_DIR$/target/weitaomiProject-1.0/WEB-INF/classes/com/weitaomi/application/model/mapper/ArticleReadRecordMapper.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/weitaomi/application/service/impl/ArticleService.class" afterPath="$PROJECT_DIR$/target/classes/com/weitaomi/application/service/impl/ArticleService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/weitaomiProject-1.0/WEB-INF/classes/com/weitaomi/application/service/impl/ArticleService.class" afterPath="$PROJECT_DIR$/target/weitaomiProject-1.0/WEB-INF/classes/com/weitaomi/application/service/impl/ArticleService.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/ArticleService.java" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/ArticleService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/weitaomiProject-1.0/WEB-INF/java/com/weitaomi/application/model/mapper/ArticleReadRecordMapper.java" afterPath="$PROJECT_DIR$/target/weitaomiProject-1.0/WEB-INF/java/com/weitaomi/application/model/mapper/ArticleReadRecordMapper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/weitaomiProject-1.0/WEB-INF/java/com/weitaomi/application/service/impl/ArticleService.java" afterPath="$PROJECT_DIR$/target/weitaomiProject-1.0/WEB-INF/java/com/weitaomi/application/service/impl/ArticleService.java" />
     </list>
     <ignored path="weitaomiProject.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -59,8 +59,8 @@
       <file leaf-file-name="ArticleService.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/ArticleService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.56777996">
-              <caret line="164" column="28" selection-start-line="164" selection-start-column="28" selection-end-line="164" selection-end-column="28" />
+            <state vertical-scroll-proportion="0.9194499">
+              <caret line="178" column="45" selection-start-line="178" selection-start-column="45" selection-end-line="178" selection-end-column="45" />
               <folding />
             </state>
           </provider>
@@ -1682,7 +1682,7 @@
       <workItem from="1473064299109" duration="29756000" />
       <workItem from="1473148202324" duration="61871000" />
       <workItem from="1473320962248" duration="41449000" />
-      <workItem from="1473474331808" duration="34061000" />
+      <workItem from="1473474331808" duration="34875000" />
     </task>
     <task id="LOCAL-00001" summary="F[任务] 增加任务相关CRUD">
       <created>1471344681918</created>
@@ -1876,7 +1876,13 @@
       <option name="project" value="LOCAL" />
       <updated>1473651840750</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="B【阅读】阅读文章回调修改">
+      <created>1473652508257</created>
+      <option name="number" value="00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1473652508257</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1912,7 +1918,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="648138000" />
+    <option name="totallyTimeSpent" value="648952000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -2011,7 +2017,8 @@
     <MESSAGE value="F【支付】支付宝支付回调处理" />
     <MESSAGE value="F【支付】支付宝支付log补全" />
     <MESSAGE value="F【阅读】阅读文章回调" />
-    <option name="LAST_COMMIT_MESSAGE" value="F【阅读】阅读文章回调" />
+    <MESSAGE value="B【阅读】阅读文章回调修改" />
+    <option name="LAST_COMMIT_MESSAGE" value="B【阅读】阅读文章回调修改" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -2483,8 +2490,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/ArticleService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.56777996">
-          <caret line="164" column="28" selection-start-line="164" selection-start-column="28" selection-end-line="164" selection-end-column="28" />
+        <state vertical-scroll-proportion="0.9194499">
+          <caret line="178" column="45" selection-start-line="178" selection-start-column="45" selection-end-line="178" selection-end-column="45" />
           <folding />
         </state>
       </provider>

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import com.weitaomi.application.model.bean.Article;
 import com.weitaomi.application.model.bean.ArticleReadRecord;
+import com.weitaomi.application.model.bean.OfficialAccount;
 import com.weitaomi.application.model.bean.TaskPool;
 import com.weitaomi.application.model.dto.ArticleDto;
 import com.weitaomi.application.model.dto.ArticleReadRecordDto;
@@ -11,6 +12,7 @@ import com.weitaomi.application.model.dto.ArticleSearch;
 import com.weitaomi.application.model.dto.ArticleShowDto;
 import com.weitaomi.application.model.mapper.ArticleMapper;
 import com.weitaomi.application.model.mapper.ArticleReadRecordMapper;
+import com.weitaomi.application.model.mapper.OfficalAccountMapper;
 import com.weitaomi.application.model.mapper.TaskPoolMapper;
 import com.weitaomi.application.service.interf.IArticleService;
 import com.weitaomi.application.service.interf.ICacheService;
@@ -50,6 +52,8 @@ public class ArticleService implements IArticleService {
     private ICacheService cacheService;
     @Autowired
     private TaskPoolMapper taskPoolMapper;
+    @Autowired
+    private OfficalAccountMapper officalAccountMapper;
     @Override
     public Page<ArticleShowDto> getAllArticle(Long memberId,ArticleSearch articleSearch) {
         if (articleSearch.getSearchWay()==0){
@@ -170,16 +174,17 @@ public class ArticleService implements IArticleService {
             throw new InfoException("任务池中该文章的剩余米币不足以支付阅读任务");
         }
         taskPool.setTotalScore(score);
+        Article article=articleMapper.selectByPrimaryKey(articleId);
+        OfficialAccount account=officalAccountMapper.selectByPrimaryKey(article.getOfficialAccountId());
         if (score<taskPool.getSingleScore()){
             taskPool.setTotalScore(0);
             taskPool.setLimitDay(0L);
             taskPool.setNeedNumber(0);
             taskPool.setSingleScore(0);
             taskPool.setIsPublishNow(0);
-            memberScoreService.addMemberScore(taskPool.getMemberId(), 6L,1,score.doubleValue(), UUIDGenerator.generate());
-            JpushUtils.buildRequest("您发布的任务积分已不足，任务终止",taskPool.getMemberId());
+            memberScoreService.addMemberScore(account.getMemberId(), 6L,1,score.doubleValue(), UUIDGenerator.generate());
+            JpushUtils.buildRequest("您发布的任务积分已不足，任务终止",account.getMemberId());
         }
-        Article article=articleMapper.selectByPrimaryKey(articleId);
         taskPoolMapper.updateByPrimaryKeySelective(taskPool);
         memberTaskHistoryService.addMemberTaskToHistory(memberId,6L, BigDecimal.valueOf(taskPool.getSingleScore()).multiply(taskPool.getRate()).doubleValue(),1,"阅读文章"+article.getTitle(),null);
         memberScoreService.addMemberScore(memberId,3L,1,BigDecimal.valueOf(taskPool.getSingleScore()).multiply(taskPool.getRate()).doubleValue(),UUIDGenerator.generate());
