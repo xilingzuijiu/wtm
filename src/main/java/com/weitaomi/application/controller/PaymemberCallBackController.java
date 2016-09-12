@@ -77,7 +77,7 @@ public class PaymemberCallBackController {
         String trade_status = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"),"UTF-8");
 
         //获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以上仅供参考)//
-
+        logger.info("out_trade_no:"+out_trade_no);
         if(AlipayNotify.verify(params)){//验证成功
             //////////////////////////////////////////////////////////////////////////////////////////
             //请在这里加上商户的业务逻辑程序代码
