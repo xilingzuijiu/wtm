@@ -194,6 +194,7 @@ public class PaymentService implements IPaymentService {
     }
 
     @Override
+    @Transactional
     public void patchAliPayCustomers(List<PaymentApprove> approveList) {
         if (approveList.isEmpty()){
             throw new BusinessException("付款账户列表为空");
@@ -224,6 +225,7 @@ public class PaymentService implements IPaymentService {
         params.put("batch_num",String.valueOf(approveList.size()));
         params.put("batch_fee",totalAmount.toString());
         params.put("pay_date",DateUtils.formatYYYY());
+        params.put("account_name",AlipayConfig.seller_id);
         String batch_no=DateUtils.formatYYYYMMddHHmmssSSS();
         params.put("batch_no",AlipayConfig.payCode_prefix+batch_no);
         String detail=detail_data.substring(0,detail_data.length()-1);

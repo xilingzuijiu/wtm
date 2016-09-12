@@ -10,6 +10,7 @@ import org.dom4j.io.SAXReader;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +44,7 @@ public class AlipaySubmit {
         if(AlipayConfig.sign_type.equals("RSA") ){
         	mysign = RSA.sign(prestr, AlipayConfig.private_key, AlipayConfig.input_charset);
         }
-        return mysign;
+        return URLEncoder.encode(mysign);
     }
 
     /**
@@ -55,12 +56,16 @@ public class AlipaySubmit {
     public static String buildRequestParams(Map<String, String> sParaTemp) {
         //待请求参数数组
         Map<String, String> sPara = buildRequestPara(sParaTemp);
-        StringBuffer toRet = new StringBuffer();
-        for (Map.Entry<String, String> entry : sPara.entrySet()) {
-            toRet.append(entry.getKey()).append("=").append("\"").append(entry.getValue()).append("\"").append("&");
-        }
-
-        return toRet.substring(0, toRet.length() - 1);
+        String sign=sPara.get("sign");
+        String sign_type=sPara.get("sign_type");
+        Map<String, String> para = AlipayCore.paraFilter(sPara);
+        String prestr = AlipayCore.createLinkString(para);
+//        StringBuffer toRet = new StringBuffer();
+//        for (Map.Entry<String, String> entry : sPara.entrySet()) {
+//            toRet.append(entry.getKey()).append("=").append("\"").append(entry.getValue()).append("\"").append("&");
+//        }
+        prestr= prestr+"&sign="+sign+"&sign_type="+sign_type;
+        return prestr;
     }
     /**
      * 生成要请求给支付宝的参数数组

@@ -121,7 +121,7 @@ public class MyBatisTest extends BaseContextCase {
     public void testApprove(){
 
         PaymentApprove approve=new PaymentApprove();
-        approve.setAccountNumber("oKfbJvp1_Bb-Xy1aqw6o4L5H55Y0");
+        approve.setAccountNumber("294200690@qq.com");
         approve.setAccountName("宁凡荣");
         approve.setAmount(BigDecimal.valueOf(1));
         approve.setCreateTime(1473393865L);
@@ -132,7 +132,7 @@ public class MyBatisTest extends BaseContextCase {
 
 
 
-        paymentService.patchWechatCustomers(approves,"192.168.0.77");
+        paymentService.patchAliPayCustomers(approves);
 
 
     }

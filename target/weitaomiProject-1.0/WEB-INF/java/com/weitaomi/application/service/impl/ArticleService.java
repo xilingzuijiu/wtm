@@ -124,7 +124,7 @@ public class ArticleService implements IArticleService {
             String messageUrl = PropertiesUtil.getValue("server.officialAccount.message.url");
             Map<String,String>  map=new HashMap<>();
             map.put("unionId",unionId);
-            map.put("url",messageUrl + "?memberId=" + memberId + "&dateTime=" +time);
+            map.put("url",messageUrl + "?memberId=" + memberId + "&requestTime=" +time);
             map.put("flag","0");
             try {
                 HttpRequestUtils.postStringEntity(url, JSON.toJSONString(map));

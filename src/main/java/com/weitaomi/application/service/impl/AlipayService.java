@@ -1,5 +1,7 @@
 package com.weitaomi.application.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.weitaomi.application.model.dto.RequestFrom;
 import com.weitaomi.application.service.interf.IPayStrategyService;
 import com.weitaomi.systemconfig.alipay.AlipayConfig;
 import com.weitaomi.systemconfig.alipay.AlipaySubmit;
@@ -20,7 +22,6 @@ public class AlipayService implements IPayStrategyService {
     public String getPaymentParams(Map<String, Object> params) {
         Map<String,String> parameters=new HashMap<String, String>();
         parameters.put("partner", AlipayConfig.partner);
-        parameters.put("seller_id",AlipayConfig.seller_id);
         parameters.put("out_trade_no",(String)params.get("trade_no"));
         parameters.put("subject","微淘米在线充值");
         parameters.put("body","微淘米在线充值");
@@ -31,7 +32,17 @@ public class AlipayService implements IPayStrategyService {
         parameters.put("payment_type","1");
         parameters.put("_input_charset",AlipayConfig.input_charset);
         parameters.put("it_b_pay","15m");
-        String requestParam= AlipaySubmit.buildRequestParams(parameters);
+        Integer plat=(Integer) params.get("platForm");
+        String requestParam="";
+        if (plat.equals(RequestFrom.ANDROID.getId())){
+            parameters.put("seller_id",AlipayConfig.seller_id);
+            requestParam= AlipaySubmit.buildRequestParams(parameters);
+        }
+        if (plat.equals(RequestFrom.IOS.getId())) {
+            parameters.put("seller_id",AlipayConfig.partner);
+            parameters.put("private_key",AlipayConfig.private_key);
+            requestParam= JSON.toJSONString(parameters);
+        }
         if (!StringUtils.isEmpty(requestParam)){
             return requestParam;
         }

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.weitaomi.application.controller.baseController.BaseController;
 import com.weitaomi.application.model.bean.MemberPayAccounts;
 import com.weitaomi.application.model.bean.PaymentApprove;
+import com.weitaomi.application.model.dto.RequestFrom;
 import com.weitaomi.application.model.enums.PayType;
 import com.weitaomi.application.service.interf.IPaymentService;
 import com.weitaomi.systemconfig.alipay.AlipayConfig;
@@ -44,10 +45,12 @@ public class PaymentController extends BaseController{
     @RequestMapping(value = "/getPaymentParams", method = RequestMethod.POST)
     public AjaxResult getPaymentParams(HttpServletRequest request,@RequestBody Map<String,Object> params){
         Long memberId=this.getUserId(request);
+        RequestFrom requestFrom=this.getRequestFrom(request);
         if (memberId==null){
             throw new BusinessException("用户ID为空");
         }
         params.put("memberId",memberId);
+        params.put("platForm",requestFrom.getId());
         if ((Integer)params.get("payType")==(PayType.WECHAT_APP.getValue())){
             params.put("spbill_create_ip", IpUtils.getIpAddr(request));
         }
@@ -56,10 +59,14 @@ public class PaymentController extends BaseController{
             Map map= JSON.parseObject(paramString);
             return AjaxResult.getOK(map);
         }
-        if ((Integer)params.get("payType")==(PayType.ALIPAY_APP.getValue())){
+        if ((Integer)params.get("payType")==(PayType.ALIPAY_APP.getValue())&&requestFrom.getId()==RequestFrom.ANDROID.getId()){
             return AjaxResult.getOK(paramString);
         }
-        return AjaxResult.getError();
+        if ((Integer)params.get("payType")==(PayType.ALIPAY_APP.getValue())&&requestFrom.getId()==RequestFrom.IOS.getId()){
+            Map map= JSON.parseObject(paramString);
+            return AjaxResult.getOK(map);
+        }
+        return AjaxResult.getOK();
     }
     @ResponseBody
     @RequestMapping(value = "/patchAliPayCustomers", method = RequestMethod.POST)
