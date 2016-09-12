@@ -2,11 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cc7b2d14-bf42-4e36-b023-825da18870c6" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/weitaomi/application/service/impl/ArticleService.class" afterPath="$PROJECT_DIR$/target/classes/com/weitaomi/application/service/impl/ArticleService.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/weitaomiProject-1.0/WEB-INF/classes/com/weitaomi/application/service/impl/ArticleService.class" afterPath="$PROJECT_DIR$/target/weitaomiProject-1.0/WEB-INF/classes/com/weitaomi/application/service/impl/ArticleService.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/ArticleService.java" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/ArticleService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/weitaomiProject-1.0/WEB-INF/java/com/weitaomi/application/service/impl/ArticleService.java" afterPath="$PROJECT_DIR$/target/weitaomiProject-1.0/WEB-INF/java/com/weitaomi/application/service/impl/ArticleService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymemberCallBackController.java" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymemberCallBackController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/alipay/AlipayNotify.java" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/alipay/AlipayNotify.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/alipay/sign/RSA.java" afterPath="$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/alipay/sign/RSA.java" />
     </list>
     <ignored path="weitaomiProject.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -56,21 +55,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ArticleService.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ArticleService.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/ArticleService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.9194499">
-              <caret line="178" column="45" selection-start-line="178" selection-start-column="45" selection-end-line="178" selection-end-column="45" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TaskPoolMapper.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/model/mapper/TaskPoolMapper.java">
-          <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+              <caret line="170" column="9" selection-start-line="170" selection-start-column="9" selection-end-line="170" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -93,8 +82,22 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/alipay/AlipayNotify.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="67" column="27" selection-start-line="67" selection-start-column="27" selection-end-line="67" selection-end-column="27" />
-              <folding />
+              <caret line="105" column="20" selection-start-line="105" selection-start-column="20" selection-end-line="105" selection-end-column="20" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RSA.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/alipay/sign/RSA.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -109,21 +112,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PaymemberCallBackController.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="PaymemberCallBackController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymemberCallBackController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="61" column="17" selection-start-line="61" selection-start-column="17" selection-end-line="61" selection-end-column="17" />
-              <folding />
+            <state vertical-scroll-proportion="0.20235756">
+              <caret line="90" column="35" selection-start-line="90" selection-start-column="35" selection-end-line="90" selection-end-column="35" />
+              <folding>
+                <element signature="e#2219#2234#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ArticleReadRecordMapper.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/model/mapper/ArticleReadRecordMapper.java">
+      <file leaf-file-name="AlipayConfig.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/alipay/AlipayConfig.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="11" column="40" selection-start-line="11" selection-start-column="40" selection-end-line="11" selection-end-column="40" />
+              <caret line="42" column="263" selection-start-line="42" selection-start-column="263" selection-end-line="42" selection-end-column="263" />
               <folding />
             </state>
           </provider>
@@ -154,7 +159,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/resources/mapper/OfficalAccountMapper.xml" />
         <option value="$PROJECT_DIR$/src/main/resources/configXml/spring-mvc.xml" />
         <option value="$PROJECT_DIR$/src/main/webapp/frontPage/officialAccountList.jsp" />
         <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/application/model/dto/OfficialAccountMsg.java" />
@@ -179,7 +183,6 @@
         <option value="$PROJECT_DIR$/src/test/java/configuration/MyBatisTest.java" />
         <option value="$PROJECT_DIR$/src/main/resources/mapper/ArticleReadRecordMapper.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/alipay/AlipaySubmit.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/alipay/AlipayConfig.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/frontPage/publishArticle.html" />
         <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymentController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/interf/IArticleService.java" />
@@ -196,15 +199,17 @@
         <option value="$PROJECT_DIR$/src/main/resources/mapper/MemberTaskHistoryMapper.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/MemberPCController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/AlipayService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/alipay/AlipayNotify.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/alipay/RequestUtils.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/alipay/StringUtils.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/alipay/AlipayNotification.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/interf/IPaymentService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/PaymentService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymemberCallBackController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/application/model/mapper/ArticleReadRecordMapper.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/ArticleService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/alipay/sign/RSA.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/alipay/AlipayNotify.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/alipay/AlipayConfig.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymemberCallBackController.java" />
       </list>
     </option>
   </component>
@@ -627,6 +632,44 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="alipay" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="weitaomiProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wtm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="weitaomi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="systemconfig" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="alipay" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sign" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1682,7 +1725,7 @@
       <workItem from="1473064299109" duration="29756000" />
       <workItem from="1473148202324" duration="61871000" />
       <workItem from="1473320962248" duration="41449000" />
-      <workItem from="1473474331808" duration="34875000" />
+      <workItem from="1473474331808" duration="37921000" />
     </task>
     <task id="LOCAL-00001" summary="F[任务] 增加任务相关CRUD">
       <created>1471344681918</created>
@@ -1882,7 +1925,13 @@
       <option name="project" value="LOCAL" />
       <updated>1473652508257</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="B【阅读】阅读文章用户积分处理模块">
+      <created>1473653338092</created>
+      <option name="number" value="00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1473653338092</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1918,7 +1967,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="648952000" />
+    <option name="totallyTimeSpent" value="651998000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -1945,7 +1994,7 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3405876" sideWeight="0.49412394" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31120783" sideWeight="0.49412394" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -2018,7 +2067,8 @@
     <MESSAGE value="F【支付】支付宝支付log补全" />
     <MESSAGE value="F【阅读】阅读文章回调" />
     <MESSAGE value="B【阅读】阅读文章回调修改" />
-    <option name="LAST_COMMIT_MESSAGE" value="B【阅读】阅读文章回调修改" />
+    <MESSAGE value="B【阅读】阅读文章用户积分处理模块" />
+    <option name="LAST_COMMIT_MESSAGE" value="B【阅读】阅读文章用户积分处理模块" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -2029,17 +2079,11 @@
           <properties />
           <option name="timeStamp" value="372" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymemberCallBackController.java</url>
-          <line>51</line>
-          <properties />
-          <option name="timeStamp" value="403" />
-        </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="404" />
+      <option name="time" value="410" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -2167,26 +2211,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/alipay/AlipayConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="46" column="120" selection-start-line="46" selection-start-column="39" selection-end-line="46" selection-end-column="120" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-core/4.2.6.RELEASE/spring-core-4.2.6.RELEASE.jar!/org/springframework/cglib/proxy/MethodProxy.class">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.72254336">
           <caret line="107" column="0" selection-start-line="107" selection-start-column="0" selection-end-line="107" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/alipay/sign/RSA.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="58" column="26" selection-start-line="58" selection-start-column="26" selection-end-line="58" selection-end-column="26" />
           <folding />
         </state>
       </provider>
@@ -2409,14 +2437,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/alipay/AlipayNotify.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="67" column="27" selection-start-line="67" selection-start-column="27" selection-end-line="67" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/alipay/StringUtils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33333334">
@@ -2464,14 +2484,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymemberCallBackController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="61" column="17" selection-start-line="61" selection-start-column="17" selection-end-line="61" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/model/mapper/ArticleReadRecordMapper.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2480,9 +2492,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/model/mapper/TaskPoolMapper.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/alipay/sign/RSA.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/alipay/AlipayNotify.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="105" column="20" selection-start-line="105" selection-start-column="20" selection-end-line="105" selection-end-column="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/systemconfig/alipay/AlipayConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="42" column="263" selection-start-line="42" selection-start-column="263" selection-end-line="42" selection-end-column="263" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/model/mapper/TaskPoolMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.22573364">
           <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
           <folding />
         </state>
@@ -2490,9 +2530,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/service/impl/ArticleService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9194499">
-          <caret line="178" column="45" selection-start-line="178" selection-start-column="45" selection-end-line="178" selection-end-column="45" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="170" column="9" selection-start-line="170" selection-start-column="9" selection-end-line="170" selection-end-column="9" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/weitaomi/application/controller/PaymemberCallBackController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.20235756">
+          <caret line="90" column="35" selection-start-line="90" selection-start-column="35" selection-end-line="90" selection-end-column="35" />
+          <folding>
+            <element signature="e#2219#2234#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
