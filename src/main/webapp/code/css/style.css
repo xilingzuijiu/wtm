@@ -35,7 +35,7 @@ html{}
 
 
 #readtitle{background:#f94b16;color:#fff;height:144px;text-align:center;line-height:144px;font-size:60px;}
-.readlist li{padding:3% 3.2% 3% 3.2%;overflow:hidden;border-bottom:#eee 1px solid;}
+.readlist li{padding:3% 3.2% 3% 3.2%;overflow:hidden;border-bottom:#eee 1px solid;display:block;}
 .readlist .tablebox{display:table;float:left;width:75%;}
 .readlist li a{border:none;  -webkit-tap-highlight-color: rgba(0,0,0,0);  -webkit-tap-highlight-color:transparent;
     outline:none;}
@@ -84,4 +84,6 @@ html{}
     .readtool p{font-size:0.8em;}
     .readtool .thistime{margin-bottom:10px;}
 }
+/*.showone{width:95%;background:#2CEF78;height:100%;position:fixed;left:5%;top:0;display:none;z-index:1;}*/
+/*.hideone{width:5%;height:50px;background:#fa4a18;text-align: center;line-height:50px;position:fixed;top:40%;z-index:2;display:none;color:#fff;}*/
 
