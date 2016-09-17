@@ -133,7 +133,7 @@
         <label class="col-sm-4 control-label">单次阅读奖励：</label>
         <div class="col-sm-8 ">
             <div class="input-group">
-                <input type="text" class="form-control" onchange="changeScore(this.value)" name="singleScore" id="input1"/>
+                <input type="text" class="form-control" onchange="changeScore(this.value)" name="singleScore" id="input1" readonly="true" value="1"/>
                 <div class="input-group-addon">米币</div>
             </div>
             <span class="info">（单次消费米币额度乘以关注数量，不得大于拥有米币总额度）</span>
@@ -147,7 +147,7 @@
                 <input type="text" class="form-control" name="needNumber" id="input2" onchange="checkAmount(this.value)"/>
                 <div class="input-group-addon">次</div>
             </div>
-            <span class="info">0则为不限制次数,直到账户剩余额度不足一次关注奖励</span>
+            <span class="info">奖励米币数和关注数量必须均大于零</span>
         </div>
 
     </div>

@@ -439,3 +439,14 @@ DELETE FROM `wtm_weitaomi_official_member`;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+
+
+
+-- 导出  表 weitaomi.wtm_weitaomi_official_member 结构
+CREATE TABLE IF NOT EXISTS `wtm_weitaomi_history_version` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `platform` varchar(50) NOT NULL DEFAULT '' COMMENT '平台',
+  `version` varchar(50) NOT NULL DEFAULT '' COMMENT '版本号',
+  `createTime` bigint(20) DEFAULT NULL COMMENT '创建日期',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微淘米历史版本';

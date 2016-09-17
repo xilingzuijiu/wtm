@@ -26,10 +26,15 @@ public interface IMemberTaskPoolService {
     /**
      * 获取求粉页相关信息
      * @param memberId
-     * @param time
      * @return
      */
-    public RequireFollowerParamsDto getRequireFollowerParamsDto(Long memberId, Long time);
+    public RequireFollowerParamsDto getRequireFollowerParamsDto(Long memberId);
+    /**
+     * 获取求粉页相关信息
+     * @param memberId
+     * @return
+     */
+    public RequireFollowerParamsDto getMemberArticlePublishMsg(Long memberId);
 
     /**
      * 获取公众号任务

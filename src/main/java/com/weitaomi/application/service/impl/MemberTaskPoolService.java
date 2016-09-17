@@ -154,7 +154,7 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
     }
 
     @Override
-    public RequireFollowerParamsDto getRequireFollowerParamsDto(Long memberId, Long time) {
+    public RequireFollowerParamsDto getRequireFollowerParamsDto(Long memberId) {
         RequireFollowerParamsDto requireFollowerParamsDto=new RequireFollowerParamsDto();
         List<OfficialAccountsDto> accountList=officalAccountMapper.getAccountsByMemberId(memberId);
         if (accountList.isEmpty()){
@@ -166,6 +166,18 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
             throw new BusinessException("获取地区列表失败，请稍后再试");
         }
         requireFollowerParamsDto.setAddressList(addressList);
+//        logger.info(JSON.toJSONString(requireFollowerParamsDto));
+        return requireFollowerParamsDto;
+    }
+
+    @Override
+    public RequireFollowerParamsDto getMemberArticlePublishMsg(Long memberId) {
+        RequireFollowerParamsDto requireFollowerParamsDto=new RequireFollowerParamsDto();
+        List<OfficialAccountsDto> accountList=officalAccountMapper.getAccountsByMemberId(memberId);
+        if (accountList.isEmpty()){
+            throw new BusinessException("公众号列表为空");
+        }
+        requireFollowerParamsDto.setOfficialAccountList(accountList);
 //        logger.info(JSON.toJSONString(requireFollowerParamsDto));
         return requireFollowerParamsDto;
     }

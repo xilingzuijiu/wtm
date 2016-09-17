@@ -93,7 +93,7 @@ public class MyBatisTest extends BaseContextCase {
     @Test
     public void testPushAddAccounts() {
         String url = "http://www.yuyinggzs.com/index.php/home/js/index";
-        String msg = "{\"unionId\":\"oaPViwd0R6XQW4MrQ2LaQTXuOTvc\",\"url\":\"http://192.168.0.77:8001/weitaomi/frontPage/index.html\",\"flag\":\"1\"}";
+        String msg = "{\"unionId\":\"oaPViwd0R6XQW4MrQ2LaQTXuOTvc\",\"url\":\"http://192.168.0.77:8001/weitaomi/frontPage/index.html\",\"flag\":\"0\"}";
         try {
             HttpRequestUtils.postStringEntity(url, msg);
         } catch (IOException e) {
@@ -123,7 +123,7 @@ public class MyBatisTest extends BaseContextCase {
         PaymentApprove approve=new PaymentApprove();
         approve.setAccountNumber("294200690@qq.com");
         approve.setAccountName("宁凡荣");
-        approve.setAmount(BigDecimal.valueOf(1));
+        approve.setAmount(BigDecimal.valueOf(1.00));
         approve.setCreateTime(1473393865L);
         approve.setIsPaid(1);
         approve.setMemberId(7L);

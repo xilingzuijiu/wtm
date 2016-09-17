@@ -18,7 +18,7 @@ function getApproveList() {
             if (json != null && json.errorCode == 0) {
                 var data = json.data
                 $("table:first").empty()
-                var trs=deal(data)
+                var trs=dealGetApproveData(data)
                 $("table:first").append(trs)
             } else {
                 alert("获取列表失败")
@@ -28,7 +28,9 @@ function getApproveList() {
 }
 
 function dealGetApproveData(data){
+    data.forEach(function (child) {
 
+    })
 }
 
 function getApproveListTr(account,name,time,amount,isCheck) {

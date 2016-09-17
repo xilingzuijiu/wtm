@@ -137,7 +137,7 @@ public class ArticleService implements IArticleService {
             map.put("url",messageUrl + "?memberId=" + memberId + "&requestTime=" +time);
             map.put("flag","0");
             try {
-                HttpRequestUtils.postStringEntity(url, JSON.toJSONString(map));
+                HttpRequestUtils.postStringEntity(url,JSON.toJSONString(map));
                 return true;
             } catch (IOException e) {
                 e.printStackTrace();

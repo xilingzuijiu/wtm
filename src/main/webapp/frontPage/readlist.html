@@ -104,6 +104,10 @@
                 }
             });
 
+
+            setInterval(function () {
+                location.reload()
+            },30000)
         })
         var articleSubmit = function(obj){
             var articleId=obj.getAttribute("id");
@@ -127,7 +131,7 @@
                         obj.style.display='none';
 //                        window.open(articleUrl)
                         location.href=articleUrl;
-//                        location.reload();
+//
                     }else if (json!=null&&json.errorCode==4){
                         alert(json.message)
                     }else{ alert("获取数据失败")}

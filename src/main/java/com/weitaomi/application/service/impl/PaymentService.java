@@ -81,7 +81,7 @@ public class PaymentService implements IPaymentService {
     }
 
     @Override
-    public void verifyAlipayNotify(Map requestParams) {
+    public String verifyAlipayNotify(Map requestParams) {
         logger.info("支付宝回调开始");
         //商户订单号
         String out_trade_no = null;
@@ -109,7 +109,9 @@ public class PaymentService implements IPaymentService {
                         paymentHistoryMapper.updateByPrimaryKeySelective(paymentHistory);
                     }
                 }
+            return "success";
             }
+        return "fail";
         }
     @Override
     public String verifyWechatNotify(WechatNotifyParams wechatNotifyParams) {

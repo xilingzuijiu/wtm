@@ -19,7 +19,10 @@ public class AlipayConfig {
 	public static String partner = "2088321045613085";
 	//账户名
 	public static String seller_name = "青岛匠人在线网络科技";
-
+	/**
+	 * 商户密钥key
+	 */
+	public static String key="rtvk49qong4g9j0y7py5h2t7nxzu9osb";
 	// 收款支付宝账号，以2088开头由16位纯数字组成的字符串，一般情况下收款账号就是签约账号
 	public static String seller_id = "9492011@qq.com";
 

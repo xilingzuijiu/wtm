@@ -1,5 +1,6 @@
 package com.weitaomi.systemconfig.alipay;
 
+import com.weitaomi.systemconfig.alipay.sign.MD5;
 import com.weitaomi.systemconfig.alipay.sign.RSA;
 import org.apache.commons.httpclient.NameValuePair;
 import org.dom4j.Document;
@@ -38,13 +39,18 @@ public class AlipaySubmit {
      * @param sPara 要签名的数组
      * @return 签名结果字符串
      */
-	public static String buildRequestMysign(Map<String, String> sPara) {
+	public static String buildRequestMysign(Map<String, String> sPara,String signType) {
     	String prestr = AlipayCore.createLinkString(sPara); //把数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串
         String mysign = "";
-        if(AlipayConfig.sign_type.equals("RSA") ){
+        if(signType.equals("RSA") ){
         	mysign = RSA.sign(prestr, AlipayConfig.private_key, AlipayConfig.input_charset);
+            return URLEncoder.encode(mysign);
         }
-        return URLEncoder.encode(mysign);
+        if(signType.equals("MD5") ) {
+            mysign = MD5.sign(prestr+AlipayConfig.key, AlipayConfig.key, AlipayConfig.input_charset);
+            return mysign;
+        }
+        return null;
     }
 
     /**
@@ -55,7 +61,7 @@ public class AlipaySubmit {
      */
     public static String buildRequestParams(Map<String, String> sParaTemp) {
         //待请求参数数组
-        Map<String, String> sPara = buildRequestPara(sParaTemp);
+        Map<String, String> sPara = buildRequestPara(sParaTemp,"RSA");
         String sign=sPara.get("sign");
         String sign_type=sPara.get("sign_type");
         Map<String, String> para = AlipayCore.paraFilter(sPara);
@@ -72,15 +78,14 @@ public class AlipaySubmit {
      * @param sParaTemp 请求前的参数数组
      * @return 要请求的参数数组
      */
-    private static Map<String, String> buildRequestPara(Map<String, String> sParaTemp) {
+    private static Map<String, String> buildRequestPara(Map<String, String> sParaTemp,String type) {
         //除去数组中的空值和签名参数
         Map<String, String> sPara = AlipayCore.paraFilter(sParaTemp);
         //生成签名结果
-        String mysign = buildRequestMysign(sPara);
-
+        String mysign = buildRequestMysign(sPara,type);
         //签名结果与签名方式加入请求提交参数组中
         sPara.put("sign", mysign);
-        sPara.put("sign_type", AlipayConfig.sign_type);
+        sPara.put("sign_type",type);
 
         return sPara;
     }
@@ -96,7 +101,7 @@ public class AlipaySubmit {
      */
     public static String buildRequest(String strParaFileName, String strFilePath,Map<String, String> sParaTemp) throws Exception {
         //待请求参数数组
-        Map<String, String> sPara = buildRequestPara(sParaTemp);
+        Map<String, String> sPara = buildRequestPara(sParaTemp,"RSA");
 
         HttpProtocolHandler httpProtocolHandler = HttpProtocolHandler.getInstance();
 
@@ -123,7 +128,7 @@ public class AlipaySubmit {
      */
     public static String buildRequest(Map<String, String> sParaTemp, String strMethod, String strButtonName) {
         //待请求参数数组
-        Map<String, String> sPara = buildRequestPara(sParaTemp);
+        Map<String, String> sPara = buildRequestPara(sParaTemp,"MD5");
         List<String> keys = new ArrayList<String>(sPara.keySet());
 
         StringBuffer sbHtml = new StringBuffer();

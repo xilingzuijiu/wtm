@@ -5,6 +5,7 @@ import com.weitaomi.application.model.bean.Member;
 import com.weitaomi.application.model.bean.TaskPool;
 import com.weitaomi.application.model.dto.PublishReadRequestDto;
 import com.weitaomi.application.model.dto.RegisterMsg;
+import com.weitaomi.application.service.interf.IAppVersionService;
 import com.weitaomi.application.service.interf.IArticleService;
 import com.weitaomi.application.service.interf.IMemberService;
 import com.weitaomi.application.service.interf.IMemberTaskPoolService;
@@ -41,6 +42,8 @@ public class MemberPCController extends BaseController {
     private IMemberTaskPoolService memberTaskPoolService;
     @Autowired
     private IArticleService articleService;
+    @Autowired
+    private IAppVersionService appVersionService;
     /**
      * 获取用户信息
      * @throws ParseException    the parse exception
@@ -48,8 +51,18 @@ public class MemberPCController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/getMemberAccountPublishMsg", method = RequestMethod.POST)
-    public AjaxResult getMemberAccountPublishMsg(Long memberId,Long time){
-        return AjaxResult.getOK(memberTaskPoolService.getRequireFollowerParamsDto(memberId, time));
+    public AjaxResult getMemberAccountPublishMsg(Long memberId){
+        return AjaxResult.getOK(memberTaskPoolService.getRequireFollowerParamsDto(memberId));
+    }
+    /**
+     * 获取用户信息
+     * @throws ParseException    the parse exception
+     * @see
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getMemberArticlePublishMsg", method = RequestMethod.POST)
+    public AjaxResult getMemberArticlePublishMsg(Long memberId){
+        return AjaxResult.getOK(memberTaskPoolService.getMemberArticlePublishMsg(memberId));
     }
     /**
      * 公众号发布关注任务
@@ -111,4 +124,26 @@ public class MemberPCController extends BaseController {
     public AjaxResult getArticleList(Long memberId,Long time,Long articleId){
         return AjaxResult.getOK(articleService.readArticleRequest(memberId, time,articleId));
     }
+
+    /**
+     * 阅读文章
+     * @throws ParseException    the parse exception
+     * @see
+     */
+    @ResponseBody
+    @RequestMapping(value = "/updateAppVersion", method = RequestMethod.POST)
+    public AjaxResult updateAppVersion(Integer platFlag,String version){
+        return AjaxResult.getOK(appVersionService.updateAppVersion(platFlag, version));
+    }
+    /**
+     * 阅读文章
+     * @throws ParseException    the parse exception
+     * @see
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getAppVersion", method = RequestMethod.GET)
+    public AjaxResult getAppVersion(Integer platFlag){
+        return AjaxResult.getOK(appVersionService.getCurrentVersion(platFlag));
+    }
+
 }
