@@ -93,12 +93,22 @@ public class MyBatisTest extends BaseContextCase {
     @Test
     public void testPushAddAccounts() {
         String url = "http://www.yuyinggzs.com/index.php/home/js/index";
-        String msg = "{\"unionId\":\"oaPViwd0R6XQW4MrQ2LaQTXuOTvc\",\"url\":\"http://192.168.0.77:8001/weitaomi/frontPage/index.html\",\"flag\":\"0\"}";
+        Map<String,Object>  map=new HashMap<>();
+        map.put("unionId","oaPViwV22OBKL-FcvcNBiZykLm_A");
+        List<Long> idList=new ArrayList<>();
+        idList.add(1L);
+        idList.add(2L);
+        map.put("officialAccountIdList",idList);
+        map.put("flag","1");
+        map.put("accountAdsId","1");
         try {
-            HttpRequestUtils.postStringEntity(url, msg);
-        } catch (IOException e) {
+            String message = HttpRequestUtils.postStringEntity(url, JSON.toJSONString(map));
+            System.out.println("=====================>"+message);
+            Thread.sleep(30000);
+        } catch (Exception e) {
             e.printStackTrace();
         }
+//        }
     }
     @Test
     public void testGetMemberInfo(){

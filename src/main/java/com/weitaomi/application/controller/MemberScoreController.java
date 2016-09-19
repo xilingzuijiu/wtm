@@ -54,7 +54,7 @@ public class MemberScoreController extends BaseController {
     }
 
     /**
-     * 获取积分记录
+     * 更新积分记录
      * @param request
      * @return
      */

@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -99,7 +100,7 @@ public class MemberScoreService implements IMemberScoreService {
                     } else {
                         Double levelOne = Double.valueOf(PropertiesUtil.getValue("score.level.one"));
                         Double rateBase = Double.valueOf(PropertiesUtil.getValue("score.level.one.base"));
-                        BigDecimal rateIncrease = afterScore.subtract(BigDecimal.valueOf(rateBase)).divide(BigDecimal.valueOf(levelOne), 1, BigDecimal.ROUND_FLOOR);
+                        BigDecimal rateIncrease = afterScore.subtract(BigDecimal.valueOf(rateBase)).divide(BigDecimal.valueOf(levelOne), 1, BigDecimal.ROUND_UP);
                         memberScore.setRate(rateIncrease.add(BigDecimal.ONE));
                     }
                     memberScore.setUpdateTime(DateUtils.getUnixTimestamp());
@@ -196,7 +197,18 @@ public class MemberScoreService implements IMemberScoreService {
 
     @Override
     public MemberScore getMemberScoreById(Long memberId) {
-        return memberScoreMapper.getMemberScoreByMemberId(memberId);
+        MemberScore memberScore = memberScoreMapper.getMemberScoreByMemberId(memberId);
+        memberScore.setAvaliableScore(this.getAvaliableScore(memberId));
+        return memberScore;
     }
 
+    @Override
+    public Double getAvaliableScore(Long memberId){
+        Double memberScoreAfter=memberScoreMapper.getAvaliableMemberScore(memberId,DateUtils.getUnixTimestamp(DateUtils.date2Str(new Date(),DateUtils.yyyyMMdd),DateUtils.yyyyMMdd)-7*24*60*60);
+        if (memberScoreAfter==null){
+            return 0D;
+        } else {
+            return memberScoreAfter;
+        }
+    }
 }

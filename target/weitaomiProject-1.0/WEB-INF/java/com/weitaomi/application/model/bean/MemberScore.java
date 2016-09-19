@@ -40,6 +40,8 @@ public class MemberScore extends BaseModel {
      */
     @Column(name = "createTime")
     private Long createTime;
+    @Transient
+    private Double avaliableScore;
 
     /**
      * 获取用户ID
@@ -143,5 +145,13 @@ public class MemberScore extends BaseModel {
      */
     public void setRate(BigDecimal rate) {
         this.rate = rate;
+    }
+
+    public Double getAvaliableScore() {
+        return this.avaliableScore;
+    }
+
+    public void setAvaliableScore(Double avaliableScore) {
+        this.avaliableScore = avaliableScore;
     }
 }

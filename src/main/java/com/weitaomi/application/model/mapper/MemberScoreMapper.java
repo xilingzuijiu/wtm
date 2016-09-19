@@ -10,5 +10,6 @@ import java.util.List;
 
 public interface MemberScoreMapper extends IBaseMapper<MemberScore> {
     MemberScore getMemberScoreByMemberId(@Param("memberId")Long memberId);
+    Double getAvaliableMemberScore(@Param("memberId")Long memberId, @Param("time") Long time);
     List<MemberScoreFlowDto> getMyWalletDtoByMemberId(@Param("memberId") Long memberId, @Param("rowBounds") RowBounds rowBounds);
 }

@@ -10,10 +10,7 @@ import com.weitaomi.application.model.dto.ArticleDto;
 import com.weitaomi.application.model.dto.ArticleReadRecordDto;
 import com.weitaomi.application.model.dto.ArticleSearch;
 import com.weitaomi.application.model.dto.ArticleShowDto;
-import com.weitaomi.application.model.mapper.ArticleMapper;
-import com.weitaomi.application.model.mapper.ArticleReadRecordMapper;
-import com.weitaomi.application.model.mapper.OfficalAccountMapper;
-import com.weitaomi.application.model.mapper.TaskPoolMapper;
+import com.weitaomi.application.model.mapper.*;
 import com.weitaomi.application.service.interf.IArticleService;
 import com.weitaomi.application.service.interf.ICacheService;
 import com.weitaomi.application.service.interf.IMemberScoreService;
@@ -54,6 +51,8 @@ public class ArticleService implements IArticleService {
     private TaskPoolMapper taskPoolMapper;
     @Autowired
     private OfficalAccountMapper officalAccountMapper;
+    @Autowired
+    private AccountAdsMapper accountAdsMapper;
     @Override
     public Page<ArticleShowDto> getAllArticle(Long memberId,ArticleSearch articleSearch) {
         if (articleSearch.getSearchWay()==0){
@@ -136,6 +135,10 @@ public class ArticleService implements IArticleService {
             map.put("unionId",unionId);
             map.put("url",messageUrl + "?memberId=" + memberId + "&requestTime=" +time);
             map.put("flag","0");
+            Integer accountAdsId=accountAdsMapper.getLatestAccountAdsId();
+            if (accountAdsId!=null){
+                map.put("accountAdsId",accountAdsId.toString());
+            }
             try {
                 HttpRequestUtils.postStringEntity(url,JSON.toJSONString(map));
                 return true;

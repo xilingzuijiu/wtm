@@ -37,4 +37,8 @@
     LEFT JOIN wtm_member_score_flow_type flowType ON flowType.id = flow.typeId
     WHERE flow.typeId IN (1,2,6) AND score.memberId=#{memberId} order by flow.createTime Desc
   </select>
+  <select id="getAvaliableMemberScore" resultType="java.lang.Double">
+    select f.memberScoreAfter from wtm_member_score s LEFT JOIN wtm_member_score_flow f ON f.memberScoreId=s.id
+    WHERE s.memberId=#{memberId} AND f.createTime&lt;#{time} order by f.createTime DESC limit 1;
+  </select>
 </mapper>

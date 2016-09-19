@@ -128,7 +128,7 @@ public class AlipaySubmit {
      */
     public static String buildRequest(Map<String, String> sParaTemp, String strMethod, String strButtonName) {
         //待请求参数数组
-        Map<String, String> sPara = buildRequestPara(sParaTemp,"MD5");
+        Map<String, String> sPara = buildRequestPara(sParaTemp,AlipayConfig.sign_type);
         List<String> keys = new ArrayList<String>(sPara.keySet());
 
         StringBuffer sbHtml = new StringBuffer();

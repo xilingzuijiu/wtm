@@ -145,5 +145,16 @@ public class MemberPCController extends BaseController {
     public AjaxResult getAppVersion(Integer platFlag){
         return AjaxResult.getOK(appVersionService.getCurrentVersion(platFlag));
     }
-
+    /**
+     * 取消关注通知
+     * @throws ParseException    the parse exception
+     * @see
+     */
+    @ResponseBody
+    @RequestMapping(value = "/cancelFollowOfficialAccount", method = RequestMethod.GET)
+    public AjaxResult cancelFollowOfficialAccount(@RequestBody Map<String,String> map){
+        String unionId=map.get("unionId");
+        String appId=map.get("appId");
+        return AjaxResult.getOK();
+    }
 }

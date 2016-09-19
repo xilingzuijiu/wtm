@@ -11,7 +11,7 @@ public class MemberInfoDto extends Member {
     /**
      * 用户积分
      */
-    private Long memberScore;
+    private Double memberScore;
     /**
      * 微信昵称
      */
@@ -61,7 +61,7 @@ public class MemberInfoDto extends Member {
      * 获取用户积分
      * @return memberScore 用户积分
      */
-    public Long getMemberScore() {
+    public Double getMemberScore() {
         return this.memberScore;
     }
 
@@ -69,7 +69,7 @@ public class MemberInfoDto extends Member {
      * 设置用户积分
      * @param memberScore 用户积分
      */
-    public void setMemberScore(Long memberScore) {
+    public void setMemberScore(Double memberScore) {
         this.memberScore = memberScore;
     }
 

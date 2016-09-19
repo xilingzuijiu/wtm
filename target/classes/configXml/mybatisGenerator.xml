@@ -129,7 +129,11 @@
             <!--<property name="useActualColumnNames" value="true"/>-->
             <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
         <!--</table>  -->
-        <table tableName="wtm_weitaomi_history_version"  domainObjectName="WtmHistoryVersion">
+        <!--<table tableName="wtm_weitaomi_history_version"  domainObjectName="WtmHistoryVersion">-->
+            <!--<property name="useActualColumnNames" value="true"/>-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+        <table tableName="wtm_accounts_ads"  domainObjectName="AccountAds">
             <property name="useActualColumnNames" value="true"/>
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>

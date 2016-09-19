@@ -16,7 +16,7 @@ import java.util.Properties;
 public class PropertiesUtil {
     public static Properties properties = new Properties();
     public static List<String> configFile = Arrays.asList(
-            "server.properties","properties/configuration.properties","properties/message.properties");
+            "server.properties","properties/configuration.properties","properties/message.properties","properties/requestUrl.properties");
     static {
         try {
             for(String fileName:configFile) {

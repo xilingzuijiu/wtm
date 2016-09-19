@@ -47,6 +47,8 @@ public class OfficeAccountService implements IOfficeAccountService {
     private IMemberScoreService memberScoreService;
     @Autowired
     private IMemberTaskHistoryService memberTaskHistoryService;
+    @Autowired
+    private AccountAdsMapper accountAdsMapper;
     @Override
     public List<OfficialAccountsDto> getAccountsByMemberId(Long memberId){
         return officalAccountMapper.getAccountsByMemberId(memberId);
@@ -77,9 +79,9 @@ public class OfficeAccountService implements IOfficeAccountService {
             OfficialAccountWithScore officialAccountWithScore=officalAccountMapper.getOfficialAccountWithScoreById(officialAccountMsg.getOriginId());
             String value=officialAccountWithScore.getId().toString();
             String valueTemp = cacheService.getCacheByKey(key,String.class);
-//            if (valueTemp!=null){
-//                throw new InfoException("公众号"+officialAccountWithScore.getUserName()+"的关注未完成，请先完成");
-//            }
+            if (valueTemp!=null){
+                throw new InfoException("公众号"+officialAccountWithScore.getUserName()+"的关注未完成，请先完成");
+            }
             cacheService.setCacheByKey(key,value, SystemConfig.TASK_CACHE_TIME);
             OfficeMember officeMember=new OfficeMember();
             officeMember.setMemberId(memberId);
@@ -93,12 +95,16 @@ public class OfficeAccountService implements IOfficeAccountService {
         }
         Long time =DateUtils.getUnixTimestamp();
         int number=officeMemberMapper.batchAddOfficeMember(officeMemberList,time);
-        if (number>100) {
+        if (number>0) {
             String url = PropertiesUtil.getValue("server.officialAccount.receiveAddRequest.url");
             Map<String,Object>  map=new HashMap<>();
             map.put("unionId",unionId);
             map.put("officialAccountIdList",idList);
             map.put("flag","1");
+            Integer accountAdsId=accountAdsMapper.getLatestAccountAdsId();
+            if (accountAdsId!=null){
+                map.put("accountAdsId",accountAdsId);
+            }
             try {
                 HttpRequestUtils.postStringEntity(url, JSON.toJSONString(map));
                 return true;

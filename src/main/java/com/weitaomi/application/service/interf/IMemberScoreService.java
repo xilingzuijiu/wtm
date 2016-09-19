@@ -26,5 +26,12 @@ public interface IMemberScoreService {
      */
     public List<MemberScoreFlow> getMemberScoreFlowList(Long memberId);
 
+    /**
+     * 更新最新积分信息
+     * @param memberId
+     * @return
+     */
     public MemberScore getMemberScoreById(Long memberId);
+
+    Double getAvaliableScore(Long memberId);
 }
