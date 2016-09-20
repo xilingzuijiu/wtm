@@ -119,6 +119,7 @@ public class ArticleService implements IArticleService {
     @Override
     @Transactional
     public Boolean readArticle(Long memberId,String unionId,List<Long> articleId) {
+        long ts=System.currentTimeMillis();
         if(memberId==null){
             throw new BusinessException("用户ID为空");
         }
@@ -140,7 +141,9 @@ public class ArticleService implements IArticleService {
                 map.put("accountAdsId",accountAdsId.toString());
             }
             try {
+                logger.info("时间为：{}",System.currentTimeMillis()-ts);
                 HttpRequestUtils.postStringEntity(url,JSON.toJSONString(map));
+                logger.info("交互时间为：{}",System.currentTimeMillis()-ts);
                 return true;
             } catch (IOException e) {
                 e.printStackTrace();

@@ -62,7 +62,7 @@ public interface IMemberService {
     * @param modifyPasswordDto
     * @return
        */
-     boolean modifyPassWord(Long memberId, ModifyPasswordDto modifyPasswordDto);
+     String modifyPassWord(Long memberId, ModifyPasswordDto modifyPasswordDto);
     /**
     * 更换密码
     * @param memberId

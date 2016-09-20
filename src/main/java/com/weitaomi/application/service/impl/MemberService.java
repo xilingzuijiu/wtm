@@ -303,7 +303,7 @@ public class MemberService extends BaseService implements IMemberService {
     }
 
     @Override
-    public boolean modifyPassWord(Long memberId, ModifyPasswordDto modifyPasswordDto) {
+    public String modifyPassWord(Long memberId, ModifyPasswordDto modifyPasswordDto) {
         boolean flag = false;
         if (modifyPasswordDto == null) {
             throw new InfoException("密码信息为空，请重新修改或者登录");
@@ -322,6 +322,9 @@ public class MemberService extends BaseService implements IMemberService {
             member.setPassword(new Sha256Hash(modifyPasswordDto.getNewPassword(), salt).toString());
             int number = memberMapper.updateByPrimaryKeySelective(member);
             flag = number > 0 ? true : false;
+            if (flag){
+                return member.getPassword();
+            }
         } else if (modifyPasswordDto.getFlag() == 1) {
             Member member = memberMapper.selectByPrimaryKey(memberId);
             if (member == null) {
@@ -339,9 +342,12 @@ public class MemberService extends BaseService implements IMemberService {
             member.setPassword(new Sha256Hash(modifyPasswordDto.getNewPassword(), salt).toString());
             int number = memberMapper.updateByPrimaryKeySelective(member);
             flag = number > 0 ? true : false;
+            if (flag){
+                return member.getPassword();
+            }
         }
 
-        return flag;
+        return "修改失败";
     }
 
     @Override
