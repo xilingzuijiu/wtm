@@ -32,7 +32,7 @@
             $.ajax({
                 type: 'get',
                 dataType: 'json',
-                url: '/weitaomi/pc/admin/member/getArticleList',
+                url: '/pc/admin/member/getArticleList',
                 data: {memberId:memberId,time:requestTime},
                 header:{
                     "Access-Control-Allow-Origin":"true"
@@ -119,7 +119,7 @@
             $.ajax({
                 type: 'get',
                 dataType: 'json',
-                url: '/weitaomi/pc/admin/member/readArticleRequest',
+                url: '/pc/admin/member/readArticleRequest',
                 data: {memberId: memberId,time:requestTime,articleId:articleId},
                 header:{
                     "Access-Control-Allow-Origin":"true"

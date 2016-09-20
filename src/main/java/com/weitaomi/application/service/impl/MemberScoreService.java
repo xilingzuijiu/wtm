@@ -198,7 +198,9 @@ public class MemberScoreService implements IMemberScoreService {
     @Override
     public MemberScore getMemberScoreById(Long memberId) {
         MemberScore memberScore = memberScoreMapper.getMemberScoreByMemberId(memberId);
-        memberScore.setAvaliableScore(this.getAvaliableScore(memberId));
+        if(memberScore!=null){
+            memberScore.setAvaliableScore(this.getAvaliableScore(memberId));
+        }
         return memberScore;
     }
 

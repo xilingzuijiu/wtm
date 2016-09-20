@@ -32,7 +32,7 @@
                 $.ajax({
                     type: 'post',
                     dataType: 'json',
-                    url: '/weitaomi/pc/admin/member/getMemberAccountPublishMsg',
+                    url: '/pc/admin/member/getMemberAccountPublishMsg',
                     data: {memberId:memberId,time:time},
                     success: function (params) {
                         var json = eval(params); //数组
@@ -80,7 +80,7 @@
                 type: 'post',
                 dataType: 'json',
                 contentType: "application/json",
-                url: '/weitaomi/pc/admin/member/publishReadRequest',
+                url: '/pc/admin/member/publishReadRequest',
                 data: request,
                 success: function (data) {
                     console.log(data)

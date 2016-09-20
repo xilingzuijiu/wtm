@@ -58,17 +58,6 @@ public class OfficialAccountController extends BaseController{
         return AjaxResult.getOK();
     }
     /**
-     * 完成关注
-     * @param
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "/pushAddFinished",method = RequestMethod.POST)
-    public AjaxResult pushAddFinished(@RequestBody Map<String,String> params){
-        System.out.println(params.get("originId")+"======="+params.get("unionId"));
-        return AjaxResult.getOK();
-    }
-    /**
      * 提醒用户任务即将到期
      * @param
      * @return

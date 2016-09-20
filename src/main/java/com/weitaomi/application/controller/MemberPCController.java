@@ -1,5 +1,6 @@
 package com.weitaomi.application.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.weitaomi.application.controller.baseController.BaseController;
 import com.weitaomi.application.model.bean.Member;
 import com.weitaomi.application.model.bean.TaskPool;
@@ -105,7 +106,7 @@ public class MemberPCController extends BaseController {
     }
 
     /**
-     * 邀请码邀请
+     * 获取文章列表
      * @throws ParseException    the parse exception
      * @see
      */
@@ -126,7 +127,7 @@ public class MemberPCController extends BaseController {
     }
 
     /**
-     * 阅读文章
+     * 更新版本号
      * @throws ParseException    the parse exception
      * @see
      */
@@ -136,7 +137,7 @@ public class MemberPCController extends BaseController {
         return AjaxResult.getOK(appVersionService.updateAppVersion(platFlag, version));
     }
     /**
-     * 阅读文章
+     * 获取版本号
      * @throws ParseException    the parse exception
      * @see
      */
@@ -151,10 +152,21 @@ public class MemberPCController extends BaseController {
      * @see
      */
     @ResponseBody
-    @RequestMapping(value = "/cancelFollowOfficialAccount", method = RequestMethod.GET)
+    @RequestMapping(value = "/cancelFollowOfficialAccount", method = RequestMethod.POST)
     public AjaxResult cancelFollowOfficialAccount(@RequestBody Map<String,String> map){
         String unionId=map.get("unionId");
         String appId=map.get("appId");
+        return AjaxResult.getOK();
+    }
+    /**
+     * 完成关注
+     * @param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/pushAddFinished",method = RequestMethod.POST)
+    public AjaxResult pushAddFinished(@RequestBody Map<String,String> params){
+        System.out.println(params.get("originId")+"======="+params.get("unionId")+ JSON.toJSONString(params));
         return AjaxResult.getOK();
     }
 }

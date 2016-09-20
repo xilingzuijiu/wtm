@@ -62,6 +62,11 @@ public class MemberService extends BaseService implements IMemberService {
         if (!member.getTelephone().matches("^[1][34578]\\d{9}$")) {
             throw new BusinessException("手机格式不正确");
         }
+        String registerKey=member.getTelephone()+":register";
+        Integer flag= cacheService.getCacheByKey(registerKey,Integer.class);
+        if (flag!=null&&flag==1){
+            throw new InfoException("手机号已经被注册，请勿重复注册");
+        }
         Member memberExist = memberMapper.getMemberByTelephone(member.getTelephone());
         if (memberExist != null) {
             throw new InfoException("手机号已经被注册");
@@ -93,9 +98,9 @@ public class MemberService extends BaseService implements IMemberService {
         if (member.getEmail() != null && member.getEmail().matches("[_a-z\\d\\-\\./]+@[_a-z\\d\\-]+(\\.[_a-z\\d\\-]+)*(\\.(info|biz|com|edu|gov|net|am|bz|cn|cx|hk|jp|tw|vc|vn))$")) {
             memberTemp.setEmail(member.getEmail());
         }
-//       if (!this.validateIndetifyCode(memberTemp.getTelephone(),registerMsg.getIdentifyCode())){
-        if (false) {
-            throw new BusinessException("验证码错误，请重试");
+       if (!this.validateIndetifyCode(memberTemp.getTelephone(),registerMsg.getIdentifyCode())){
+//        if (false) {
+            throw new InfoException("验证码错误，请重试");
         }
         memberTemp.setSource(member.getSource());
         memberTemp.setCreateTime(DateUtils.getUnixTimestamp());
@@ -149,6 +154,7 @@ public class MemberService extends BaseService implements IMemberService {
                 }
             }
         }
+        cacheService.setCacheByKey(registerKey,1,null);
         return true;
     }
 
@@ -231,7 +237,7 @@ public class MemberService extends BaseService implements IMemberService {
         }
         ThirdLogin thirdLogin = thirdLoginMapper.getThirdLoginInfo(openId);
         if (thirdLogin == null) {
-            throw new BusinessException("该微信账号未绑定，请登录绑定或者重新注册");
+            throw new BusinessException("该微信账号未绑定App账号，若有App账号，请登录后绑定微信，或者注册App账户并自动绑定微信");
         }
         if (!thirdLogin.getType().equals(type)) {
             throw new InfoException("登录平台与OpenID不匹配");
