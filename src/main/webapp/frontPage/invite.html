@@ -50,17 +50,60 @@
             });
             $("#ivload").click(function() {
                 EV_modeAlert('envon')
+                var invitedCode=$("#target").text().trim();
+                $("#invitedcode").val(invitedCode)
+            })
+
+           $("#sendVerifyCode").click( function (){
+                var telephone = $("#telephone").val().trim();
+                if (telephone==null || !telephone.match(/^1\d{10}$/)){
+                    alert("手机号码不正确")
+                }else {
+                    $.ajax({
+                        type: 'get',
+                        url: '/pc/admin/member/sendIndentifyCode',
+                        data: {telephone:telephone},
+                        success: function (params) {
+                            var data=eval(params)
+                            var errorCode=data.errorCode
+                            if (errorCode==0){
+
+                            } else if (errorCode==4){
+                                alert(data.message)
+                            }
+                        }
+
+                    })
+                }
             })
 
 
-            $("#submitAndDowload").click(function () {
-                if(isAndroid==true){
-                    $("#ivload").attr("href","http://a.app.qq.com/o/simple.jsp?pkgname=com.woyun.weitaomi")
-                }else if(isiOS==true) {
-                    $("#ivload").attr("href", "http://a.app.qq.com/o/simple.jsp?pkgname=com.woyun.weitaomi")
-                }else{
-                    $("#ivload").attr("href","http://a.app.qq.com/o/simple.jsp?pkgname=com.woyun.weitaomi")
-                }
+            $("#register").click( function (){
+                $("#form").attr("enctype","multipart/form-data")
+                var requestObj = eval($("#registerForm").serializeObject())
+                var request =getRegeisterParams(requestObj)
+                    $.ajax({
+                        type: 'post',
+                        url: '/pc/admin/member/register',
+                        dataType:"json",
+                        data: request,
+                        contentType: "application/json",
+                        beforeSend: function (XMLHttpRequest) {
+                            XMLHttpRequest.setRequestHeader("from","2")
+                        },
+                        success: function (params) {
+                            var data=eval(params)
+                            var errorCode=data.errorCode
+                            if (errorCode==0){
+                                if (data.data){
+                                    download()
+                                }
+                            } else if (errorCode==4){
+                                alert(data.message)
+                            }
+                        }
+
+                    })
             })
     })
 
@@ -87,14 +130,14 @@
 <!-- 弹窗样式 -->
 <div id="envon" style=" width:300px; background-color:#FFFFFF; border:1px solid #000000; padding:20px; overflow:hidden; display:none;">
     <a href="javascript:EV_closeAlert()">关闭</a>
-    <form id="register">
+    <form id="registerForm">
         <input type="text" name="memberName" value="用户名">
         <input type="password" name="password" value="密码">
-        <input type="text" name="telephone" value="电话"><input type="button" value="发送验证码">
-        <input type="text" name="verifyCode" value="验证码">
-        <input type="text" name="invitedCode" value="邀请码">
+        <input type="text"  id="telephone" name="telephone" value="电话"><input type="button" id="sendVerifyCode"  value="发送验证码">
+        <input type="text" name="identifyCode" value="验证码">
+        <input type="text" name="invitedCode" id="invitedcode" value="邀请码">
     </form>
-    <input type="submit" value="确认并提交">
+    <input type="submit" id="register" value="确认并提交">
 </div>
 </body>
 </html>

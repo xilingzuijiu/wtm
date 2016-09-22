@@ -18,10 +18,7 @@ import com.weitaomi.systemconfig.util.DateUtils;
 import com.weitaomi.systemconfig.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -168,5 +165,39 @@ public class MemberPCController extends BaseController {
     public AjaxResult pushAddFinished(@RequestBody Map<String,String> params){
         System.out.println(params.get("originId")+"======="+params.get("unionId")+ JSON.toJSONString(params));
         return AjaxResult.getOK();
+    }
+    /**
+     * 获取邀请码
+     * @param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/sendIndentifyCode",method = RequestMethod.GET)
+    public AjaxResult sendIndentifyCode(String telephone,@RequestParam(required = false,defaultValue ="0") Integer type){
+        return AjaxResult.getOK(memberService.sendIndentifyCode(telephone,type));
+    }
+
+    /**
+     * 用户注册（手机注册）
+     *
+     * @param registerMsg 注册信息
+     * @return AjaxResult 注册成功与否
+
+     * @throws ParseException    the parse exception
+     * @see
+     */
+    @ResponseBody
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public AjaxResult registerAction(@RequestBody RegisterMsg registerMsg,HttpServletRequest request)
+            throws BusinessException, DBException, ParseException {
+        String source=this.getRequestFrom(request).getName();
+        if (registerMsg!=null){
+            Member member=registerMsg.getMember();
+            if (member!=null){
+                member.setSource(source);
+                return AjaxResult.getOK(memberService.register(registerMsg));
+            }
+        }
+        return AjaxResult.getError();
     }
 }

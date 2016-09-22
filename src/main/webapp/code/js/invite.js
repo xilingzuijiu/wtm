@@ -1,3 +1,20 @@
+$.fn.serializeObject = function() {
+    var o = {};
+    var a = this.serializeArray();
+    $.each(a, function() {
+        if (o[this.name]) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+};
+
+
 var EV_MsgBox_ID="";
 
 //弹出对话窗口(msgID-要显示的div的id)
@@ -98,4 +115,28 @@ function EV_myClientHeight(){
     var n=document.documentElement.clientHeight
         || document.body.clientHeight || 0;
     return n;
+}
+
+function ReuqestObj(obj,invtedCode,identifyCode){
+    this.member=obj
+    this.invitedCode=invtedCode
+    this.identifyCode=identifyCode
+}
+function getRegeisterParams(requestObj){
+    var invitedCode = requestObj.invitedCode
+    var identifyCode = requestObj.identifyCode
+    delete requestObj.invitedCode
+    delete requestObj.identifyCode
+    var obj=new ReuqestObj(requestObj,invitedCode,identifyCode)
+    return JSON.stringify(obj)
+}
+
+function download() {
+    if(isAndroid==true){
+        $("#ivload").attr("href","http://a.app.qq.com/o/simple.jsp?pkgname=com.woyun.weitaomi")
+    }else if(isiOS==true) {
+        $("#ivload").attr("href", "http://a.app.qq.com/o/simple.jsp?pkgname=com.woyun.weitaomi")
+    }else{
+        $("#ivload").attr("href","http://a.app.qq.com/o/simple.jsp?pkgname=com.woyun.weitaomi")
+    }
 }
