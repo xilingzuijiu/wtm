@@ -51,4 +51,10 @@ public interface IPaymentService {
      * @return
      */
     MemberPayAccounts savePayAccounts(Long memberId,Integer payType,String payAccount,String realName);
+
+    /**
+     * 获取用户提现列表
+     * @return
+     */
+    Page<PaymentApprove> getPaymentApproveList(Integer pageIndex,Integer pageSize);
 }

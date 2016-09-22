@@ -26,6 +26,11 @@ public class MemberScore extends BaseModel {
     @Column(name = "inValidScore")
     private BigDecimal inValidScore;
     /**
+     * 可用米币数
+     */
+    @Column(name = "avaliableScore")
+    private BigDecimal avaliableScore;
+    /**
      * 可用倍率
      */
     @Column(name = "rate")
@@ -40,8 +45,6 @@ public class MemberScore extends BaseModel {
      */
     @Column(name = "createTime")
     private Long createTime;
-    @Transient
-    private Double avaliableScore;
 
     /**
      * 获取用户ID
@@ -147,11 +150,19 @@ public class MemberScore extends BaseModel {
         this.rate = rate;
     }
 
-    public Double getAvaliableScore() {
+    /**
+     * 获取可用米币数
+     * @return avaliableScore 可用米币数
+     */
+    public BigDecimal getAvaliableScore() {
         return this.avaliableScore;
     }
 
-    public void setAvaliableScore(Double avaliableScore) {
+    /**
+     * 设置可用米币数
+     * @param avaliableScore 可用米币数
+     */
+    public void setAvaliableScore(BigDecimal avaliableScore) {
         this.avaliableScore = avaliableScore;
     }
 }

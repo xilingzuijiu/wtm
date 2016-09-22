@@ -18,7 +18,7 @@ public class WechatConfig {
     //批量付款接口
     public static final String BATCH_PAY_URL= "https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers";
     //微信回调地址
-    public static final String NOTIFY_URL= "http://121.42.196.236:8018/weitaomi/pc/admin/paymemberCallBack/verifyWechatNotify";
+    public static final String NOTIFY_URL= "http://weitaomi.cn/pc/admin/paymemberCallBack/verifyWechatNotify";
     public static final String SUCCESS= "SUCCESS";
     public static final String FAIL= "FAILURE";
 

@@ -10,6 +10,7 @@
     <script src="../code/js/jquery.min.js"></script>
     <script type="text/javascript" src="../code/js/jquery.zclip.min.js"></script>
     <script type="text/javascript" src="../code/js/clipboard.js"></script>
+    <script type="text/javascript" src="../code/js/invite.js"></script>
     <script>
         var u = navigator.userAgent;
         var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;//android终端
@@ -48,6 +49,11 @@
 
             });
             $("#ivload").click(function() {
+                EV_modeAlert('envon')
+            })
+
+
+            $("#submitAndDowload").click(function () {
                 if(isAndroid==true){
                     $("#ivload").attr("href","http://a.app.qq.com/o/simple.jsp?pkgname=com.woyun.weitaomi")
                 }else if(isiOS==true) {
@@ -66,7 +72,7 @@
 </div>
 <div class="ivwrap">
         <img class="ivbanner"src="../code/img/banner.png"/>
-    <p class="ivintroduce">新注册用户通过您的邀请码注册,即送<span>150米币</span>,另外通过您的邀请码注册的用户完成任务,您还能获取<span>额外10%的米币</span>奖励,邀请好友，即刻出发~</p>
+    <p class="ivintroduce">好友通过您的邀请码注册,即送您<span>150米币</span><br/>平台还将给您好友收入<span>10%</span>的奖励</p>
     <div class="invite">
         <img src="../code/img/invite.png"/>
         <div id="invitecode"  data-clipboard-action="copy" data-clipboard-target="#target"><span id="target">dvFgba</span></div>
@@ -74,10 +80,21 @@
     <p class="ivusage">邀请码使用方式：<br/>APP注册页面-输入邀请码即可</p>
     <div class="ivlogo">
         <img src="../code/img/76pt-2x.png"/>
-        <h5>微淘米一款<br/>会赚钱的APP</h5>
+        <h5>玩着就可以<br/>赚钱的APP</h5>
     </div>
-    <a id="ivload" href="#">下载最新APP></a>
+    <a id="ivload" href="#">注册并下载最新APP></a>
+</div>
+<!-- 弹窗样式 -->
+<div id="envon" style=" width:300px; background-color:#FFFFFF; border:1px solid #000000; padding:20px; overflow:hidden; display:none;">
+    <a href="javascript:EV_closeAlert()">关闭</a>
+    <form id="register">
+        <input type="text" name="memberName" value="用户名">
+        <input type="password" name="password" value="密码">
+        <input type="text" name="telephone" value="电话"><input type="button" value="发送验证码">
+        <input type="text" name="verifyCode" value="验证码">
+        <input type="text" name="invitedCode" value="邀请码">
+    </form>
+    <input type="submit" value="确认并提交">
 </div>
 </body>
-
 </html>

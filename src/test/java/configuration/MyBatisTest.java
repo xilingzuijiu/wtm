@@ -47,6 +47,8 @@ public class MyBatisTest extends BaseContextCase {
     @Autowired
     private IPaymentService paymentService;
     @Autowired
+    private IMemberTaskHistoryService memberTaskHistoryService;
+    @Autowired
     private MemberScoreFlowMapper memberScoreFlowMapper;
 
     //    @Autowired
@@ -173,7 +175,10 @@ public class MyBatisTest extends BaseContextCase {
 
         System.out.println(requestParams);
     }
-
+    @Test
+    public void testQuartz(){
+        memberTaskHistoryService.updateAaliableScore();
+    }
     private XStream getXStream(){
         XStream xStream = new XStream();
 //        xStream.autodetectAnnotations(true);

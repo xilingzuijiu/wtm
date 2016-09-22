@@ -4,10 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.weitaomi.application.model.bean.*;
 import com.weitaomi.application.model.dto.MemberTaskDto;
 import com.weitaomi.application.model.dto.MemberTaskWithDetail;
-import com.weitaomi.application.model.mapper.MemberTaskHistoryDetailMapper;
-import com.weitaomi.application.model.mapper.MemberTaskHistoryMapper;
-import com.weitaomi.application.model.mapper.MemberTaskMapper;
-import com.weitaomi.application.model.mapper.OfficeMemberMapper;
+import com.weitaomi.application.model.mapper.*;
 import com.weitaomi.application.service.interf.IMemberScoreService;
 import com.weitaomi.application.service.interf.IMemberTaskHistoryService;
 import com.weitaomi.systemconfig.constant.SystemConfig;
@@ -38,6 +35,8 @@ public class MemberTaskHistoryService  implements IMemberTaskHistoryService {
     private MemberTaskHistoryMapper memberTaskHistoryMapper;
     @Autowired
     private MemberTaskMapper memberTaskMapper;
+    @Autowired
+    private MemberMapper memberMapper;
     @Autowired
     private MemberTaskHistoryDetailMapper memberTaskHistoryDetailMapper;
     @Autowired
@@ -166,5 +165,10 @@ public class MemberTaskHistoryService  implements IMemberTaskHistoryService {
         logger.info("删除未完成任务"+number2+"条");
         int number3=memberTaskHistoryMapper.deleteUnfinishedTaskDetail(SystemConfig.TASK_CACHE_TIME);
         logger.info("删除未完成任务详情"+number3+"条");
+    }
+    @Override
+    public void updateAaliableScore() {
+        Integer number = memberScoreService.updateAvaliableScore();
+        logger.info("更新积分"+number+"条");
     }
 }

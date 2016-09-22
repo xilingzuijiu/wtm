@@ -6,8 +6,10 @@ import com.thoughtworks.xstream.io.xml.Dom4JDriver;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
 import com.weitaomi.application.service.interf.IPaymentService;
+import com.weitaomi.systemconfig.dataFormat.AjaxResult;
 import com.weitaomi.systemconfig.exception.BusinessException;
 import com.weitaomi.systemconfig.exception.SystemException;
+import com.weitaomi.systemconfig.util.AjaxUtil;
 import com.weitaomi.systemconfig.util.HttpRequestUtils;
 import com.weitaomi.systemconfig.util.StreamUtils;
 import com.weitaomi.systemconfig.wechat.WechatBatchPayParams;
@@ -27,6 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.util.Map;
 
 /**
@@ -71,4 +74,11 @@ public class PaymemberCallBackController {
         }
         return code;
     }
+
+    @ResponseBody
+    @RequestMapping(value = "getApproveList",method = RequestMethod.GET)
+    public AjaxResult getApproveList(Integer pageIndex,Integer pageSize){
+        return AjaxResult.getOK(paymentService.getPaymentApproveList(pageIndex, pageSize));
+    }
+
 }

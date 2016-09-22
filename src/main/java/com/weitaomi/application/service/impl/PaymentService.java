@@ -19,6 +19,7 @@ import com.weitaomi.systemconfig.exception.BusinessException;
 import com.weitaomi.systemconfig.exception.InfoException;
 import com.weitaomi.systemconfig.util.*;
 import com.weitaomi.systemconfig.wechat.*;
+import jdk.management.resource.internal.ApproverGroup;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
@@ -257,6 +258,8 @@ public class PaymentService implements IPaymentService {
                         }
                         memberScoreFlow.setIsFinished(1);
                         memberScoreFlow.setCreateTime(DateUtils.getUnixTimestamp());
+                        MemberScore memberScore=memberScoreMapper.selectByPrimaryKey(memberScoreFlow.getMemberScoreId());
+                        memberScore.setInValidScore(memberScore.getInValidScore().add(memberScoreFlow.getFlowScore()));
                         memberScoreFlowMapper.updateByPrimaryKeySelective(memberScoreFlow);
                         approveMapper.updateByPrimaryKeySelective(approve);
                         PaymentHistory paymentHistory = new PaymentHistory();
@@ -294,7 +297,7 @@ public class PaymentService implements IPaymentService {
             if (memberScore==null){
                 throw new InfoException("没有可用提现金额");
             }
-            if (memberScore.getMemberScore().longValue()<approve.getAmount().longValue()){
+            if (memberScore.getAvaliableScore().longValue()<approve.getAmount().multiply(BigDecimal.valueOf(100)).longValue()){
                 throw new InfoException("提现金额大于可用金额");
             }
             approve.setMemberId(memberId);
@@ -347,6 +350,12 @@ public class PaymentService implements IPaymentService {
         pay.setCreateTime(DateUtils.getUnixTimestamp());
         int number=memberPayAccountsMapper.updateByPrimaryKeySelective(pay);
         return number>0?pay:null;
+    }
+    @Override
+    public  Page<PaymentApprove> getPaymentApproveList(Integer pageIndex,Integer pageSize){
+        List<PaymentApprove> paymentApproveList=approveMapper.getPaymentApproveList(new RowBounds(pageIndex,pageSize));
+        PageInfo<PaymentApprove> pageInfo=new PageInfo<PaymentApprove>(paymentApproveList);
+        return Page.trans(pageInfo);
     }
     private String getTradeNo(){
         String key="wtm:orderCode:max";

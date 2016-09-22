@@ -3,6 +3,7 @@ package com.weitaomi.application.service.interf;
 import com.weitaomi.application.model.bean.MemberScore;
 import com.weitaomi.application.model.bean.MemberScoreFlow;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -33,5 +34,5 @@ public interface IMemberScoreService {
      */
     public MemberScore getMemberScoreById(Long memberId);
 
-    Double getAvaliableScore(Long memberId);
+    Integer updateAvaliableScore();
 }

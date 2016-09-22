@@ -14,4 +14,9 @@
     <result column="isPaid" property="isPaid" jdbcType="INTEGER" />
     <result column="createTime" property="createTime" jdbcType="BIGINT" />
   </resultMap>
+  <select id="getPaymentApproveList" resultType="com.weitaomi.application.model.bean.PaymentApprove">
+
+    select * from wtm_payment_approve a WHERE isPaid=0 ORDER BY a.createTime DESC
+
+  </select>
 </mapper>

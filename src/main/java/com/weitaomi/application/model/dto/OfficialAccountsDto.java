@@ -16,6 +16,10 @@ public class OfficialAccountsDto {
      * 可用余额
      */
     private double memberScore;
+    /**
+     * 单次关注奖励
+     */
+    private double singleScore;
 
 
     /**
@@ -64,5 +68,21 @@ public class OfficialAccountsDto {
      */
     public void setMemberScore(double memberScore) {
         this.memberScore = memberScore;
+    }
+
+    /**
+     * 获取单次关注奖励
+     * @return singleScore 单次关注奖励
+     */
+    public double getSingleScore() {
+        return this.singleScore;
+    }
+
+    /**
+     * 设置单次关注奖励
+     * @param singleScore 单次关注奖励
+     */
+    public void setSingleScore(double singleScore) {
+        this.singleScore = singleScore;
     }
 }

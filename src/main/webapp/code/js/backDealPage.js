@@ -11,7 +11,7 @@ function getApproveList() {
     $.ajax({
         type: 'get',
         dataType: 'json',
-        url: '/weitaomi/pc/admin/member/getInvitedCode',
+        url: '/pc/admin/paymemberCallBack',
         success: function (params) {
             var json = eval(params); //数组
             console.log("json数据为：" + params)

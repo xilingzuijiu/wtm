@@ -43,6 +43,8 @@ public class MemberScoreService implements IMemberScoreService {
     private MemberTaskMapper memberTaskMapper;
     @Autowired
     private IMemberTaskHistoryService memberTaskHistoryService;
+    @Autowired
+    private MemberMapper memberMapper;
 
     @Override
     @Transactional
@@ -89,10 +91,12 @@ public class MemberScoreService implements IMemberScoreService {
                     memberScoreMapper.insertSelective(memberScore);
                 } else {
                     BigDecimal afterScore = memberScore.getMemberScore().add(increaseScore);
+                    BigDecimal avaliableScore = memberScore.getAvaliableScore().add(increaseScore);
                     if (afterScore.doubleValue() < 0) {
                         throw new BusinessException("可用积分不足");
                     }
                     memberScore.setMemberScore(afterScore);
+                    memberScore.setAvaliableScore(avaliableScore);
                     if (afterScore.doubleValue() >= Double.valueOf(PropertiesUtil.getValue("score.level.one"))) {
                         memberScore.setRate(BigDecimal.valueOf(2.00));
                     } else if (afterScore.doubleValue() <= Double.valueOf(PropertiesUtil.getValue("score.level.one.one"))) {
@@ -120,7 +124,6 @@ public class MemberScoreService implements IMemberScoreService {
                 if (!flag) {
                     throw new BusinessException("积分记录失败");
                 }
-
                 cacheService.setCacheByKey(key, memberScore, SystemConfig.TASK_CACHE_TIME);
                 if (typeId==3&&increaseScore.doubleValue()>0) {
                     //处理上级奖励问题
@@ -198,19 +201,13 @@ public class MemberScoreService implements IMemberScoreService {
     @Override
     public MemberScore getMemberScoreById(Long memberId) {
         MemberScore memberScore = memberScoreMapper.getMemberScoreByMemberId(memberId);
-        if(memberScore!=null){
-            memberScore.setAvaliableScore(this.getAvaliableScore(memberId));
-        }
         return memberScore;
     }
 
     @Override
-    public Double getAvaliableScore(Long memberId){
-        Double memberScoreAfter=memberScoreMapper.getAvaliableMemberScore(memberId,DateUtils.getUnixTimestamp(DateUtils.date2Str(new Date(),DateUtils.yyyyMMdd),DateUtils.yyyyMMdd)-7*24*60*60);
-        if (memberScoreAfter==null){
-            return 0D;
-        } else {
-            return memberScoreAfter;
-        }
+    public Integer updateAvaliableScore(){
+        List<Long> memberIdList=memberMapper.getAllMemberId();
+        Integer number=memberScoreMapper.getAvaliableMemberScore(memberIdList,DateUtils.getUnixTimestamp(DateUtils.date2Str(new Date(),DateUtils.yyyyMMdd),DateUtils.yyyyMMdd)-7*24*60*60);
+        return number;
     }
 }

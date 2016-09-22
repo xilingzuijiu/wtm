@@ -61,4 +61,6 @@ public interface IMemberTaskHistoryService {
      * 定时清除未完成的任务
      */
     public void deleteUnFinishedTask();
+
+    void updateAaliableScore();
 }

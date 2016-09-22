@@ -126,4 +126,7 @@
       LEFT JOIN wtm_member_score score ON score.memberId=m.id
      WHERE m.id=#{memberId}
   </select>
+  <select id="getAllMemberId" resultType="java.lang.Long">
+    select id from wtm_member
+  </select>
 </mapper>
