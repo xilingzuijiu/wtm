@@ -1,0 +1,48 @@
+.margin0{margin:0 !important;}
+.wpcactive{color:#ff0000 !important;}
+.blankchild{display:none;height:97px;}
+header{width:100%;position:fixed; top:0;left:0;background:#fff;}
+.headerbox{width:1200px;padding-top:15px;overflow:hidden;margin:auto;}
+header .logo{float:left;}
+nav{float:right;overflow:hidden;padding-top:40px;padding-right:13px;}
+nav .nava{display:block;font-size:16px;color:#353535;padding:0 13px;float:left;text-align:center;}
+nav .nava h5{padding-bottom:22px;font-size:16px;color:#353535;font-weight:normal;}
+.blank{height:92px;}
+nav .nava div{background:#fff;position:fixed; top:92px;left:50%;padding:15px 10px 10px 10px;display:none;box-shadow:2px 3px 8px #bbb;}
+nav .nava #navgzh{margin-left:285px;}
+nav .nava #navapp{margin-left:383px;}
+nav .nava:hover #navgzh{display:block;}
+nav .nava:hover #navapp{display:block;}
+nav .nava h4,nav .nava input{font-size:16px;color:#545454 !important;font-weight:normal;padding-top:5px;}
+/*.loadapp{position:fixed; top:243px;left:50%;margin-left:397px;}*/
+/*.loadapp a{display:block;width:125px;height:25px;}*/
+nav .nava input{display:block;background:none;margin:auto;outline:none;cursor:pointer;}
+.weibanner{background:#68c1f4 url("../img/wbanner_02.png") no-repeat center top;height:778px;}
+.UserPlatform,.multiterminal{background:#f8f8f8;padding:90px 0;}
+.multiterminal,.weicontact{text-align:center;}
+.BusinessPlatform,.weicontact{padding:90px 0;}
+.userbox,.BusinessPlatform,.multbox,.weicontact,.copybox{width:1200px;margin:auto;overflow:hidden;}
+.userprofile{float:left;width:435px;}
+.businessprofile{float:right;width:435px;}
+.userprofile h3,.businessprofile h3,.multiterminal h3,.weicontact h3{font-size:55px;color:#fd6021;padding-bottom:42px;}
+.userprofile p,.businessprofile p,.multiterminal p,.weicontact p{font-size:20px;color:#545454;line-height:35px;padding-bottom:18px;}
+.userprofile p span,.businessprofile p span{color:#ec2a52;}
+.userprofile .topbd,.businessprofile .topbd{border-top:#e8e8e8 1px solid;padding-top:18px;padding-bottom:0 !important;}
+.userimg{padding-top:20px;float:right;}
+.businessimg{float:left;padding-top:10px;}
+.mulimg,.weicontact ul{padding-top:35px;}
+.weicontact ul{overflow:hidden;padding:0 52px;}
+.weicontact ul li{text-align:center;background:#f08200;padding:35px 0 50px 0;float:left;margin-right:30px;width:345px;height:240px;}
+.weicontact ul li h5{font-size:20px;color:#fff;padding:28px 0 40px 0;background:url("../img/fenge_29.png") no-repeat center bottom;}
+.weicontact ul li p{font-size:22px;line-height:40px;color:#fff;margin-top:40px;}
+.weicontact ul li .emailone{margin-top:65px;}
+.copyright{background:#3f454c;}
+.copybox{padding:50px 0 35px 0;}
+.copyleft{float:left;margin-right:80px;margin-left:100px;}
+.copyleft h5{font-size:22px;color:#fff;padding-top:50px;font-weight:normal;}
+.gongzhonghao{margin-right:35px;float:left;}
+.app{margin-right:80px;float:left;}
+.gongzhonghao h6,.app h6{font-size:20px;color:#fff;padding-top:10px;font-weight:normal;}
+.copyright p{font-size:22px;line-height:40px;color:#fff;width:200px;float:left;margin-right:100px;}
+.footer{background:#2b3035;text-align:center;}
+.footer p{color:#fff;font-size:18px;padding:5px 0;}
