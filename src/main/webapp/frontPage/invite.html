@@ -78,9 +78,13 @@
                     $("#sendVerifyCode").css("display","none");
                     $("#downtime").css("display","block");
                     countDown();
+                    setTimeout(function () {
+                        $("#sendVerifyCode").css("display","block");
+                        $("#downtime").css("display","none");
+                    }, SS*1000);
+
+
                 }
-
-
 
             })
 
@@ -114,6 +118,7 @@
             })
 
     })
+
 
     </script>
 </head>

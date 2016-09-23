@@ -19,8 +19,8 @@ var showTime = function(){
     totle = totle - 1;
     if (totle == 0) {
         clearInterval(s);
-        clearInterval(t1);
-        clearInterval(t2);
+        //clearInterval(t1);
+        //clearInterval(t2);
 
     } else {
         if (totle > 0 && MS > 0) {
@@ -52,7 +52,7 @@ var showTime = function(){
     }
     ;
     $("#downtime").html(SS + "s");
-	
+
 };
 
 
@@ -69,9 +69,11 @@ var countDown = function() {
     MM = "0" + MM;
 
     showTime();
-
     s = setInterval("showTime()", 100);
-    start1();
+
+
+    //start1();
     //start2();
-    t1 = setInterval("start1()", 100);
+    //t1 = setInterval("start1()", 100);
+
 }
