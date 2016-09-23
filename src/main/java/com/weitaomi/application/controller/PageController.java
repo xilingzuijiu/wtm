@@ -12,6 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PageController extends BaseController{
     @RequestMapping("")
     public String indexPage(){
-        return "index";
+        return "wtmpc/index";
     }
 }
