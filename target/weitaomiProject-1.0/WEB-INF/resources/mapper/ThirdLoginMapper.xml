@@ -21,6 +21,9 @@
     select login.memberId from wtm_third_login login WHERE login.unionId=#{unionId}
   </select>
   <select id="getUnionIdByMemberId" resultType="com.weitaomi.application.model.bean.ThirdLogin">
-    select * from wtm_third_login login WHERE login.memberId=#{memberId}
+    select login.*,m.sex from wtm_third_login login LEFT JOIN wtm_member m  ON m.id=login.memberId WHERE login.memberId=#{memberId}
+  </select>
+  <select id="getThirdlogInDtoMemberId" resultType="com.weitaomi.application.model.dto.ThirdLoginDto">
+     select login.*,m.sex from wtm_third_login login LEFT JOIN wtm_member m  ON m.id=login.memberId WHERE login.memberId=#{memberId}
   </select>
 </mapper>

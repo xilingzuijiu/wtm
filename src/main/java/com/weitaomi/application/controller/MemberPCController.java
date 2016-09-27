@@ -6,10 +6,7 @@ import com.weitaomi.application.model.bean.Member;
 import com.weitaomi.application.model.bean.TaskPool;
 import com.weitaomi.application.model.dto.PublishReadRequestDto;
 import com.weitaomi.application.model.dto.RegisterMsg;
-import com.weitaomi.application.service.interf.IAppVersionService;
-import com.weitaomi.application.service.interf.IArticleService;
-import com.weitaomi.application.service.interf.IMemberService;
-import com.weitaomi.application.service.interf.IMemberTaskPoolService;
+import com.weitaomi.application.service.interf.*;
 import com.weitaomi.systemconfig.dataFormat.AjaxResult;
 import com.weitaomi.systemconfig.exception.BusinessException;
 import com.weitaomi.systemconfig.exception.DBException;
@@ -42,6 +39,8 @@ public class MemberPCController extends BaseController {
     private IArticleService articleService;
     @Autowired
     private IAppVersionService appVersionService;
+    @Autowired
+    private IOfficeAccountService officeAccountService;
     /**
      * 获取用户信息
      * @throws ParseException    the parse exception
@@ -163,8 +162,8 @@ public class MemberPCController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/pushAddFinished",method = RequestMethod.POST)
     public AjaxResult pushAddFinished(@RequestBody Map<String,String> params){
-        System.out.println(params.get("originId")+"======="+params.get("unionId")+ JSON.toJSONString(params));
-        return AjaxResult.getOK();
+        System.out.println(params.get("nickname")+"======="+params.get("sex")+ JSON.toJSONString(params));
+        return AjaxResult.getOK(officeAccountService.pushAddFinished(params));
     }
     /**
      * 获取邀请码
@@ -199,5 +198,30 @@ public class MemberPCController extends BaseController {
             }
         }
         return AjaxResult.getError();
+    }
+
+
+    /**
+     * 存储用户信息
+     * @param map
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/saveAccountsUser", method = RequestMethod.POST)
+    public AjaxResult getOfficialAccountMember(@RequestBody Map map) {
+        System.out.println(JSON.toJSONString(map));
+      return AjaxResult.getOK();
+    }
+
+    /**
+     * 微信服务号签到
+     * @param map
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/signAccount", method = RequestMethod.POST)
+    public AjaxResult signAccount(@RequestBody Map map) {
+        System.out.println(JSON.toJSONString(map));
+        return AjaxResult.getOK();
     }
 }

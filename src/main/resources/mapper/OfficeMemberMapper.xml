@@ -9,6 +9,7 @@
     <result column="officeAccountId" property="officeAccountId" jdbcType="BIGINT" />
     <result column="memberId" property="memberId" jdbcType="BIGINT" />
     <result column="isAccessNow" property="isAccessNow" jdbcType="INTEGER" />
+    <result column="openId" property="openId" jdbcType="VARCHAR" />
     <result column="finishedTime" property="finishedTime" jdbcType="BIGINT" />
     <result column="createTime" property="createTime" jdbcType="BIGINT" />
   </resultMap>
@@ -21,10 +22,16 @@
   <delete id="deleteOverTimeUnfollowedAccounts">
     DELETE FROM wtm_office_member WHERE isAccessNow=0 AND finishedTime is NULL AND unix_timestamp(now())-createTime>#{time}
   </delete>
+  <delete id="deleteFollowAccountsMember">
+    DELETE FROM wtm_office_member WHERE id=#{id}
+  </delete>
   <select id="getOfficeMember" resultType="com.weitaomi.application.model.bean.OfficeMember">
-    select * from wtm_office_member m  WHERE m.memberId=#{memberId} AND m.officialAccountId=#{officialAccountId}
+    select * from wtm_office_member m  WHERE m.memberId=#{memberId} AND m.officeAccountId=#{officialAccountId}
   </select>
   <select id="getOfficeMemberList" resultType="com.weitaomi.application.model.bean.OfficeMember">
     select * from wtm_office_member m WHERE m.memberId=#{memberId} AND m.isAccessNow=0
+  </select>
+  <select id="getOfficeMemberByOpenId" resultType="com.weitaomi.application.model.bean.OfficeMember">
+    select * from wtm_office_member member  WHERE member.openId=#{openid}
   </select>
 </mapper>

@@ -6,60 +6,68 @@
     <link href="../../code/css/base.css" rel="stylesheet" type="text/css"/>
     <link href="../../code/css/backstyle.css" rel="stylesheet" type="text/css"/>
     <script src="../../code/js/jquery.min.js"></script>
+    <script src="../../code/js/backDealPage.js"></script>
     <script>
         $(function () {
             //全选反选
             $(".all").click(function () {
-                if($(this).prop("checked")==true){
-                    $(this).closest(".farther").find(".selectchild").prop("checked",true);
-                   // $(".selectchild").prop("checked", true);
-                }else{$(this).closest(".farther").find(".selectchild").prop("checked", false);}
+                if ($(this).prop("checked") == true) {
+                    $(this).closest(".farther").find(".selectchild").prop("checked", true);
+                    // $(".selectchild").prop("checked", true);
+                } else {
+                    $(this).closest(".farther").find(".selectchild").prop("checked", false);
+                }
             })
             $(".selectchild").click(function () {
-               var length= $(this).closest(".farther").find(".selectchild:checked").length;
-                var alllength=$(this).closest(".farther").find(".selectchild").length;
-                if(length==alllength) {
-                    $(this).closest(".farther").find(".all").prop("checked",true);
-                }else{$(this).closest(".farther").find(".all").prop("checked",false);}
+                var length = $(this).closest(".farther").find(".selectchild:checked").length;
+                var alllength = $(this).closest(".farther").find(".selectchild").length;
+                if (length == alllength) {
+                    $(this).closest(".farther").find(".all").prop("checked", true);
+                } else {
+                    $(this).closest(".farther").find(".all").prop("checked", false);
+                }
             })
 
             //批量审核
             $("#btn").click(function () {
-                var btnlength=$(".selectchild:checked").length;
-                if(btnlength>0){
-                    if(confirm("是否允许用户提现")){
+                var btnlength = $(".selectchild:checked").length;
+                if (btnlength > 0) {
+                    if (confirm("是否允许用户提现")) {
                         //与后台数据交互
                         alert("审核成功");
                         $(".selectchild:checked").closest(".list").find(".audit").html("已审核")
-                    }else{
+                    } else {
                         alert("审核未通过，请重新审核")
                     }
-                }else{
-                    alert("请选择要处理的数据")}
+                } else {
+                    alert("请选择要处理的数据")
+                }
 
             })
             //单条审批
             $(".audit").click(function () {
-                if($(this).html()=="待审核"){
-                    if(confirm("是否允许用户提现")){
+                if ($(this).html() == "待审核") {
+                    if (confirm("是否允许用户提现")) {
                         //与后台数据交互
                         alert("审核成功");
                         $(this).html("已审核")
-                    }else{
+                    } else {
                         alert("审核未通过，请重新审核")
                     }
                 }
             })
-//选项卡设置
-$("aside a").click(function () {
-var index=$(this).index();
-    console.log(index)
-    $("article table").eq(index).css("display","block").siblings().css("display","none");
-	$(this).siblings().removeClass("atagactive");
-	$(this).addClass("atagactive");
-})
+            //选项卡设置
+            $("aside a").click(function () {
+                var index = $(this).index();
+                console.log(index)
+                $("article table").eq(index).css("display", "block").siblings().css("display", "none");
+                $(this).siblings().removeClass("atagactive");
+                $(this).addClass("atagactive");
+            })
 
-
+            $("#withdrawApproveList").click(function () {
+                getApproveList()
+            })
         })
     </script>
 
@@ -69,115 +77,76 @@ var index=$(this).index();
     <h1>微淘米后台管理系统</h1>
 </header>
 <div class="content">
-   <aside>
-       <a href="#" class="atagactive">提现申请</a>
-       <a href="#">后台管理</a>
-       <a href="#">提现申请</a>
-       <a href="#">提现申请</a>
-       <a href="#">提现申请</a>
-       <a href="#">提现申请</a>
-       <a href="#">提现申请</a>
-       <a href="#">提现申请</a>
-       <a href="#">提现申请</a>
-   </aside>
-<article>
-    <input id="btn" type="button" value="批量处理"/>
-    <table cellspacing="0" class="farther active">
-        <tr class="list">
-            <td><label><input class="all" type="checkbox" value="全选"/>全选</label></td>
-            <td>提现方式</td>
-            <td>用户账号</td>
-            <td>提现时间</td>
-            <td>提现金额</td>
-            <td>处理状态</td>
-            <td>审批</td>
-        </tr>
-        <tr class="list">
-            <td>
-                <label><input class="selectchild" type="checkbox" value=""/></label>
-            </td>
-            <td>支付宝</td>
-            <td>匠人在线</td>
-            <td>2016.9.07.17：56</td>
-            <td>123.25</td>
-            <td>已处理</td>
-            <td class="audit">待审核</td>
-        </tr>
-    </table>
-    <table cellspacing="0" class="farther">
-        <tr class="list">
-            <td><label><input class="all" type="checkbox" value="全选"/>全选</label></td>
-            <td>后台显示</td>
-            <td>后台显示</td>
-            <td>提现时间</td>
-            <td>提现金额</td>
-            <td>处理状态</td>
-            <td>审批</td>
-        </tr>
-        <tr class="list">
-            <td>
-                <label><input class="selectchild" type="checkbox" value=""/></label>
-            </td>
-            <td>支付宝</td>
-            <td>匠人在线</td>
-            <td>2016.9.07.17：56</td>
-            <td>123.25</td>
-            <td>已处理</td>
-            <td class="audit">待审核</td>
-        </tr>
-        <tr class="list">
-            <td>
-                <label><input class="selectchild" type="checkbox" value=""/></label>
-            </td>
-            <td>支付宝</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td class="audit">待审核</td>
-        </tr>
-        <tr class="list">
-            <td>
-                <label><input class="selectchild" type="checkbox" value=""/></label>
-            </td>
-            <td>支付宝</td>
-            <td>匠人在线</td>
-            <td>2016.9.07.17：56</td>
-            <td>123.25</td>
-            <td>已处理</td>
-            <td class="audit">待审核</td>
-        </tr>
-        <tr class="list">
-            <td>
-                <label><input class="selectchild" type="checkbox" value=""/></label>
-            </td>
-            <td>支付宝</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td class="audit">待审核</td>
-        </tr>
-    </table>
-    <ul class="page">
-      	<li><a class="zero" href="#">首页</a></li>
-        <li><a class="gltactive" href="#"><</a></li>
-        <li class="pageactive"><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-        <li><a href="#">6</a></li>
-        <li><a href="#">7</a></li>
-        <li class="eliphsis nobg nobd">...</li>
-        <li><a href="#">11</a></li>
-        <li><a href="#">></a></li>
-        <li><a class="zero" href="#">尾页</a></li>
-        	<li class="jump nobg nobd"><label>跳转到</label>
-            <input type="text" value=""/></li>
-        <li><a class="go" href="#">GO</a></li>
-      </ul>
-</article>
+    <aside>
+        <a href="#" class="atagactive" id="withdrawApproveList">提现申请</a>
+        <a href="#">后台管理</a>
+        <a href="#">提现申请</a>
+    </aside>
+    <article>
+        <input id="btn" type="button" value="批量处理"/>
+        <table cellspacing="0" class="farther active">
+            <tr class="list">
+                <td><label><input class="all" type="checkbox" value="全选"/>全选</label></td>
+                <td>提现方式</td>
+                <td>用户账号</td>
+                <td>提现时间</td>
+                <td>提现金额</td>
+                <td>处理状态</td>
+                <td>审批</td>
+            </tr>
+            <tr class="list">
+                <td>
+                    <label><input class="selectchild" type="checkbox" value=""/></label>
+                </td>
+                <td>支付宝</td>
+                <td>匠人在线</td>
+                <td>2016.9.07.17：56</td>
+                <td>123.25</td>
+                <td>已处理</td>
+                <td class="audit">待审核</td>
+            </tr>
+        </table>
+        <table cellspacing="0" class="farther">
+            <tr class="list">
+                <td><label><input class="all" type="checkbox" value="全选"/>全选</label></td>
+                <td>后台显示</td>
+                <td>后台显示</td>
+                <td>提现时间</td>
+                <td>提现金额</td>
+                <td>处理状态</td>
+                <td>审批</td>
+            </tr>
+            <tr class="list">
+                <td>
+                    <label><input class="selectchild" type="checkbox" value=""/></label>
+                </td>
+                <td>支付宝</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="audit">待审核</td>
+            </tr>
+        </table>
+        <ul class="page">
+            <li><a class="zero" href="#">首页</a></li>
+            <li><a class="gltactive" href="#"><</a></li>
+            <li class="pageactive"><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li><a href="#">6</a></li>
+            <li><a href="#">7</a></li>
+            <li class="eliphsis nobg nobd">...</li>
+            <li><a href="#">11</a></li>
+            <li><a href="#">></a></li>
+            <li><a class="zero" href="#">尾页</a></li>
+            <li class="jump nobg nobd"><label>跳转到</label>
+                <input type="text" value=""/></li>
+            <li><a class="go" href="#">GO</a></li>
+        </ul>
+    </article>
 </div>
 </body>
 </html>

@@ -23,4 +23,8 @@
     SELECT history.* FROM  wtm_member_task_history history
       WHERE history.memberId=#{memberId} AND history.createTime >#{start} AND history.createTime &lt; #{end} AND taskId=#{taskId}
   </select>
+  <select id="isSignAccount" resultType="com.weitaomi.application.model.bean.MemberTask">
+    SELECT task.* FROM wtm_member_task task LEFT JOIN wtm_member_task_history history ON task.id=history.taskId
+      WHERE history.memberId=#{memberId} AND history.createTime >#{start} AND history.createTime &lt; #{end} AND task.id=10
+  </select>
 </mapper>

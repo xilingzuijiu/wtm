@@ -49,5 +49,5 @@ public interface IMemberTaskPoolService {
      * @param isPublishNow
      * @return
      */
-    public Boolean updateTaskPoolDto(Long memberId,Long taskPoolId, Integer isPublishNow,Integer needNumber,Integer singScore,Integer limitDay);
+    public Boolean updateTaskPoolDto(Long memberId,Long taskPoolId, Integer isPublishNow,Integer needNumber,Double singScore,Integer limitDay);
 }

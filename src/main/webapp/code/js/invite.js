@@ -112,8 +112,7 @@ function EV_myClientWidth(){
 }
 //网页可见区域高
 function EV_myClientHeight(){
-    var n=document.documentElement.clientHeight
-        || document.body.clientHeight || 0;
+    var n=document.body.clientHeight || 0;
     return n;
 }
 
@@ -121,6 +120,7 @@ function ReuqestObj(obj,invtedCode,identifyCode){
     this.member=obj
     this.invitedCode=invtedCode
     this.identifyCode=identifyCode
+    this.flag=0
 }
 function getRegeisterParams(requestObj){
     var invitedCode = requestObj.invitedCode
@@ -132,11 +132,5 @@ function getRegeisterParams(requestObj){
 }
 
 function download() {
-    if(isAndroid==true){
-        $("#ivload").attr("href","http://a.app.qq.com/o/simple.jsp?pkgname=com.woyun.weitaomi")
-    }else if(isiOS==true) {
-        $("#ivload").attr("href", "http://a.app.qq.com/o/simple.jsp?pkgname=com.woyun.weitaomi")
-    }else{
-        $("#ivload").attr("href","http://a.app.qq.com/o/simple.jsp?pkgname=com.woyun.weitaomi")
-    }
+    location.href="http://a.app.qq.com/o/simple.jsp?pkgname=com.woyun.weitaomi"
 }

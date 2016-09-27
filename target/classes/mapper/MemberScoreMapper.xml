@@ -49,7 +49,7 @@
                     (select CASE m.totalScore is NULL WHEN TRUE THEN 0 ELSE m.totalScore END AS totalScore from (
                         select SUM(f.flowScore) totalScore from wtm_member_score s LEFT JOIN
                         wtm_member_score_flow f ON f.memberScoreId=s.id
-                        WHERE s.memberId=#{i} AND f.createTime &lt; unix_timestamp(now()) AND f.createTime > #{time} AND f.typeId=3 AND f.flowScore &lt; 0) m
+                        WHERE s.memberId=#{i} AND f.createTime &lt; unix_timestamp(now()) AND f.createTime > #{time} AND f.typeId=7 AND f.flowScore &lt; 0) m
                     )
                 </foreach>
             </trim>

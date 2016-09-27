@@ -185,7 +185,7 @@ public class MemberScoreService implements IMemberScoreService {
                         memberScoreFlowMapper.insertSelective(memberScoreFlow1);
 
                         //处理任务记录问题
-                        memberTaskHistoryService.addMemberTaskToHistory(memberInvitedRecord.getParentId(), 7L, rewardScore, 1, null, null);
+                        memberTaskHistoryService.addMemberTaskToHistory(memberInvitedRecord.getParentId(), 7L, rewardScore, 1, null, null,null);
                     }
                 }
                 return memberScore;

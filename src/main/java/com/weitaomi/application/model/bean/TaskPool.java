@@ -37,7 +37,7 @@ public class TaskPool extends BaseModel {
      * 任务总支出米币
      */
     @Column(name = "totalScore")
-    private Integer totalScore;
+    private Double totalScore;
     /**
      * 任务总支出米币
      */
@@ -47,7 +47,7 @@ public class TaskPool extends BaseModel {
      * 单次奖励
      */
     @Column(name = "singleScore")
-    private Integer singleScore;
+    private Double singleScore;
 
     /**
      * 请求群体性别
@@ -113,7 +113,7 @@ public class TaskPool extends BaseModel {
      *
      * @return totalScore - 任务总支出米币
      */
-    public Integer getTotalScore() {
+    public Double getTotalScore() {
         return totalScore;
     }
 
@@ -122,7 +122,7 @@ public class TaskPool extends BaseModel {
      *
      * @param totalScore 任务总支出米币
      */
-    public void setTotalScore(Integer totalScore) {
+    public void setTotalScore(Double totalScore) {
         this.totalScore = totalScore;
     }
 
@@ -198,7 +198,7 @@ public class TaskPool extends BaseModel {
      * 获取单次奖励
      * @return singleScore 单次奖励
      */
-    public Integer getSingleScore() {
+    public Double getSingleScore() {
         return this.singleScore;
     }
 
@@ -206,7 +206,7 @@ public class TaskPool extends BaseModel {
      * 设置单次奖励
      * @param singleScore 单次奖励
      */
-    public void setSingleScore(Integer singleScore) {
+    public void setSingleScore(Double singleScore) {
         this.singleScore = singleScore;
     }
 

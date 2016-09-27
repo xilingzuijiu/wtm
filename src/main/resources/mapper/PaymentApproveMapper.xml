@@ -7,6 +7,7 @@
     -->
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="memberId" property="memberId" jdbcType="BIGINT" />
+    <result column="payType" property="payType" jdbcType="INTEGER" />
     <result column="accountNumber" property="accountNumber" jdbcType="VARCHAR" />
     <result column="accountName" property="accountName" jdbcType="VARCHAR" />
     <result column="amount" property="amount" jdbcType="DECIMAL" />

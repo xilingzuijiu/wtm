@@ -98,7 +98,15 @@ public class MemberTaskHistoryService  implements IMemberTaskHistoryService {
     }
 
     @Override
-    public boolean addMemberTaskToHistory(Long memberId, Long taskId, Double score, Integer flag,String detail,List<MemberTaskHistoryDetail> detailList) {
+    public Boolean isSignAccount(Long memberId){
+        MemberTask memberTask=memberTaskMapper.isSignAccount(memberId,DateUtils.getTodayZeroSeconds(),DateUtils.getTodayEndSeconds());
+        if (memberTask!=null){
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean addMemberTaskToHistory(Long memberId, Long taskId, Double score, Integer flag,String detail,List<MemberTaskHistoryDetail> detailList,String taskFlag) {
         MemberTask memberTask = memberTaskMapper.selectByPrimaryKey(taskId);
         if (score==null||score==0){
             score=memberTask.getPointCount().doubleValue();
@@ -114,6 +122,9 @@ public class MemberTaskHistoryService  implements IMemberTaskHistoryService {
         memberTaskWithDetail.setTaskName(memberTask.getTaskName());
         memberTaskWithDetail.setTaskDesc(memberTask.getTaskDesc());
         memberTaskWithDetail.setCreateTime(DateUtils.getUnixTimestamp());
+        if (!StringUtil.isEmpty(taskFlag)){
+            memberTaskWithDetail.setTaskFlag(taskFlag);
+        }
         List<MemberTaskHistoryDetail> memberTaskHistoryDetailList = new ArrayList<MemberTaskHistoryDetail>();
         if (detailList!=null){
             //// TODO: 2016/8/25
@@ -148,7 +159,7 @@ public class MemberTaskHistoryService  implements IMemberTaskHistoryService {
             throw new InfoException("该任务今天已完成");
         }
         MemberTask memberTask=memberTaskMapper.selectByPrimaryKey(typeId);
-        this.addMemberTaskToHistory(memberId,typeId,null,1,null,null);
+        this.addMemberTaskToHistory(memberId,typeId,null,1,null,null,null);
         MemberScore memberScore=memberScoreService.addMemberScore(memberId,3L,1,memberTask.getPointCount().doubleValue(), UUIDGenerator.generate());
         if (memberScore!=null){
             return memberScore;

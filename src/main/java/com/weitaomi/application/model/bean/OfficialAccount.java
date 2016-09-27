@@ -30,6 +30,11 @@ public class OfficialAccount extends BaseModel {
     @Column(name = "level")
     private String level;
     /**
+     * 认证类型
+     */
+    @Column(name = "level2")
+    private String level2;
+    /**
      * 用户ID
      */
     @Column(name = "memberId")
@@ -421,5 +426,21 @@ public class OfficialAccount extends BaseModel {
      */
     public void setTokenUpdate(String tokenUpdate) {
         this.tokenUpdate = tokenUpdate;
+    }
+
+    /**
+     * 获取认证类型
+     * @return level2 认证类型
+     */
+    public String getLevel2() {
+        return this.level2;
+    }
+
+    /**
+     * 设置认证类型
+     * @param level2 认证类型
+     */
+    public void setLevel2(String level2) {
+        this.level2 = level2;
     }
 }

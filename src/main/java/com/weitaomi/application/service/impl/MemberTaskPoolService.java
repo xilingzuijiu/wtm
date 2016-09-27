@@ -67,7 +67,7 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
             }
             int num =taskPoolMapper.insertSelective(taskPool);
             memberScoreService.addMemberScore(taskPool.getMemberId(),4L,1,-Double.valueOf(taskPool.getTotalScore()), UUIDGenerator.generate());
-            boolean flag=memberTaskHistoryService.addMemberTaskToHistory(taskPool.getMemberId(),8L,-taskPool.getTotalScore().doubleValue(),1,"发布公众号"+officialAccount.getUserName()+"求粉任务",null);
+            boolean flag=memberTaskHistoryService.addMemberTaskToHistory(taskPool.getMemberId(),8L,-taskPool.getTotalScore().doubleValue(),1,"发布公众号"+officialAccount.getUserName()+"求粉任务",null,null);
             if (flag){
                 logger.info("处理成功");
                 return "任务提交成功";
@@ -148,7 +148,7 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
         taskPool.setTotalScore(taskPool.getNeedNumber()*taskPool.getSingleScore());
         int num = taskPoolMapper.insertSelective(taskPool);
         memberScoreService.addMemberScore(publishReadRequestDto.getMemberId(),5L,1,-taskPool.getNeedNumber()*taskPool.getSingleScore().doubleValue(),UUIDGenerator.generate());
-        memberTaskHistoryService.addMemberTaskToHistory(publishReadRequestDto.getMemberId(),9L,-taskPool.getNeedNumber()*taskPool.getSingleScore().doubleValue(),1,"发布文章\""+publishReadRequestDto.getTitle()+"\"求阅读任务",null);
+        memberTaskHistoryService.addMemberTaskToHistory(publishReadRequestDto.getMemberId(),9L,-taskPool.getNeedNumber()*taskPool.getSingleScore().doubleValue(),1,"发布文章\""+publishReadRequestDto.getTitle()+"\"求阅读任务",null,null);
         if (num>0) return "发布成功";
         return "发布失败";
     }
@@ -197,7 +197,7 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
 
     @Override
     @Transactional
-    public Boolean updateTaskPoolDto(Long memberId,Long taskPoolId, Integer isPublishNow,Integer needNumber,Integer singScore,Integer limitDay) {
+    public Boolean updateTaskPoolDto(Long memberId,Long taskPoolId, Integer isPublishNow,Integer needNumber,Double singScore,Integer limitDay) {
         TaskPool taskPool=taskPoolMapper.selectByPrimaryKey(taskPoolId);
         taskPool.setIsPublishNow(isPublishNow);
         taskPool.setCreateTime(DateUtils.getUnixTimestamp());
@@ -229,7 +229,7 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
             if (needNumber==null||needNumber==0){
                 throw new InfoException("任务需求量必须为大于零的整数");
             }
-            Integer totalScore=singScore*needNumber-taskPool.getTotalScore();
+            Double totalScore=singScore*needNumber-taskPool.getTotalScore();
             MemberScore  memberScore=memberScoreMapper.getMemberScoreByMemberId(memberId);
             OfficialAccount officialAccount= officalAccountMapper.selectByPrimaryKey(taskPool.getOfficialAccountsId());
             if (totalScore>memberScore.getMemberScore().doubleValue()){
@@ -240,13 +240,13 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
             taskPool.setNeedNumber(needNumber);
             taskPool.setSingleScore(singScore);
             memberScoreService.addMemberScore(taskPool.getMemberId(),scoreId,1,-Double.valueOf(totalScore), UUIDGenerator.generate());
-            memberTaskHistoryService.addMemberTaskToHistory(taskPool.getMemberId(),taskId,-totalScore.doubleValue(),1,"重新发布公众号"+officialAccount.getUserName()+"求粉任务",null);
+            memberTaskHistoryService.addMemberTaskToHistory(taskPool.getMemberId(),taskId,-totalScore.doubleValue(),1,"重新发布公众号"+officialAccount.getUserName()+"求粉任务",null,null);
         } else if (isPublishNow==0){
-            Integer score=taskPool.getTotalScore();
-            taskPool.setTotalScore(0);
+            Double score=taskPool.getTotalScore();
+            taskPool.setTotalScore(0D);
             taskPool.setLimitDay(0L);
             taskPool.setNeedNumber(0);
-            taskPool.setSingleScore(0);
+            taskPool.setSingleScore(0D);
             memberScoreService.addMemberScore(memberId, 6L,1,score.doubleValue(), UUIDGenerator.generate());
         }
         int num = taskPoolMapper.updateByPrimaryKeySelective(taskPool);

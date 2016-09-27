@@ -31,7 +31,7 @@ public class PublishReadRequestDto {
     /**
      * 单次奖励
      */
-    private Integer singleScore;
+    private Double singleScore;
     /**
      * 需求数量
      */
@@ -114,7 +114,7 @@ public class PublishReadRequestDto {
      * 获取单次奖励
      * @return singleScore 单次奖励
      */
-    public Integer getSingleScore() {
+    public Double getSingleScore() {
         return this.singleScore;
     }
 
@@ -122,7 +122,7 @@ public class PublishReadRequestDto {
      * 设置单次奖励
      * @param singleScore 单次奖励
      */
-    public void setSingleScore(Integer singleScore) {
+    public void setSingleScore(Double singleScore) {
         this.singleScore = singleScore;
     }
 

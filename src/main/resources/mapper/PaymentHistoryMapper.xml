@@ -38,6 +38,6 @@
     select max(payCode) from wtm_payment_history;
   </select>
   <select id="getPaymentHistory" resultMap="BaseResultMap">
-    select * from wtm_payment_history h WHERE h.payCode=#{payCode};
+    select * from wtm_payment_history h WHERE h.payCode=#{payCode} AND h.isPaySuccess=0;
   </select>
 </mapper>

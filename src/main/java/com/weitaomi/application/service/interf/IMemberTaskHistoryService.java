@@ -36,12 +36,14 @@ public interface IMemberTaskHistoryService {
      */
     public List<MemberTaskDto> getMemberDailyTask(Long memberId);
 
+    Boolean isSignAccount(Long memberId);
+
     /**
      * 增加任务记录
      * @param
      * @return
      */
-    public boolean addMemberTaskToHistory(Long memberId, Long taskId, Double score, Integer flag,String detail,List<MemberTaskHistoryDetail> detailList);
+    public boolean addMemberTaskToHistory(Long memberId, Long taskId, Double score, Integer flag,String detail,List<MemberTaskHistoryDetail> detailList,String taskFlag);
     /**
      * 增加任务记录
      * @param

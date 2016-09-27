@@ -13,7 +13,11 @@ public class PaymentApprove  extends BaseModel {
      */
     @Column(name = "memberId")
     private Long memberId;
-
+    /**
+     * 用户ID
+     */
+    @Column(name = "payType")
+    private Integer payType;
     /**
      * 收款账号
      */
@@ -173,5 +177,21 @@ public class PaymentApprove  extends BaseModel {
      */
     public void setCreateTime(Long createTime) {
         this.createTime = createTime;
+    }
+
+    /**
+     * 获取用户ID
+     * @return payType 用户ID
+     */
+    public Integer getPayType() {
+        return this.payType;
+    }
+
+    /**
+     * 设置用户ID
+     * @param payType 用户ID
+     */
+    public void setPayType(Integer payType) {
+        this.payType = payType;
     }
 }

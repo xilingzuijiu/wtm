@@ -34,6 +34,17 @@ public class MemberTaskHistoryController extends BaseController {
         return AjaxResult.getOK(memberTaskHistoryService.getMemberDailyTask(memberId));
     }
     /**
+     * 是否服务号签到
+     * @param httpServletRequest
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/isSignAccount",method = RequestMethod.POST)
+    public AjaxResult isSignAccount(HttpServletRequest httpServletRequest){
+        Long memberId=super.getUserId(httpServletRequest);
+        return AjaxResult.getOK(memberTaskHistoryService.isSignAccount(memberId));
+    }
+    /**
      * 获取用户任务记录
      * @param httpServletRequest
      * @return

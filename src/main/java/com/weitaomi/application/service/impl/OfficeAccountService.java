@@ -75,14 +75,16 @@ public class OfficeAccountService implements IOfficeAccountService {
         List<OfficeMember> officeMemberList=new ArrayList<>();
         List<Long> idList=new ArrayList<>();
         for (OfficialAccountMsg officialAccountMsg:list){
-            String key=addOfficalAccountDto.getUnionId()+":"+officialAccountMsg.getOriginId();
+            ThirdLoginDto thirdLoginDto=thirdLoginMapper.getThirdlogInDtoMemberId(memberId);
+            String key=thirdLoginDto.getNickname()+":"+thirdLoginDto.getSex()+":"+officialAccountMsg.getOriginId();
+            logger.info("key is {}",key);
             OfficialAccountWithScore officialAccountWithScore=officalAccountMapper.getOfficialAccountWithScoreById(officialAccountMsg.getOriginId());
-            String value=officialAccountWithScore.getId().toString();
-            String valueTemp = cacheService.getCacheByKey(key,String.class);
+            MemberCheck memberCheck=new MemberCheck(memberId,officialAccountWithScore.getId());
+            MemberCheck valueTemp = cacheService.getCacheByKey(key,MemberCheck.class);
             if (valueTemp!=null){
                 throw new InfoException("公众号"+officialAccountWithScore.getUserName()+"的关注未完成，请先完成");
             }
-            cacheService.setCacheByKey(key,value, SystemConfig.TASK_CACHE_TIME);
+            cacheService.setCacheByKey(key,memberCheck, SystemConfig.TASK_CACHE_TIME);
             OfficeMember officeMember=new OfficeMember();
             officeMember.setMemberId(memberId);
             officeMember.setOfficeAccountId(officialAccountWithScore.getId());
@@ -90,7 +92,7 @@ public class OfficeAccountService implements IOfficeAccountService {
             officeMemberList.add(officeMember);
             //添加到待完成任务记录中
             String detail ="关注公众号"+officialAccountWithScore.getUserName()+"，领取"+officialAccountWithScore.getScore()+"米币";
-            memberTaskHistoryService.addMemberTaskToHistory(memberId,1L,officialAccountWithScore.getScore(),0,detail,null);
+            memberTaskHistoryService.addMemberTaskToHistory(memberId,1L,officialAccountWithScore.getScore(),0,detail,null,officialAccountMsg.getOriginId());
             idList.add(officialAccountWithScore.getId());
         }
         Long time =DateUtils.getUnixTimestamp();
@@ -118,58 +120,85 @@ public class OfficeAccountService implements IOfficeAccountService {
     @Override
     @Transactional
     public Boolean pushAddFinished(Map<String,String> params) {
-        String unionId=params.get("unionId");
-        String appid=params.get("appId");
-        String originId=officalAccountMapper.getOriginIdByAppId(appid);
+        String openid=params.get("openid");
+        String nickname=params.get("nickname");
+        String sexString=params.get("sex");
+        String originId=params.get("originId");
+        Integer flag=Integer.valueOf(params.get("flag"));
 //        JpushUtils.buildRequest("受到消息了"+unionId+"      "+originId);
-        String key=unionId+":"+originId;
-        String value=cacheService.getCacheByKey(key,String.class);
-        if (value!=null){
-            Long officeAccountId=Long.valueOf(value);
-            TaskPool taskPool = taskPoolMapper.getTaskPoolByOfficialId(officeAccountId,1);
-            OfficialAccountWithScore officialAccountWithScore  =officalAccountMapper.getOfficialAccountWithScoreById(originId);
-            Long memberId=thirdLoginMapper.getMemberIdByUnionId(unionId);
-            if (taskPool==null){
-                JpushUtils.buildRequest("您关注的公众号任务："+officialAccountWithScore.getUserName()+"已经结束",memberId);
-                return false;
+        logger.info("openId:{},flag{}",openid,nickname);
+        OfficialAccountWithScore officialAccountWithScore = officalAccountMapper.getOfficialAccountWithScoreById(originId);
+        if (flag==0){
+            OfficeMember officeMember=officeMemberMapper.getOfficeMemberByOpenId(openid);
+            if (officeMember==null){
+                throw new BusinessException("没有此用户记录");
             }
-            Integer score=taskPool.getTotalScore()-taskPool.getSingleScore();
-            if (taskPool!=null&&officialAccountWithScore!=null&&score>=0){
-                //添加到公众号关注表中
-                OfficeMember officeMember=officeMemberMapper.getOfficeMember(memberId,officeAccountId);
-                if (officeMember==null){
-                    JpushUtils.buildRequest("您关注的公众号任务："+officialAccountWithScore.getUserName()+"，不存在或者已经结束",memberId);
+            if (DateUtils.getUnixTimestamp()-officeMember.getCreateTime()<7*24*60*60){
+                //增加积分以及积分记录
+                Long memberId=officeMember.getMemberId();
+               int num =  officeMemberMapper.deleteFollowAccountsMember(officeMember.getId());
+                if (num>0){
+                    TaskPool taskPool = taskPoolMapper.getTaskPoolByOfficialId(officialAccountWithScore.getId(), 1);
+                    memberScoreService.addMemberScore(memberId,7L, 1, -(taskPool.getRate().multiply(BigDecimal.valueOf(officialAccountWithScore.getScore()))).doubleValue(), UUIDGenerator.generate());
+                }
+            }
+        }
+        if (flag==1) {
+            Integer sex = Integer.valueOf(sexString);
+            String key = nickname + ":" + sex + ":" + originId;
+            logger.info("key is {}",key);
+            MemberCheck memberCheck = cacheService.getCacheByKey(key, MemberCheck.class);
+            logger.info("获取到的关注数据为:{}",JSON.toJSONString(memberCheck));
+            if (memberCheck != null) {
+                Long officeAccountId = Long.valueOf(memberCheck.getOfficialAccountsId());
+                TaskPool taskPool = taskPoolMapper.getTaskPoolByOfficialId(officeAccountId, 1);
+                Long memberId = memberCheck.getMemberId();
+                if (taskPool == null) {
+                    JpushUtils.buildRequest("您关注的公众号任务：" + officialAccountWithScore.getUserName() + "已经结束", memberId);
                     return false;
                 }
-                if (officeMember.getIsAccessNow()==1){
-                    JpushUtils.buildRequest("您已关注过公众号："+officialAccountWithScore.getUserName()+"，该任务失效",memberId);
-                    return false;
-                }
-                officeMember.setIsAccessNow(1);
-                officeMember.setFinishedTime(DateUtils.getUnixTimestamp());
-                int num= officeMemberMapper.updateByPrimaryKeySelective(officeMember);
-                if (num>0) {
-                    //任务池中的任务剩余积分更改
-                    if (score>=taskPool.getSingleScore()){
-                        taskPoolMapper.updateTaskPoolWithScore(score, taskPool.getId());
-                    } else {
-                        taskPool.setTotalScore(0);
-                        taskPool.setLimitDay(0L);
-                        taskPool.setNeedNumber(0);
-                        taskPool.setSingleScore(0);
-                        taskPool.setIsPublishNow(0);
-                        taskPoolMapper.updateByPrimaryKeySelective(taskPool);
-                        memberScoreService.addMemberScore(officialAccountWithScore.getMemberId(), 6L,1,score.doubleValue(), UUIDGenerator.generate());
+                Double score = taskPool.getTotalScore() - taskPool.getSingleScore();
+                if (taskPool != null && officialAccountWithScore != null && score >= 0) {
+                    //添加到公众号关注表中
+                    OfficeMember officeMember = officeMemberMapper.getOfficeMember(memberId,officeAccountId);
+                    logger.info("关注记录表:{}",JSON.toJSONString(officeMember));
+                    if (officeMember == null) {
+                        JpushUtils.buildRequest("您关注的公众号任务：" + officialAccountWithScore.getUserName() + "，不存在或者已经结束", memberId);
+                        return false;
                     }
-                    //增加任务记录
-                    int number = memberTaskHistoryMapper.updateMemberTaskUnfinished(memberId,0,officialAccountWithScore.getOriginId());
-                    //增加积分以及积分记录
-                    memberScoreService.addMemberScore(memberId, 3L,1,officialAccountWithScore.getScore().doubleValue(), UUIDGenerator.generate());
-                    cacheService.delKeyFromRedis(key);
+                    if (officeMember.getIsAccessNow() == 1) {
+                        JpushUtils.buildRequest("您已关注过公众号：" + officialAccountWithScore.getUserName() + "，该任务失效", memberId);
+                        return false;
+                    }
+                    officeMember.setIsAccessNow(1);
+                    officeMember.setOpenId(openid);
+                    officeMember.setFinishedTime(DateUtils.getUnixTimestamp());
+                    int num = officeMemberMapper.updateByPrimaryKeySelective(officeMember);
+                    if (num > 0) {
+                        //任务池中的任务剩余积分更改
+                        if (score >= taskPool.getSingleScore()) {
+                            taskPoolMapper.updateTaskPoolWithScore(score.doubleValue(), taskPool.getId());
+                        } else {
+                            taskPool.setTotalScore(0D);
+                            taskPool.setLimitDay(0L);
+                            taskPool.setNeedNumber(0);
+                            taskPool.setSingleScore(0D);
+                            taskPool.setIsPublishNow(0);
+                            taskPoolMapper.updateByPrimaryKeySelective(taskPool);
+                            memberScoreService.addMemberScore(officialAccountWithScore.getMemberId(), 6L, 1, score.doubleValue(), UUIDGenerator.generate());
+                        }
+                        //增加任务记录
+                        logger.info("增加任务记录");
+                        int number = memberTaskHistoryMapper.updateMemberTaskUnfinished(memberId, 0, officialAccountWithScore.getOriginId());
+                        //增加积分以及积分记录
+                        logger.info("增加积分以及积分记录");
+                        memberScoreService.addMemberScore(memberId, 3L, 1, (taskPool.getRate().multiply(BigDecimal.valueOf(officialAccountWithScore.getScore()))).doubleValue(), UUIDGenerator.generate());
+                        cacheService.delKeyFromRedis(key);
+                    }
+                } else {
+                    JpushUtils.buildRequest(JpushUtils.getJpushMessage(memberId, "任务不存在，或者任务已结束"));
+                    throw new InfoException("任务不存在，或者任务已结束");
                 }
-            }else {
-                JpushUtils.buildRequest(JpushUtils.getJpushMessage(memberId,"任务不存在，或者任务已结束"));
-                throw new InfoException("任务不存在，或者任务已结束");
             }
         }
         return false;

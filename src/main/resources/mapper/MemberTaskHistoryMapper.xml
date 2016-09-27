@@ -31,9 +31,8 @@
     detail.taskDesc detail_taskDesc,detail.isFinished detail_isFinished,detail.createTime detail_createTime
   </sql>
   <update id="updateMemberTaskUnfinished">
-    update wtm_member_history  set isFinished = 1 WHERE memberId=#{memberId} AND isFinished=#{type} AND taskFlag=#{originId}
+    update wtm_member_task_history  set isFinished = 1 WHERE memberId=#{memberId} AND isFinished=#{type} AND taskFlag=#{originId}
   </update>
-
 
   <delete id="deleteUnfinishedTaskDetail">
     DELETE FROM wtm_member_task_history_detail   WHERE taskHistoryId  IN (

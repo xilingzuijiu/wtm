@@ -25,6 +25,11 @@ public class OfficeMember extends BaseModel implements Serializable{
      */
     @Column(name = "isAccessNow")
     private Integer isAccessNow;
+    /**
+     * 公众号分配给用户的openid
+     */
+    @Column(name = "openId")
+    private String openId;
 
     /**
      * 完成时间
@@ -141,5 +146,21 @@ public class OfficeMember extends BaseModel implements Serializable{
      */
     public void setFinishedTime(Long finishedTime) {
         this.finishedTime = finishedTime;
+    }
+
+    /**
+     * 获取公众号分配给用户的openid
+     * @return openId 公众号分配给用户的openid
+     */
+    public String getOpenId() {
+        return this.openId;
+    }
+
+    /**
+     * 设置公众号分配给用户的openid
+     * @param openId 公众号分配给用户的openid
+     */
+    public void setOpenId(String openId) {
+        this.openId = openId;
     }
 }

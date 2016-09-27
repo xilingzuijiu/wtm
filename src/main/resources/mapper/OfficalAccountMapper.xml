@@ -10,6 +10,7 @@
         <result column="sellerTypeId" jdbcType="INTEGER" property="sellerTypeId"/>
         <result column="isOpen" jdbcType="INTEGER" property="isOpen"/>
         <result column="level" jdbcType="INTEGER" property="level"/>
+        <result column="level2" jdbcType="INTEGER" property="level2"/>
         <result column="openId" jdbcType="VARCHAR" property="openId"/>
         <result column="originId" jdbcType="VARCHAR" property="originId"/>
         <result column="appId" jdbcType="VARCHAR" property="appId"/>

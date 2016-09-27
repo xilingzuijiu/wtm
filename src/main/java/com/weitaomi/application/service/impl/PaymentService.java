@@ -38,7 +38,7 @@ import java.util.*;
  */
 @Service
 public class PaymentService implements IPaymentService {
-    private Logger logger= LoggerFactory.getLogger(PaymentService.class);
+    private Logger logger = LoggerFactory.getLogger(PaymentService.class);
     @Autowired
     private ICacheService cacheService;
     @Autowired
@@ -55,102 +55,107 @@ public class PaymentService implements IPaymentService {
     private PaymentApproveMapper approveMapper;
     @Autowired
     private MemberPayAccountsMapper memberPayAccountsMapper;
+
     @Override
     @Transactional
-    public String getPaymentParams(Map<String,Object> params) {
-        String payCode=this.getTradeNo();
-        if ((Integer)params.get("payType")==(PayType.WECHAT_APP.getValue())){
-            params.put("out_trade_no", AlipayConfig.payCode_prefix+payCode);
+    public String getPaymentParams(Map<String, Object> params) {
+        String payCode = this.getTradeNo();
+        if ((Integer) params.get("payType") == (PayType.WECHAT_APP.getValue())) {
+            params.put("out_trade_no", AlipayConfig.payCode_prefix + payCode);
         }
-        if ((Integer)params.get("payType")==(PayType.ALIPAY_APP.getValue())){
-            params.put("trade_no", AlipayConfig.payCode_prefix+payCode);
+        if ((Integer) params.get("payType") == (PayType.ALIPAY_APP.getValue())) {
+            params.put("trade_no", AlipayConfig.payCode_prefix + payCode);
         }
-        String requestParam=payStrategyContext.getPaymentParams(params);
-        PaymentHistory paymentHistory=new PaymentHistory();
-        paymentHistory.setMemberId((Long)params.get("memberId"));
+        String requestParam = payStrategyContext.getPaymentParams(params);
+        PaymentHistory paymentHistory = new PaymentHistory();
+        paymentHistory.setMemberId((Long) params.get("memberId"));
         paymentHistory.setPayCode(payCode);
-        paymentHistory.setPlatform(PayType.getValue((Integer)params.get("payType")).getDesc());
+        paymentHistory.setPlatform(PayType.getValue((Integer) params.get("payType")).getDesc());
         paymentHistory.setParams(requestParam);
         paymentHistory.setIsPaySuccess(0);
         paymentHistory.setPayType(0);
         paymentHistory.setCreateTime(DateUtils.getUnixTimestamp());
         paymentHistoryMapper.insertSelective(paymentHistory);
-        if (!StringUtils.isEmpty(requestParam)){
+        if (!StringUtils.isEmpty(requestParam)) {
             return requestParam;
         }
         return null;
     }
 
     @Override
-    public String verifyAlipayNotify(Map requestParams) {
-        logger.info("支付宝回调开始");
+    public String verifyAlipayNotify(Map<String, String[]> requestParams) {
+        logger.info("支付宝回调开始，参数为{}", JSON.toJSONString(requestParams));
         //商户订单号
-        String out_trade_no = null;
+        String out_trade_no = requestParams.get("out_trade_no")[0].toString();
         //支付宝交易号
-        String trade_no = null;
+        String total_amount = requestParams.get("total_fee")[0].toString();
         //交易状态
-        String trade_status = null;
-        try {
-            out_trade_no = new String(requestParams.get("out_trade_no").toString().getBytes("ISO-8859-1"), "UTF-8");
-            trade_no = new String(requestParams.get("trade_no").toString().getBytes("ISO-8859-1"), "UTF-8");
-            trade_status = new String(requestParams.get("trade_status").toString().getBytes("ISO-8859-1"), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
+        String trade_status = requestParams.get("trade_status")[0].toString();
+//        try {
+//            logger.info("youwenti0");
+//            out_trade_no = new String(requestParams.get("out_trade_no").get(0).toString().getBytes("ISO-8859-1"), "UTF-8");
+//            logger.info("youwenti1");
+//            total_amount = new String(requestParams.get("total_fee").get(0).toString().getBytes("ISO-8859-1"), "UTF-8");
+//            logger.info("youwenti2");
+//            trade_status = new String(requestParams.get("trade_status").get(0).toString().getBytes("ISO-8859-1"), "UTF-8");
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
+        logger.info("out_trade_no:{},total_amount:{},trade_status:{}", out_trade_no, total_amount, trade_status);
         if (trade_status.equals("TRADE_SUCCESS")) {
-                logger.info("支付宝回调验证成功");
-                PaymentHistory paymentHistory=paymentHistoryMapper.getPaymentHistory(out_trade_no);
-                if (paymentHistory!=null){
-                    String sign=(String)requestParams.get("sign");
-                    if (sign.equals(paymentHistory.getParams())) {
-                        paymentHistory.setParams(sign);
-                        paymentHistory.setIsPaySuccess(1);
-                        paymentHistory.setCreateTime(DateUtils.getUnixTimestamp());
-                        paymentHistoryMapper.updateByPrimaryKeySelective(paymentHistory);
-                    }
-                }
-            return "success";
+            logger.info("支付宝回调验证成功");
+            PaymentHistory paymentHistory = paymentHistoryMapper.getPaymentHistory(out_trade_no.substring(3));
+            if (paymentHistory != null) {
+                paymentHistory.setIsPaySuccess(1);
+                paymentHistory.setCreateTime(DateUtils.getUnixTimestamp());
+                paymentHistoryMapper.updateByPrimaryKeySelective(paymentHistory);
+                memberScoreService.addMemberScore(paymentHistory.getMemberId(), 1L, 1, Double.valueOf(total_amount) * 100, UUIDGenerator.generate());
+                JpushUtils.buildRequest("米币充值到账", paymentHistory.getMemberId());
             }
-        return "fail";
+            return "success";
         }
+        return "fail";
+    }
+
     @Override
     public String verifyWechatNotify(WechatNotifyParams wechatNotifyParams) {
         logger.info("微信支付回调开始{}", JSON.toJSONString(wechatNotifyParams));
-        if (wechatNotifyParams!=null){
-            if (wechatNotifyParams.getResult_code().equals(WechatConfig.SUCCESS)&&wechatNotifyParams.getReturn_code().equals(WechatConfig.SUCCESS)){
-                Long amount =Long.valueOf(wechatNotifyParams.getTotal_fee());
-                String trade_no=wechatNotifyParams.getOut_trade_no();
-                PaymentHistory paymentHistory=paymentHistoryMapper.getPaymentHistory(trade_no.substring(3));
-                if (paymentHistory==null){
-                    return this.getXMLString("FAIL","查无此单");
+        if (wechatNotifyParams != null) {
+            if (wechatNotifyParams.getResult_code().equals(WechatConfig.SUCCESS) && wechatNotifyParams.getReturn_code().equals(WechatConfig.SUCCESS)) {
+                Long amount = Long.valueOf(wechatNotifyParams.getTotal_fee());
+                String trade_no = wechatNotifyParams.getOut_trade_no();
+                PaymentHistory paymentHistory = paymentHistoryMapper.getPaymentHistory(trade_no.substring(3));
+                if (paymentHistory == null) {
+                    return this.getXMLString("FAIL", "查无此单");
                 }
                 paymentHistory.setIsPaySuccess(1);
                 paymentHistory.setCreateTime(DateUtils.getUnixTimestamp());
                 paymentHistoryMapper.updateByPrimaryKeySelective(paymentHistory);
-                memberScoreService.addMemberScore(paymentHistory.getMemberId(),1L,1,Double.valueOf(amount),UUIDGenerator.generate());
+                memberScoreService.addMemberScore(paymentHistory.getMemberId(), 1L, 1, Double.valueOf(amount), UUIDGenerator.generate());
+                JpushUtils.buildRequest("米币充值到账", paymentHistory.getMemberId());
                 return "SUCCESS";
             }
         }
         return "";
     }
+
     @Override
     public String verifyBatchPayNotify(Map requestParams) {
-        String patchTradeNo=(String)requestParams.get("batch_no");
-        String flag= cacheService.getCacheByKey(patchTradeNo,String.class);
-        if (patchTradeNo.equals(flag)){
-            String fail_details=(String)requestParams.get("fail_details");
-            if (StringUtils.isEmpty(fail_details)){
-                paymentHistoryMapper.batchUpdatePayHistory(patchTradeNo,DateUtils.getUnixTimestamp());
+        String patchTradeNo = (String) requestParams.get("batch_no");
+        String flag = cacheService.getCacheByKey(patchTradeNo, String.class);
+        if (patchTradeNo.equals(flag)) {
+            String fail_details = (String) requestParams.get("fail_details");
+            if (StringUtils.isEmpty(fail_details)) {
+                paymentHistoryMapper.batchUpdatePayHistory(patchTradeNo, DateUtils.getUnixTimestamp());
                 return "success";
-            }else {
-                String success=(String)requestParams.get("success_details");
-                String[] success_details=success.split("\\|");
-                List<String> payCodeList=new ArrayList<String>();
-                for (int i=0;i<success_details.length;i++){
-                    payCodeList.add(success.substring(0,success.indexOf("^")));
+            } else {
+                String success = (String) requestParams.get("success_details");
+                String[] success_details = success.split("\\|");
+                List<String> payCodeList = new ArrayList<String>();
+                for (int i = 0; i < success_details.length; i++) {
+                    payCodeList.add(success.substring(0, success.indexOf("^")));
                 }
-                paymentHistoryMapper.batchUpdatePayHistoryByTradeNo(payCodeList,DateUtils.getUnixTimestamp());
+                paymentHistoryMapper.batchUpdatePayHistoryByTradeNo(payCodeList, DateUtils.getUnixTimestamp());
                 return "success";
             }
         }
@@ -160,21 +165,21 @@ public class PaymentService implements IPaymentService {
     @Override
     @Transactional
     public void patchAliPayCustomers(List<PaymentApprove> approveList) {
-        if (approveList.isEmpty()){
+        if (approveList.isEmpty()) {
             throw new BusinessException("付款账户列表为空");
         }
-        Map<String,String> params=new HashMap<String, String>();
-        BigDecimal totalAmount=BigDecimal.ZERO;
-        StringBuffer detail_data=new StringBuffer();
-        List<PaymentHistory> paymentHistoryList=new ArrayList<PaymentHistory>();
-        for(PaymentApprove approve:approveList){
-            totalAmount=totalAmount.add(approve.getAmount());
-            String trade_no=this.getTradeNo();
-            detail_data.append(AlipayConfig.payCode_prefix+trade_no);
-            if (!StringUtils.isEmpty(approve.getAccountNumber())&&!StringUtils.isEmpty(approve.getAccountName())&&approve.getAmount()!=null){
+        Map<String, String> params = new HashMap<String, String>();
+        BigDecimal totalAmount = BigDecimal.ZERO;
+        StringBuffer detail_data = new StringBuffer();
+        List<PaymentHistory> paymentHistoryList = new ArrayList<PaymentHistory>();
+        for (PaymentApprove approve : approveList) {
+            totalAmount = totalAmount.add(approve.getAmount());
+            String trade_no = this.getTradeNo();
+            detail_data.append(AlipayConfig.payCode_prefix + trade_no);
+            if (!StringUtils.isEmpty(approve.getAccountNumber()) && !StringUtils.isEmpty(approve.getAccountName()) && approve.getAmount() != null) {
                 detail_data.append("^").append(approve.getAccountNumber()).append("^").append(approve.getAccountName()).append("^").append(approve.getAmount());
             }
-            if (!StringUtils.isEmpty(approve.getRemark())){
+            if (!StringUtils.isEmpty(approve.getRemark())) {
                 detail_data.append("^").append(approve.getRemark()).append("|");
             }
             PaymentHistory paymentHistory = new PaymentHistory();
@@ -186,52 +191,53 @@ public class PaymentService implements IPaymentService {
             paymentHistory.setCreateTime(DateUtils.getUnixTimestamp());
             paymentHistoryList.add(paymentHistory);
         }
-        params.put("batch_num",String.valueOf(approveList.size()));
-        params.put("batch_fee",totalAmount.toString());
-        params.put("pay_date",DateUtils.formatYYYY());
-        params.put("account_name",AlipayConfig.seller_id);
-        String batch_no=DateUtils.formatYYYYMMddHHmmssSSS();
-        params.put("batch_no",AlipayConfig.payCode_prefix+batch_no);
-        String detail=detail_data.substring(0,detail_data.length()-1);
-        params.put("detail_data",detail_data.toString());
-        String result=payStrategyContext.getBatchPayParams(params, PayType.ALIPAY_APP.getValue());
+        params.put("batch_num", String.valueOf(approveList.size()));
+        params.put("batch_fee", totalAmount.toString());
+        params.put("pay_date", DateUtils.formatYYYY());
+        params.put("account_name", AlipayConfig.seller_id);
+        String batch_no = DateUtils.formatYYYYMMddHHmmssSSS();
+        params.put("batch_no", AlipayConfig.payCode_prefix + batch_no);
+        String detail = detail_data.substring(0, detail_data.length() - 1);
+        params.put("detail_data", detail_data.toString());
+        String result = payStrategyContext.getBatchPayParams(params, PayType.ALIPAY_APP.getValue());
         //TODO  处理result
-        if (paymentHistoryList!=null) {
+        if (paymentHistoryList != null) {
             for (PaymentHistory paymentHistory : paymentHistoryList) {
                 paymentHistory.setBatchPayNo(batch_no);
                 paymentHistory.setParams(detail);
             }
-            int num= paymentHistoryMapper.batchInsertPayHistory(paymentHistoryList);
-            if (num>0){
+            int num = paymentHistoryMapper.batchInsertPayHistory(paymentHistoryList);
+            if (num > 0) {
                 logger.info("支付请求成功");
             }
         }
-        cacheService.setCacheByKey(batch_no,batch_no,24*60*60);
+        cacheService.setCacheByKey(batch_no, batch_no, 24 * 60 * 60);
     }
+
     @Override
     @Transactional
-    public String patchWechatCustomers(List<PaymentApprove> approveList,String ip) {
-        List<PaymentHistory> paymentHistoryList=new ArrayList<PaymentHistory>();
-        Integer number=0;
-        for (PaymentApprove approve:approveList){
-            Long amount=approve.getAmount().multiply(BigDecimal.valueOf(100)).longValue();
-            String randomkey=UUIDGenerator.generate();
-            String code=this.getTradeNo();
-            Map<String,String> params=new HashMap<>();
-            params.put("mch_appid",WechatConfig.APP_ID);
-            params.put("mchid",WechatConfig.MCHID);
-            params.put("nonce_str",randomkey);
-            params.put("partner_trade_no",code);
-            params.put("openid",approve.getAccountNumber());
-            params.put("check_name","NO_CHECK");
-            params.put("amount",amount.toString());
-            params.put("desc","付款到个人账户");
-            params.put("spbill_create_ip",ip);
-            String pre_sign= StringUtil.formatParaMap(params);
-            pre_sign=pre_sign+"&key="+WechatConfig.API_KEY;
-            String sign= DigestUtils.md5Hex(pre_sign).toUpperCase();
+    public String patchWechatCustomers(List<PaymentApprove> approveList, String ip) {
+        List<PaymentHistory> paymentHistoryList = new ArrayList<PaymentHistory>();
+        Integer number = 0;
+        for (PaymentApprove approve : approveList) {
+            Long amount = approve.getAmount().multiply(BigDecimal.valueOf(100)).longValue();
+            String randomkey = UUIDGenerator.generate();
+            String code = this.getTradeNo();
+            Map<String, String> params = new HashMap<>();
+            params.put("mch_appid", WechatConfig.APP_ID);
+            params.put("mchid", WechatConfig.MCHID);
+            params.put("nonce_str", randomkey);
+            params.put("partner_trade_no", code);
+            params.put("openid", approve.getAccountNumber());
+            params.put("check_name", "NO_CHECK");
+            params.put("amount", amount.toString());
+            params.put("desc", "付款到个人账户");
+            params.put("spbill_create_ip", ip);
+            String pre_sign = StringUtil.formatParaMap(params);
+            pre_sign = pre_sign + "&key=" + WechatConfig.API_KEY;
+            String sign = DigestUtils.md5Hex(pre_sign).toUpperCase();
 
-            WechatBatchPayParams wechatBatchPayParams=new WechatBatchPayParams();
+            WechatBatchPayParams wechatBatchPayParams = new WechatBatchPayParams();
             wechatBatchPayParams.setAmount(amount.toString());
             wechatBatchPayParams.setCheck_name("NO_CHECK");
             wechatBatchPayParams.setDesc("付款到个人账户");
@@ -242,23 +248,23 @@ public class PaymentService implements IPaymentService {
             wechatBatchPayParams.setPartner_trade_no(code);
             wechatBatchPayParams.setSign(sign);
             wechatBatchPayParams.setSpbill_create_ip(ip);
-            XStream xStream=new XStream(new DomDriver("UTF-8",new XmlFriendlyNameCoder("-_","_")));
+            XStream xStream = new XStream(new DomDriver("UTF-8", new XmlFriendlyNameCoder("-_", "_")));
             xStream.autodetectAnnotations(true);
-            String xml=xStream.toXML(wechatBatchPayParams);
+            String xml = xStream.toXML(wechatBatchPayParams);
             try {
-                String result= ClientCustomSSL.connectKeyStore(WechatConfig.BATCH_PAY_URL,xml);
-                WechatBatchPayResult wechat=StreamUtils.toBean(result,WechatBatchPayResult.class);
-                if (wechat!=null){
-                    if (wechat.getResult_code().equals(WechatConfig.SUCCESS)&&wechat.getReturn_code().equals(WechatConfig.SUCCESS)){
+                String result = ClientCustomSSL.connectKeyStore(WechatConfig.BATCH_PAY_URL, xml);
+                WechatBatchPayResult wechat = StreamUtils.toBean(result, WechatBatchPayResult.class);
+                if (wechat != null) {
+                    if (wechat.getResult_code().equals(WechatConfig.SUCCESS) && wechat.getReturn_code().equals(WechatConfig.SUCCESS)) {
                         approve.setIsPaid(1);
-                        MemberScoreFlow memberScoreFlow=memberScoreFlowMapper.getMemberScoreFlow(approve.getMemberId(),-approve.getAmount().multiply(BigDecimal.valueOf(100)).doubleValue(),approve.getCreateTime(),2L,0);
-                    approve.setCreateTime(DateUtils.getUnixTimestamp());
-                    if (memberScoreFlow==null){
+                        MemberScoreFlow memberScoreFlow = memberScoreFlowMapper.getMemberScoreFlow(approve.getMemberId(), -approve.getAmount().multiply(BigDecimal.valueOf(100)).doubleValue(), approve.getCreateTime(), 2L, 0);
+                        approve.setCreateTime(DateUtils.getUnixTimestamp());
+                        if (memberScoreFlow == null) {
                             throw new InfoException("获取待提现记录失败");
                         }
                         memberScoreFlow.setIsFinished(1);
                         memberScoreFlow.setCreateTime(DateUtils.getUnixTimestamp());
-                        MemberScore memberScore=memberScoreMapper.selectByPrimaryKey(memberScoreFlow.getMemberScoreId());
+                        MemberScore memberScore = memberScoreMapper.selectByPrimaryKey(memberScoreFlow.getMemberScoreId());
                         memberScore.setInValidScore(memberScore.getInValidScore().add(memberScoreFlow.getFlowScore()));
                         memberScoreFlowMapper.updateByPrimaryKeySelective(memberScoreFlow);
                         approveMapper.updateByPrimaryKeySelective(approve);
@@ -280,34 +286,35 @@ public class PaymentService implements IPaymentService {
                 e.printStackTrace();
             }
         }
-        if (number==approveList.size()){
-            int num= paymentHistoryMapper.batchInsertPayHistory(paymentHistoryList);
-            if (num==number)
-              return "所有用户均提现成功";
+        if (number == approveList.size()) {
+            int num = paymentHistoryMapper.batchInsertPayHistory(paymentHistoryList);
+            if (num == number)
+                return "所有用户均提现成功";
             else return "提现失败";
-        }else {
+        } else {
             return "部分用户提现失败，请查看失败列表，重新审批";
         }
     }
+
     @Override
     @Transactional
-    public MemberScore generatorPayParams(Long memberId,PaymentApprove approve) {
-        if (approve!=null){
-            MemberScore memberScore=memberScoreMapper.getMemberScoreByMemberId(memberId);
-            if (memberScore==null){
+    public MemberScore generatorPayParams(Long memberId, PaymentApprove approve) {
+        if (approve != null) {
+            MemberScore memberScore = memberScoreMapper.getMemberScoreByMemberId(memberId);
+            if (memberScore == null) {
                 throw new InfoException("没有可用提现金额");
             }
-            if (memberScore.getAvaliableScore().longValue()<approve.getAmount().multiply(BigDecimal.valueOf(100)).longValue()){
+            if (memberScore.getAvaliableScore().longValue() < approve.getAmount().multiply(BigDecimal.valueOf(100)).longValue()) {
                 throw new InfoException("提现金额大于可用金额");
             }
             approve.setMemberId(memberId);
             approve.setCreateTime(DateUtils.getUnixTimestamp());
-            int number=approveMapper.insertSelective(approve);
-            boolean flag= number>0?true:false;
-            if (flag){
+            int number = approveMapper.insertSelective(approve);
+            boolean flag = number > 0 ? true : false;
+            if (flag) {
                 memberScore.setInValidScore(approve.getAmount().multiply(BigDecimal.valueOf(100)).add(memberScore.getInValidScore()));
                 memberScoreMapper.updateByPrimaryKeySelective(memberScore);
-                return memberScoreService.addMemberScore(memberId,2L,0,-approve.getAmount().multiply(BigDecimal.valueOf(100)).doubleValue(), UUIDGenerator.generate());
+                return memberScoreService.addMemberScore(memberId, 2L, 0, -approve.getAmount().multiply(BigDecimal.valueOf(100)).doubleValue(), UUIDGenerator.generate());
             }
         }
         return null;
@@ -315,72 +322,75 @@ public class PaymentService implements IPaymentService {
 
     @Override
     public Page<MemberScoreFlowDto> getMemberWalletInfo(Long memberId, Integer paygeSize, Integer pageIndex) {
-        List<MemberScoreFlowDto>  myWalletDto= memberScoreMapper.getMyWalletDtoByMemberId(memberId,new RowBounds(pageIndex,paygeSize));
-        if (myWalletDto==null){
+        List<MemberScoreFlowDto> myWalletDto = memberScoreMapper.getMyWalletDtoByMemberId(memberId, new RowBounds(pageIndex, paygeSize));
+        if (myWalletDto == null) {
             return null;
         }
-        PageInfo<MemberScoreFlowDto> showDtoPage=new PageInfo<MemberScoreFlowDto>(myWalletDto);
+        PageInfo<MemberScoreFlowDto> showDtoPage = new PageInfo<MemberScoreFlowDto>(myWalletDto);
         return Page.trans(showDtoPage);
     }
+
     @Override
-    public MemberPayAccounts savePayAccounts(Long memberId,Integer payType,String payAccount,String realName) {
-        if (payAccount==null){
+    public MemberPayAccounts savePayAccounts(Long memberId, Integer payType, String payAccount, String realName) {
+        if (payAccount == null) {
             throw new InfoException("支付账号信息为空");
         }
-        MemberPayAccounts payAccounts=new MemberPayAccounts();
+        MemberPayAccounts payAccounts = new MemberPayAccounts();
         payAccounts.setMemberId(memberId);
         payAccounts.setPayType(payType);
-        MemberPayAccounts memberPayAccounts=new MemberPayAccounts();
+        MemberPayAccounts memberPayAccounts = new MemberPayAccounts();
         memberPayAccounts.setMemberId(memberId);
         memberPayAccounts.setPayAccount(payAccount);
         memberPayAccounts.setPayType(payType);
         memberPayAccounts.setRealName(realName);
         memberPayAccounts.setCreateTime(DateUtils.getUnixTimestamp());
-        List<MemberPayAccounts> memberPayAccountsList=memberPayAccountsMapper.select(payAccounts);
-        if (memberPayAccountsList.isEmpty()){
+        List<MemberPayAccounts> memberPayAccountsList = memberPayAccountsMapper.select(payAccounts);
+        if (memberPayAccountsList.isEmpty()) {
             int num = memberPayAccountsMapper.insertSelective(memberPayAccounts);
-            return num>0?memberPayAccounts:null;
+            return num > 0 ? memberPayAccounts : null;
         }
-        if (memberPayAccountsList.size()>1){
+        if (memberPayAccountsList.size() > 1) {
             throw new InfoException("绑定微信或支付宝账户过多");
         }
-        MemberPayAccounts pay=memberPayAccountsList.get(0);
+        MemberPayAccounts pay = memberPayAccountsList.get(0);
         pay.setPayAccount(memberPayAccounts.getPayAccount());
         pay.setRealName(memberPayAccounts.getRealName());
         pay.setCreateTime(DateUtils.getUnixTimestamp());
-        int number=memberPayAccountsMapper.updateByPrimaryKeySelective(pay);
-        return number>0?pay:null;
+        int number = memberPayAccountsMapper.updateByPrimaryKeySelective(pay);
+        return number > 0 ? pay : null;
     }
+
     @Override
-    public  Page<PaymentApprove> getPaymentApproveList(Integer pageIndex,Integer pageSize){
-        List<PaymentApprove> paymentApproveList=approveMapper.getPaymentApproveList(new RowBounds(pageIndex,pageSize));
-        PageInfo<PaymentApprove> pageInfo=new PageInfo<PaymentApprove>(paymentApproveList);
+    public Page<PaymentApprove> getPaymentApproveList(Integer pageIndex, Integer pageSize) {
+        List<PaymentApprove> paymentApproveList = approveMapper.getPaymentApproveList(new RowBounds(pageIndex, pageSize));
+        PageInfo<PaymentApprove> pageInfo = new PageInfo<PaymentApprove>(paymentApproveList);
         return Page.trans(pageInfo);
     }
-    private String getTradeNo(){
-        String key="wtm:orderCode:max";
-        String payCode= cacheService.getCacheByKey(key,String.class);
-        if (StringUtils.isEmpty(payCode)){
-            payCode=paymentHistoryMapper.getMaxPayCode();
-            if (StringUtils.isEmpty(payCode)){
-                payCode="100000000000";
-                Long orderNumer=Long.valueOf(payCode)+1;
-                cacheService.setCacheByKey(key,orderNumer.toString(),null);
-            }else {
+
+    private String getTradeNo() {
+        String key = "wtm:orderCode:max";
+        String payCode = cacheService.getCacheByKey(key, String.class);
+        if (StringUtils.isEmpty(payCode)) {
+            payCode = paymentHistoryMapper.getMaxPayCode();
+            if (StringUtils.isEmpty(payCode)) {
+                payCode = "100000000000";
+                Long orderNumer = Long.valueOf(payCode) + 1;
+                cacheService.setCacheByKey(key, orderNumer.toString(), null);
+            } else {
                 Long orderNumer = Long.valueOf(payCode) + 1;
                 cacheService.setCacheByKey(key, orderNumer.toString(), null);
             }
-        }else {
-            Long orderNumer=Long.valueOf(payCode)+1;
-            cacheService.setCacheByKey(key,orderNumer.toString(),null);
+        } else {
+            Long orderNumer = Long.valueOf(payCode) + 1;
+            cacheService.setCacheByKey(key, orderNumer.toString(), null);
         }
         return payCode;
     }
 
-    private String getXMLString(String code,String msg){
-        String value="<xml>\n" +
-                "  <return_code><![CDATA["+code+"]]></return_code>\n" +
-                "  <return_msg><![CDATA["+msg+"]]></return_msg>\n" +
+    private String getXMLString(String code, String msg) {
+        String value = "<xml>\n" +
+                "  <return_code><![CDATA[" + code + "]]></return_code>\n" +
+                "  <return_msg><![CDATA[" + msg + "]]></return_msg>\n" +
                 "</xml>";
         return value;
     }
