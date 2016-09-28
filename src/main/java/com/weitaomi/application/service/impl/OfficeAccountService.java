@@ -90,9 +90,10 @@ public class OfficeAccountService implements IOfficeAccountService {
             officeMember.setOfficeAccountId(officialAccountWithScore.getId());
             officeMember.setIsAccessNow(0);
             officeMemberList.add(officeMember);
+            TaskPool taskPool = taskPoolMapper.getTaskPoolByOfficialId(officialAccountWithScore.getId(), 1);
             //添加到待完成任务记录中
             String detail ="关注公众号"+officialAccountWithScore.getUserName()+"，领取"+officialAccountWithScore.getScore()+"米币";
-            memberTaskHistoryService.addMemberTaskToHistory(memberId,1L,officialAccountWithScore.getScore(),0,detail,null,officialAccountMsg.getOriginId());
+            memberTaskHistoryService.addMemberTaskToHistory(memberId,1L,taskPool.getRate().multiply(BigDecimal.valueOf(officialAccountWithScore.getScore())).doubleValue(),0,detail,null,officialAccountMsg.getOriginId());
             idList.add(officialAccountWithScore.getId());
         }
         Long time =DateUtils.getUnixTimestamp();
