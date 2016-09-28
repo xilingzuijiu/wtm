@@ -2,7 +2,7 @@
 /* CSS Document */
 @font-face{
 	font-family:fangzheng;
-	src:url(../fonts/fangzheng.ttf)
+	src:url(../fonts/fangzheng.TTF)
 }
 html,body{
 	margin:0;
