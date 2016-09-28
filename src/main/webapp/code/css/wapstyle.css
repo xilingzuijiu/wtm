@@ -1,0 +1,463 @@
+@charset "utf-8";
+/* CSS Document */
+html{font-size:62.5% !important;}
+header{background:url("../img/MainViewImgae/top.png") no-repeat center top;height:23em;background-size:100%;padding:0 !important;overflow:hidden;margin-bottom:1.5em;}
+.adress{color:#fff;text-align:center;width:20%;padding-top:0.5em;padding-bottom:2em;}
+.adress span{font-size:2em;}
+.adress #adressname{font-size:1.5em;}
+.owner{overflow:hidden;width:100%;}
+.owner .photo{margin-left:4%;float:left;width:17%;border-radius:60%;-webkit-border-radius:60%;-moz-border-radius:60%;
+    -o-border-radius:60%;-ms-border-radius:60%;border:#fff 0.2em solid;}
+.ownerdetail{float:left;padding-left:5%;}
+.ownerdetail .ownername{font-size:1.6em;color:#ffe7b9;width:16em;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;}
+.ownerdetail span{font-size:1.6em;color:#ffe7b9;display:block;line-height:2.2em;}
+.owner .money{color:#fff;text-align:right;padding-right:3%;padding:1.1em 3%;
+    background:url("../img/MainViewImgae/stripes.png") no-repeat right center;background-size:100%;float:right;margin-top:1.5em;}
+.owner .money p{line-height:1.5em;font-size:1.2em;}
+.owner .money span{font-size:1.5em;}
+.homebanner{position:relative;width:95%;margin:auto;height:18em;overflow:hidden;}
+.homebanner ul{overflow:hidden;position:absolute;left:0;top:0;}
+.homebanner ul li{float:left;}
+.homebanner ul li img{width:100%;}
+/*.flexslider{position:relative;height:21em;overflow:hidden;}*/
+/*.slides{position:relative;z-index:1;}*/
+/*.slides li{height:21em;}*/
+/*.slides li a{display:block;width:100%;}*/
+/*.flex-control-nav{position:absolute;bottom:10px;z-index:2;width:100%;text-align:center;}*/
+/*.flex-control-nav li{display:inline-block;width:14px;height:14px;margin:0 5px;*display:inline;zoom:1;}*/
+/*.flex-control-nav a{display:inline-block;width:14px;height:14px;line-height:40px;overflow:hidden;cursor:pointer;}*/
+/*.flex-control-nav .flex-active{background-position:0 0;}*/
+
+/*.flex-direction-nav{position:absolute;z-index:3;width:100%;top:45%;}*/
+/*.flex-direction-nav li a{display:block;width:50px;overflow:hidden;cursor:pointer;position:absolute;}*/
+/*.flex-direction-nav li a.flex-prev{left:40px;}*/
+/*.flex-direction-nav li a.flex-next{right:40px;}*/
+
+
+.indexlist{padding:0 0.7em 3em 0.7em;margin:0 !important;}
+.indexlist li{margin-bottom:1em;}
+.indexlist li img{width:60%;}
+.indexlist li .thumbnail{display:block;border:none;box-shadow:none;}
+.indexlist li .caption{padding:0 !important;}
+.indexlist li .caption h3{font-size:2em;text-align:center;padding-top:0.5em;}
+
+/*阅读列表样式---------------------------------------------------------------------------------*/
+/*.insethead{background:#fa4a18 !important;height:96px;margin:0;}*/
+/*.headerbox{padding:0 3em; }*/
+/*.insethead .imgbox{padding:0;}*/
+/*.insethead img{width:14%;padding-top:1.7em;}*/
+/*.insethead h3{text-align:center;color:#fff;font-size:3em;line-height:96px;padding:0;}*/
+/*.insethead a{color:#fff;font-size:1.8em;-webkit-tap-highlight-color: rgba(0,0,0,0);*/
+    /*-webkit-tap-highlight-color:transparent;outline:none;padding:0;text-align:right;line-height:96px;}*/
+.choose{height:96px;overflow:hidden;padding:0 1.5em;}
+.choose p{color:#545454;line-height:96px;font-size:3rem;float:left;}
+.choose p span{color:#f54715;}
+.choose a{display:block;float:right;font-size:2.4rem;color:#fff;background:#68c1f4;border-radius:0.5em;-webkit-border-radius:0.5em;
+    -moz-border-radius:0.5em;-ms-border-radius:0.5em;-o-border-radius:0.5em;padding:0.4em 1em;margin-top:0.95em;}
+.choose label{font-size:3rem;font-weight:normal;line-height:96px;margin-left:2rem;color:#666;}
+.choose input{zoom:200%;margin-top:0.5em;}
+.wapreadlist{padding:0 1.5em;overflow:hidden;}
+.wapreadlist li{overflow:hidden;border-top:#eee 1px solid;}
+.wapreadlist li img{width:25%;float:left;padding:0.5em 0;}
+.checkanniu{padding:0;}
+.checkanniu a{display:block;float:right;font-size:1.7em;color:#fff;background:#68c1f4;border-radius:0.5em;-webkit-border-radius:0.5em;
+    -moz-border-radius:0.5em;-ms-border-radius:0.5em;-o-border-radius:0.5em;padding:0.4em 1em;margin-top:2.8em;}
+.readdetails{padding-left:2em;padding-top:1em;padding-right:0;}
+.readdetails h5{font-size:3em;}
+.readdetails h6{font-size:1.9em;padding:1em 0;color:#333;width:10em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.readdetails p{font-size:1.9em;color:#666;}
+.readdetails p span{color:#68c1f4;}
+/*关注公众号样式---------------------------------------------------------------------------------*/
+.gzhlist{border-top:#eee 1px solid;padding-top:1rem;}
+.gzhlist li{text-align:center;padding-bottom:3rem;}
+.gzhlist li img{width:90%;}
+.gzhlist li h5{font-size:3rem;padding-top:0.5rem;width:7em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.gzhlist li p{font-size:2rem;padding:0.8rem 0 0.8rem 0;color:#666;width:11em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.gzhlist li p span{color:#fa4a18;font-weight:normal;}
+.gzhlist li input{display:block;font-size:2.2rem;color:#fff;margin:auto;background:#68c1f4;border-radius:0.5em;-webkit-border-radius:0.5em;
+    -moz-border-radius:0.5em;-ms-border-radius:0.5em;-o-border-radius:0.5em;padding:0.4em 1.5em;}
+/*任务奖励样式---------------------------------------------------------------------------------*/
+.daytask h5,.undotask h5{font-size:3rem;line-height:96px;padding-left:4%;background:#f9f9f9;color:#ff7353;}
+.daytask ul li,.undotask ul li{height:80px;overflow:hidden;padding:0 30px;border-top:#efefef 1px solid;}
+.daytask ul li h6,.undotask ul li h6{padding-left:1.5em;background:url("../img/Person/mo.png") no-repeat left center;background-size:2.2rem;
+    font-weight:normal;font-size:3rem;color:#444;float:left;line-height:80px;width:12em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.daytask ul li p,.undotask ul li p{font-size:3rem;line-height:80px;color:#666;padding-right:2.5rem;
+    background:url("../img/next.png") no-repeat right center;background-size:1.2rem;float:right;}
+/*钱包提现样式---------------------------------------------------------------------------------*/
+.pursetop{font-size:3rem;line-height:96px;padding-right:30px;text-align:right;}
+.pursetop a{-webkit-tap-highlight-color: rgba(0,0,0,0);-webkit-tap-highlight-color: transparent;outline:none;}
+.pursebag{text-align:center;padding-top:10rem;}
+.pursebag img{width:30%;padding-bottom:2rem;}
+.pursebag h5{font-size:4.5rem;}
+.pursebag h6{padding:1.5rem 0;font-size:3.5rem;color:#444;}
+.pursebag p{font-size:2rem;color:#888;}
+.pay,.cash{font-size:2.5rem;display:block;margin: 2rem auto;width:70%;padding:1rem 0;border-radius:0.5em;
+box-shadow:0px 1px 2px #aaa;}
+.pay{background:#fa4a18;color:#fff;}
+.cash{background:none;border:#999 1px solid;}
+/*提现明细样式---------------------------------------------------------------------------------*/
+.cashdetails li{overflow:hidden;padding:0 2rem;}
+.cashdetails li:nth-child(2n){background:#ddf3ff;}
+.cashdetails .cashname{float:left;padding:2rem 0 1rem 0;}
+.cashdetails h5{font-size:3rem;font-weight:600;}
+.cashdetails span{font-size:2rem;color:#666;font-weight:normal;}
+.cashdetails p{font-size:2rem;color:#666;margin-top:1.5rem;line-height:1;}
+.cashdetails h6{float:right;font-size:3rem;padding-top:3.3rem;}
+
+
+
+@media all and (min-width:800px){
+    header{height:33em;}
+    .adress{padding-bottom:5em;padding-top:0.8em;}
+    .adress span{font-size:3em;padding-bottom:0.3em;}
+    .adress #adressname{font-size:2.5em;}
+    .ownerdetail .ownername{font-size:2.5em;width:14em;}
+    .ownerdetail span{font-size:2em;line-height:2em;}
+    .owner .money{padding:1em 2.8%;margin-top:2em;}
+    .owner .money p{font-size:3em;}
+    .owner .money span{font-size:1.3em;}
+    /*.flexslider, .slides li{margin-top:0.7em;height:30em;}*/
+    .homebanner{margin-top:0.7em;height:28em;}
+    .indexlist li{margin-bottom:2em;}
+    .indexlist li .caption h3{font-size:3em;}
+    /*阅读列表样式---------------------------------------------------------------------------------*/
+    /*.insethead{height:15.9em;}*/
+    /*.insethead img{width:11%;padding-top:7rem;}*/
+    /*.insethead h3{font-size:7rem;line-height:15.9rem;}*/
+    /*.insethead a{font-size:4rem;line-height:15.9rem;}*/
+    .choose{height:15.9rem;}
+    .choose p{font-size:4rem;line-height:15.9rem;}
+    .choose a{font-size:3.5rem;margin-top:4.5rem;}
+    .wapreadlist li img{padding:1em 0;}
+    .readdetails{padding-left:4em;padding-top:2em;}
+    .readdetails h5{font-size:4.5em;}
+    .readdetails h6{font-size:2.8em;}
+    .readdetails p{font-size:2.7em;}
+    .checkanniu a{font-size:2.3em;margin-top:3.5em;}
+    /*关注公众号样式---------------------------------------------------------------------------------*/
+    .gzhlist{padding-top:1.5rem;}
+    .gzhlist li{padding-bottom:4rem;}
+    .gzhlist li h5{font-size:5rem;padding-top:1rem;width:6.5em;}
+    .gzhlist li p{font-size:3.2rem;padding:1.5rem 0 1.5rem 0;width:10em;}
+    .gzhlist li input{font-size:3rem;padding:0.5em 1.5em;color:#fff;}
+    /*任务奖励样式---------------------------------------------------------------------------------*/
+    .daytask h5,.undotask h5{font-size:5rem;line-height:159px;}
+    .daytask ul li,.undotask ul li{height:159px;padding:0 35px;}
+    .daytask ul li h6,.undotask ul li h6{padding-left:2em;background-size:4rem;
+        font-size:4rem;line-height:159px;}
+    .daytask ul li p,.undotask ul li p{font-size:4rem;line-height:159px;padding-right:3.5rem;
+        background-size:1.6rem;}
+    /*钱包提现样式---------------------------------------------------------------------------------*/
+    .pursetop{font-size:4rem;line-height:12rem;}
+    .pursebag{padding-top:10rem;}
+    .pursebag img{padding-bottom:3rem;}
+    .pursebag h5{font-size:6.5rem;}
+    .pursebag h6{padding:3.5rem 0;font-size:5rem;}
+    .pursebag p{font-size:4rem;}
+    .pay,.cash{font-size:4rem;margin: 4rem auto;padding:2rem 0;}
+    /*提现明细样式---------------------------------------------------------------------------------*/
+    .cashdetails li{padding:0 3rem;}
+    .cashdetails .cashname{padding:3rem 0 1.8rem 0;}
+    .cashdetails h5{font-size:4.5rem;}
+    .cashdetails span{font-size:3.5rem;}
+    .cashdetails p{font-size:3.5rem;margin-top:2.5rem;}
+    .cashdetails h6{font-size:4.5rem;padding-top:5.4rem;}
+}
+@media screen and (min-width:640px) and (max-width:719px){
+    header{height:20em;margin-bottom:0.3em;}
+    .ownerdetail .ownername{font-size:1.5em;}
+    .ownerdetail span{font-size:1.5em;}
+    .owner .money{margin-top:0.7em;}
+    .homebanner{height:15em;}
+    /*.flexslider, .slides li{margin-top:0.6em;height:18em;}*/
+    .indexlist{padding-bottom:1.5em;}
+    .indexlist li{margin-bottom:0.2em;}
+    .indexlist li img{width:50%;}
+    .indexlist li .caption h3{font-size:1.5em;}
+    /*阅读列表样式---------------------------------------------------------------------------------*/
+    /*.insethead{height:88px;}*/
+    /*.insethead img{width:11%;padding-top:2.5em;}*/
+    /*.insethead h3{font-size:2.5em;line-height:88px;}*/
+    /*.insethead a{font-size:1.8em;line-height:88px;}*/
+    .choose{height:88px;}
+    .choose p{font-size:1.8em;line-height:88px;}
+    .choose a{font-size:1.4em;margin-top:1.3em;}
+    .wapreadlist li img{padding:0.7em 0;}
+    .readdetails{padding-left:2em;padding-top:1.5em;}
+    .readdetails h5{font-size:2.5em;}
+    .readdetails h6{font-size:1.6em;}
+    .readdetails p{font-size:1.6em;}
+    .checkanniu a{font-size:1.4em;margin-top:3.2em;}
+    /*关注公众号样式---------------------------------------------------------------------------------*/
+    .gzhlist{padding-top:1em;}
+    .gzhlist li{padding-bottom:3em;}
+    .gzhlist li h5{font-size:2em;margin-top:0.5em;}
+    .gzhlist li p{font-size:1.3em;padding:0.3em 0 0.3em 0;}
+    .gzhlist li input{font-size:1.8rem;padding:0.3em 1.5em;}
+    /*任务奖励样式---------------------------------------------------------------------------------*/
+    .daytask h5,.undotask h5{font-size:3.5rem;height:88px;line-height:88px;}
+    .daytask ul li,.undotask ul li{height:70px;padding:0 30px;}
+    .daytask ul li h6,.undotask ul li h6{padding-left:1.8em;background-size:2.4rem;
+        font-size:2.4rem;line-height:70px;}
+    .daytask ul li p,.undotask ul li p{font-size:2.4rem;line-height:70px;padding-right:1.8rem;
+        background-size:1rem;}
+    /*钱包提现样式---------------------------------------------------------------------------------*/
+    .pursetop{font-size:3rem;line-height:9.6rem;}
+    .pursebag{padding-top:3rem;}
+    .pursebag img{padding-bottom:2.5rem;}
+    .pursebag h5{font-size:3.8rem;}
+    .pursebag h6{padding:1.5rem 0;font-size:2.5rem;}
+    .pursebag p{font-size:2rem;}
+    .pay,.cash{font-size:2.5rem;margin: 2.5rem auto;padding:1.2rem 0;}
+    /*提现明细样式---------------------------------------------------------------------------------*/
+    .cashdetails li{padding:0 2rem;}
+    .cashdetails .cashname{padding:1.5rem 0 0.8rem 0;}
+    .cashdetails h5{font-size:2.5rem;}
+    .cashdetails span{font-size:1.8rem;}
+    .cashdetails p{font-size:1.8rem;margin-top:1.2rem;}
+    .cashdetails h6{font-size:2.5rem;padding-top:2.6rem;}
+}
+@media screen and (min-width:415px) and (max-width:639px){
+    header{height:17em;}
+    .adress{padding-bottom:1.1em;}
+    .ownerdetail .ownername{font-size:1.5em;width:12em;}
+    .ownerdetail span{font-size:1.5em;line-height:1.7em;}
+    .owner .money{margin-top:0.3em;}
+    /*.flexslider, .slides li{height:15em;}*/
+    .homebanner{height:13em;}
+    .indexlist{padding-bottom:1em;}
+    .indexlist li{margin-bottom:0;}
+    .indexlist li .caption h3{font-size:1.4em;}
+    /*阅读列表样式---------------------------------------------------------------------------------*/
+    /*.headerbox{padding:0 2.5em;}*/
+    /*.insethead{height:80px;}*/
+    /*.insethead img{width:12%;padding-top:2.5em;}*/
+    /*.insethead h3{font-size:2.5em;line-height:80px;}*/
+    /*.insethead a{font-size:1.5em;line-height:80px;}*/
+    .choose{height:80px;}
+    .choose p{font-size:1.6em;line-height:80px;}
+    .choose a{font-size:1.3em;margin-top:1.3em;}
+    .wapreadlist li img{padding:0.7em 0;}
+    .readdetails{padding-left:2em;padding-top:1.5em;}
+    .readdetails h5{font-size:2.2em;}
+    .readdetails h6{font-size:1.3em;}
+    .readdetails p{font-size:1.3em;}
+    .checkanniu a{font-size:1.3em;margin-top:2.8em;}
+    /*关注公众号样式---------------------------------------------------------------------------------*/
+    .gzhlist{padding-top:0.7em;}
+    .gzhlist li{padding-bottom:2.5em;}
+    .gzhlist li img{width:95%;}
+    .gzhlist li h5{font-size:1.5em;margin-top:0.5em;}
+    .gzhlist li p{font-size:1em;padding:0.3em 0 0.3em 0;width:9.5em;}
+    .gzhlist li input{font-size:1.6rem;padding:0.3em 1.5em;}
+    /*任务奖励样式---------------------------------------------------------------------------------*/
+    .daytask h5,.undotask h5{font-size:2.8rem;height:80px;line-height:80px;}
+    .daytask ul li,.undotask ul li{height:70px;padding:0 30px;}
+    .daytask ul li h6,.undotask ul li h6{padding-left:2em;background-size:2.2rem;
+        font-size:2.2rem;line-height:70px;}
+    .daytask ul li p,.undotask ul li p{font-size:2.2rem;line-height:70px;padding-right:1.8rem;
+        background-size:0.8rem;}
+    /*钱包提现样式---------------------------------------------------------------------------------*/
+    .pursetop{font-size:2.5rem;line-height:8rem;}
+    .pursebag{padding-top:3rem;}
+    .pursebag img{padding-bottom:2rem;}
+    .pursebag h5{font-size:3.6rem;}
+    .pursebag h6{padding:1.2rem 0;font-size:2.6rem;}
+    .pursebag p{font-size:1.8rem;}
+    .pay,.cash{font-size:2rem;margin: 2rem auto;padding:1rem 0;}
+    /*提现明细样式---------------------------------------------------------------------------------*/
+    .cashdetails li{padding:0 1.5rem;}
+    .cashdetails .cashname{padding:1.2rem 0 0.5rem 0;}
+    .cashdetails h5{font-size:2.2rem;}
+    .cashdetails span{font-size:1.6rem;}
+    .cashdetails p{font-size:1.6rem;margin-top:1rem;}
+    .cashdetails h6{font-size:2.2rem;padding-top:2.1rem;}
+}
+@media screen and (min-width:376px) and (max-width:414px){
+    .headerbox{padding:0 2.5em;}
+    header{height:13em;}
+    .adress{padding-bottom:0.5em;}
+    .adress span{font-size:1.2em}
+    .adress #adressname{font-size:1em;}
+    .ownerdetail .ownername{font-size:1em;width:11em;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;}
+    .ownerdetail span{font-size:1.1em;line-height:1.8em;}
+    .owner .money{padding:0.3em 2%;margin-top:0.2em;}
+    .owner .money p{font-size:1em;}
+    .owner .money span{font-size:1.1em;}
+    /*.flexslider, .slides li{margin-top:0.5em;height:11.5em;}*/
+    .homebanner{margin-top:0.5em;height:11.5em;}
+    .indexlist{padding-bottom:0.5em;}
+    .indexlist li{margin-bottom:0;}
+    .indexlist li img{width:70%;}
+    .indexlist li .caption h3{font-size:1.05em;}
+    /*阅读列表样式---------------------------------------------------------------------------------*/
+    /*.headerbox{padding:0 2em; }*/
+    /*.insethead{height:80px;}*/
+    /*.insethead img{width:12%;padding-top:2.5em;}*/
+    /*.insethead h3{font-size:2em;line-height:80px;}*/
+    /*.insethead a{font-size:1.2em;line-height:80px;}*/
+    .choose{height:80px;}
+    .choose p{font-size:1.3em;line-height:80px;}
+    .choose a{font-size:1em;margin-top:1.3em;}
+    .wapreadlist li img{padding:0.7em 0;}
+    .readdetails{padding-left:1.5em;padding-top:1em;}
+    .readdetails h5{font-size:1.8em;}
+    .readdetails h6{font-size:1.1em;padding:0.7em 0 0.5em 0;}
+    .readdetails p{font-size:1.1em;}
+    .checkanniu a{font-size:1em;margin-top:2.8em;}
+    /*关注公众号样式---------------------------------------------------------------------------------*/
+    .gzhlist{padding-top:0.5em;}
+    .gzhlist li img{width:100%;}
+    .gzhlist li h5{font-size:1.4em;margin-top:0.5em;width:5.5em;}
+    .gzhlist li p{font-size:0.85em;padding:0.1em 0 0.1em 0;text-align:left;width:9.2em;}
+    .gzhlist li input{font-size:1.5rem;padding:0.3em 1.5em;}
+    /*任务奖励样式---------------------------------------------------------------------------------*/
+    .daytask h5,.undotask h5{font-size:2.8rem;height:70px;line-height:70px;}
+    .daytask ul li,.undotask ul li{height:60px;padding:0 20px;}
+    .daytask ul li h6,.undotask ul li h6{padding-left:2em;background-size:2rem;
+        font-size:2rem;line-height:60px;}
+    .daytask ul li p,.undotask ul li p{font-size:2rem;line-height:70px;padding-right:1.8rem;
+        background-size:0.8rem;}
+    /*钱包提现样式---------------------------------------------------------------------------------*/
+    .pursetop{font-size:2.1rem;line-height:7rem;}
+    .pursebag{padding-top:3rem;}
+    .pursebag img{padding-bottom:2rem;}
+    .pursebag h5{font-size:3.5rem;}
+    .pursebag h6{padding:1.2rem 0;font-size:2.5rem;}
+    .pursebag p{font-size:1.8rem;}
+    .pay,.cash{font-size:2rem;margin: 1.5rem auto;padding:1rem 0;}
+    /*提现明细样式---------------------------------------------------------------------------------*/
+    .cashdetails li{padding:0 1.5rem;}
+    .cashdetails .cashname{padding:1rem 0 0.5rem 0;}
+    .cashdetails h5{font-size:2rem;}
+    .cashdetails span{font-size:1.4rem;}
+    .cashdetails p{font-size:1.4rem;margin-top:0.8rem;}
+    .cashdetails h6{font-size:2rem;padding-top:1.8rem;}
+}
+@media screen and (min-width:321px) and (max-width:375px){
+    header{height:11.5em;margin-bottom:1em;}
+    .adress{padding-bottom:0.5em;}
+    .adress span{font-size:1.2em}
+    .adress #adressname{font-size:1em;}
+    .ownerdetail .ownername{font-size:1em;width:11em;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;}
+    .ownerdetail span{font-size:1.1em;line-height:1.8em;}
+    .owner .money{padding:0.3em 2%;margin-top:0.2em;}
+    .owner .money p{font-size:1em;}
+    .owner .money span{font-size:1.1em;}
+    /*.flexslider, .slides li{margin-top:0.7em;height:10.5em;}*/
+    .homebanner{margin-top:0.7em;height:10em;}
+    .indexlist{padding-bottom:0.5em;}
+    .indexlist li{margin-bottom:0;}
+    .indexlist li img{width:70%;}
+    .indexlist li .caption h3{font-size:1em;padding-top:0.7em;}
+    /*阅读列表样式---------------------------------------------------------------------------------*/
+    /*.headerbox{padding:0 1.5em; }*/
+    /*.insethead{height:50px;}*/
+    /*.insethead img{width:12%;padding-top:1.1em;}*/
+    /*.insethead h3{font-size:1.8em;line-height:50px;}*/
+    /*.insethead a{font-size:1.1em;line-height:50px;}*/
+    .choose{height:50px;}
+    .choose p{font-size:1.3em;line-height:50px;}
+    .choose a{font-size:1em;margin-top:0.7em;}
+    .wapreadlist li img{padding:0.5em 0;}
+    .readdetails{padding-left:1.2em;padding-top:0.9em;}
+    .readdetails h5{font-size:1.4em;}
+    .readdetails h6{font-size:1em;padding:0.7em 0 0.3em 0;}
+    .readdetails p{font-size:1em;}
+    .checkanniu a{font-size:1em;margin-top:2.8em;}
+    /*关注公众号样式---------------------------------------------------------------------------------*/
+    .gzhlist{padding-top:0.5em;}
+    .gzhlist li{padding:0 0.3em 1.5em 0.3em;}
+    .gzhlist li img{width:95%;}
+    .gzhlist li h5{font-size:1.3em;margin-top:0.5em;width:5.5em;}
+    .gzhlist li p{font-size:0.85em;padding:0;text-align:left;width:9.2em;}
+    .gzhlist li input{font-size:1.5rem;padding:0.3em 1.5rem;}
+    /*任务奖励样式---------------------------------------------------------------------------------*/
+    .daytask h5,.undotask h5{font-size:2.8rem;height:70px;line-height:70px;}
+    .daytask ul li,.undotask ul li{height:60px;padding:0 20px;}
+    .daytask ul li h6,.undotask ul li h6{padding-left:2em;background-size:2rem;
+        font-size:2rem;line-height:60px;}
+    .daytask ul li p,.undotask ul li p{font-size:2rem;line-height:70px;padding-right:1.8rem;
+        background-size:0.8rem;}
+    /*钱包提现样式---------------------------------------------------------------------------------*/
+    .pursetop{font-size:2.1rem;line-height:7rem;}
+    .pursebag{padding-top:1rem;}
+    .pursebag img{padding-bottom:2rem;}
+    .pursebag h5{font-size:3.3rem;}
+    .pursebag h6{padding:1rem 0;font-size:2.6rem;}
+    .pursebag p{font-size:1.7rem;}
+    .pay,.cash{font-size:2rem;margin: 1.5rem auto;padding:0.8rem 0;}
+    /*提现明细样式---------------------------------------------------------------------------------*/
+    .cashdetails li{padding:0 1.5rem;}
+    .cashdetails .cashname{padding:1.1rem 0 0.4rem 0;}
+    .cashdetails h5{font-size:1.8rem;}
+    .cashdetails span{font-size:1.3rem;}
+    .cashdetails p{font-size:1.3rem;margin-top:0.7rem;}
+    .cashdetails h6{font-size:1.8rem;padding-top:1.8rem;}
+}
+@media screen and (max-width:320px){
+    header{height:10em;margin-bottom:0.8em;}
+    .adress{padding-bottom:0.5em;}
+    .adress span{font-size:1.2em}
+    .adress #adressname{font-size:1em;}
+    .ownerdetail .ownername{font-size:1em;width:11em;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;}
+    .ownerdetail span{font-size:1.1em;line-height:1.8em;}
+    .owner .money{padding:0.3em 2%;margin-top:0.2em;}
+    .owner .money p{font-size:1em;}
+    .owner .money span{font-size:1.1em;}
+    /*.flexslider, .slides li{margin-top:0.7em;height:9em;}*/
+    .homebanner{margin-top:0.7em;height:8em;}
+    .indexlist{padding-bottom:0;}
+    .indexlist li{margin-bottom:0;}
+    .indexlist li img{width:75%;}
+    .indexlist li .caption h3{font-size:0.8em;padding-top:0.5em;}
+    /*阅读列表样式---------------------------------------------------------------------------------*/
+    /*.headerbox{padding:0 1em; }*/
+    /*.insethead{height:44px;}*/
+    /*.insethead img{width:12%;padding-top:1em;}*/
+    /*.insethead h3{font-size:1.5em;line-height:44px;}*/
+    /*.insethead a{font-size:1em;line-height:44px;}*/
+    .choose{height:44px;padding:0 0.8em;}
+    .choose p{font-size:1.2em;line-height:44px;}
+    .choose a{font-size:0.8em;margin-top:0.8em;}
+    .wapreadlist li img{padding:0.5em 0;}
+    .readdetails{padding-left:1.2em;padding-top:0.9em;}
+    .readdetails h5{font-size:1.4em;}
+    .readdetails h6{font-size:0.8em;padding:0.7em 0 0 0;}
+    .readdetails p{font-size:0.8em;}
+    .checkanniu a{font-size:0.8em;margin-top:2.3em;}
+    /*关注公众号样式---------------------------------------------------------------------------------*/
+    .gzhlist{padding-top:0.5em;}
+    .gzhlist li{padding:0 0 1.5em 0;}
+    .gzhlist li img{width:90%;}
+    .gzhlist li h5{font-size:1.3em;margin-top:0.5em;width:5.5em;}
+    .gzhlist li p{font-size:0.5em;padding:0;width:8em;}/*p标签的字体大小有问题需要放在手机上真实模拟一下*/
+    .gzhlist li input{font-size:1rem;padding:0.5em 1.5em;}
+    /*任务奖励样式---------------------------------------------------------------------------------*/
+    .daytask h5,.undotask h5{font-size:2.8rem;height:70px;line-height:70px;padding:0 1.5rem;}
+    .daytask ul li,.undotask ul li{height:60px;padding:0 10px;}
+    .daytask ul li h6,.undotask ul li h6{padding-left:1.7em;background-size:2rem;
+        font-size:2rem;line-height:60px;}
+    .daytask ul li p,.undotask ul li p{font-size:2rem;line-height:70px;padding-right:1.3rem;
+        background-size:0.8rem;}
+    /*钱包提现样式---------------------------------------------------------------------------------*/
+    .pursetop{font-size:1.8rem;line-height:4.5rem;}
+    .pursebag{padding-top:3rem;}
+    .pursebag img{padding-bottom:1.5rem;}
+    .pursebag h5{font-size:3rem;}
+    .pursebag h6{padding:1rem 0;font-size:2.3rem;}
+    .pursebag p{font-size:1.5rem;line-height:1.8rem;}
+    .pay,.cash{font-size:2rem;margin: 1.2rem auto;padding:0.6rem 0;}
+    /*提现明细样式---------------------------------------------------------------------------------*/
+    .cashdetails li{padding:0 1rem;}
+    .cashdetails .cashname{padding:1rem 0 0.6rem 0;}
+    .cashdetails h5{font-size:1.5rem;}
+    .cashdetails span{font-size:1rem;}
+    .cashdetails p{font-size:1rem;margin-top:0.8rem;}
+    .cashdetails h6{font-size:1.5rem;padding-top:1.5rem;}
+
+}
+
+
+
+
