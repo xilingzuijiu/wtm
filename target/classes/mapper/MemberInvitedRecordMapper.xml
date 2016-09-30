@@ -19,11 +19,10 @@
   </select>
   <select id="getInvitedParamsDto" resultType="com.weitaomi.application.model.dto.InvitedParamsDto">
     SELECT
-        sum(history.pointCount)                                   totalScore,
+        CASE  WHEN sum(history.pointCount) is null THEN 0 ELSE sum(history.pointCount) END AS totalScore,
         (SELECT pointCount FROM   wtm_member_task WHERE id=3)    invitedScore
     FROM wtm_member_task_history history LEFT JOIN wtm_member_task task ON task.id = history.taskId
-    WHERE history.memberId =#{memberId} AND task.id IN (3,7)
-    GROUP BY history.memberId;
+    WHERE history.memberId =#{memberId} AND task.id IN (3,7);
   </select>
     <select id="getTotalSharedMsg" resultType="com.weitaomi.application.model.dto.TotalSharedMsg">
        SELECT

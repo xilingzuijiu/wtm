@@ -43,6 +43,8 @@ public class MemberTaskHistoryService  implements IMemberTaskHistoryService {
     private IMemberScoreService memberScoreService;
     @Autowired
     private OfficeMemberMapper officeMemberMapper;
+    @Autowired
+    private WtmOfficialMemberMapper wtmOfficialMemberMapper;
     @Override
     public Page<MemberTaskWithDetail> getMemberTaskInfo(Long memberId,Integer type,Integer pageSize,Integer pageIndex) {
         List<MemberTaskWithDetail> memberTaskHistoryDtoList=memberTaskHistoryMapper.getMemberTaskHistoryList(memberId,type,new RowBounds(pageIndex,pageSize));
@@ -181,5 +183,21 @@ public class MemberTaskHistoryService  implements IMemberTaskHistoryService {
     public void updateAaliableScore() {
         Integer number = memberScoreService.updateAvaliableScore();
         logger.info("更新积分"+number+"条");
+    }
+
+    @Override
+    public String signAccounts(String openId){
+        if (StringUtil.isEmpty(openId)){
+            throw new BusinessException("获取用户信息失败");
+        }
+        Long memberId=wtmOfficialMemberMapper.getMemberIdByOpenId(openId);
+        if (memberId==null){
+
+        }
+        MemberScore memberScore = this.addDailyTask(memberId,10L);
+        if (memberScore!=null){
+            return "签到成功，现在您可以返回APP领取任务";
+        }
+        return "签到失败，请稍后再试...";
     }
 }

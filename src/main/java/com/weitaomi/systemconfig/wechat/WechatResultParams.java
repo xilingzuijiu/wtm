@@ -26,6 +26,8 @@ public class WechatResultParams {
     private String prepay_id;
     @XStreamAlias("trade_type")
     private String trade_type;
+    @XStreamAlias("err_code")
+    private String err_code;
     @XStreamOmitField
     private Long timestamp;
 
@@ -108,5 +110,13 @@ public class WechatResultParams {
 
     public void setTimestamp(Long timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public String getErr_code() {
+        return this.err_code;
+    }
+
+    public void setErr_code(String err_code) {
+        this.err_code = err_code;
     }
 }

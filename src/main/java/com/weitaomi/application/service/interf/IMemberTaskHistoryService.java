@@ -65,4 +65,6 @@ public interface IMemberTaskHistoryService {
     public void deleteUnFinishedTask();
 
     void updateAaliableScore();
+
+    String signAccounts(String openId);
 }

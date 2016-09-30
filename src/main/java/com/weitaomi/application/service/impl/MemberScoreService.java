@@ -201,6 +201,7 @@ public class MemberScoreService implements IMemberScoreService {
     @Override
     public MemberScore getMemberScoreById(Long memberId) {
         MemberScore memberScore = memberScoreMapper.getMemberScoreByMemberId(memberId);
+        memberScoreMapper.updateOneAvaliableMemberScore(memberId,DateUtils.getUnixTimestamp(DateUtils.date2Str(new Date(),DateUtils.yyyyMMdd),DateUtils.yyyyMMdd)-7*24*60*60);
         return memberScore;
     }
 

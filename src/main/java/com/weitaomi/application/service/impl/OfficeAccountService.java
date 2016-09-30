@@ -51,14 +51,36 @@ public class OfficeAccountService implements IOfficeAccountService {
     private AccountAdsMapper accountAdsMapper;
     @Override
     public List<OfficialAccountsDto> getAccountsByMemberId(Long memberId){
-        return officalAccountMapper.getAccountsByMemberId(memberId);
+        return officalAccountMapper.getAccountsByMemberId(memberId,0L);
+    }
+    /**
+     * 查看已关注公众号
+     */
+    @Override
+    public List<MemberAccountLabel> getOfficialAccountMsgList(Long memberId){
+        List<MemberAccountLabel> officialAccountNameList=officeMemberMapper.getOfficialAccountNameList(memberId);
+        return officialAccountNameList;
+    }
+    /**
+     *更新已关注公众号
+     */
+    @Override
+    public Integer signOfficialAccountMsgList(Long memberId){
+        List<MemberAccountLabel> officialAccountNameList=officeMemberMapper.getOfficialAccountNameList(memberId);
+        Integer num=officeMemberMapper.updateOfficialMemberList(memberId);
+        for (MemberAccountLabel memberAccountLabel: officialAccountNameList) {
+            String key = memberAccountLabel.getNickName() + ":" + memberAccountLabel.getSex() + ":" + memberAccountLabel.getOriginId();
+            int number = memberTaskHistoryMapper.deleteMemberTaskUnfinished(memberId, 0, memberAccountLabel.getOriginId());
+            cacheService.delKeyFromRedis(key);
+        }
+        return num;
     }
     @Override
     @Transactional
     public boolean pushAddRequest(Long memberId,AddOfficalAccountDto addOfficalAccountDto) {
         List<OfficeMember> officeMembers=officeMemberMapper.getOfficeMemberList(memberId);
         if (!officeMembers.isEmpty()){
-            String info="您还有未完成的任务，请先到微淘米APP服务号内完成，\n未完成任务将会在24小时内删除，请尽快完成,\n如有事宜，请联系客服~";
+            String info="您还有未关注公众号，请到服务号内完成\n未完成任务将会在1小时后删除\n若领任务之前已关注，请标注这些公众号";
             throw new InfoException(info);
         }
         if (addOfficalAccountDto==null){

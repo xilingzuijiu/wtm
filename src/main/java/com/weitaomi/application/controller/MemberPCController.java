@@ -41,6 +41,8 @@ public class MemberPCController extends BaseController {
     private IAppVersionService appVersionService;
     @Autowired
     private IOfficeAccountService officeAccountService;
+    @Autowired
+    private IMemberTaskHistoryService memberTaskHistoryService;
     /**
      * 获取用户信息
      * @throws ParseException    the parse exception
@@ -222,6 +224,6 @@ public class MemberPCController extends BaseController {
     @RequestMapping(value = "/signAccount", method = RequestMethod.POST)
     public AjaxResult signAccount(@RequestBody Map map) {
         System.out.println(JSON.toJSONString(map));
-        return AjaxResult.getOK();
+        return AjaxResult.getOK(memberTaskHistoryService.signAccounts((String)map.get("openid")));
     }
 }

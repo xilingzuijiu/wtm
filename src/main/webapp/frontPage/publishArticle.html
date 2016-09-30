@@ -3,12 +3,13 @@
 <head lang="en">
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../code/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../code/css/showBo.css"/>
     <meta name="viewport" content="width=device-width,inital-scale=1,maximum-scale=1,user-scalable=no"/>
     <title>发布文章任务页</title>
     <style>
         body{
             font-family: "Microsoft Yahei UI", "Helvetica Neue", Helvetica, Arial, sans-serif, "Microsoft YaHei";
-            background: #ebe378;
+            background: #FFFBE6;
         }
         .info{
             color:#0059b2;
@@ -18,10 +19,7 @@
             color: #c12e2a;
         }
     </style>
-    <script src="../code/js/jquery.min.js" ></script>
-    <script src="../code/js/bootstrap.min.js" ></script>
     <script src="../code/js/publishAccounts.js"></script>
-    <script src="../code/js/lrz.mobile.min.js"></script>
     <script>
         var memberId;
         var time;
@@ -33,17 +31,17 @@
                 $.ajax({
                     type: 'post',
                     dataType: 'json',
-                    url: '/pc/admin/member/getMemberAccountPublishMsg',
+                    url: '/pc/admin/member/getMemberArticlePublishMsg',
                     data: {memberId:memberId,time:time},
                     success: function (params) {
                         var json = eval(params); //数组
                         if (json!=null&&json.errorCode==0){
                             var data=eval(json.data);
                             deal(data)
-                        }else alert("获取微信公众号列表失败")
+                        }else Showbo.Msg.alert("获取微信公众号列表失败")
                     },
                     error:function (data){
-                        alert("页面加载错误，请重试");
+                        Showbo.Msg.alert("页面加载错误，请重试");
                     }
 //                headers:{
 //                    "Access-Control-Allow-Origin":"",
@@ -87,18 +85,19 @@
                     console.log(data)
                     var json = eval(data); //数组
                     if (json!=null&&json.errorCode==0){
-                        alert(json.data)
+                        Showbo.Msg.alert(json.data)
                         location.reload()
                     }else if (json!=null&&json.errorCode==4){
-                        alert(json.message)
+                        Showbo.Msg.alert(json.message)
                     }
                 },
                 error:function (data){
                     console.log(data)
-                    alert("页面加载错误，请重试");
+                    Showbo.Msg.alert("页面加载错误，请重试");
                 }
             })
         }
+
     </script>
 </head>
 <body style="margin: 50px">
@@ -124,13 +123,9 @@
         <div class="col-sm-8" id="articleLink">
             <input type="text" class="form-control" name="articleUrl" />
         </div>
-        <label class="col-sm-4 control-label">要发布文章的标题</label>
+        <label class="col-sm-4 control-label">要发布文章的标题/简介</label>
         <div class="col-sm-8">
-            <input type="text" class="form-control" name="title" />
-        </div>
-        <label class="col-sm-4 control-label">要发布文章的摘要</label>
-        <div class="col-sm-8">
-            <input type="text" class="form-control" name="articleAbstract" />
+            <input type="text" class="form-control" onfocus="if (value =='不能超过200字...'){value =''}" name="title" value="不能超过200字..."/>
         </div>
         <label class="col-sm-4 control-label" >上传文章展示图片</label>
         <div class="col-sm-8">
@@ -162,7 +157,7 @@
     </div>
 
     <div class="form-group">
-        <label class="col-sm-4 control-label">求关注时间限制：</label>
+        <label class="col-sm-4 control-label">求关注时间限制（天）：</label>
         <div class="col-sm-8" id="div2">
             <select name="limitDay" class="form-control" id="select2">
                 <option value="0">0</option>
@@ -183,5 +178,7 @@
 <div style="text-align: center">
     <button class="btn btn-primary" id="button" onclick="publish()">提交任务</button>
 </div>
+
+<a href="weixin://dl/scan">打开扫</a>
 </body>
 </html>

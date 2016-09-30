@@ -13,6 +13,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 /**
  * Created by Jemry.Liu on 2015/5/9.
@@ -32,7 +33,6 @@ public abstract class BaseController {
      */
     protected Long getUserId(HttpServletRequest request) {
         String sId = request.getHeader("memberId");
-
         if (!StringUtils.isEmpty(sId)) {
             try {
                 Long userId = Long.parseLong(sId);
@@ -41,6 +41,12 @@ public abstract class BaseController {
                     throw new InfoException("用户不存在");
                 }else if (member.getSex()==3){
                     throw new InfoException("用户已经被禁用，请联系客服人员");
+                }
+                Map<String,Long> idMap= memberMapper.getIsFollowWtmAccount(userId);
+                if (idMap!=null){
+                    if (idMap.get("officialMemberId")==null){
+                        throw new InfoException("未关注微淘米服务号");
+                    }
                 }
                 return userId;
             } catch (NumberFormatException e) {

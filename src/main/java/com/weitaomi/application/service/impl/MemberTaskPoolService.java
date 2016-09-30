@@ -57,6 +57,9 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
             if (!taskPools.isEmpty()){
                 return "您已发布过此任务，请在公众号详情中查看";
             }
+            if (taskPool.getSingleScore()==null||taskPool.getSingleScore()<=0){
+                throw new InfoException("单次奖励必须大于零哦~亲~");
+            }
             MemberScore memberScore=memberScoreMapper.getMemberScoreByMemberId(taskPool.getMemberId());
             OfficialAccount officialAccount= officalAccountMapper.selectByPrimaryKey(taskPool.getOfficialAccountsId());
             if (memberScore==null){
@@ -131,7 +134,7 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
         if (publishReadRequestDto.getLimitDay()!=null){
             taskPool.setLimitDay(publishReadRequestDto.getLimitDay().longValue());
         }
-        if (publishReadRequestDto.getSingleScore()==null||publishReadRequestDto.getSingleScore()==0){
+        if (publishReadRequestDto.getSingleScore()==null||publishReadRequestDto.getSingleScore()<=0){
             throw new InfoException("单次奖励必须大于零哦~亲~");
         }
         if (publishReadRequestDto.getNeedNumber()==null||publishReadRequestDto.getNeedNumber()==0){
@@ -156,7 +159,7 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
     @Override
     public RequireFollowerParamsDto getRequireFollowerParamsDto(Long memberId) {
         RequireFollowerParamsDto requireFollowerParamsDto=new RequireFollowerParamsDto();
-        List<OfficialAccountsDto> accountList=officalAccountMapper.getAccountsByMemberId(memberId);
+        List<OfficialAccountsDto> accountList=officalAccountMapper.getAccountsByMemberId(memberId,0L);
         if (accountList.isEmpty()){
             throw new BusinessException("公众号列表为空");
         }
@@ -173,7 +176,7 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
     @Override
     public RequireFollowerParamsDto getMemberArticlePublishMsg(Long memberId) {
         RequireFollowerParamsDto requireFollowerParamsDto=new RequireFollowerParamsDto();
-        List<OfficialAccountsDto> accountList=officalAccountMapper.getAccountsByMemberId(memberId);
+        List<OfficialAccountsDto> accountList=officalAccountMapper.getAccountsByMemberId(memberId,1L);
         if (accountList.isEmpty()){
             throw new BusinessException("公众号列表为空");
         }

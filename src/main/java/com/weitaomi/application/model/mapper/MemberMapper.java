@@ -6,6 +6,7 @@ import com.weitaomi.application.model.dto.MemberInfoDto;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface MemberMapper extends IBaseMapper<Member> {
     MemberInfoDto getMemberByTelephone(@Param("telephone")String telephone);
@@ -15,4 +16,5 @@ public interface MemberMapper extends IBaseMapper<Member> {
     public Member getByCellphoneAndPassword(@Param("cellphone")String cellphone,@Param("password")String password);
     int upLoadMemberShowImage(@Param("memberId") Long memberId, @Param("imageUrl") String imageUrl);
     List<Long> getAllMemberId();
+    Map<String,Long> getIsFollowWtmAccount(@Param("memberId") Long memberId);
 }

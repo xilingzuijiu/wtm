@@ -3,12 +3,13 @@
 <head lang="en">
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../code/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../code/css/showBo.css"/>
     <meta name="viewport" content="width=device-width,inital-scale=1,maximum-scale=1,user-scalable=no"/>
     <title>发布关注任务页</title>
     <style>
         body {
             font-family: "Microsoft Yahei UI", "Helvetica Neue", Helvetica, Arial, sans-serif, "Microsoft YaHei";
-            background: #c3f1d5;
+            background: #FFFBE6;
         }
 
         .info {
@@ -20,8 +21,6 @@
             color: #c12e2a;
         }
     </style>
-    <script src="../code/js/jquery.min.js"></script>
-    <script src="../code/js/bootstrap.min.js"></script>
     <script src="../code/js/publishAccounts.js"></script>
     <script>
         var memberId;
@@ -41,11 +40,11 @@
                             if (json != null && json.errorCode == 0) {
                                 var data = eval(json.data);
                                 deal(data)
-                            } else alert("获取微信公众号列表失败")
+                            } else Showbo.Msg.alert("获取微信公众号列表失败")
 
                         },
                         error: function (data) {
-                            alert("页面加载错误，请重试");
+                            Showbo.Msg.alert("页面加载错误，请重试");
                         }
 //                headers:{
 //                    "Access-Control-Allow-Origin":"",
@@ -103,15 +102,15 @@
                     var json = eval(data); //数组
                     if (json != null && json.errorCode == 0) {
 //                            console.log(data)
-                        alert(json.data)
+                        Showbo.Msg.alert(json.data)
                         location.reload()
                     }
                     else {
-                        alert("提交失败")
+                        Showbo.Msg.alert("提交失败")
                     }
                 },
                 error: function (data) {
-                    alert("页面加载错误，请重试");
+                    Showbo.Msg.alert("页面加载错误，请重试");
                 }
             })
         }
@@ -150,7 +149,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-4 control-label">关注时间限制：</label>
+        <label class="col-sm-4 control-label">关注时间限制（天）：</label>
         <div class="col-sm-8" id="div2">
             <select name="limitDay" class="form-control" id="select2">
                 <option value="0">0</option>

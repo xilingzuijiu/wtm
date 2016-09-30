@@ -42,6 +42,9 @@
   <delete id="deleteUnfinishedTask">
     DELETE FROM  wtm_member_task_history  WHERE isFinished=0 AND unix_timestamp(now())-createTime>#{time}
   </delete>
+  <delete id="deleteMemberTaskUnfinished">
+    DELETE FROM wtm_member_task_history  WHERE memberId=#{memberId} AND isFinished=#{type} AND taskFlag=#{originId}
+  </delete>
 
 
   <select id="getMemberTaskHistoryList" resultMap="MyResultMap">

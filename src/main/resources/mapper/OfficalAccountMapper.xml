@@ -32,6 +32,9 @@
     select fa.id,fa.userName ofiicialAccountName,score.memberScore memberScore,t.singleScore from wtm_official_accounts fa LEFT JOIN wtm_member_score score ON score.memberId=fa.memberId
      LEFT JOIN wtm_seller_type t ON t.id=fa.sellerTypeId
         WHERE fa.memberId=#{memberId} AND fa.isOpen=1
+        <if test="flag==0">
+            and fa.level2>=0
+        </if>
   </select>
     <select id="getOfficalAccountByoriginId" resultType="com.weitaomi.application.model.bean.OfficialAccount">
     select * from wtm_official_accounts a WHERE a.originId=#{originId}

@@ -17,4 +17,7 @@
           resultType="com.weitaomi.application.model.bean.WtmOfficialMember">
     select * from wtm_weitaomi_official_member m where m.unionId=#{unionId}
   </select>
+  <select id="getMemberIdByOpenId" resultType="java.lang.Long">
+    select login.memberId from wtm_third_login login LEFT JOIN wtm_weitaomi_official_member m ON m.unionId=login.unionId WHERE m.openId=#{openId}
+  </select>
 </mapper>

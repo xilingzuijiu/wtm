@@ -19,6 +19,9 @@
       (#{item.memberId},#{item.officeAccountId},#{item.isAccessNow},#{dateTime})
     </foreach>
   </insert>
+  <update id="updateOfficialMemberList">
+    update wtm_office_member  set isAccessNow  = 1 where isAccessNow=0 AND memberId=#{memberId} AND unix_timestamp(now())-createTime &lt; 60*60;
+  </update>
   <delete id="deleteOverTimeUnfollowedAccounts">
     DELETE FROM wtm_office_member WHERE isAccessNow=0 AND finishedTime is NULL AND unix_timestamp(now())-createTime>#{time}
   </delete>
@@ -33,5 +36,11 @@
   </select>
   <select id="getOfficeMemberByOpenId" resultType="com.weitaomi.application.model.bean.OfficeMember">
     select * from wtm_office_member member  WHERE member.openId=#{openid}
+  </select>
+  <select id="getOfficialAccountNameList" resultType="com.weitaomi.application.model.dto.MemberAccountLabel">
+    select a.userName accountName,login.nickname nickName,member.sex,a.originId,a.imageUrl from wtm_office_member m
+    LEFT JOIN wtm_official_accounts a ON a.id=m.officeAccountId LEFT JOIN wtm_member member ON member.id=m.memberId
+    LEFT JOIN wtm_third_login login ON member.id=login.memberId
+     WHERE m.memberId=#{memberId} AND m.isAccessNow=0
   </select>
 </mapper>

@@ -57,6 +57,32 @@ public class OfficialAccountController extends BaseController{
         officeAccountService.pushAddRequest(memberId,addOfficalAccountDto);
         return AjaxResult.getOK();
     }
+
+    /**
+     * 查看已关注公众号
+     * @param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getOfficialAccountMsgList")
+    public AjaxResult getOfficialAccountMsgList(HttpServletRequest request){
+        Long memberId=super.getUserId(request);
+        return AjaxResult.getOK(officeAccountService.getOfficialAccountMsgList(memberId));
+    }
+
+    /**
+     * 更新已关注公众号
+     * @param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/signOfficialAccountMsgList",method = RequestMethod.POST)
+    public AjaxResult signOfficialAccountMsgList(HttpServletRequest request){
+        Long memberId=super.getUserId(request);
+        return AjaxResult.getOK(officeAccountService.signOfficialAccountMsgList(memberId));
+    }
+
+
     /**
      * 提醒用户任务即将到期
      * @param
