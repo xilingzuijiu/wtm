@@ -11,46 +11,38 @@
     <link href="../../code/css/wapstyle.css" rel="stylesheet" type="text/css"/>
     <script src="../../code/js/jquery.min.js"></script>
     <script src="../../code/js/bootstrap.min.js"></script>
-    <script src="../../code/js/jquery.flexslider-min.js"></script>
-    <!--[if lt IE 9]>
-    <script src="../../code/js/html5shiv.min.js"></script>
-    <script src="../../code/js/respond.min.js"></script>
-    <![endif]-->
     <script>
         var u = navigator.userAgent;
         var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;//android终端
         var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);// ios终端
         $(document).ready(function () {
+            $(".owner img").click(function(){
+                location.href="mycenter.html";
+            })
+
             var index=0;//index只是定义的一个变量，可以是任意名称。
             var liwidth=$(document.body).width();
+            var leftwidth=liwidth*2.5%
+                            console.log(leftwidth);
             $(".homebanner li").css("width",liwidth);
             var liwi=$(".homebanner li").width();
             var length=$(".homebanner li").length;
             $(".homebanner ul").css("width",liwi*length);
-            var ulwi=$(".homebanner ul").width();
+           var ulwi=$(".homebanner ul").width();
             function show() {
-                if (index == length - 1) {
-                    $(".homebanner ul").css("left",0);
+               if (index == length - 1) {
+                    $(".homebanner ul").css("right",0);
                     index = 1;
                 } else {
                     index++;
-                }
-                $(".homebanner ul").animate({left: -index * liwi},400);
+               }
+                $(".homebanner ul").animate({right: -index * liwi},400);
             }
-            var timer=setInterval(show,2000);
-            $(".homebanner li").click(
-                    function() {
-                        clearInterval(timer);
-                        setTimeout(show, 5000);
-                        setInterval(show,2000);
-                    })
-        })
-//        $(function(){
-//            $('.flexslider').flexslider({
-//                directionNav: true,
-//                pauseOnAction: false
-//            });
-//        });
+            setInterval(show,2000);
+
+            document.addEventListener('touchstart', touchStart);
+
+       })
     </script>
 </head>
 <body>
@@ -69,25 +61,19 @@
         </div>
     </div>
 </header>
-<div class="homebanner">
-    <ul>
-        <li>
+<div class="homebanner swiper-container">
+    <ul class="swiper-wrapper">
+        <li class="swiper-slide">
             <a href="rewards.html"> <img src="../../code/img/fahongbao.png"/></a>
         </li>
-        <li>
+        <li class="swiper-slide">
             <a href="myinvite.html"><img src="../../code/img/yaohaoyou.png"/></a>
         </li>
-        <li>
+        <li class="swiper-slide">
             <a href="rewards.html"><img src="../../code/img/fahongbao.png"/></a>
         </li>
     </ul>
 </div>
-<!--<div class="homebanner flexslider">-->
-    <!--<ul class="slides">-->
-        <!--<li style="background:url(../../code/img/MainViewImgae/fahongbao.png) 50% 0 no-repeat;"><a href="myinvite.html"></a></li>-->
-        <!--<li style="background:url(../../code/img/MainViewImgae/yaohaoyou.png) 50% 0 no-repeat;"><a href="rewards.html"></a></li>-->
-    <!--</ul>-->
-<!--</div>-->
 <ul class="row indexlist">
     <li class="col-xs-4">
         <a class="thumbnail" href="readlist.html">

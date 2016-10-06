@@ -2,9 +2,71 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0" name="viewport" />
+    <title>邀请好友</title>
+    <link href="../../code/css/base.css" rel="stylesheet" type="text/css"/>
+    <link href="../../code/css/wapstyle.css" rel="stylesheet" type="text/css"/>
+    <script src="../../code/js/jquery.min.js"></script>
+    <script>
+        $(function(){
+            $(".dayrecord input").click(function(){
+                location.href="myinvite.html";
+            })
+        })
+    </script>
 </head>
 <body>
+<div class="dayinvite">
+    <div class="daycode">
+        <img src="../../code/img/invite/integral1.png"/>
+        <h5>邀请码：<span>5JSPfR</span></h5>
+        <p>（<span>！</span>点击邀请码复制到剪贴板）</p>
+        <a>活动规则说明>></a>
+    </div>
+    <div class="dayrecord">
+        <img src="../../code/img/invite/cutoff1.png"/>
+            <div class="padding0">
+                <h6>￥150米币</h6>
+                <p>成功邀请就送<span>150米币</span></p>
+            </div>
+            <div>
+                <h6>%10奖励</h6>
+                <p>成功邀请获取好友奖励的<span>10%</span></p>
+            </div>
+        <img src="../../code/img/invite/cutoff2.png"/>
+<input class="payconfirm" type="button" value="立即邀请马上领钱"/>
+    </div>
+</div>
+<div class="inviteintroduce">
+    <div>
+        <h5 class="fl" style="background:url('../../code/img/invite/cup.png') no-repeat left center">我获得的奖励</h5>
+        <a href="inviterecord.html">记录>></a>
+    </div>
+    <div>
+        <h5 class="rewardmibi bg">累计获得<span>0</span>米币</h5>
+    </div>
+    <div>
+        <h5 class="fl" style="background:url('../../code/img/invite/medal.png') no-repeat left center">本月分享达人</h5>
+    </div>
+<ul class="inviterank">
+    <li id="Noone">
+        <img src="../../code/img/zhengshuang.png"/>
+        <p>3.0</p>
+        <h6>变身汉</h6>
+    </li>
+    <li id="Notwo">
+        <img src="../../code/img/yangyang.png"/>
+        <p>3.0</p>
+        <h6>变身汉</h6>
+    </li>
+    <li id="Nothree">
+        <img  src="../../code/img/gzhimg.jpg"/>
+        <p>3.0</p>
+        <h6>变身汉</h6>
+    </li>
+</ul>
 
+</div>
 </body>
 </html>

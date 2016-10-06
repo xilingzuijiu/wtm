@@ -13,10 +13,6 @@
     <link href="../../code/css/wapstyle.css" rel="stylesheet" type="text/css"/>
     <script src="../../code/js/jquery.min.js"></script>
     <script src="../../code/js/bootstrap.min.js"></script>
-    <!--[if lt IE 9]>
-    <script src="../../code/js/html5shiv.min.js"></script>
-    <script src="../../code/js/respond.min.js"></script>
-    <![endif]-->
     <script>
 //        var li=document.createElement("li");
 //        var img=document.createElement('img');
@@ -36,71 +32,19 @@
 //        li.appendChild(button);
 //        document.body.appendChild(li);
 //        document.getElementsByTagName('ul')[0].appendChild(li);//动态添加文章（li标签）
-        $(function(){
-            var clickcount=0;
-            var choosecount=0;
-            var licount=$(".wapreadlist li").length;
-            var indexarr=["wang","li"];
-            var j=0;
-            console.log(indexarr);
-            $(".checkanniu a").click(function(){
-                indexarr[clickcount]=$(this).parent().parent().index();
-                console.log(indexarr);
-                for(var i=0;i<licount;i++){
-                    if(indexarr[clickcount]==indexarr[i]){
-                        j++;
-                        if(j>1){
-
-                        }
-                        if(clickcount%2==0){
-                            $(this).html("选中");
-                            choosecount++;
-                            clickcount++;
-                        }else{
-                            $(this).html("未选");
-                            choosecount--;
-                            clickcount--;
-                            if(choosecount<=0){
-                                choosecount=0;
-                            }
-                        }
-                    }else{
-                        clickcount++;
-                        console.log(clickcount);
-                        $(this).html("选中");
-                        choosecount++;
-                    }
-                }
-
-            $(".choose span").html(choosecount);
-            })
-
-        })
       </script>
 </head>
 <body>
-<!--<header class="insethead">-->
-    <!--<div class="headerbox">-->
-        <!--<div class="imgbox col-xs-3"><img src="../../code/img/back.png" onclick="javascript:history.back(-1);" title="返回上一页"/></div>-->
-        <!--<h3 class="col-xs-6">领取任务文章</h3>-->
-        <!--<a class="col-xs-3">确认领取</a>-->
-    <!--</div>-->
-<!--</header>-->
-<div class="choose">
-    <p>已选中&nbsp<span>0</span></p>
-    <a class="chooseall" href="#">全选</a>
-    <a class="confirm">确认领取</a>
-</div>
 <ul class="wapreadlist">
-<li>
+<li class="bdnone   ">
     <div class="cos-xs-3 listimg"><img src="../../code/img/shuiguo.png"/></div>
     <div class="readdetails col-xs-6">
         <h5>ios10</h5>
         <h6>ios10有哪些新特征</h6>
-        <p>阅读增长数：<span>0</span></p>
+        <p>剩余阅读数：<span>0</span></p>
     </div>
     <div class="col-xs-3 checkanniu">
-        <a>未选</a>
+        <a>阅读</a>
     </div>
 </li>
     <li>
@@ -108,12 +52,25 @@
         <div class="readdetails col-xs-6">
             <h5>ios10</h5>
             <h6>有哪些新特征有哪些新特征</h6>
-            <p>阅读增长数：<span>0</span></p>
+            <p>剩余阅读数：<span>0</span></p>
         </div>
         <div class="col-xs-3 checkanniu">
-            <a>未选</a>
+            <a>阅读</a>
         </div>
     </li>
+    <li>
+        <div class="cos-xs-3 listimg"><img src="../../code/img/shuiguo.png"/></div>
+        <div class="readdetails col-xs-6">
+            <h5>ios10</h5>
+            <h6>有哪些新特征有哪些新特征</h6>
+            <p>剩余阅读数：<span>0</span></p>
+        </div>
+        <div class="col-xs-3 checkanniu">
+            <a>阅读</a>
+        </div>
+    </li>
+
+
 </ul>
 </body>
 </html>

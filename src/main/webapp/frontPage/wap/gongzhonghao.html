@@ -11,62 +11,112 @@
     <link href="../../code/css/wapstyle.css" rel="stylesheet" type="text/css"/>
     <script src="../../code/js/jquery.min.js"></script>
     <script src="../../code/js/bootstrap.min.js"></script>
-    <!--[if lt IE 9]>
-    <script src="../../code/js/html5shiv.min.js"></script>
-    <script src="../../code/js/respond.min.js"></script>
-    <![endif]-->
+    <script>
+        //        var li=document.createElement("li");
+        //        var img=document.createElement('img');
+        //        var div=document.createElement('div');
+        $(function(){
+            var lilength=$(".gzhlist li").length;
+            $("#one").click(function () {
+                if ($(this).is(':checked')) {
+                    $(".childchoose").attr("checked",true);
+                    $(".gzhlist label").children("span").text("已添加");
+                    $(".choose p span").text(lilength);
+                }else{
+                    $(".childchoose").attr("checked",false);
+                    $(".gzhlist label").children("span").text("添加");
+                    $(".choose p span").text("0");
+                }
+            })
+            $(".childchoose").click(function () {
+                var choosecount=parseInt($(".choose p span").text());
+                if($(this).is(':checked')==false){
+                    $(".choose p span").text(choosecount-1);
+                    $(this).next().text("添加");
+                    $("#one").attr("checked",false);
+                }else{
+                    $(".choose p span").text(choosecount+1);
+                    $(this).next().text("已添加");
+                    var flag=true;
+                    $(".childchoose").each(function (index,element) {
+                        if($(this).is(':checked')==false) {
+                            flag=false;
+                        }
+                    })
+                    if(flag){
+                        $("#one").attr("checked",true);
+                    }
+                }
+            })
+            var rootheight=$(window).height();
+            var rootwidth=$(window).width();
+            console.log(rootwidth);
+            var confirmheight=$(".confirmbox").height();
+            console.log(confirmheight);
+            var confirmwidth=$(".confirmbox").width();
+            console.log(confirmwidth);
+
+            $(".confirmbox").css("left",rootwidth/2-confirmwidth/2);
+            $(".confirmbox").css("top",rootheight/2-confirmheight/2);
+            $(".confirm").click(function(){
+                $(".confirmbox").css("display","block");
+                    $(".cancel").click(function(){
+                        $(".confirmbox").css("display","none");
+                    })
+
+            })
+        })
+    </script>
 </head>
 <body>
-<!--<header class="insethead">-->
-    <!--<div class="headerbox">-->
-        <!--<div class="imgbox col-xs-3"><img src="../../code/img/back.png" onclick="javascript:history.back(-1);" title="返回上一页"/></div>-->
-        <!--<h3 class="col-xs-6">公众号列表</h3>-->
-        <!--<a class="col-xs-3">确认领取</a>-->
-    <!--</div>-->
-<!--</header>-->
-<div class="choose">
-    <p>已选中&nbsp<span>0</span></p>
-    <label><input type="checkbox" value=""/>全选</label>
-    <!--<a class="chooseall" href="#">全选</a>-->
-    <a class="confirm">确认领取</a>
-</div>
 <ul class="gzhlist">
     <li class="col-xs-4">
         <img src="../../code/img/gzhimg.jpg"/>
         <h5>时尚女范</h5>
         <p>关注奖励：<span>40.0米币</span></p>
-        <input class="addgzh" type="button" value="添加"/>
+        <input type="button" value="求关注"/>
     </li>
     <li class="col-xs-4">
         <img src="../../code/img/gzhimg.jpg"/>
         <h5>时尚女范</h5>
         <p>关注奖励：<span>40.0米币</span></p>
-        <input class="addgzh" type="button" value="添加"/>
+        <input type="button" value="求关注"/>
     </li>
     <li class="col-xs-4">
         <img src="../../code/img/gzhimg.jpg"/>
         <h5>时尚女范</h5>
         <p>关注奖励：<span>40.0米币</span></p>
-        <input class="addgzh" type="button" value="添加"/>
+        <input type="button" value="求关注"/>
     </li>
     <li class="col-xs-4">
         <img src="../../code/img/gzhimg.jpg"/>
         <h5>时尚女范</h5>
         <p>关注奖励：<span>40.0米币</span></p>
-        <input class="addgzh" type="button" value="添加"/>
+        <input type="button" value="求关注"/>
     </li>
     <li class="col-xs-4">
         <img src="../../code/img/gzhimg.jpg"/>
         <h5>时尚女范时尚女范时尚女范</h5>
         <p>关注奖励：<span>40.0米币40.0米币</span></p>
-        <input class="addgzh" type="button" value="添加"/>
+        <input type="button" value="求关注"/>
     </li>
     <li class="col-xs-4">
         <img src="../../code/img/gzhimg.jpg"/>
         <h5>时尚女范</h5>
         <p>关注奖励：<span>40.0米币</span></p>
-        <input class="addgzh" type="button" value="添加"/>
+        <input type="button" value="求关注"/>
     </li>
 </ul>
+<div class="confirmbox">
+    <div class="confirmtitle">
+        <img src="../../code/img/76pt-2x.png"/>
+        <h5>微淘米</h5>
+    </div>
+    <h6>是否跳转到微信关注公众号</h6>
+    <div class="okcancel">
+        <a class="cancel">取消</a>
+        <a class="ok" href="http://www.cnblogs.com/hoojo/archive/2012/02/16/2354663.html">确认</a>
+    </div>
+</div>
 </body>
 </html>
