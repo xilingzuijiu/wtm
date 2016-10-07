@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0" name="viewport" />
+    <title>每日签到</title>
+    <link href="../../code/css/base.css" rel="stylesheet" type="text/css"/>
+    <link href="../../code/css/wapstyle.css" rel="stylesheet" type="text/css"/>
+    <script src="../../code/js/jquery.min.js"></script>
+    <script>
+        $(function(){
+            var signheight=$(window).height();
+            var signwidth=$(window).width();
+            $(".daysign").css("height",signheight);
+            $(".daysign").css("width",signwidth);
+            var clickcount=0;
+            $(".signbutton").click(function(){
+                if(clickcount==0){
+                    $(this).attr("src","../../code/img/MainViewImgae/signtwo.png")
+                    clickcount++;
+                }else{$(this).attr("src","../../code/img/MainViewImgae/signone.png")
+                    clickcount--;}
+            })
+        })
+    </script>
+</head>
+<body>
+<img class="daysign" src="../../code/img/MainViewImgae/abputsign.png"/>
+<img class="signbutton" src="../../code/img/MainViewImgae/signone.png"/>
+</body>
+</html>
