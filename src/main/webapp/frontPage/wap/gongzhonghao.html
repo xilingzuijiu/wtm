@@ -15,58 +15,7 @@
         //        var li=document.createElement("li");
         //        var img=document.createElement('img');
         //        var div=document.createElement('div');
-        $(function(){
-            var lilength=$(".gzhlist li").length;
-            $("#one").click(function () {
-                if ($(this).is(':checked')) {
-                    $(".childchoose").attr("checked",true);
-                    $(".gzhlist label").children("span").text("已添加");
-                    $(".choose p span").text(lilength);
-                }else{
-                    $(".childchoose").attr("checked",false);
-                    $(".gzhlist label").children("span").text("添加");
-                    $(".choose p span").text("0");
-                }
-            })
-            $(".childchoose").click(function () {
-                var choosecount=parseInt($(".choose p span").text());
-                if($(this).is(':checked')==false){
-                    $(".choose p span").text(choosecount-1);
-                    $(this).next().text("添加");
-                    $("#one").attr("checked",false);
-                }else{
-                    $(".choose p span").text(choosecount+1);
-                    $(this).next().text("已添加");
-                    var flag=true;
-                    $(".childchoose").each(function (index,element) {
-                        if($(this).is(':checked')==false) {
-                            flag=false;
-                        }
-                    })
-                    if(flag){
-                        $("#one").attr("checked",true);
-                    }
-                }
-            })
-            var rootheight=$(window).height();
-            var rootwidth=$(window).width();
-            console.log(rootwidth);
-            var confirmheight=$(".confirmbox").height();
-            console.log(confirmheight);
-            var confirmwidth=$(".confirmbox").width();
-            console.log(confirmwidth);
-
-            $(".confirmbox").css("left",rootwidth/2-confirmwidth/2);
-            $(".confirmbox").css("top",rootheight/2-confirmheight/2);
-            $(".confirm").click(function(){
-                $(".confirmbox").css("display","block");
-                    $(".cancel").click(function(){
-                        $(".confirmbox").css("display","none");
-                    })
-
-            })
-        })
-    </script>
+        </script>
 </head>
 <body>
 <ul class="gzhlist">

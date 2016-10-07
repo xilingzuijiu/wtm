@@ -12,16 +12,12 @@
         $(function(){
             var height=$(".payway h3").height();
             console.log(height);
-            var paycount=0;
-            $(".payway div").click(function(){
-                if(paycount==0){
-                    $(this).find("img").attr("src","../../code/img/paywayone.png");
-                    paycount++;
-                }else{
-                    $(this).find("img").attr("src","../../code/img/paywaytwo.png");
-                    paycount--;
-                }
-            })
+            //js制作单选框效果
+            $('label').click(function(){
+                var radioId = $(this).attr('name');
+                $('label').removeAttr('class') && $(this).attr('class', 'checked');
+                $('input[type="radio"]').removeAttr('checked') && $('#' + radioId).attr('checked', 'checked');
+            });
         })
     </script>
 </head>
@@ -29,17 +25,16 @@
 <div class="payway">
     <h3>请选择充值方式</h3>
     <div>
-        <img src="../../code/img/paywaytwo.png"/>
-        <p>支付宝充值</p>
+        <label><input type="radio" id="zfbpay" checked="checked" name="sport" value="支付宝充值"> <img src="../../code/img/pay/alipayLogo.png"/>支付宝充值</label>
     </div>
     <div class="bdnone">
-        <img src="../../code/img/paywaytwo.png"/>
-        <p>微信充值</p>
+        <label><input type="radio" id="wxpay" name="sport" value="微信充值"><img src="../../code/img/pay/wxlogot.png"/>微信充值<span>我</span></label>
     </div>
 </div>
 <div class="paymuch">
     <h3>请选择充值金额</h3>
-<div>充值金额￥<input type="text" value="" placeholder="请输入金额" autofocus/>元 </div>
+<div>充值金额￥
+    <input type="text" value="" placeholder="请输入金额" autofocus/>元 </div>
     <ol class="paydetails">
         <li><span>*</span>到账时间最快当天，通常为第二天到账</li>
         <li><span>*</span><strong>周末、法定节假日不处理提现</strong>（周五周六顺延至周一，周日顺延至周二）</li>
@@ -47,13 +42,6 @@
     </ol>
 </div>
 <input class="payconfirm" type="button" value="确认"/>
-<select value="请选择金额">
-    <option>2</option>
-    <option>0.01</option>
-    <option>1.00</option>
-    <option>10</option>
-    <option>100</option>
-    <option>1000</option>
-</select>
+
 </body>
 </html>

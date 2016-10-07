@@ -14,23 +14,70 @@
             var invitewidth=$(window).width();
             var wayheight=$(".myinviteway").height();
             var waywidth=$(".myinviteway").width();
-            $(".myinviteway").css("height",inviteheight-wayheight);
-            $(".myinviteway").css("width",invitewidth/2-waywidth/2);
+            $(".myinviteway").css("top",inviteheight-wayheight);
+            $(".myinviteway").css("left",invitewidth/2-waywidth/2);
 
         })
 
-        $(".myinvite input").click(function(){
+        var _system={
+            $:function(id){return document.getElementById(id);},
+            _client:function(){
+                return {w:document.documentElement.scrollWidth,h:document.documentElement.scrollHeight,bw:document.documentElement.clientWidth,bh:document.documentElement.clientHeight};
+            },
+            _scroll:function(){
+                return {x:document.documentElement.scrollLeft?document.documentElement.scrollLeft:document.body.scrollLeft,y:document.documentElement.scrollTop?document.documentElement.scrollTop:document.body.scrollTop};
+            },
+            _cover:function(show){
+                if(show){
+                    this.$("cover").style.display="block";
+                    this.$("cover").style.width=(this._client().bw>this._client().w?this._client().bw:this._client().w)+"px";
+                    this.$("cover").style.height=(this._client().bh>this._client().h?this._client().bh:this._client().h)+"px";
+                }else{
+                    this.$("cover").style.display="none";
+                }
+            },
+            _guide:function(click){
+                this._cover(true);
+                this.$("guide").style.display="block";
+//                this.$("guide").style.top=(_system._scroll().y+5)+"px";
+//                window.onresize=function(){_system._cover(true);_system.$("guide").style.top=(_system._scroll().y+5)+"px";};
 
-        })
+                if(click){_system.$("cover").onclick=function(){
+                    _system._cover();
+                    _system.$("guide").style.display="none";
+                    _system.$("cover").onclick=null;
+                    window.onresize=null;
+                };
+                    _system.$("myinvitecancle").onclick=function(){
+                        _system._cover();
+                        _system.$("guide").style.display="none";
+                        _system.$("cover").onclick=null;
+                        window.onresize=null;
+                    };
+
+                }
+            },
+            _zero:function(n){
+                return n<0?0:n;
+            }
+        }
+        var jinzhi=0;
+        document.addEventListener("touchmove",function(e){
+            if(jinzhi==0){
+                e.preventDefault();
+                e.stopPropagation();
+            }
+        },false);
     </script>
 </head>
 <body>
 <div class="myinvite">
     <img src="../../code/img/myerweima.png"/>
     <h5>成功邀请好友<br/>平台奖励好友收入的<span>10%</span></h5>
-    <input class="payconfirm" type="button" value="邀请好友"/>
+    <input class="payconfirm" type="button" value="邀请好友" onclick="_system._guide(true)"/>
 </div>
-<ul class="myinviteway">
+<div id="cover"></div>
+<ul class="myinviteway" id="guide">
     <li>分享朋友圈</li>
     <li>邀请好友</li>
     <li>保存链接</li>

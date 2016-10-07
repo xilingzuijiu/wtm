@@ -13,7 +13,51 @@
             $(".dayrecord input").click(function(){
                 location.href="myinvite.html";
             })
+            var inviteheight=$(window).height();
+            var eventheight=$(".eventintroduce").height();
+            $(".eventintroduce").css("top",inviteheight/2-eventheight/2);
         })
+        var _system={
+            $:function(id){return document.getElementById(id);},
+            _client:function(){
+                return {w:document.documentElement.scrollWidth,h:document.documentElement.scrollHeight,bw:document.documentElement.clientWidth,bh:document.documentElement.clientHeight};
+            },
+            _scroll:function(){
+                return {x:document.documentElement.scrollLeft?document.documentElement.scrollLeft:document.body.scrollLeft,y:document.documentElement.scrollTop?document.documentElement.scrollTop:document.body.scrollTop};
+            },
+            _cover:function(show){
+                if(show){
+                    this.$("cover").style.display="block";
+                    this.$("cover").style.width=(this._client().bw>this._client().w?this._client().bw:this._client().w)+"px";
+                    this.$("cover").style.height=(this._client().bh>this._client().h?this._client().bh:this._client().h)+"px";
+                }else{
+                    this.$("cover").style.display="none";
+                }
+            },
+            _guide:function(click){
+                this._cover(true);
+                this.$("guide").style.display="block";
+//                this.$("guide").style.top=(_system._scroll().y+5)+"px";
+//                window.onresize=function(){_system._cover(true);_system.$("guide").style.top=(_system._scroll().y+5)+"px";};
+
+                if(click){_system.$("cover").onclick=function(){
+                    _system._cover();
+                    _system.$("guide").style.display="none";
+                    _system.$("cover").onclick=null;
+                    window.onresize=null;
+                };}
+            },
+            _zero:function(n){
+                return n<0?0:n;
+            }
+        }
+        var jinzhi=0;
+        document.addEventListener("touchmove",function(e){
+            if(jinzhi==0){
+                e.preventDefault();
+                e.stopPropagation();
+            }
+        },false);
     </script>
 </head>
 <body>
@@ -22,7 +66,7 @@
         <img src="../../code/img/invite/integral1.png"/>
         <h5>邀请码：<span>5JSPfR</span></h5>
         <p>（<span>！</span>点击邀请码复制到剪贴板）</p>
-        <a>活动规则说明>></a>
+        <a class="btonshare"  onClick="_system._guide(true)">活动规则说明>></a>
     </div>
     <div class="dayrecord">
         <img src="../../code/img/invite/cutoff1.png"/>
@@ -67,6 +111,14 @@
     </li>
 </ul>
 
+</div>
+<div id="cover"></div>
+<div class="eventintroduce" id="guide">
+    <p><span>注：</span>（每一个APP用户都是一个业务代理，注册了APP之后平台会自动为用户生成一个代理二维码，
+        用户可通过自己的二维码去邀请好友来下载APP赚钱，代理可以得到用户收入的提成（此提成由平台支付给用户）
+    但是平台会对每一个代理有业务考核，如：上线代理完成的金额被下线超越，上线代理是收不到下线超额的提成，
+        相反下线超额的部分会得到平台1.1倍的奖励，如果上线代理连续三个月被下线超越，上线将会被取消超额下线一方
+    的代理权。）</p>
 </div>
 </body>
 </html>
