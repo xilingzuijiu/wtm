@@ -159,7 +159,7 @@ public class OfficeAccountService implements IOfficeAccountService {
             if (DateUtils.getUnixTimestamp()-officeMember.getCreateTime()<7*24*60*60){
                 //增加积分以及积分记录
                 Long memberId=officeMember.getMemberId();
-               int num =  officeMemberMapper.deleteFollowAccountsMember(officeMember.getId());
+                int num =  officeMemberMapper.deleteFollowAccountsMember(officeMember.getId());
                 if (num>0){
                     TaskPool taskPool = taskPoolMapper.getTaskPoolByOfficialId(officialAccountWithScore.getId(), 1);
                     memberScoreService.addMemberScore(memberId,7L, 1, -(taskPool.getRate().multiply(BigDecimal.valueOf(officialAccountWithScore.getScore()))).doubleValue(), UUIDGenerator.generate());
@@ -204,7 +204,6 @@ public class OfficeAccountService implements IOfficeAccountService {
                         } else {
                             taskPool.setTotalScore(0D);
                             taskPool.setLimitDay(0L);
-                            taskPool.setNeedNumber(0);
                             taskPool.setSingleScore(0D);
                             taskPool.setIsPublishNow(0);
                             taskPoolMapper.updateByPrimaryKeySelective(taskPool);
@@ -232,6 +231,12 @@ public class OfficeAccountService implements IOfficeAccountService {
         Member member=memberMapper.selectByPrimaryKey(memberId);
         if (member==null){
             throw new InfoException("用户信息为空");
+        }
+        Map<String,Long> idMap= memberMapper.getIsFollowWtmAccount(memberId);
+        if (idMap!=null){
+            if (idMap.get("officialMemberId")==null){
+                throw new InfoException("未关注微淘米服务号");
+            }
         }
         List<OfficialAccountMsg> officialAccountMsgs=officalAccountMapper.getOfficialAccountMsg(memberId,unionId,member.getSex(),member.getProvince(),member.getCity());
         if (officialAccountMsgs.isEmpty()){

@@ -43,6 +43,8 @@ public class MemberPCController extends BaseController {
     private IOfficeAccountService officeAccountService;
     @Autowired
     private IMemberTaskHistoryService memberTaskHistoryService;
+    @Autowired
+    private IMemberScoreService memberScoreService;
     /**
      * 获取用户信息
      * @throws ParseException    the parse exception
@@ -70,7 +72,8 @@ public class MemberPCController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/publishAddRequest", method = RequestMethod.POST)
-    public AjaxResult publishAddRequest(@RequestBody TaskPool taskPool){
+    public AjaxResult publishAddRequest(@RequestBody TaskPool taskPool,HttpServletRequest request){
+//        Integer flag=Integer.valueOf(request.getHeader("flag"));
         taskPool.setTaskType(0);
         taskPool.setCreateTime(DateUtils.getUnixTimestamp());
         taskPool.setRate(BigDecimal.valueOf(0.8));
@@ -202,7 +205,22 @@ public class MemberPCController extends BaseController {
         return AjaxResult.getError();
     }
 
-
+    /**
+     * 修改地址
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/modifyMemberAddress", method = RequestMethod.POST)
+    public AjaxResult modifyMemberAddress(HttpServletRequest request,String memberAddress){
+        Long memberId=this.getUserId(request);
+        if (memberId==null){
+            throw new BusinessException("用户ID为空");
+        }
+        if (StringUtil.isEmpty(memberAddress)){
+            throw new InfoException("定位地址失败");
+        }
+        return AjaxResult.getOK(memberService.modifyMemberAddress(memberId,memberAddress));
+    }
     /**
      * 存储用户信息
      * @param map
@@ -212,9 +230,22 @@ public class MemberPCController extends BaseController {
     @RequestMapping(value = "/saveAccountsUser", method = RequestMethod.POST)
     public AjaxResult getOfficialAccountMember(@RequestBody Map map) {
         System.out.println(JSON.toJSONString(map));
-      return AjaxResult.getOK();
+        return AjaxResult.getOK();
     }
-
+    /**
+     * 更新积分记录
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/updateMemberScore",method = RequestMethod.POST)
+    AjaxResult updateMemberScore(HttpServletRequest request){
+        Long memberId=this.getUserId(request);
+        if (memberId==null){
+            throw new BusinessException("用户ID为空");
+        }
+        return AjaxResult.getOK(memberScoreService.getMemberScoreById(memberId));
+    }
     /**
      * 微信服务号签到
      * @param map

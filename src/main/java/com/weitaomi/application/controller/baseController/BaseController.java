@@ -42,12 +42,6 @@ public abstract class BaseController {
                 }else if (member.getSex()==3){
                     throw new InfoException("用户已经被禁用，请联系客服人员");
                 }
-                Map<String,Long> idMap= memberMapper.getIsFollowWtmAccount(userId);
-                if (idMap!=null){
-                    if (idMap.get("officialMemberId")==null){
-                        throw new InfoException("未关注微淘米服务号");
-                    }
-                }
                 return userId;
             } catch (NumberFormatException e) {
                 logger.warn("请求头memberId参数格式错误:{}", sId);

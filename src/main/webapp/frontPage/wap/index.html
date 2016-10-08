@@ -9,8 +9,7 @@
     <link rel="stylesheet" href="../../code/css/bootstrap-theme.min.css">
     <link href="../../code/css/base.css" rel="stylesheet" type="text/css"/>
     <link href="../../code/css/wapstyle.css" rel="stylesheet" type="text/css"/>
-    <script src="../../code/js/jquery.min.js"></script>
-    <script src="../../code/js/bootstrap.min.js"></script>
+    <script src="../../code/js/wap/common.js"></script>
     <script>
         var u = navigator.userAgent;
         var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;//android终端
@@ -19,44 +18,47 @@
             $(".owner img").click(function(){
                 location.href="mycenter.html";
             })
-
             var index=0;//index只是定义的一个变量，可以是任意名称。
             var liwidth=$(document.body).width();
             var leftwidth=liwidth*2.5%
-                            console.log(leftwidth);
+                    console.log(leftwidth);
             $(".homebanner li").css("width",liwidth);
             var liwi=$(".homebanner li").width();
             var length=$(".homebanner li").length;
             $(".homebanner ul").css("width",liwi*length);
-           var ulwi=$(".homebanner ul").width();
+            var ulwi=$(".homebanner ul").width();
             function show() {
-               if (index == length - 1) {
+                if (index == length - 1) {
                     $(".homebanner ul").css("right",0);
                     index = 1;
                 } else {
                     index++;
-               }
+                }
                 $(".homebanner ul").animate({right: -index * liwi},400);
             }
             setInterval(show,2000);
-
-
-       })
+            getLocation();
+            updateMyscore();
+            $(".money").click(function (){
+                updateMyscore()
+            })
+//            document.addEventListener('touchstart', touchStart);
+        })
     </script>
 </head>
 <body>
 <header>
-        <div class="adress">
-            <span class="glyphicon glyphicon-map-marker"></span>
-            <p id="adressname">青岛市</p>
-        </div>
+    <div class="adress">
+        <span class="glyphicon glyphicon-map-marker"></span>
+        <p id="addressname">俄罗斯</p>
+    </div>
     <div class="owner">
-            <img class="photo" src="../../code/img/MainViewImgae/women.jpg"/>
+        <img class="photo" src="../../code/img/MainViewImgae/women.jpg"/>
         <div class="ownerdetail">
             <h3 class="ownername"><span>黎沙</span>一款玩着就会赚钱的APP一款玩着就会赚钱的APP</h3>
         </div>
         <div class="money">
-            <p><span>38.0米</span><br/>我的钱包</p>
+            <p><span>38.0</span>米<br/>我的钱包</p>
         </div>
     </div>
 </header>
