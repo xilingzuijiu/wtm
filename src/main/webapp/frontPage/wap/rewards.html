@@ -7,16 +7,23 @@
     <link href="../../code/css/base.css" rel="stylesheet" type="text/css"/>
     <link href="../../code/css/wapstyle.css" rel="stylesheet" type="text/css"/>
     <script src="../../code/js/jquery.min.js"></script>
+    <script>
+        $(function(){
+            $("#signday").click(function(){
+                location.href="daysign.html";
+            })
+
+        })
+
+    </script>
 </head>
 <body>
 <div class="daytask">
     <h5>每日任务</h5>
-<ul>
-    <li>
-        <a href="daysign.html">
+<ul id="daytaskul">
+    <li id="signday">
         <h6>每日签到</h6>
         <p>10米</p>
-        </a>
     </li>
     <li>
         <h6>每日分享朋友</h6>
@@ -26,7 +33,7 @@
 </div>
 <div class="undotask">
     <h5>未完成任务</h5>
-    <ul>
+    <ul id="undotaskul">
         <li>
             <h6>每日签到</h6>
             <p>10米</p>
