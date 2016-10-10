@@ -8,6 +8,7 @@
     <link href="../../code/css/base.css" rel="stylesheet" type="text/css"/>
     <link href="../../code/css/wapstyle.css" rel="stylesheet" type="text/css"/>
     <script src="../../code/js/jquery.min.js"></script>
+    <script src="../../code/js/jquery.cookie.js"></script>
     <script>
         $(function(){
             $(".wxjump").click(function(){
@@ -19,17 +20,28 @@
                 var password=$("#password").val();
                 $.ajax({
                     type: 'post',
-                        url: '#',
-                        dataType:"json",
-                        data: {memberName:memberName,password:password},
-                        contentType: "application/json",
+                        url: '/pc/admin/member/login',
+                        data: {mobileOrName:memberName,password:password},
                         beforeSend: function (XMLHttpRequest) {
                     XMLHttpRequest.setRequestHeader("from","2")
                 },
                     success: function (params) {
-                        var data=eval(params);
-                        if (data!=null&&data.errorCode==0){
-                            if (data.data){
+                        var param=eval(params);
+                        if (param!=null&&param.errorCode==0){
+                            var data=param.data
+                            if (data.id!=null){
+                                $.cookie("memberId",data.id,{expires:30,path:"/frontPage/wap"})
+                                $.cookie("memberName",data.memberName,{expires:30,path:"/frontPage/wap"})
+                                $.cookie("password",data.password,{expires:30,path:"/frontPage/wap"})
+                                var image=data.imageUrl;
+                                if (image.indexOf("http")<0){
+                                    image ="http://weitaomi.b0.upaiyun.com"+image
+                                }
+                                $.cookie("imageUrl",image,{expires:30,path:"/frontPage/wap"})
+                                $.cookie("telephone",data.telephone,{expires:30,path:"/frontPage/wap"})
+                                $.cookie("officialAccountList",data.officialAccountList,{expires:30,path:"/frontPage/wap"})
+                                $.cookie("thirdLogin",data.thirdLogin,{expires:30,path:"/frontPage/wap"})
+                                $.cookie("payList",data.payList,{expires:30,path:"/frontPage/wap"})
                                 location.href="index.html";
                             }
                         } else if (errorCode==4){

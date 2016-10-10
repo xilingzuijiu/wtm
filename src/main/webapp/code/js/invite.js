@@ -130,7 +130,37 @@ function getRegeisterParams(requestObj){
     var obj=new ReuqestObj(requestObj,invitedCode,identifyCode)
     return JSON.stringify(obj)
 }
-
+function WxReuqestObj(obj,invtedCode,identifyCode,thirdLoginInfo){
+    this.member=obj
+    this.invitedCode=invtedCode
+    this.identifyCode=identifyCode
+    this.thirdLogin=thirdLoginInfo
+    this.flag=1
+}
+function ThirdLoginInfo(openid,unionid,sex,nickname){
+    this.type=0
+    this.nickname=nickname
+    this.sex=sex
+    this.unionId=unionid
+    this.openId=openid
+}
+function getWxRegeisterParams(requestObj){
+    var invitedCode = requestObj.invitedCode
+    var identifyCode = requestObj.identifyCode
+    var openid=requestObj.openid
+    var province=requestObj.province
+    var unionid=requestObj.unionid
+    var city=requestObj.city
+    var nickname=requestObj.memberName
+    var sex=requestObj.sex
+    delete requestObj.invitedCode
+    delete requestObj.identifyCode
+    delete requestObj.unionid
+    delete requestObj.openid
+    var thirdLoginInfo=new ThirdLoginInfo(openid,unionid,sex,nickname)
+    var obj=new WxReuqestObj(requestObj,invitedCode,identifyCode,thirdLoginInfo)
+    return JSON.stringify(obj)
+}
 function download() {
     location.href="http://a.app.qq.com/o/simple.jsp?pkgname=com.woyun.weitaomi"
 }

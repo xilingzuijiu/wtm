@@ -118,6 +118,10 @@ public class MemberService extends BaseService implements IMemberService {
             if (thirdLogin.getOpenId() == null || thirdLogin.getOpenId().isEmpty()) {
                 throw new BusinessException("第三方OpenId为空");
             }
+            Long memberId=thirdLoginMapper.getMemberIdByUnionId(thirdLogin.getUnionId());
+            if (memberId!=null){
+                throw new InfoException("微信号已经绑定站内账号");
+            }
             memberMapper.insertSelective(memberTemp);
             newMemberId = memberTemp.getId();
             String code = StringUtil.toSerialNumber(newMemberId);
@@ -177,7 +181,7 @@ public class MemberService extends BaseService implements IMemberService {
         if (thirdLogin.getType() == null) {
             throw new BusinessException("登陆平台类型为空");
         }
-        ThirdLogin thirdLoginFlag = thirdLoginMapper.getThirdLoginInfo(thirdLogin.getOpenId());
+        ThirdLogin thirdLoginFlag = thirdLoginMapper.getThirdLoginInfo(thirdLogin.getUnionId());
         if (thirdLoginFlag != null) {
             throw new InfoException("您已经绑定此账号");
         }
@@ -231,11 +235,11 @@ public class MemberService extends BaseService implements IMemberService {
     }
 
     @Override
-    public MemberInfoDto thirdPlatLogin(String openId, Integer type) {
-        if (openId == null || openId.isEmpty()) {
+    public MemberInfoDto thirdPlatLogin(String unionId, Integer type) {
+        if (unionId == null || unionId.isEmpty()) {
             throw new BusinessException("第三方OpenId为空");
         }
-        ThirdLogin thirdLogin = thirdLoginMapper.getThirdLoginInfo(openId);
+        ThirdLogin thirdLogin = thirdLoginMapper.getThirdLoginInfo(unionId);
         if (thirdLogin == null) {
             throw new BusinessException("该微信账号未绑定App账号，若有App账号，请登录后绑定微信，或者注册App账户并自动绑定微信");
         }

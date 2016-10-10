@@ -263,4 +263,15 @@ public class MemberPCController extends BaseController {
         System.out.println(JSON.toJSONString(map));
         return AjaxResult.getOK(memberTaskHistoryService.signAccounts((String)map.get("openid")));
     }
+    /**
+     * 会员登陆
+     * @param mobileOrName
+     * @param password
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public AjaxResult login(@RequestParam("mobileOrName")String mobileOrName,@RequestParam("password") String password){
+        return AjaxResult.getOK(memberService.login(mobileOrName, password));
+    }
 }

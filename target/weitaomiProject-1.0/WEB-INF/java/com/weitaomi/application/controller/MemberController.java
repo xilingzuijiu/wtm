@@ -103,14 +103,14 @@ public class MemberController  extends BaseController {
     }
     /**
      * 第三方平台登陆
-     * @param openId
+     * @param unionId
      * @param type
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/thirdPlatLogin", method = RequestMethod.POST)
-    public AjaxResult thirdPlatLogin(@RequestParam("openId")String openId, @RequestParam("type")Integer type){
-        return AjaxResult.getOK(memberService.thirdPlatLogin(openId, type));
+    public AjaxResult thirdPlatLogin(@RequestParam("unionId")String unionId, @RequestParam("type")Integer type){
+        return AjaxResult.getOK(memberService.thirdPlatLogin(unionId, type));
     }
     /**
      * 获取用户信息

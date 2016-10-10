@@ -44,8 +44,8 @@
             })
             $("#register").click( function (){
                 $("#form").attr("enctype","multipart/form-data");
-//                var requestObj = eval($("#registerForm").serializeObject());
-//                var request =getRegeisterParams(requestObj);
+                var requestObj = eval($("#registerForm").serializeObject());
+                var request =getRegeisterParams(requestObj);
                 if(!$("#memberName").val()){
                     alert("用户名不能为空");
                 }else if($("#password").val().length<6){

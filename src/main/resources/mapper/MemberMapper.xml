@@ -109,8 +109,14 @@
   <select id="getByCellphoneAndPassword" resultMap="BaseResultMap">
     select * from wtm_member m WHERE m.telephone=#{cellphone} AND m.password=#{password}
   </select>
-  <select id="getMemberByMemberName" resultType="com.weitaomi.application.model.dto.MemberInfoDto">
-    select m.*,s.memberScore,login.openId from wtm_member m LEFT JOIN wtm_member_score s ON s.memberId=m.id LEFT JOIN wtm_third_login login ON login.memberId=m.id
+  <select id="getMemberByMemberName" resultMap="MemberResultMap">
+    SELECT m.*,score.memberScore score_memberScore,<include refid="officialAccount"/>,<include refid="payAccounts"/>,<include
+          refid="thirdLogin"/>
+    FROM wtm_member m
+    LEFT JOIN wtm_official_accounts official ON m.id=official.memberId
+    LEFT JOIN wtm_member_pay_accounts pay ON pay.memberId=m.id
+    LEFT JOIN wtm_third_login third ON third.memberId=m.id
+    LEFT JOIN wtm_member_score score ON score.memberId=m.id
      WHERE m.memberName=#{memberName}
   </select>
   <select id="getMemberByInviteCode" resultMap="BaseResultMap">

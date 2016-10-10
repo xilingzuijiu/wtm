@@ -16,6 +16,7 @@
     <link href="../../code/css/wapstyle.css" rel="stylesheet" type="text/css"/>
     <script src="../../code/js/jquery.min.js"></script>
     <script type="text/javascript" src="../../code/js/time_js.js"></script>
+    <script type="text/javascript" src="../../code/js/invite.js"></script>
     <script>
         $(function(){
             $("#sendVerifyCode").click( function (){
@@ -50,8 +51,8 @@
             })
             $("#register").click( function (){
                 $("#form").attr("enctype","multipart/form-data");
-//                var requestObj = eval($("#registerForm").serializeObject());
-//                var request =getRegeisterParams(requestObj);
+                var requestObj = eval($("#registerForm").serializeObject());
+                var request =getWxRegeisterParams(requestObj);
                 if(!$("#memberName").val()){
                     alert("用户名不能为空");
                 }else if($("#password").val().length<6){
@@ -71,7 +72,7 @@
                             var errorCode=data.errorCode
                             if (errorCode==0){
                                 if (data.data){
-                                    download()
+                                    location.href="frontPage/wap/login.html"
                                 }
                             } else if (errorCode==4){
                                 alert(data.message)
