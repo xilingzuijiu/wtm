@@ -1,10 +1,116 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="myinformation">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0" name="viewport" />
+    <title>个人资料</title>
+    <link href="../../code/css/base.css" rel="stylesheet" type="text/css"/>
+    <link href="../../code/css/wapstyle.css" rel="stylesheet" type="text/css"/>
+    <script src="../../code/js/jquery.min.js"></script>
+    <script src="../../code/js/lCalendar.js"></script>
+    <link rel="stylesheet" href="../../code/css/lCalendar.css">
+    <script>
+        $(function(){
+            var calendar = new lCalendar();
+            calendar.init({
+                'trigger': '#demo1',
+                'type': 'date'
+            });//日期插件
 
+            var inviteheight=$(window).height();
+            var invitewidth=$(window).width();
+            var wayheight=$(".myinviteway").height();
+            var waywidth=$(".myinviteway").width();
+            $(".myinviteway").css("top",inviteheight-wayheight);
+            $(".myinviteway").css("left",invitewidth/2-waywidth/2);
+            $(".photoimg").click(function(){
+                $("#darkcolor").css("display","block");
+                $(".myinviteway").css("display","block");
+                $(".nogo").css("height",inviteheight);
+                $(".nogo").css("overflow","hidden");
+                $("#demo1").attr("disabled","disabled");
+                $("select").attr("disabled","disabled");
+            })
+            $("#myinvitecancle").click(function(){
+                $("#darkcolor").css("display","none");
+                $(".myinviteway").css("display","none");
+                $(".nogo").css("overflow","auto");
+                $('#demo1').removeAttr("disabled");
+                $('select').removeAttr("disabled");
+            })
+            var obj=document.getElementById("darkcolor");
+            obj.addEventListener("touchstart",function(e){
+                $("#darkcolor").css("display","none");
+                $(".myinviteway").css("display","none");
+                $(".nogo").css("overflow","auto");
+                $(".time").click(function(){
+                    $('#demo1').removeAttr("disabled");
+                })
+                $(".sexmi").click(function(){
+                    $('select').removeAttr("disabled");
+                })
+            },false)
+
+        })
+    </script>
+</head>
+<body class="myinformation">
+<div class="nogo">
+<div class="signature">
+    <h5>APP个性签名</h5>
+    <h6>一款玩就可以赚钱的APP</h6>
+</div>
+<h5 class="baseinformation">基础资料</h5>
+<ul class="information">
+<li>
+    <h6 id="headimg">头像</h6>
+    <p class="photoimg"><img src="../../code/img/gzhimg.jpg"/></p>
+</li>
+    <li class="bg">
+        <h6>账号</h6>
+        <p>0532-80801188</p>
+    </li>
+    <li>
+        <h6>生日</h6>
+        <p class="time">
+            <input id="demo1" type="text" readonly="" name="input_date" placeholder="1970-01-01" data-lcalendar="1970-01-1,2019-12-31" />
+        </p>
+    </li>
+    <li>
+        <h6>性别</h6>
+        <p class="sexmi"><select>
+            <option>保密</option>
+            <option>男</option>
+            <option>女</option>
+        </select></p>
+    </li>
+    </ul>
+<ul class="information">
+    <li>
+        <h6>应用更新</h6>
+        <p>1.0</p>
+    </li>
+    <li>
+        <h6>修改登录密码</h6>
+        <p></p>
+    </li>
+    <li>
+        <h6>客服电话</h6>
+        <p>0532-80801188</p>
+    </li>
+</ul>
+<ul class="information">
+    <li class="exit">
+        <h6>退出当前账户</h6>
+    </li>
+</ul>
+    <div id="darkcolor"></div>
+    <ul class="myinviteway">
+        <li>拍照</li>
+        <li>从相册选择</li>
+        <li id="myinvitecancle">取消</li>
+    </ul>
+</div>
 </body>
 </html>
