@@ -24,6 +24,7 @@
     <script src="../code/js/publishAccounts.js"></script>
     <script>
         var memberId;
+        var flag=1;
         var time;
         var addressArr;
         $(function () {
@@ -90,7 +91,8 @@
         )
 
         function publish() {
-            var request = JSON.stringify($("#form").serializeObject())
+            var obj=$("#form").serializeObject();
+            var request = JSON.stringify(obj)
             console.log(request)
             $.ajax({
                 type: 'post',
@@ -98,12 +100,16 @@
                 contentType: "application/json",
                 url: '/pc/admin/member/publishAddRequest',
                 data: request,
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader("flag",flag)
+                },
                 success: function (data) {
                     var json = eval(data); //数组
                     if (json != null && json.errorCode == 0) {
 //                            console.log(data)
-                        Showbo.Msg.alert(json.data)
-                        location.reload()
+                        Showbo.Msg.alert(json.data, function () {
+                            location.reload()
+                        })
                     }
                     else {
                         Showbo.Msg.alert("提交失败")
@@ -208,4 +214,4 @@
     <button class="btn btn-primary" id="button" onclick="publish()">提交任务</button>
 </div>
 </body>
-</html>                  
+</html>

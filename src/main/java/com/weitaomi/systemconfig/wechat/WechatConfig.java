@@ -23,4 +23,8 @@ public class WechatConfig {
     public static final String FAIL= "FAILURE";
 
 
+
+
+
+    public static final String wxAppSecret="76960948558fec39d804e7aefacc5c25";
 }

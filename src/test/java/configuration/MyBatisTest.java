@@ -20,6 +20,8 @@ import com.weitaomi.systemconfig.wechat.WechatPayParams;
 import common.BaseContextCase;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -193,6 +195,21 @@ public class MyBatisTest extends BaseContextCase {
         xStream.useAttributeFor(WechatPayParams.class,"spbill_create_ip");
         xStream.useAttributeFor(WechatPayParams.class,"sign");
         return xStream;
+    }
+    @Test
+    public  void testRequestGet(){
+        NameValuePair[] nameValue = new NameValuePair[3];
+        nameValue[0]=new BasicNameValuePair("access_token","wG1UmatSeWR4xBNLYxFuMuUMkLDhoy2c815X9ns6tOjJYYnBvh7Am7OH33mQF_fyAQKacu09i3kb4H8JYd7tqgqsuFQ2nN_K23W_WXlRv0A");
+        nameValue[1]=new BasicNameValuePair("openid","oIaNTwVfVcGGJWJfEv4i4xC8FLU4");
+        nameValue[2]=new BasicNameValuePair("lang", "zh_CN");
+        try {
+            String params=HttpRequestUtils.get("https://api.weixin.qq.com/sns/userinfo",nameValue);
+            System.out.println(params);
+            Map<String,String> hashMap= (Map<String, String>) JSONObject.parse(params);
+            System.out.println(hashMap.get("nickname"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
 

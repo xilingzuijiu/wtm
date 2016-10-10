@@ -8,6 +8,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
@@ -60,6 +61,34 @@ public class HttpRequestUtils {
 
     }
 
+    public static String get(String url, NameValuePair... params) throws IOException {
+        try {
+            String parameters="";
+            for (NameValuePair p : params) {
+                parameters += p.getName()+"="+p.getValue()+"&";
+            }
+            parameters=parameters.substring(0,parameters.lastIndexOf("&"));
+            // 创建POST请求
+            HttpGet request = new HttpGet(url+"?"+parameters);
+            // 发送请求
+            HttpClient client = HttpClients.createDefault();
+
+            HttpResponse response = client.execute(request);
+//            System.out.println("============>"+response.getEntity().toString());
+            if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+                throw new RuntimeException("请求失败");
+            }
+            HttpEntity resEntity = response.getEntity();
+            return readInstream(resEntity.getContent(),"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            return null;
+        } catch (ClientProtocolException e) {
+            return null;
+        } catch (IOException e) {
+            throw new RuntimeException("连接失败", e);
+        }
+
+    }
 
 
 

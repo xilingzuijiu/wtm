@@ -405,14 +405,11 @@ public class MemberService extends BaseService implements IMemberService {
         String key = "member:indentifyCode:" + mobile;
         String value = this.getIndentifyCodeFromCache(key);
         if (value == null) {
-            throw new InfoException("邀请码未发送");
+            throw new InfoException("验证码未发送");
         }
         if (indentifyCode.equals(value)) {
             return true;
         }
         return false;
     }
-
-
-
 }

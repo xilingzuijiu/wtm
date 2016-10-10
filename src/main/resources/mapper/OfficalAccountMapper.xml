@@ -76,7 +76,7 @@
  select account.*,pool.singleScore score from wtm_official_accounts account
   LEFT JOIN wtm_official_accounts_level le ON account.level=le.id
   LEFT JOIN wtm_task_pool pool ON pool.officialAccountsId=account.id
-  WHERE account.originId=#{originId}
+  WHERE account.originId=#{originId} AND pool.isPublishNow=1
 </select>
 <select id="getOfficialAccountList" resultType="com.weitaomi.application.model.bean.OfficialAccount">
     select * from wtm_official_accounts a WHERE a.memberId=#{memberId}

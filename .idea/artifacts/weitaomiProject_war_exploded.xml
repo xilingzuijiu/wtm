@@ -25,6 +25,7 @@
           <element id="library" level="project" name="Maven: com.github.pagehelper:pagehelper:3.6.3" />
           <element id="library" level="project" name="Maven: com.github.jsqlparser:jsqlparser:0.9.1" />
           <element id="library" level="project" name="Maven: javax.servlet:servlet-api:2.5" />
+          <element id="library" level="project" name="Maven: javax.servlet:javax.servlet-api:3.0.1" />
           <element id="library" level="project" name="Maven: taglibs:standard:1.1.2" />
           <element id="library" level="project" name="Maven: javax.servlet:jstl:1.2" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.6.5" />
@@ -50,7 +51,6 @@
           <element id="library" level="project" name="Maven: org.ow2.asm:asm:4.2" />
           <element id="library" level="project" name="Maven: redis.clients:jedis:2.7.0" />
           <element id="library" level="project" name="Maven: org.apache.commons:commons-pool2:2.3" />
-          <element id="library" level="project" name="Maven: javax.servlet:javax.servlet-api:3.0.1" />
           <element id="library" level="project" name="Maven: com.alibaba:fastjson:1.2.4" />
           <element id="library" level="project" name="Maven: net.sf.json-lib:json-lib:jdk15:2.4" />
           <element id="library" level="project" name="Maven: commons-lang:commons-lang:2.5" />

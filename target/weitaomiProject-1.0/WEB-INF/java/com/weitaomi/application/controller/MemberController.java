@@ -170,6 +170,9 @@ public class MemberController  extends BaseController {
         if (modifyPasswordDto.getFlag()==1) {
             memberId = this.getUserId(request);
         }
+        if (modifyPasswordDto.getNewPassword().length()<6){
+            throw new InfoException("新密码长度不能小于六位");
+        }
         if (memberId==null){
             throw new BusinessException("用户ID为空");
         }

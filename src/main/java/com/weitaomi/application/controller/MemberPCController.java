@@ -1,6 +1,7 @@
 package com.weitaomi.application.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.weitaomi.application.controller.baseController.BaseController;
 import com.weitaomi.application.model.bean.Member;
 import com.weitaomi.application.model.bean.TaskPool;
@@ -12,12 +13,17 @@ import com.weitaomi.systemconfig.exception.BusinessException;
 import com.weitaomi.systemconfig.exception.DBException;
 import com.weitaomi.systemconfig.exception.InfoException;
 import com.weitaomi.systemconfig.util.DateUtils;
+import com.weitaomi.systemconfig.util.HttpRequestUtils;
 import com.weitaomi.systemconfig.util.StringUtil;
+import com.weitaomi.systemconfig.wechat.WechatConfig;
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

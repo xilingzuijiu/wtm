@@ -4,8 +4,7 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
     <welcome-file-list>
-        <welcome-file>/WEB-INF/index.html</welcome-file>
-        <welcome-file>/index.jsp</welcome-file>
+        <welcome-file>/frontPage/index.html</welcome-file>
     </welcome-file-list>
     <context-param>
         <param-name>contextConfigLocation</param-name>
@@ -24,7 +23,7 @@
     <servlet-mapping>
         <servlet-name>weitaomi</servlet-name>
         <!--所有请求-->
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 
     <filter>

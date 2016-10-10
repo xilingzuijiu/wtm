@@ -48,6 +48,7 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
     @Autowired
     private ArticleMapper articleMapper;
     @Override
+    @Transactional
     public String uploadAddTaskPool(TaskPool taskPool) {
         if (taskPool!=null){
             TaskPool taskPoolTemp=new TaskPool();
@@ -55,7 +56,14 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
             taskPoolTemp.setTaskType(0);
             List<TaskPool> taskPools=taskPoolMapper.select(taskPoolTemp);
             if (!taskPools.isEmpty()){
-                return "您已发布过此任务，请在公众号详情中查看";
+                boolean temp=false;
+                for (TaskPool taskPool1:taskPools){
+                    if (taskPool1.getIsPublishNow()>0){
+                        temp=true;
+                        break;
+                    }
+                }
+                if (temp) return "您已发布的任务没有完成，请在公众号详情中查看";
             }
             if (taskPool.getSingleScore()==null||taskPool.getSingleScore()<=0){
                 throw new InfoException("单次奖励必须大于零哦~亲~");

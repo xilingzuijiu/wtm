@@ -38,7 +38,7 @@
   <select id="getAtricleList" resultType="com.weitaomi.application.model.dto.ArticleShowDto">
    select a.id,a.officialAccountId,a.url,a.imageUrl,a.title,a.articleAbstract,
       a.readNumber,a.agreeNumber,a.createTime,a.validNumber,a.isTop,
-      Floor((pool.totalScore-pool.singleScore)/pool.singleScore) readIncreaseNumber,u.username username
+      Floor((pool.totalScore-pool.singleScore)/pool.singleScore)+1 readIncreaseNumber,u.username username
     from wtm_article a LEFT JOIN wtm_official_accounts u ON a.officialAccountId=u.id LEFT JOIN wtm_task_pool pool ON pool.articleId = a.id
     WHERE pool.isPublishNow=1 AND pool.totalScore>=pool.singleScore AND pool.id>0 AND pool.articleId NOT IN
     (select r.articleId from wtm_article_read_record r WHERE r.memberId=#{memberId})

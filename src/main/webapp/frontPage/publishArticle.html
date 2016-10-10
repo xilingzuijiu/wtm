@@ -25,24 +25,24 @@
         var time;
         var addressArr;
         $(function(){
-                    memberId=GetQueryString("memberId");
-                    $("#memberId").val(memberId);
-                    time=GetQueryString("time");
-                    $.ajax({
-                        type: 'post',
-                        dataType: 'json',
-                        url: '/pc/admin/member/getMemberArticlePublishMsg',
-                        data: {memberId:memberId,time:time},
-                        success: function (params) {
-                            var json = eval(params); //数组
-                            if (json!=null&&json.errorCode==0){
-                                var data=eval(json.data);
-                                deal(data)
-                            }else Showbo.Msg.alert("获取微信公众号列表失败")
-                        },
-                        error:function (data){
-                            Showbo.Msg.alert("页面加载错误，请重试");
-                        }
+                memberId=GetQueryString("memberId");
+                $("#memberId").val(memberId);
+                time=GetQueryString("time");
+                $.ajax({
+                    type: 'post',
+                    dataType: 'json',
+                    url: '/pc/admin/member/getMemberArticlePublishMsg',
+                    data: {memberId:memberId,time:time},
+                    success: function (params) {
+                        var json = eval(params); //数组
+                        if (json!=null&&json.errorCode==0){
+                            var data=eval(json.data);
+                            deal(data)
+                        }else Showbo.Msg.alert("获取微信公众号列表失败")
+                    },
+                    error:function (data){
+                        Showbo.Msg.alert("页面加载错误，请重试");
+                    }
 //                headers:{
 //                    "Access-Control-Allow-Origin":"",
 //                    "Access-Control-Allow-Headers":"X-Requested-With",
@@ -52,17 +52,17 @@
                 }
         )
         var imagefile='';
-        //        function selectImage(file){
-        //            if(!file.files || !file.files[0]){
-        //                return;
-        //            }
-        //            var reader = new FileReader();
-        //            reader.onload = function(evt){
-        //                $('#image').src = evt.target.result;
-        //                imagefile = evt.target.result;
-        //            }
-        //            reader.readAsDataURL(file.files[0]);
-        //        }
+//        function selectImage(file){
+//            if(!file.files || !file.files[0]){
+//                return;
+//            }
+//            var reader = new FileReader();
+//            reader.onload = function(evt){
+//                $('#image').src = evt.target.result;
+//                imagefile = evt.target.result;
+//            }
+//            reader.readAsDataURL(file.files[0]);
+//        }
         function selectImage(file){
             //console.log(this.files[0]);
             lrz(file.files[0],{width:150,height:150},function(rst){
@@ -85,8 +85,9 @@
                     console.log(data)
                     var json = eval(data); //数组
                     if (json!=null&&json.errorCode==0){
-                        Showbo.Msg.alert(json.data)
-                        location.reload()
+                        Showbo.Msg.alert(json.data, function () {
+                            location.reload()
+                        })
                     }else if (json!=null&&json.errorCode==4){
                         Showbo.Msg.alert(json.message)
                     }
