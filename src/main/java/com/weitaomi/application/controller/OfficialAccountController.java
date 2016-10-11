@@ -34,7 +34,7 @@ public class OfficialAccountController extends BaseController{
     private ThirdLoginMapper thirdLoginMapper;
 
     /**
-     * 获取用户每日任务
+     * 获取用户可关注公众号列表
      * @param httpServletRequest
      * @return
      */

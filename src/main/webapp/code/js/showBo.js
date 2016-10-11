@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2016/9/30.
  */
-var Showbo={author:'showbo',homepage:'http://www.weitaomi.cn'};
+var Showbo={author:'yuguodong',homepage:'http://www.weitaomi.cn'};
 //是否为ie浏览器
 Showbo.IsIE=!!document.all;
 //ie浏览器版本

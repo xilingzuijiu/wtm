@@ -5,6 +5,7 @@ import com.weitaomi.application.model.dto.AddOfficalAccountDto;
 import com.weitaomi.application.model.dto.MemberAccountLabel;
 import com.weitaomi.application.model.dto.OfficialAccountMsg;
 import com.weitaomi.application.model.dto.OfficialAccountsDto;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -36,6 +37,15 @@ public interface IOfficeAccountService {
      * @param addOfficalAccountDto
      */
     public boolean pushAddRequest(Long memberId,AddOfficalAccountDto addOfficalAccountDto);
+
+    /**
+     * 标记要关注该公众号
+     * @param memberId
+     * @param officialAccountMsg
+     * @return
+     */
+    @Transactional
+    boolean markAddRecord(Long memberId, OfficialAccountMsg officialAccountMsg);
 
     /**
      * {"originId":""," nickname ":"昵称，如果unionId一致则换成unionId","time":"关注时间"}

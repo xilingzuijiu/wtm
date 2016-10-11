@@ -8,53 +8,10 @@
     <link href="../../code/css/base.css" rel="stylesheet" type="text/css"/>
     <link href="../../code/css/wapstyle.css" rel="stylesheet" type="text/css"/>
     <script src="../../code/js/jquery.min.js"></script>
+    <script src="../../code/js/wap/pursewithdraw.js"></script>
     <script>
-    $(function() {
-        var li = document.createElement("li");
-        var div = document.createElement('div');
-        div.className="cashname";
-        var h4 = document.createElement('h4');
-        h4.innerHTML = "提现";
-        var span = document.createElement('span');
-        span.innerHTML = "（用户账户提现）";
-        var p = document.createElement('p');
-        p.innerHTML = "2016-9-29 14:30:16";
-        var h6 = document.createElement('h6');
-        h6.innerHTML = "-0.01元";
-        var h5 = document.createElement('h5');
-        h5.className="margin0";
-        h5.innerHTML = "待审核";
-        li.appendChild(div);
-        div.appendChild(h4);
-        h4.appendChild(span);
-        div.appendChild(p);
-        li.appendChild(h6);
-        li.appendChild(h5);
-        document.body.appendChild(li);
-        document.getElementsByTagName('ul')[0].appendChild(li);
-
-        var li = document.createElement("li");
-        var div = document.createElement('div');
-        div.className="cashname";
-        var h4 = document.createElement('h4');
-        h4.innerHTML = "提现";
-        var span = document.createElement('span');
-        span.innerHTML = "（用户账户提现）";
-        var p = document.createElement('p');
-        p.innerHTML = "2016-9-29 14:30:16";
-        var h6 = document.createElement('h6');
-        h6.innerHTML = "-0.01元";
-        var h5 = document.createElement('h5');
-        h5.className="margin0";
-        h5.innerHTML = "待审核";
-        li.appendChild(div);
-        div.appendChild(h4);
-        h4.appendChild(span);
-        div.appendChild(p);
-        li.appendChild(h6);
-        li.appendChild(h5);
-        document.body.appendChild(li);
-        document.getElementsByTagName('ul')[0].appendChild(li);
+        $(function () {
+            puser.getFlowScoreDetail()
     })
     </script>
 </head>
