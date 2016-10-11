@@ -56,17 +56,10 @@
 
             })
             $("#register").click( function (){
-                $("#form").attr("enctype","multipart/form-data")
-                var requestObj = eval($("#registerForm").serializeObject())
-                var request =getRegeisterParams(requestObj)
                 $("#form").attr("enctype","multipart/form-data");
                 var memberName=$("#memberName").val();
                 $.ajax({
                     type: 'post',
-                    url: '/pc/admin/member/register',
-                    dataType:"json",
-                    data: request,
-                    contentType: "application/json",
                     url: '/pc/admin/member/login',
                     data: {mobileOrName:memberName},
                     beforeSend: function (XMLHttpRequest) {
@@ -77,7 +70,6 @@
                         var errorCode=data.errorCode
                         if (errorCode==0){
                             if (data.data){
-                                download()
                                 location.href="changepassword.html";
                             }
                         } else if (errorCode==4){
@@ -96,7 +88,6 @@
 <div class="forgetpage">
     <form id="registerForm">
         <div id="telverify">
-            <input type="text" name="telephone" id="telephone" value="" placeholder="请输入手机号">
             <input type="text" name="telephone" id="telephone" value="" placeholder="请输入手机号" autofocus>
             <a id="sendVerifyCode" >发送验证码</a>
             <div id="downtime"></div>
