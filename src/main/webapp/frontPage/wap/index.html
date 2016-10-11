@@ -19,6 +19,11 @@
                 location.href="mycenter.html";
             })
             var index=0;//index只是定义的一个变量，可以是任意名称。
+            updateMyscore();
+            var imageUrl=$.cookie("imageUrl");
+            $(".owner img").attr("src",imageUrl);
+            //banner图
+            var index=0;
             var liwidth=$(document.body).width();
             var leftwidth=liwidth*2.5%
                     console.log(leftwidth);
@@ -36,6 +41,7 @@
                 }
                 $(".homebanner ul").animate({right: -index * liwi},400);
             }
+            //钱包刷新
             setInterval(show,2000);
             getLocation();
             updateMyscore();

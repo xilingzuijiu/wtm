@@ -16,20 +16,27 @@
             }else{
                 alert("登录过期，请重新登录")
             }
+            var loginheight=$(window).height();
+            var loginwidth=$(window).width();
+            var promptwidth=$("#prompt").width();
+            $("#prompt").css("top",loginheight/2.5);
+            $("#prompt").css("left",loginwidth/2-promptwidth/2);
             $(".wxjump").click(function(){
                 location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx2282c57276f83fad&redirect_uri=http%3a%2f%2fwww.weitaomi.cn%2fwxRegisterOAuth&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
             })
             $(".loginbutton").click(function(){
                 $("#form").attr("enctype","multipart/form-data");
                 var memberName=$("#memberName").val();
+                console.log(memberName);
                 var password=$("#password").val();
+                console.log(password);
                 $.ajax({
                     type: 'post',
-                        url: '/pc/admin/member/login',
-                        data: {mobileOrName:memberName,password:password},
-                        beforeSend: function (XMLHttpRequest) {
-                    XMLHttpRequest.setRequestHeader("from","2")
-                },
+                    url: '/pc/admin/member/login',
+                    data: {mobileOrName:memberName,password:password},
+                    beforeSend: function (XMLHttpRequest) {
+                        XMLHttpRequest.setRequestHeader("from","2")
+                    },
                     success: function (params) {
                         var param = eval(params);
                         if (param != null && param.errorCode == 0) {
@@ -56,34 +63,42 @@
                             alert(data.message)
                         }
                         if (memberName != $.cookie("memberName")) {
-                            $("#prompt").css("display", "block");
-                            $("#prompt").text("用户名不存在");
-                            $('#prompt').delay(600).fadeOut(350);
-                        } else {
-                            if (password == $.cookie("password")) {
-                                location.href = "index.html";
-                            } else {
+                            if (memberName!=$.cookie("memberName")) {
                                 $("#prompt").css("display", "block");
-                                $("#prompt").text("密码不正确，请重新输入");
+                                $("#prompt").text("用户名不存在");
                                 $('#prompt').delay(600).fadeOut(350);
+                            } else {
+                                if (password == $.cookie("password")) {
+                                    location.href = "index.html";
+                                } else {
+                                    $("#prompt").css("display", "block");
+                                    $("#prompt").text("密码不正确，请重新输入");
+                                    $('#prompt').delay(600).fadeOut(350);
+                                }
                             }
                         }
-                    }
-                });
+                    });
+                if($.cookie("memberId")!=null){
+                    location.href="index.html";
+                }else{
+                    alert("登录过期，请重新登录")
+                }
             })
+
         })
     </script>
 </head>
 <body>
 <img class="accountimg" src="../../code/img/76pt-2x.png"/>
 <div class="login">
-<form>
-    <input type="text" name="memberName" id="memberName" value="" placeholder="请输入用户名" autofocus>
-    <input type="password" name="password" id="password" value="" placeholder="请输入密码">
-    <input class="payconfirm loginbutton" type="button" value="登录"/>
-</form>
+    <form>
+        <input type="text" name="memberName" id="memberName" value="" placeholder="请输入用户名" autofocus>
+        <input type="password" name="password" id="password" value="" placeholder="请输入密码">
+        <input class="payconfirm loginbutton" type="button" value="登录"/>
+    </form>
 </div>
-    <p class="wordpage"><span><a href="forgetcode.html"> 忘记密码</a></span><a href="Register.html"> 注册</a></p>
+<p class="wordpage"><span><a href="forgetcode.html"> 忘记密码</a></span><a href="Register.html"> 注册</a></p>
+<p class="wordpage"><span><a href="forgetcode.html"> 忘记密码</a></span><a href="register.html"> 注册</a></p>
 <img class="wxjump" src="../../code/img/regist/wxLoginLogo.png"/>
 <div id="prompt"></div>
 </body>

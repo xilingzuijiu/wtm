@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0" name="viewport" />
     <title>个人资料</title>
+    <title>个人中心</title>
     <link href="../../code/css/base.css" rel="stylesheet" type="text/css"/>
     <link href="../../code/css/wapstyle.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="../../code/css/lCalendar.css">
     <script src="../../code/js/jquery.min.js"></script>
     <script src="../../code/js/lCalendar.js"></script>
     <link rel="stylesheet" href="../../code/css/lCalendar.css">
@@ -54,16 +56,34 @@
             $(".mywtm").click(function(){
                 location.href="myinvite.html";
             })
+            $(".openbusy").click(function(){
+                $(".openbusy").css("display","none");
+                $(".shop").css("display","block");
+//                location.href="certificategzh.html";
+            })
+            if($.cookie("officialAccountList")!=null){
+                $(".openbusy").css("display","none");
+                $(".shop").css("display","block");
+                $("#one").click(function(){
+                    location.href="#";
+                })
+                $("#two").click(function(){
+                    location.href="#";
+                })
+                $("#three").click(function(){
+                    location.href="#";
+                })
+            }
         })
     </script>
 </head>
 <body class="myinformation">
 <div class="nogo">
-<!--<div class="signature">-->
+    <!--<div class="signature">-->
     <!--<h5>APP个性签名</h5>-->
     <!--<h6>一款玩就可以赚钱的APP</h6>-->
-<!--</div>-->
-<!--<h5 class="baseinformation">基础资料</h5>-->
+    <!--</div>-->
+    <!--<h5 class="baseinformation">基础资料</h5>-->
     <div class="selfinformation">
         <div id="imgaccount">
             <img class="photoimg" src="../../code/img/gzhimg.jpg"/>
@@ -74,48 +94,93 @@
         </div>
         <img class="mywtm" src="../../code/img/mywtm2.png"/>
     </div>
-<ul class="information">
-    <li>
-        <h6>生日</h6>
-        <p class="time">
-            <input id="demo1" type="text" readonly="" name="input_date" placeholder="1970-01-01" data-lcalendar="1970-01-1,2019-12-31" />
-        </p>
-    </li>
-    <li>
-        <h6>性别</h6>
-        <p class="sexmi">
-            <select>
-            <option>保密</option>
-            <option>男</option>
-            <option>女</option>
-        </select></p>
-    </li>
-    </ul>
-<ul class="information">
-    <li>
-        <h6>绑定微信号</h6>
-        <p>未绑定微信号</p>
-    </li>
-    <li>
-        <h6>修改登录密码</h6>
-        <p></p>
-    </li>
-    <li>
-        <h6>客服电话</h6>
-        <p>0532-80801188</p>
-    </li>
-</ul>
-<ul class="information">
-    <li class="exit">
-        <h6>退出当前账户</h6>
-    </li>
-</ul>
-    <div id="darkcolor"></div>
-    <ul class="myinviteway">
-        <li>拍照</li>
-        <li>从相册选择</li>
-        <li id="myinvitecancle">取消</li>
-    </ul>
+    <ul class="information">
+        <li>
+            <h6>生日</h6>
+            <p class="time">
+                <input id="demo1" type="text" readonly="" name="input_date" placeholder="1970-01-01" data-lcalendar="1970-01-1,2019-12-31" />
+            </p>
+        </li>
+        <li>
+            <h6>性别</h6>
+            <p class="sexmi">
+                <select>
+                    <option>保密</option>
+                    <option>男</option>
+                    <option>女</option>
+                </select></p>
+        </li>
+        <ul class="information">
+            <li>
+                <h6>生日</h6>
+                <p class="time">
+                    <input id="demo1" type="text" readonly="" name="input_date" placeholder="1970-01-01" data-lcalendar="1970-01-1,2019-12-31" />
+                </p>
+            </li>
+            <li>
+                <h6>性别</h6>
+                <p class="sexmi">
+                    <select>
+                        <option>保密</option>
+                        <option>男</option>
+                        <option>女</option>
+                    </select></p>
+            </li>
+        </ul>
+        <ul class="information">
+            <li>
+                <h6>绑定微信号</h6>
+                <p>未绑定微信号</p>
+            </li>
+            <li>
+                <h6>修改登录密码</h6>
+                <p></p>
+            </li>
+            <li>
+                <h6>客服电话</h6>
+                <p>0532-80801188</p>
+            </li>
+        </ul>
+        <ul class="information">
+            <li class="exit">
+                <h6>退出当前账户</h6>
+                <ul class="information">
+                    <li>
+                        <h6>绑定微信号</h6>
+                        <p>未绑定微信号</p>
+                    </li>
+                    <li>
+                        <h6>修改登录密码</h6>
+                        <p></p>
+                    </li>
+                    <li>
+                        <h6>客服电话</h6>
+                        <p>0532-80801188</p>
+                    </li>
+                </ul>
+                <ul class="information">
+                    <li class="exit">
+                        <h6>退出当前账户</h6>
+                    </li>
+                </ul>
+                <img class="openbusy" src="../../code/img/Person/shop.png"/>
+                <ul class="information shop">
+                    <li id="one">
+                        <h6>发布任务</h6>
+                    </li>
+                    <li id="two">
+                        <h6>修改登录密码</h6>
+                    </li>
+                    <li id="three">
+                        <h6>客服电话</h6>
+                    </li>
+                </ul>
+                <div id="darkcolor"></div>
+                <ul class="myinviteway">
+                    <li>拍照</li>
+                    <li>从相册选择</li>
+                    <li id="myinvitecancle">取消</li>
+                </ul>
 </div>
 </body>
 </html>

@@ -79,7 +79,7 @@ header{background:url("../img/MainViewImgae/top.png") no-repeat center top;heigh
 .pursebag h6{padding:1.5rem 0;font-size:3.5rem;color:#444;}
 .pursebag p{font-size:2rem;color:#888;}
 .pay,.cash{font-size:3.3rem;display:block;margin: 2rem auto;width:80%;padding:1.4rem 0;border-radius:0.5em;
-box-shadow:0px 1px 2px #aaa;outline:none;}
+    box-shadow:0px 1px 2px #aaa;outline:none;}
 .pay{background:#fa4a18;color:#fff;}
 .cash{background:none;border:#999 1px solid;}
 /*提现明细样式---------------------------------------------------------------------------------*/
@@ -112,6 +112,7 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
     -webkit-border-radius:0.5em;-moz-border-radius:0.5em;-ms-border-radius:0.5em;-o-border-radius:0.5em;  box-shadow:0px 1px 2px #aaa;
     background:#fa4a18;color:#fff;border:none;outline:none;-webkit-tap-highlight-color: rgba(0,0,0,0);  -webkit-tap-highlight-color:transparent;  }
 .btoninvite{margin:auto;margin-top:10rem;}
+.certificate{background:#43b546;}
 /*申请提现样式-------*/
 .cashway a{display:block;}
 .cashwaydetails{margin-top:3rem;}
@@ -129,7 +130,7 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
 .wxcash li p option{font-size:3rem;color:#333;}
 .wxcashnext{float:right;width:2.5%;padding-top:2.4em;padding-right:2%;}
 .wxcash .defaultset{background:none;display:block;float:right;margin-top:1em;font-size:2.5rem;
-border-radius:0.3em;padding:0.6rem 2%;color:#fa4a18;border:#fa4a18 1px solid;outline:none;}
+    border-radius:0.3em;padding:0.6rem 2%;color:#fa4a18;border:#fa4a18 1px solid;outline:none;}
 .wxcashremark{font-size:2.8rem;width:100%;height:5em;border:#eee 1px solid;outline:none;padding:0 1%;
     line-height:1.5;margin-top:3%;}
 /*邀请好友样式---------------------------------------------------------------------------------*/
@@ -209,6 +210,9 @@ border-radius:0.3em;padding:0.6rem 2%;color:#fa4a18;border:#fa4a18 1px solid;out
 .wordpage{font-size:3rem;width:80%;overflow:hidden;margin:auto;text-align:right;color:#666;padding:2em 0 2.5em 0;background:url("../img/loginway.png") no-repeat center bottom;background-size:100%;}
 .wordpage span{float:left;}
 .wxjump{display:block;margin:auto;padding-top:2em;width:13%;}
+#prompt{display:none;position:absolute;border-radius:0.5em;-webkit-border-radius:0.5em;-moz-border-radius:0.5em;
+    -ms-border-radius:0.5em;-o-border-radius:0.5em;padding:0.5em 1em;background:#333;text-align:center;
+    color:#fff;margin:auto;width:7em;line-height:1.5;}
 /*注册页面样式---------------------------------------------------------------------------------*/
 .registerpage{font-size:5rem;color:#353535;font-weight:500;text-align:center;margin-bottom:2em;margin-top:1.5em;}
 #registerForm input{display:block;border:#d33711 1px solid;width:80%;box-sizing:border-box;margin:auto;height:2.7em;
@@ -249,6 +253,18 @@ border-radius:0.3em;padding:0.6rem 2%;color:#fa4a18;border:#fa4a18 1px solid;out
 .exit{background:none !important;}
 #darkcolor{display:none;position:absolute;left:0;top:0;z-index:18888;background-color:#000000;background: rgba(0, 0, 0, 0.7) !important;
     filter: alpha(opacity=70);-moz-opacity:0.7; -khtml-opacity: 0.7; opacity:0.7;width:100%;height:100%;}
+.openbusy{display:block;width:80%;margin:auto;margin-top:4em;}
+.shop{display:none;}
+.shop li{background:none;}
+/*认证公众号页面样式---------------------------------------------------------------------------------*/
+.certih5{font-weight:normal;width:80%;margin:auto;font-size:3.2rem;margin-top:5em;line-height:1.3;}
+.certitext,.certiarea{display:block;width:80%;font-size:3rem;background:#fafafa;border:#eee 1px solid;
+    padding:0.3em 0.7em;border-radius:0.3em;-webit-border-radius:0.3em;-ms-border-radius:0.3em;-moz-border-radius:0.3em;
+    -o-border-radius:0.3em;outline:none;margin:0.8em auto;box-sizing:border-box;-webkit-box-sizing:border-box;-ms-box-sizing:border-box;
+    -moz-box-sizing:border-box;-o-box-sizing:border-box;}
+.certiarea{margin:auto;margin-top:3em;}
+.certip{font-size:2.5rem;width:80%;margin:auto;line-height:1.3;color:#777;}
+.certip span{color:#f00;}
 
 @media all and (min-width:800px){
     header{height:33em;}
@@ -393,6 +409,11 @@ border-radius:0.3em;padding:0.6rem 2%;color:#fa4a18;border:#fa4a18 1px solid;out
     .information li p input,.information li p select{font-size:2.9rem;}
     .information li p img{width:25%;}
 
+    /*认证公众号页面样式---------------------------------------------------------------------------------*/
+    .certih5{width:80%;font-size:4.5rem;margin-top:5em;line-height:1.3;}
+    .certitext,.certiarea{font-size:3.5rem;padding:0.3em 0.7em;margin:1em auto;}
+    .certip{font-size:3.5rem;}
+    .certiarea{margin:auto;margin-top:3em;}
 
 }
 @media screen and (min-width:640px) and (max-width:719px){
@@ -541,6 +562,11 @@ border-radius:0.3em;padding:0.6rem 2%;color:#fa4a18;border:#fa4a18 1px solid;out
     .information li p img{width:15%;}
     .information li p input,.information li p select{font-size:1.7rem;}
 
+    /*认证公众号页面样式---------------------------------------------------------------------------------*/
+    .certih5{font-size:2.8rem;margin-top:5em;}
+    .certitext,.certiarea{font-size:2.2rem;padding:0.3em 0.7em;margin:0.7em auto;}
+    .certip{font-size:2.2rem;}
+    .certiarea{margin:3em auto;}
 }
 @media screen and (min-width:415px) and (max-width:639px){
     header{height:17em;}
@@ -687,6 +713,11 @@ border-radius:0.3em;padding:0.6rem 2%;color:#fa4a18;border:#fa4a18 1px solid;out
     .information li p{font-size:1.5rem;line-height:2.7em;width:50%;text-align:right;}
     .information li p img{width:29%;}
     .information li p input,.information li p select{font-size:1.5rem;}
+    /*认证公众号页面样式---------------------------------------------------------------------------------*/
+    .certih5{font-size:2.2rem;margin-top:4em;}
+    .certitext,.certiarea{font-size:1.7rem;padding:0.3em 0.7em;margin:0.7em auto;}
+    .certip{font-size:1.7rem;}
+    .certiarea{margin:auto;margin-top:3em;}
 }
 @media screen and (min-width:376px) and (max-width:414px){
     .headerbox{padding:0 2.5em;}
@@ -837,6 +868,11 @@ border-radius:0.3em;padding:0.6rem 2%;color:#fa4a18;border:#fa4a18 1px solid;out
     .information li p{font-size:1.4rem;line-height:2.7em;width:50%;text-align:right;}
     .information li p img{width:33%;}
     .information li p input,.information li p select{font-size:1.4rem;}
+    /*认证公众号页面样式---------------------------------------------------------------------------------*/
+    .certih5{font-size:2.1rem;margin-top:4em;}
+    .certitext,.certiarea{font-size:1.6rem;padding:0.3em 0.7em;margin:0.5em auto;}
+    .certip{font-size:1.6rem;}
+    .certiarea{margin:auto;margin-top:3em;}
 }
 @media screen and (min-width:321px) and (max-width:375px){
     header{height:11.5em;margin-bottom:1em;}
@@ -986,6 +1022,11 @@ border-radius:0.3em;padding:0.6rem 2%;color:#fa4a18;border:#fa4a18 1px solid;out
     .information li p{font-size:1.3rem;line-height:2.6em;width:50%;text-align:right;}
     .information li p img{width:33%;}
     .information li p input,.information li p select{font-size:1.3rem;}
+    /*认证公众号页面样式---------------------------------------------------------------------------------*/
+    .certih5{font-size:1.9rem;margin-top:4em;}
+    .certitext,.certiarea{font-size:1.5rem;padding:0.3em 0.7em;margin:0.5em auto;}
+    .certip{font-size:1.5rem;}
+    .certiarea{margin:auto;margin-top:3em;}
 }
 @media screen and (max-width:320px){
     header{height:10em;margin-bottom:0.8em;}
@@ -1136,7 +1177,13 @@ border-radius:0.3em;padding:0.6rem 2%;color:#fa4a18;border:#fa4a18 1px solid;out
     .information li p{font-size:1rem;line-height:2.6em;width:50%;text-align:right;}
     .information li p input,.information li p select{font-size:1rem;}
     .information li p img{width:33%;}
+    /*认证公众号页面样式---------------------------------------------------------------------------------*/
+    .certih5{font-size:1.8rem;margin-top:4em;}
+    .certitext,.certiarea{font-size:1.4rem;padding:0.3em 0.7em;margin:0.5em auto;}
+    .certip{font-size:1.4rem;}
+    .certiarea{margin:auto;margin-top:3em;}
 }
+
 
 
 
