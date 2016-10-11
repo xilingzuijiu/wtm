@@ -15,28 +15,24 @@
             })
             var inviteheight=$(window).height();
             var eventheight=$(".eventintroduce").height();
-            var coverheight=$(document.body).height();
             $(".eventintroduce").css("top",inviteheight/2-eventheight/2);
+            //弹窗遮罩效果
             $(".btonshare").click(function(){
                 $("#cover").css("display","block");
                 $(".eventintroduce").css("display","block");
                 $(".nogo").css("height",inviteheight);
                 $(".nogo").css("overflow","hidden");
-            })
-
-            $(".coverclose").click(function(){
-                $("#cover").css("display","none");
-                $(".eventintroduce").css("display","none");
-                $(".nogo").css("overflow","auto");
+                $(".payconfirm").attr("disabled","disabled");
             })
             var obj=document.getElementById("cover");
             obj.addEventListener("touchstart",function(e){
                 $("#cover").css("display","none");
                 $(".eventintroduce").css("display","none");
                 $(".nogo").css("overflow","auto");
+                $(".abox").click(function(){
+                    $('.payconfirm').removeAttr("disabled");
+                })
             },false)
-
-
         })
     </script>
 </head>
@@ -60,7 +56,9 @@
                 <p>成功邀请获取好友奖励的<span>10%</span></p>
             </div>
         <img src="../../code/img/invite/cutoff2.png"/>
-<input class="payconfirm" type="button" value="立即邀请马上领钱"/>
+<div class="abox">
+    <input class="payconfirm" type="button" value="立即邀请马上领钱"/>
+</div>
     </div>
 </div>
 <div class="inviteintroduce">
@@ -91,11 +89,9 @@
         <h6>变身汉</h6>
     </li>
 </ul>
-
 </div>
-
 <div id="cover"></div>
-<div class="eventintroduce" id="guide">
+<div class="eventintroduce">
     <p><span>注：</span>（每一个APP用户都是一个业务代理，注册了APP之后平台会自动为用户生成一个代理二维码，
         用户可通过自己的二维码去邀请好友来下载APP赚钱，代理可以得到用户收入的提成（此提成由平台支付给用户）
     但是平台会对每一个代理有业务考核，如：上线代理完成的金额被下线超越，上线代理是收不到下线超额的提成，

@@ -24,7 +24,7 @@
             var waywidth=$(".myinviteway").width();
             $(".myinviteway").css("top",inviteheight-wayheight);
             $(".myinviteway").css("left",invitewidth/2-waywidth/2);
-            $(".photoimg").click(function(){
+            $("#imgaccount").click(function(){
                 $("#darkcolor").css("display","block");
                 $(".myinviteway").css("display","block");
                 $(".nogo").css("height",inviteheight);
@@ -51,26 +51,30 @@
                     $('select').removeAttr("disabled");
                 })
             },false)
-
+            $(".mywtm").click(function(){
+                location.href="myinvite.html";
+            })
         })
     </script>
 </head>
 <body class="myinformation">
 <div class="nogo">
-<div class="signature">
-    <h5>APP个性签名</h5>
-    <h6>一款玩就可以赚钱的APP</h6>
-</div>
-<h5 class="baseinformation">基础资料</h5>
+<!--<div class="signature">-->
+    <!--<h5>APP个性签名</h5>-->
+    <!--<h6>一款玩就可以赚钱的APP</h6>-->
+<!--</div>-->
+<!--<h5 class="baseinformation">基础资料</h5>-->
+    <div class="selfinformation">
+        <div id="imgaccount">
+            <img class="photoimg" src="../../code/img/gzhimg.jpg"/>
+            <div class="accounttel">
+                <h5 id="headimg">黎沙</h5>
+                <h6>手机号：15689931603</h6>
+            </div>
+        </div>
+        <img class="mywtm" src="../../code/img/mywtm2.png"/>
+    </div>
 <ul class="information">
-<li>
-    <h6 id="headimg">头像</h6>
-    <p class="photoimg"><img src="../../code/img/gzhimg.jpg"/></p>
-</li>
-    <li class="bg">
-        <h6>账号</h6>
-        <p>0532-80801188</p>
-    </li>
     <li>
         <h6>生日</h6>
         <p class="time">
@@ -79,7 +83,8 @@
     </li>
     <li>
         <h6>性别</h6>
-        <p class="sexmi"><select>
+        <p class="sexmi">
+            <select>
             <option>保密</option>
             <option>男</option>
             <option>女</option>
@@ -88,8 +93,8 @@
     </ul>
 <ul class="information">
     <li>
-        <h6>应用更新</h6>
-        <p>1.0</p>
+        <h6>绑定微信号</h6>
+        <p>未绑定微信号</p>
     </li>
     <li>
         <h6>修改登录密码</h6>

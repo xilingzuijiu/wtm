@@ -11,6 +11,11 @@
     <script src="../../code/js/jquery.cookie.js"></script>
     <script>
         $(function(){
+            if($.cookie("memberId")!=null){
+                location.href="index.html";
+            }else{
+                alert("登录过期，请重新登录")
+            }
             $(".wxjump").click(function(){
                 location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx2282c57276f83fad&redirect_uri=http%3a%2f%2fwww.weitaomi.cn%2fwxRegisterOAuth&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
             })
@@ -26,26 +31,42 @@
                     XMLHttpRequest.setRequestHeader("from","2")
                 },
                     success: function (params) {
-                        var param=eval(params);
-                        if (param!=null&&param.errorCode==0){
-                            var data=param.data
-                            if (data.id!=null){
-                                $.cookie("memberId",data.id,{expires:30,path:"/frontPage/wap"})
-                                $.cookie("memberName",data.memberName,{expires:30,path:"/frontPage/wap"})
-                                $.cookie("password",data.password,{expires:30,path:"/frontPage/wap"})
-                                var image=data.imageUrl;
-                                if (image.indexOf("http")<0){
-                                    image ="http://weitaomi.b0.upaiyun.com"+image
+                        var param = eval(params);
+                        if (param != null && param.errorCode == 0) {
+                            var data = param.data
+                            if (data.id != null) {
+                                $.cookie("memberId", data.id, {expires: 30, path: "/frontPage/wap"})
+                                $.cookie("memberName", data.memberName, {expires: 30, path: "/frontPage/wap"})
+                                $.cookie("password", data.password, {expires: 30, path: "/frontPage/wap"})
+                                var image = data.imageUrl;
+                                if (image.indexOf("http") < 0) {
+                                    image = "http://weitaomi.b0.upaiyun.com" + image
                                 }
-                                $.cookie("imageUrl",image,{expires:30,path:"/frontPage/wap"})
-                                $.cookie("telephone",data.telephone,{expires:30,path:"/frontPage/wap"})
-                                $.cookie("officialAccountList",data.officialAccountList,{expires:30,path:"/frontPage/wap"})
-                                $.cookie("thirdLogin",data.thirdLogin,{expires:30,path:"/frontPage/wap"})
-                                $.cookie("payList",data.payList,{expires:30,path:"/frontPage/wap"})
-                                location.href="index.html";
+                                $.cookie("imageUrl", image, {expires: 30, path: "/frontPage/wap"})
+                                $.cookie("telephone", data.telephone, {expires: 30, path: "/frontPage/wap"})
+                                $.cookie("officialAccountList", data.officialAccountList, {
+                                    expires: 30,
+                                    path: "/frontPage/wap"
+                                })
+                                $.cookie("thirdLogin", data.thirdLogin, {expires: 30, path: "/frontPage/wap"})
+                                $.cookie("payList", data.payList, {expires: 30, path: "/frontPage/wap"})
+                                location.href = "index.html";
                             }
-                        } else if (errorCode==4){
+                        } else if (errorCode == 4) {
                             alert(data.message)
+                        }
+                        if (memberName != $.cookie("memberName")) {
+                            $("#prompt").css("display", "block");
+                            $("#prompt").text("用户名不存在");
+                            $('#prompt').delay(600).fadeOut(350);
+                        } else {
+                            if (password == $.cookie("password")) {
+                                location.href = "index.html";
+                            } else {
+                                $("#prompt").css("display", "block");
+                                $("#prompt").text("密码不正确，请重新输入");
+                                $('#prompt').delay(600).fadeOut(350);
+                            }
                         }
                     }
                 });
@@ -64,5 +85,6 @@
 </div>
     <p class="wordpage"><span><a href="forgetcode.html"> 忘记密码</a></span><a href="Register.html"> 注册</a></p>
 <img class="wxjump" src="../../code/img/regist/wxLoginLogo.png"/>
+<div id="prompt"></div>
 </body>
 </html>
