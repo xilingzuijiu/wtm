@@ -5,73 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0" name="viewport" />
     <title>关注公众号</title>
-    <link rel="stylesheet" href="../../code/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../code/css/bootstrap-theme.min.css">
-    <link href="../../code/css/base.css" rel="stylesheet" type="text/css"/>
-    <link href="../../code/css/wapstyle.css" rel="stylesheet" type="text/css"/>
-    <script src="../../code/js/jquery.min.js"></script>
-    <script src="../../code/js/bootstrap.min.js"></script>
-    <script src="../../code/js/jquery.cookie.js"></script>
-    <script>
-        $(function(){
-            $.ajax({
-                type: 'post',
-                dataType: 'json',
-                url: '/pc/admin/official/getFollowOfficialAccountList',
-                beforeSend: function (XMLHttpRequest) {
-                    getMemberRequestHeaderMsg(XMLHttpRequest)
-                },
-                success: function (params) {
-                    var json = eval(params); //数组
-                    console.log("json数据为：" + params);
-                    console.log($.cookie("memberId"));
-                    if (json != null && json.errorCode == 0) {
-                        var leng = json.data.length;
-                        for(var i=0;i<leng;i++) {
-                            var li = document.createElement("li");
-                            li.className = "col-xs-4";
-                            li.setAttribute("onClick","officialSubmit(this)")
-                            var img = document.createElement('img');
-                            img.setAttribute("src", json.data[i].imageUrl)
-                            var h5 = document.createElement('h5');
-                            h5.innerHTML = json.data[i].username;
-                            var p = document.createElement('p');
-                            p.innerHTML = "关注奖励："
-                            var span = document.createElement('span');
-                            span.innerHTML = json.data[i].rewardCount+"米币";
-                            p.appendChild(span);
-                            var input = document.createElement('input');
-                            input.setAttribute("type", "button");
-                            input.setAttribute("value", "求关注");
-                            li.appendChild(img);
-                            li.appendChild(h5);
-                            li.appendChild(p);
-                            li.appendChild(input);
-                            document.body.appendChild(li);
-                            document.getElementsByTagName('ul')[0].appendChild(li);//动态添加文章（li标签）
-                        }
-                    }
-                }
-            })
-
-        })
-        function getMemberRequestHeaderMsg(XMLHttpRequest){
-            var memberId= $.cookie("memberId");
-
-            if (memberId==null||memberId == undefined){
-                Showbo.Msg.confirm("登录已过期请重新登录", function () {
-                    location.href="login.html";
-                })
-            }
-            var password= $.cookie("password");
-            XMLHttpRequest.setRequestHeader("memberId",memberId);
-            XMLHttpRequest.setRequestHeader("from",2);
-        }
-        var articleSubmit = function(obj){
-
-        }
-
-    </script>
+    <link href="../../code/css/common.css" rel="stylesheet" type="text/css"/>
+    <script src="../../code/js/wap/common.js"></script>
+    <script src="../../code/js/wap/officialaccount.js"></script>
 </head>
 <body>
 <ul class="gzhlist">

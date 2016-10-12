@@ -42,10 +42,11 @@ header{background:url("../img/MainViewImgae/top.png") no-repeat center top;heigh
     margin-right:0.8em;text-decoration:none !important;}
 .checkanniu a:hover{color:#fff;background:#ccc;}
 .readdetails{padding-left:2em;padding-top:1em;padding-right:0;}
-.readdetails h5{font-size:3em;}
+.readdetails h5{font-size:3em;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .readdetails h6{font-size:1.9em;padding:1em 0;color:#333;width:10em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .readdetails p{font-size:1.9em;color:#666;}
 .readdetails p span{color:#68c1f4;}
+.loadmore{text-align:center;font-size:3rem;color:#aaa;font-weight:normal;padding:0.5em 0;}
 /*关注公众号样式---------------------------------------------------------------------------------*/
 .gzhlist{border-top:#eee 1px solid;padding-top:1.5em;}
 .gzhlist li{text-align:center;padding-bottom:3rem;}
@@ -288,6 +289,7 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
     .readdetails h6{font-size:2.8em;}
     .readdetails p{font-size:2.7em;}
     .checkanniu a{font-size:2.5em;margin-top:2.8em;padding:0.5em 1.3em;margin-right:1em;}
+    .loadmore{font-size:4rem;}
     /*关注公众号样式---------------------------------------------------------------------------------*/
     .gzhlist{padding-top:1.8em;}
     .gzhlist li{padding-bottom:4rem;}
@@ -436,6 +438,7 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
     .readdetails h6{font-size:1.6em;}
     .readdetails p{font-size:1.6em;}
     .checkanniu a{font-size:1.4em;margin-top:3.1em;padding:0.5em 1.3em;margin-right:0.7em;}
+    .loadmore{font-size:2.2rem;padding:0.5em 0;}
     /*关注公众号样式---------------------------------------------------------------------------------*/
     .gzhlist{padding-top:1.2em;}
     .gzhlist li{padding-left:10px;padding-right:10px;}
@@ -589,6 +592,7 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
     .readdetails h6{font-size:1.3em;padding:0.7em 0;}
     .readdetails p{font-size:1.3em;}
     .checkanniu a{font-size:1.3em;margin-top:2.3em;padding:0.5em 1.3em;margin-right:0.2em;}
+    .loadmore{font-size:1.9rem;padding:0.3em 0;}
     /*关注公众号样式---------------------------------------------------------------------------------*/
     .gzhlist{padding-top:0.7em;}
     .gzhlist li{padding-bottom:2.5em;padding-left:10px;padding-right:10px;}
@@ -745,6 +749,7 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
     .readdetails h6{font-size:1.1em;padding:0.7em 0 0.5em 0;}
     .readdetails p{font-size:1.1em;}
     .checkanniu a{font-size:1.1em;margin-top:2.5em;padding:0.5em 1.3em;margin-right:0.2em;}
+    .loadmore{font-size:1.7rem;padding:0.3em 0;}
     /*关注公众号样式---------------------------------------------------------------------------------*/
     .gzhlist{padding-top:0.5em;}
     .gzhlist li{padding-left:10px;padding-right:10px;}
@@ -899,6 +904,7 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
     .readdetails h6{font-size:1em;padding:0.7em 0 0.3em 0;}
     .readdetails p{font-size:1em;}
     .checkanniu a{font-size:1em;margin-top:2.2em;padding:0.5em 1.3em;margin-right:0.2em;}
+    .loadmore{font-size:1.5rem;padding:0.1em 0;}
     /*关注公众号样式---------------------------------------------------------------------------------*/
     .gzhlist{padding-top:0.5em;}
     .gzhlist li{padding:0 0.3em 1.5em 0.3em;}
@@ -1054,6 +1060,7 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
     .readdetails h6{font-size:0.8em;padding:0.7em 0 0 0;}
     .readdetails p{font-size:0.8em;}
     .checkanniu a{font-size:0.9em;margin-top:2.2em;padding:0.5em 1.3em;margin-right:0em;}
+    .loadmore{font-size:1.5rem;padding:0.1em 0;}
     /*关注公众号样式---------------------------------------------------------------------------------*/
     .gzhlist{padding-top:0.5em;}
     .gzhlist li{padding:0 0 1.5em 0;}

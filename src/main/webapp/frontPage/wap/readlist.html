@@ -2,154 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1,target-densitydpi=high-dpi">
-    <meta content="width=device-width; initial-scale=1.0;maximum-scale=1.0; user-scalable=0" name="viewport" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0" name="viewport" />
     <title>文章列表</title>
-    <link rel="stylesheet" href="../../code/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../code/css/bootstrap-theme.min.css">
-    <link href="../../code/css/base.css" rel="stylesheet" type="text/css"/>
-    <link href="../../code/css/wapstyle.css" rel="stylesheet" type="text/css"/>
-    <link href="../../code/css/showBo.css" rel="stylesheet" type="text/css"/>
-    <script src="../../code/js/jquery.min.js"></script>
-    <script src="../../code/js/bootstrap.min.js"></script>
-    <script src="../../code/js/jquery.cookie.js"></script>
-    <script src="../../code/js/showBo.js"></script>
-    <script>
-                var hashMap = {
-                    Set : function(key,value){this[key] = value},
-                    Get : function(key){return this[key]},
-                    Contains : function(key){return this.Get(key) == null?false:true},
-                    Remove : function(key){delete this[key]}
-                }
-        var count=0;
-        var total=0;
-        var pageSize=15;
-        $(function(){
-            var request=JSON.stringify(new ArticleSerach(0,count++,pageSize));
-//            if(count==Math.ceil(total/pageSize)){
-//                $("body").append("没有更多");
-//            }
-            $.ajax({
-                type: 'post',
-                contentType: "application/json",
-                dataType: 'json',
-                url: '/pc/admin/article/getAllArticle',
-                data:request,
-                beforeSend: function (XMLHttpRequest) {
-                    getMemberRequestHeaderMsg(XMLHttpRequest)
-                },
-                header:{
-                    "contentType":"application/json"
-                },
-                success: function (params) {
-                    var json = eval(params); //数组
-                    console.log("json数据为：" + params);
-                    console.log($.cookie("memberId"));
-                    if (json!=null&&json.errorCode==0){
-                        total=json.data.total
-                        json.data.list.forEach(function (article) {
-                            var li = document.createElement("li");
-                            li.setAttribute("onClick", "articleSubmit(this)");
-                            li.id = article.id;
-                            var div1 = document.createElement('div');
-                           hashMap.Set(li.id, article.url);
-                            div1.className = "col-xs-3 listimg";
-                            var img = document.createElement('img');
-                            img.setAttribute("src", 'http://weitaomi.b0.upaiyun.com' + article.imageUrl);
-                            div1.appendChild(img);
-                            var div2 = document.createElement('div');
-                            div2.className = "readdetails col-xs-6";
-                            var h5 = document.createElement('h5');
-                            h5.innerHTML = article.title;
-                            var h6 = document.createElement('h6');
-                            h6.innerHTML = article.articleAbstract;
-                            var p = document.createElement('p');
-                            p.innerHTML = "剩余阅读数："
-                            var span = document.createElement('span');
-                            span.innerHTML = article.readIncreaseNumber;//阅读数名称修改
-                            p.appendChild(span);
-                            div2.appendChild(h5);
-                            div2.appendChild(h6);
-                            div2.appendChild(p);
-                            var div3 = document.createElement('div');
-                            div3.className = "checkanniu col-xs-3";
-                            var a = document.createElement('a');
-                            a.innerHTML = "阅读";
-                            div3.appendChild(a);
-                            li.appendChild(div1);
-                            li.appendChild(div2);
-                            li.appendChild(div3);
-                            document.body.appendChild(li);
-                            document.getElementsByTagName('ul')[0].appendChild(li);//动态添加文章（li标签）
-                        })
-                    }
-                    else
-                    {
-                        alert("获取数据失败")
-                    }
-                },
-                error:function (data) {
-                    console.log(data)
-                    alert("页面加载错误，请重试");
-                }
-
-            })
-//            setInterval(function () {
-//                location.reload()
-//            },30000)
-        })
-        function getMemberRequestHeaderMsg(XMLHttpRequest){
-            var memberId= $.cookie("memberId");
-
-            if (memberId==null||memberId == undefined){
-                Showbo.Msg.confirm("登录已过期请重新登录", function () {
-                    location.href="login.html";
-                })
-            }
-            var password= $.cookie("password");
-            XMLHttpRequest.setRequestHeader("memberId",memberId);
-            XMLHttpRequest.setRequestHeader("from",2);
-        }
-        var articleSubmit = function(obj){
-            var articleId=obj.getAttribute("id");
-            //var index=obj.index();
-//            var obj= a.parentNode;
-            var articleUrl=hashMap.Get(articleId);
-            console.log(articleId);
-            $.ajax({
-                type: 'post',
-//                dataType: 'json',
-                url: '/pc/admin/article/pcreadArticleRequest',
-                data: {articleId:articleId},
-                beforeSend: function (XMLHttpRequest) {
-                    getMemberRequestHeaderMsg(XMLHttpRequest)
-                },
-                success: function (params) {
-                    var json = eval(params); //数组
-                    console.log("json数据为："+params)
-                    if (json!=null&&json.errorCode==0) {
-                        obj.style.display='none';
-//                        window.open(articleUrl)
-                        location.href=articleUrl;
-//
-                    }else if (json!=null&&json.errorCode==4){
-                        Showbo.Msg.alert(json.message, function () {
-                            location.reload()
-                        });
-                    }else{ alert("获取数据失败")}
-                },
-                error:function (data){
-                    console.log(data)
-                    alert("页面加载错误，请重试");
-                }
-            })
-        }
-        function ArticleSerach(searchWay,pageIndex,pageSize){
-            this.searchWay=searchWay
-            this.pageIndex=pageIndex
-            this.pageSize=pageSize
-        }
-    </script>
+    <link href="../../code/css/common.css" rel="stylesheet" type="text/css"/>
+    <script src="../../code/js/wap/common.js"></script>
+    <script src="../../code/js/wap/readlist.js"></script>
 </head>
 <body>
 <ul class="wapreadlist">
@@ -158,28 +16,6 @@
     <!--<div class="readdetails col-xs-6">-->
     <!--<h5>ios10</h5>-->
     <!--<h6>ios10有哪些新特征</h6>-->
-    <!--<p>剩余阅读数：<span>0</span></p>-->
-    <!--</div>-->
-    <!--<div class="col-xs-3 checkanniu">-->
-    <!--<a>阅读</a>-->
-    <!--</div>-->
-    <!--</li>-->
-    <!--<li>-->
-    <!--<div class="cos-xs-3 listimg"><img src="../../code/img/shuiguo.png"/></div>-->
-    <!--<div class="readdetails col-xs-6">-->
-    <!--<h5>ios10</h5>-->
-    <!--<h6>有哪些新特征有哪些新特征</h6>-->
-    <!--<p>剩余阅读数：<span>0</span></p>-->
-    <!--</div>-->
-    <!--<div class="col-xs-3 checkanniu">-->
-    <!--<a>阅读</a>-->
-    <!--</div>-->
-    <!--</li>-->
-    <!--<li>-->
-    <!--<div class="cos-xs-3 listimg"><img src="../../code/img/shuiguo.png"/></div>-->
-    <!--<div class="readdetails col-xs-6">-->
-    <!--<h5>ios10</h5>-->
-    <!--<h6>有哪些新特征有哪些新特征</h6>-->
     <!--<p>剩余阅读数：<span>0</span></p>-->
     <!--</div>-->
     <!--<div class="col-xs-3 checkanniu">-->
