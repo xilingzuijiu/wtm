@@ -6,8 +6,19 @@
     <meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0" name="viewport" />
     <title>申请提现</title>
     <link href="../../code/css/base.css" rel="stylesheet" type="text/css"/>
+    <link href="../../code/css/showBo.css" rel="stylesheet" type="text/css"/>
     <link href="../../code/css/wapstyle.css" rel="stylesheet" type="text/css"/>
     <script src="../../code/js/jquery.min.js"></script>
+    <script src="../../code/js/jquery.cookie.js"></script>
+    <script src="../../code/js/wap/saveOrGetChange.js"></script>
+    <script src="../../code/js/showBo.js"></script>
+    <script>
+        $(function () {
+            $(".payconfirm").click(function () {
+                enchashment.getChange();
+            })
+        })
+    </script>
 </head>
 <body>
 <ul class="wxcash">
@@ -25,20 +36,20 @@
         <!--<p id="getmoneyway"><input type="text" value="" placeholder="请选择提现金额" autofocus/>元</p>-->
             <p><select>
                 <option>请输入提现金额</option>
-                <option>0.01</option>
-                <option>10</option>
-                <option>30</option>
-                <option>50</option>
-                <option>100</option>
-                <option>200</option>
-                <option>300</option>
-                <option>400</option>
-                <option>500</option>
-                <option>600</option>
-                <option>700</option>
-                <option>800</option>
-                <option>900</option>
-                <option>1000</option>
+                <option name="amount" value="0.01">0.01</option>
+                <option name="amount" value="10">10</option>
+                <option name="amount" value="20">20</option>
+                <option name="amount" value="50">50</option>
+                <option name="amount" value="100">100</option>
+                <option name="amount" value="200">200</option>
+                <option name="amount" value="300">300</option>
+                <option name="amount" value="400">400</option>
+                <option name="amount" value="500">500</option>
+                <option name="amount" value="600">600</option>
+                <option name="amount" value="700">700</option>
+                <option name="amount" value="800">800</option>
+                <option name="amount" value="900">900</option>
+                <option name="amount" value="1000">1000</option>
             </select>元</p>
         <img class="wxcashnext" src="../../code/img/next.png"/>
     </li>

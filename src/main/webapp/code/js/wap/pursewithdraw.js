@@ -11,7 +11,7 @@ var puser={
     var memberId= $.cookie("memberId");
     if (memberId==null||memberId == undefined){
         Showbo.Msg.confirm("登录已过期请重新登录", function () {
-            location.href=""
+            location.href="/frontPage/wap/login.html"
         })
     }
     var password= $.cookie("password");
@@ -38,11 +38,11 @@ var puser={
 },
     getFlowScoreDetail: function () {
         $.ajax({
-            url:"/pc/admin/member/getMemberWalletInfo",
-            type:"post",
+            url:"/pc/admin/payment/getMemberWalletInfo",
+            type:"get",
             beforeSend: function (XMLHttpRequest) {
                 puser.getMemberRequestHeaderMsg(XMLHttpRequest)
-            } ,
+            },
             success: function (params) {
                 var data=eval(params)
                 var errorCode=data.errorCode
@@ -55,7 +55,7 @@ var puser={
         })
     },
     showFlowScoreDetail: function (data) {
-        data.forEach(function (memberScoreFlowDto) {
+        data.list.forEach(function (memberScoreFlowDto) {
             var li = document.createElement("li");
             var div = document.createElement('div');
             div.className="cashname";
@@ -64,11 +64,11 @@ var puser={
             var span = document.createElement('span');
             span.innerHTML = "（"+memberScoreFlowDto.typeDesc+"）";
             var p = document.createElement('p');
-            p.innerHTML = puser.getLocalTime(memberScoreFlowDto.createTime);
+            p.innerHTML = puser.getLocalTime(memberScoreFlowDto.flowTime);
             var h6 = document.createElement('h6');
             h6.innerHTML = memberScoreFlowDto.flowCount/100+"元";
+            var h5 = document.createElement('h5');
             if (memberScoreFlowDto.isFinished==0){
-                var h5 = document.createElement('h5');
                 h5.className="margin0";
                 h5.innerHTML = "待审核";
             }

@@ -11,25 +11,18 @@
     <script src="../../code/js/jquery.cookie.js"></script>
     <script>
         $(function(){
-            if($.cookie("memberId")!=null){
+            if($.cookie("memberId")!=null&&$.cookie("memberId")!=undefined){
                 location.href="index.html";
             }else{
                 alert("登录过期，请重新登录")
             }
-            var loginheight=$(window).height();
-            var loginwidth=$(window).width();
-            var promptwidth=$("#prompt").width();
-            $("#prompt").css("top",loginheight/2.5);
-            $("#prompt").css("left",loginwidth/2-promptwidth/2);
             $(".wxjump").click(function(){
                 location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx2282c57276f83fad&redirect_uri=http%3a%2f%2fwww.weitaomi.cn%2fwxRegisterOAuth&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
             })
             $(".loginbutton").click(function(){
                 $("#form").attr("enctype","multipart/form-data");
                 var memberName=$("#memberName").val();
-                console.log(memberName);
                 var password=$("#password").val();
-                console.log(password);
                 $.ajax({
                     type: 'post',
                     url: '/pc/admin/member/login',
@@ -51,40 +44,33 @@
                                 }
                                 $.cookie("imageUrl", image, {expires: 30, path: "/frontPage/wap"})
                                 $.cookie("telephone", data.telephone, {expires: 30, path: "/frontPage/wap"})
-                                $.cookie("officialAccountList", data.officialAccountList, {
+                                $.cookie("officialAccountList", JSON.stringify(data.officialAccountList), {
                                     expires: 30,
                                     path: "/frontPage/wap"
                                 })
-                                $.cookie("thirdLogin", data.thirdLogin, {expires: 30, path: "/frontPage/wap"})
-                                $.cookie("payList", data.payList, {expires: 30, path: "/frontPage/wap"})
+                                $.cookie("thirdLogin", JSON.stringify(data.thirdLogin), {expires: 30, path: "/frontPage/wap"})
+                                $.cookie("payList", JSON.stringify(data.payList), {expires: 30, path: "/frontPage/wap"})
                                 location.href = "index.html";
                             }
                         } else if (errorCode == 4) {
                             alert(data.message)
                         }
                         if (memberName != $.cookie("memberName")) {
-                            if (memberName!=$.cookie("memberName")) {
-                                $("#prompt").css("display", "block");
-                                $("#prompt").text("用户名不存在");
-                                $('#prompt').delay(600).fadeOut(350);
+                            $("#prompt").css("display", "block");
+                            $("#prompt").text("用户名不存在");
+                            $('#prompt').delay(600).fadeOut(350);
+                        } else {
+                            if (password == $.cookie("password")) {
+                                location.href = "index.html";
                             } else {
-                                if (password == $.cookie("password")) {
-                                    location.href = "index.html";
-                                } else {
-                                    $("#prompt").css("display", "block");
-                                    $("#prompt").text("密码不正确，请重新输入");
-                                    $('#prompt').delay(600).fadeOut(350);
-                                }
+                                $("#prompt").css("display", "block");
+                                $("#prompt").text("密码不正确，请重新输入");
+                                $('#prompt').delay(600).fadeOut(350);
                             }
                         }
-                    });
-                if($.cookie("memberId")!=null){
-                    location.href="index.html";
-                }else{
-                    alert("登录过期，请重新登录")
-                }
+                    }
+                });
             })
-
         })
     </script>
 </head>
@@ -98,7 +84,6 @@
     </form>
 </div>
 <p class="wordpage"><span><a href="forgetcode.html"> 忘记密码</a></span><a href="Register.html"> 注册</a></p>
-<p class="wordpage"><span><a href="forgetcode.html"> 忘记密码</a></span><a href="register.html"> 注册</a></p>
 <img class="wxjump" src="../../code/img/regist/wxLoginLogo.png"/>
 <div id="prompt"></div>
 </body>

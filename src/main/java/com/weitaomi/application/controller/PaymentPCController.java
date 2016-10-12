@@ -1,16 +1,14 @@
 package com.weitaomi.application.controller;
 
 import com.weitaomi.application.controller.baseController.BaseController;
+import com.weitaomi.application.model.bean.PaymentApprove;
 import com.weitaomi.application.service.interf.IMemberScoreService;
 import com.weitaomi.application.service.interf.IPaymentService;
 import com.weitaomi.systemconfig.dataFormat.AjaxResult;
 import com.weitaomi.systemconfig.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -46,5 +44,11 @@ public class PaymentPCController extends BaseController{
             throw new BusinessException("用户ID为空");
         }
         return AjaxResult.getOK(memberScoreService.getMemberScoreById(memberId));
+    }
+    @ResponseBody
+    @RequestMapping(value = "/generatorPayParams", method = RequestMethod.POST)
+    public AjaxResult generatorPayParams(HttpServletRequest request,@RequestBody PaymentApprove approve){
+        Long memberId=this.getUserId(request);
+        return AjaxResult.getOK(paymentService.generatorPayParams(memberId,approve));
     }
 }

@@ -66,4 +66,11 @@ public interface IArticleService {
      * @return
      */
     public Boolean readArticleRequest(Long memberId,Long time,Long articleId);
+    /**
+     * wap站阅读文章
+     * @param memberId
+     * @param articleId
+     * @return
+     */
+    public Boolean pcreadArticleRequest(Long memberId,Long articleId);
 }

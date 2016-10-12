@@ -85,8 +85,8 @@ Showbo.Msg={
         }
         return btn;
     },
-    alert:function(msg){
-        this.show({buttons:{yes:'确认'},msg:msg,title:'消息'});
+    alert:function(msg,fn){
+        this.show({buttons:{yes:'确认'},msg:msg,title:'消息',fn:fn});
     },
     confirm:function(msg,fn){
         //fn为回调函数，参数和show方法的一致

@@ -25,7 +25,7 @@ public class ArticlePcController extends BaseController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/getAllArticle",method = RequestMethod.POST)
+    @RequestMapping(value = "/getAllArticle",method = RequestMethod.GET)
     public AjaxResult getAllArticle(HttpServletRequest request, @RequestBody(required = false) ArticleSearch articleSearch){
         Long memberId=this.getUserId(request);
         return AjaxResult.getOK(articleService.getAllArticle(memberId,articleSearch));
@@ -36,9 +36,9 @@ public class ArticlePcController extends BaseController {
      * @see
      */
     @ResponseBody
-    @RequestMapping(value = "/readArticleRequest", method = RequestMethod.GET)
+    @RequestMapping(value = "/readArticleRequest", method = RequestMethod.POST)
     public AjaxResult getArticleList(Long memberId, @RequestParam(required = false) Long time, Long articleId){
-        return AjaxResult.getOK(articleService.readArticleRequest(memberId, time,articleId));
+        return AjaxResult.getOK(articleService.pcreadArticleRequest(memberId,articleId));
     }
 
 }
