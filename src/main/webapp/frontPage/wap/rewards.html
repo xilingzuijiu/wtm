@@ -10,10 +10,20 @@
     <script src="../../code/js/jquery.min.js"></script>
     <script>
         $(function(){
-            $("#signday").click(function(){
-                location.href="daysign.html";
-            })
+            var signheight=$(window).height();
+            var signwidth=$(window).width();
+            $(".daysign").css("height",signheight);
+            $(".daysign").css("width",signwidth);
+            $(".signbutton").click(function(){
+                    $(this).attr("src","../../code/img/MainViewImgae/signtwo.png");
+//                    $(".daysignbox").delay(50000).css("display","none");
 
+            })
+            $("#signday").click(function(){
+                console.log("a")
+//                location.href="daysign.html";
+                $(".daysignbox").slideDown("fast");
+            })
         })
 
     </script>
@@ -44,6 +54,10 @@
             <p>30米</p>
         </li>
     </ul>
+</div>
+<div class="daysignbox">
+    <img class="daysign" src="../../code/img/MainViewImgae/abputsign.png"/>
+    <img class="signbutton" src=""/>
 </div>
 </body>
 </html>

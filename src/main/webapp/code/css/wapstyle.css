@@ -199,8 +199,9 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
 .okcancel{text-align:right;margin-bottom:0.8em;}
 .confirmbox a{font-size:2.9rem;color:#444;padding:0 0.5em;}
 /*每日签到样式---------------------------------------------------------------------------------*/
+.daysignbox{display:none;position:absolute;left:0;top:0;}
 .daysign{position:relative;vertical-align:middle;}
-.signbutton{width:42%;position:absolute;left:28%;top:54.5%;}
+.signbutton{width:42%;position:absolute;left:28%;top:54.5%;height:10%;}
 /*登录页面样式---------------------------------------------------------------------------------*/
 .accountimg{width:25%;border-radius:50%;display:block;margin:3em auto;}
 .login{margin-top:5em;}
