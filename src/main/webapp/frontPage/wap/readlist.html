@@ -9,19 +9,26 @@
     <link rel="stylesheet" href="../../code/css/bootstrap-theme.min.css">
     <link href="../../code/css/base.css" rel="stylesheet" type="text/css"/>
     <link href="../../code/css/wapstyle.css" rel="stylesheet" type="text/css"/>
+    <link href="../../code/css/showBo.css" rel="stylesheet" type="text/css"/>
     <script src="../../code/js/jquery.min.js"></script>
     <script src="../../code/js/bootstrap.min.js"></script>
     <script src="../../code/js/jquery.cookie.js"></script>
+    <script src="../../code/js/showBo.js"></script>
     <script>
-        //        var hashMap = {
-        //            Set : function(key,value){this[key] = value},
-        //            Get : function(key){return this[key]},
-        //            Contains : function(key){return this.Get(key) == null?false:true},
-        //            Remove : function(key){delete this[key]}
-        //        }
+                var hashMap = {
+                    Set : function(key,value){this[key] = value},
+                    Get : function(key){return this[key]},
+                    Contains : function(key){return this.Get(key) == null?false:true},
+                    Remove : function(key){delete this[key]}
+                }
         var count=0;
+        var total=0;
+        var pageSize=15;
         $(function(){
-            var request=JSON.stringify(new ArticleSerach(0,count+1,1))
+            var request=JSON.stringify(new ArticleSerach(0,count++,pageSize));
+//            if(count==Math.ceil(total/pageSize)){
+//                $("body").append("没有更多");
+//            }
             $.ajax({
                 type: 'post',
                 contentType: "application/json",
@@ -39,12 +46,13 @@
                     console.log("json数据为：" + params);
                     console.log($.cookie("memberId"));
                     if (json!=null&&json.errorCode==0){
+                        total=json.data.total
                         json.data.list.forEach(function (article) {
                             var li = document.createElement("li");
                             li.setAttribute("onClick", "articleSubmit(this)");
                             li.id = article.id;
                             var div1 = document.createElement('div');
-//                            hashMap.Set(li.id, article.url);
+                           hashMap.Set(li.id, article.url);
                             div1.className = "col-xs-3 listimg";
                             var img = document.createElement('img');
                             img.setAttribute("src", 'http://weitaomi.b0.upaiyun.com' + article.imageUrl);
@@ -106,15 +114,15 @@
             var articleId=obj.getAttribute("id");
             //var index=obj.index();
 //            var obj= a.parentNode;
-//            var articleUrl=hashMap.Get(articleId);
+            var articleUrl=hashMap.Get(articleId);
             console.log(articleId);
             $.ajax({
-                type: 'get',
-                dataType: 'json',
-                url: '/pc/admin/member/readArticleRequest',
-//                data: {memberId: memberId,articleId:articleId},
-                header:{
-                    "Access-Control-Allow-Origin":"true"
+                type: 'post',
+//                dataType: 'json',
+                url: '/pc/admin/article/pcreadArticleRequest',
+                data: {articleId:articleId},
+                beforeSend: function (XMLHttpRequest) {
+                    getMemberRequestHeaderMsg(XMLHttpRequest)
                 },
                 success: function (params) {
                     var json = eval(params); //数组
@@ -125,7 +133,9 @@
                         location.href=articleUrl;
 //
                     }else if (json!=null&&json.errorCode==4){
-                        alert(json.message);
+                        Showbo.Msg.alert(json.message, function () {
+                            location.reload()
+                        });
                     }else{ alert("获取数据失败")}
                 },
                 error:function (data){
