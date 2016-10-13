@@ -174,7 +174,7 @@ public class ArticleService implements IArticleService {
         articleReadRecord.setCreateTime(time);
         List<ArticleReadRecord> articleReadRecordList=articleReadRecordMapper.select(articleReadRecord);
         if (articleReadRecordList.isEmpty()||articleReadRecordList.size()>1){
-            throw new InfoException("文章记录为空或者发现多于一条");
+            throw new InfoException("文章不存在或者已阅读");
         }
         articleReadRecord=articleReadRecordList.get(0);
         articleReadRecord.setType(1);
@@ -227,11 +227,9 @@ public class ArticleService implements IArticleService {
         if (score<taskPool.getSingleScore()){
             taskPool.setTotalScore(0D);
             taskPool.setLimitDay(0L);
-            taskPool.setNeedNumber(0);
-            taskPool.setSingleScore(0D);
             taskPool.setIsPublishNow(0);
             memberScoreService.addMemberScore(account.getMemberId(), 6L,1,score.doubleValue(), UUIDGenerator.generate());
-            JpushUtils.buildRequest("您发布的任务积分已不足，任务终止",account.getMemberId());
+            JpushUtils.buildRequest("您发布的文章"+article.getTitle()+"阅读任务已经完成，任务终止",account.getMemberId());
         }
         taskPoolMapper.updateByPrimaryKeySelective(taskPool);
         memberTaskHistoryService.addMemberTaskToHistory(memberId,6L, BigDecimal.valueOf(taskPool.getSingleScore()).multiply(taskPool.getRate()).doubleValue(),1,"阅读文章"+article.getTitle(),null,null);

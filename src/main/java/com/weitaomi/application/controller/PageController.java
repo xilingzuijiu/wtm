@@ -93,20 +93,57 @@ public class PageController extends BaseController{
                 image.setMaxAge(30*24*60*60);
                 Cookie telephone=new Cookie("telephone", memberInfoDto.getTelephone().toString());
                 telephone.setMaxAge(30*24*60*60);
-                Cookie officialAccountList=new Cookie("officialAccountList", JSON.toJSONString(memberInfoDto.getOfficialAccountList()));
-                officialAccountList.setMaxAge(30*24*60*60);
-                Cookie thirdLogin=new Cookie("thirdLogin",JSON.toJSONString(memberInfoDto.getThirdLogin()));
+                if (!memberInfoDto.getOfficialAccountList().isEmpty()){
+                    Cookie officialAccountList=new Cookie("officialAccountList","1");
+                    officialAccountList.setMaxAge(30*24*60*60);
+                    response.addCookie(officialAccountList);
+                }
+                Cookie thirdLogin=new Cookie("thirdLogin",URLEncoder.encode(JSON.toJSONString(memberInfoDto.getThirdLogin()),"UTF-8"));
                 thirdLogin.setMaxAge(30*24*60*60);
-                Cookie payList=new Cookie("payList",JSON.toJSONString(memberInfoDto.getPayAccountsList()));
+                Cookie payList=new Cookie("payList",URLEncoder.encode(JSON.toJSONString(memberInfoDto.getPayAccountsList()),"UTF-8"));
                 payList.setMaxAge(30*24*60*60);
                 response.addCookie(idCookie);
                 response.addCookie(memberName);
                 response.addCookie(passWord);
                 response.addCookie(image);
                 response.addCookie(telephone);
-                response.addCookie(officialAccountList);
                 response.addCookie(thirdLogin);
                 response.addCookie(payList);
+                return modelAndView;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    /**
+     * 微信授权回调
+     * @return
+     */
+    @RequestMapping(value = "/blindWXOAuth", method = RequestMethod.GET)
+    public ModelAndView blindWXOAuth(HttpServletRequest request, HttpServletResponse response) {
+        NameValuePair[] nameValue = new NameValuePair[4];
+        nameValue[0]=new BasicNameValuePair("appid", WechatConfig.MCH_APPID);
+        nameValue[1]=new BasicNameValuePair("secret", WechatConfig.wxAppSecret);
+        nameValue[2]=new BasicNameValuePair("code", request.getParameter("code"));
+        nameValue[3]=new BasicNameValuePair("grant_type","authorization_code");
+        try {
+            String params= HttpRequestUtils.get("https://api.weixin.qq.com/sns/oauth2/access_token",nameValue);
+            Map<String,String> hashMap= (Map<String, String>) JSONObject.parse(params);
+            NameValuePair[] userInfoRequestParams = new NameValuePair[3];
+            userInfoRequestParams[0]=new BasicNameValuePair("access_token",hashMap.get("access_token"));
+            userInfoRequestParams[1]=new BasicNameValuePair("openid",hashMap.get("openid"));
+            userInfoRequestParams[2]=new BasicNameValuePair("lang","zh_CN");
+            String userInfo=HttpRequestUtils.get("https://api.weixin.qq.com/sns/userinfo",userInfoRequestParams);
+            Map<String,String> userInfoParams= (Map<String, String>) JSONObject.parse(userInfo);
+            Long memberId=thirdLoginMapper.getMemberIdByUnionId(userInfoParams.get("unionid"));
+            if (memberId==null){
+                MemberInfoDto memberInfoDto = memberService.thirdPlatLogin(userInfoParams.get("unionid"),0);
+                Cookie thirdLogin=new Cookie("thirdLogin",URLEncoder.encode(JSON.toJSONString(memberInfoDto.getThirdLogin()),"UTF-8"));
+                thirdLogin.setMaxAge(30*24*60*60);
+                response.addCookie(thirdLogin);
+                ModelAndView modelAndView=new ModelAndView("wap/mycenter.html");
+//                request.getRequestDispatcher("/frontPage/wap/register.jsp").forward(request,response);
                 return modelAndView;
             }
         } catch (IOException e) {

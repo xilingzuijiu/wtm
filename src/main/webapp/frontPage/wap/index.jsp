@@ -26,6 +26,7 @@
                 location.href="mycenter.html";
             })
             var index=0;//index只是定义的一个变量，可以是任意名称。
+            updateMyscore();
             var liwidth=$(document.body).width();
             var leftwidth=liwidth*2.5%
                     console.log(leftwidth);
@@ -45,7 +46,6 @@
             }
             setInterval(show,2000);
             getLocation();
-            updateMyscore();
             $(".money").click(function (){
                 updateMyscore()
             })

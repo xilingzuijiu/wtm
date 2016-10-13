@@ -192,7 +192,7 @@ public class MemberTaskHistoryService  implements IMemberTaskHistoryService {
         }
         Long memberId=wtmOfficialMemberMapper.getMemberIdByOpenId(openId);
         if (memberId==null){
-
+            return "没有微淘米账号,请下载微淘米APP注册";
         }
         MemberScore memberScore = this.addDailyTask(memberId,10L);
         if (memberScore!=null){

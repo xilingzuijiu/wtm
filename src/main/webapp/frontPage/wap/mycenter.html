@@ -6,18 +6,21 @@
     <meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0" name="viewport" />
     <title>个人中心</title>
     <link href="../../code/css/base.css" rel="stylesheet" type="text/css"/>
+    <link href="../../code/css/showBo.css" rel="stylesheet" type="text/css"/>
     <link href="../../code/css/wapstyle.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="../../code/css/lCalendar.css">
     <script src="../../code/js/jquery.min.js"></script>
+    <script src="../../code/js/jquery.cookie.js"></script>
     <script src="../../code/js/lCalendar.js"></script>
+    <script src="../../code/js/showBo.js"></script>
     <script>
         $(function(){
+            initilizePage()
             var calendar = new lCalendar();
             calendar.init({
                 'trigger': '#demo1',
                 'type': 'date'
             });//日期插件
-
             var inviteheight=$(window).height();
             var invitewidth=$(window).width();
             var wayheight=$(".myinviteway").height();
@@ -72,7 +75,69 @@
                     location.href="#";
                 })
             }
+            $("#demo1").on("blur", function () {
+                modifyBirth();
+            })
+            $("#wechat").click(function(){
+                if ($("#wechat>p").text()=="未绑定微信"){
+                    location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx2282c57276f83fad&redirect_uri=http%3a%2f%2fwww.weitaomi.cn%2fblindWXOAuth&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+                }
+            })
         })
+        function modifyBirth(){
+            var date =$("#demo1").val() ;
+            date = date.replace(/-/g,'/');
+            var timestamp = new Date(date).getTime()/1000;
+            $.ajax({
+                url:"/pc/admin/member/modifyBirth",
+                type:"post",
+                data:{birth:timestamp},
+                beforeSend: function (XMLHttpRequest) {
+                    getMemberRequestHeaderMsg(XMLHttpRequest)
+                },
+                success: function (params) {
+                    var data=eval(params)
+                    var errorCode=data.errorCode
+                    if (errorCode==0){
+                    } else if (errorCode==4){
+                        alert(data.message)
+                    }
+                }
+            })
+        }
+        var getMemberRequestHeaderMsg=function(XMLHttpRequest){
+            var memberId= $.cookie("memberId");
+            if (memberId==null||memberId == undefined){
+                Showbo.Msg.confirm("登录已过期请重新登录", function () {
+                    location.href="login.html"
+                })
+            }
+            var password= $.cookie("password");
+            XMLHttpRequest.setRequestHeader("memberId",memberId);
+            XMLHttpRequest.setRequestHeader("from",2);
+        }
+        function initilizePage(){
+            if($.cookie("memberId")==null||$.cookie("memberId")==undefined){
+                Showbo.Msg.alert("登录超时，请重新登录", function () {
+                    location.href="login.html"
+                })
+            }
+            $("#headimg").text(decodeURI($.cookie("memberName")))
+            $(".accounttel>h6>span").text($.cookie("telephone"))
+            $(".photoimg").attr("src",$.cookie("imageUrl"));
+            $("#demo1").val(getLocalTime($.cookie("birth")));
+            var sex=$.cookie("sex");
+            $(".sexmi").find("option[value="+sex+"]").attr("selected",true);
+            var thirdLogin=$.cookie("thirdLogin")
+            if (thirdLogin==null||thirdLogin==undefined||thirdLogin.length<=0){
+                $("#wechat>p").text("未绑定微信")
+            } else{
+                $("#wechat>p").text("已绑定微信")
+            }
+        }
+        var getLocalTime=function(nS){
+            return new Date(parseInt(nS) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
+        }
     </script>
 </head>
 <body class="myinformation">
@@ -82,7 +147,7 @@
             <img class="photoimg" src="../../code/img/gzhimg.jpg"/>
             <div class="accounttel">
                 <h5 id="headimg">黎沙</h5>
-                <h6>手机号：15689931603</h6>
+                <h6>手机号：<span></span></h6>
             </div>
         </div>
         <img class="mywtm" src="../../code/img/mywtm2.png"/>
@@ -98,14 +163,14 @@
             <h6>性别</h6>
             <p class="sexmi">
                 <select>
-                    <option>保密</option>
-                    <option>男</option>
-                    <option>女</option>
+                    <option value="2" >保密</option>
+                    <option value="0">男</option>
+                    <option value="1">女</option>
                 </select></p>
         </li>
     </ul>
     <ul class="information">
-        <li>
+        <li id="wechat">
             <h6>绑定微信号</h6>
             <p>未绑定微信号</p>
         </li>

@@ -21,6 +21,7 @@
             })
             var index=0;//index只是定义的一个变量，可以是任意名称。
             updateMyscore();
+            $(".ownername>span").text(decodeURI($.cookie("memberName")))
             var imageUrl=$.cookie("imageUrl");
             $(".owner img").attr("src",imageUrl);
             //banner图
@@ -45,7 +46,6 @@
             //钱包刷新
             setInterval(show,2000);
             getLocation();
-            updateMyscore();
             $(".money").click(function (){
                 updateMyscore()
             })

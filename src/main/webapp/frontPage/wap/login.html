@@ -11,11 +11,6 @@
     <script src="../../code/js/jquery.cookie.js"></script>
     <script>
         $(function(){
-            if($.cookie("memberId")!=null&&$.cookie("memberId")!=undefined){
-                location.href="index.html";
-            }else{
-                alert("登录过期，请重新登录")
-            }
             $(".wxjump").click(function(){
                 location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx2282c57276f83fad&redirect_uri=http%3a%2f%2fwww.weitaomi.cn%2fwxRegisterOAuth&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
             })
@@ -36,8 +31,10 @@
                             var data = param.data
                             if (data.id != null) {
                                 $.cookie("memberId", data.id, {expires: 30, path: "/frontPage/wap"})
-                                $.cookie("memberName", data.memberName, {expires: 30, path: "/frontPage/wap"})
+                                $.cookie("memberName", encodeURI(data.memberName), {expires: 30, path: "/frontPage/wap"})
                                 $.cookie("password", data.password, {expires: 30, path: "/frontPage/wap"})
+                                $.cookie("birth", data.birth, {expires: 30, path: "/frontPage/wap"})
+                                $.cookie("sex", data.sex, {expires: 30, path: "/frontPage/wap"})
                                 var image = data.imageUrl;
                                 if (image.indexOf("http") < 0) {
                                     image = "http://weitaomi.b0.upaiyun.com" + image
@@ -55,7 +52,7 @@
                         } else if (errorCode == 4) {
                             alert(data.message)
                         }
-                        if (memberName != $.cookie("memberName")) {
+                        if (memberName != decodeURI($.cookie("memberName"))) {
                             $("#prompt").css("display", "block");
                             $("#prompt").text("用户名不存在");
                             $('#prompt').delay(600).fadeOut(350);

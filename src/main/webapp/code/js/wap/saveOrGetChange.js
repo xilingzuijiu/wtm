@@ -41,8 +41,8 @@ var enchashment={
     },
     getRequestData:function() {
         var amount=$("select").find("option:selected").val()
-        var payAccounts= $.cookie("payList");
-        var thirdLogin= $.cookie("thirdLogin");
+        var payAccounts= decodeURI($.cookie("payList"));
+        var thirdLogin= decodeURI($.cookie("thirdLogin"));
         if (thirdLogin==null||thirdLogin==undefined){
             Showbo.Msg.alert("未绑定微信或者登录已过期");
             return;

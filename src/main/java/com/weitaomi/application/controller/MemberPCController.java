@@ -274,4 +274,17 @@ public class MemberPCController extends BaseController {
     public AjaxResult login(@RequestParam("mobileOrName")String mobileOrName,@RequestParam("password") String password){
         return AjaxResult.getOK(memberService.login(mobileOrName, password));
     }
+    /**
+     * 修改密码
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/modifyBirth", method = RequestMethod.POST)
+    public AjaxResult modifyBirth(HttpServletRequest request,Long birth){
+        Long memberId=this.getUserId(request);
+        if (memberId==null){
+            throw new BusinessException("用户ID为空");
+        }
+        return AjaxResult.getOK(memberService.modifyBirth(memberId,birth));
+    }
 }

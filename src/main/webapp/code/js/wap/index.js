@@ -84,9 +84,7 @@ function updateMyscore(){
             var json=eval(data)
             if(json.errorCode==0){
                 var obj=json.data
-                $(".money").click(function () {
-                    $(".money>p>span").text(obj.memberScore)
-                })
+                $(".money>p>span").text(obj.memberScore)
             }
         }
     })
@@ -95,7 +93,7 @@ function getMemberRequestHeaderMsg(XMLHttpRequest){
     var memberId= $.cookie("memberId");
     if (memberId==null||memberId == undefined){
         Showbo.Msg.confirm("登录已过期请重新登录", function () {
-            location.href=""
+            location.href="login.html"
         })
     }
     var password= $.cookie("password");
