@@ -164,18 +164,26 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
 .dayrecord p{font-size:2.5rem;color:#666;text-align:right;display:table-cell;}
 .dayrecord p span{font-size:3.5rem;color:#af8976;}
 .dayinvite input{width:85%;margin-top:1em;margin-bottom:3em;}
-.inviteintroduce div{border-top:#fa4a18 0.2em solid;overflow:hidden;}
+.inviteintroduce div{border-top:#fa4a18 1px solid;overflow:hidden;}
+.inviteintroduce .totalbox{background:#fff8d6;border:none;}
+.inviteintroduce .thissharebox{border-top:#f2f2f2 1px solid;}
 .inviteintroduce div h5{font-size:3em;color:#af8976;padding:1em 0 1em 1.2em;margin-left:1em;font-weight:normal;background-size:13% !important;}
 .inviteintroduce a{float:right;font-size:2em;color:#af8976;padding:1.65em 1em;}
 .inviteintroduce div .rewardmibi{text-align:center;padding-left:0;margin:0;}
 .inviteintroduce div .rewardmibi span{color:#fa4a18;}
-.inviterank{overflow:hidden;display:table;margin-top:2em;}
-.inviterank li{width:30%;text-align:center;vertical-align: bottom;display:table-cell;padding-bottom:10em;}
-.inviterank #Notwo{width:40%;}
+.inviterank{overflow:hidden;display:table;margin-top:2em;width:100%;}
+.inviterank li{width:30%;text-align:center;vertical-align: bottom;display:table-cell;padding-bottom:5em;display:none;}
+.inviterank li:nth-child(2){width:40%;}
 .inviterank li img{border-radius:50%;-webkit-border-radius:50%;-moz-border-radius:50%;-ms-border-radius:50%;
     -o-border-radius:50%;width:60%;padding:1em;background:url("../img/invite/rankbg4.png") no-repeat center center;}
 .inviterank li p{font-size:3rem;padding:1em 0;color:#af8976;}
-.inviterank li h6{font-size:3rem;font-weight:normal;}
+.inviterank li h6{font-size:2.5rem;font-weight:normal;width:6em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin:auto;}
+.inviterankxs li{border-top:#eee 1px solid;padding:0.5em 2em;box-sizing:border-box;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;
+    -ms-box-sizing:border-box;-o-box-sizing:border-box;display:table;width:100%;}
+.inviterankxs li:last-child{border-bottom:#eee 1px solid;}
+.inviterankxs li img{height:5em;border-radius:50%;display:table-cell;}
+.inviterankxs li p,.inviterankxs li h5,.inviterankxs li h6{display:table-cell;font-size:2.5rem;font-weight:normal;width:10%;vertical-align:middle;}
+.inviterankxs li h5{width:64%;}
 /*邀请记录样式---------------------------------------------------------------------------------*/
 .inviterecord{}
 .inviterecord li{overflow:hidden;padding:0 1em;height:7em;}
@@ -364,10 +372,13 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
     .inviteintroduce div h5{font-size:4.5em;margin-left:1em;}
     .inviteintroduce a{font-size:3em;padding:1.65em 1.5em;}
     .inviterank{margin-top:3em;}
-    .inviterank li{padding-bottom:15em;}
+    .inviterank li{padding-bottom:7em;}
     .inviterank li img{padding:1.5em;}
     .inviterank li p{font-size:4.7rem;padding:1.2em 0;}
-    .inviterank li h6{font-size:4.7rem;}
+    .inviterank li h6{font-size:4.2rem;}
+    .inviterankxs li{padding:0.7em 2.5em;}
+    .inviterankxs li img{height:8em;}
+    .inviterankxs li p,.inviterankxs li h5,.inviterankxs li h6{font-size:4.2rem;}
     /*邀请记录样式---------------------------------------------------------------------------------*/
     .inviterecord li{padding:0 1em;height:10.5em;}
     .inviterecord li img{margin-top:0.7em;margin-right:2em;}
@@ -518,10 +529,14 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
     .inviteintroduce div h5{font-size:2.5em;padding:1.2em 0 1.2em 1.3em;margin-left:1em;}
     .inviteintroduce a{font-size:1.5em;padding:1.8em 1em;}
     .inviterank{margin-top:2em;}
-    .inviterank li{padding-bottom:8em;}
+    .inviterank li{padding-bottom:5em;}
     .inviterank li img{padding:0.9em;}
     .inviterank li p{font-size:2.8rem;padding:0.8em 0;}
-    .inviterank li h6{font-size:2.8rem;}
+    .inviterank li h6{font-size:2.3rem;}
+    .inviterankxs{margin-bottom:5em;}
+    .inviterankxs li{padding:0.4em 1.8em;}
+    .inviterankxs li img{height:4em;}
+    .inviterankxs li p,.inviterankxs li h5,.inviterankxs li h6{font-size:2.3rem;}
     /*邀请记录样式---------------------------------------------------------------------------------*/
     .inviterecord li{padding:0 1em;height:6em;}
     .inviterecord li img{margin-top:0.38em;margin-right:2em;}
@@ -671,10 +686,14 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
     .inviteintroduce div h5{font-size:2em;padding:1em 0 1em 1.3em;margin-left:1em;}
     .inviteintroduce a{font-size:1.2em;padding:1.9em 1em;}
     .inviterank{margin-top:1.2em;}
-    .inviterank li{padding-bottom:7em;}
+    .inviterank li{padding-bottom:3.5em;}
     .inviterank li img{padding:0.7em;}
     .inviterank li p{font-size:2.4rem;padding:0.7em 0;}
-    .inviterank li h6{font-size:2.4rem;}
+    .inviterank li h6{font-size:1.9rem;}
+    .inviterankxs{margin-bottom:2em;}
+    .inviterankxs li{padding:0.2em 1.5em;}
+    .inviterankxs li img{height:3.2em;}
+    .inviterankxs li p,.inviterankxs li h5,.inviterankxs li h6{font-size:1.9rem;}
     /*邀请记录样式---------------------------------------------------------------------------------*/
     .inviterecord li{padding:0 1em;height:4.55em;}
     .inviterecord li img{margin-top:0.38em;margin-right:1.3em;}
@@ -828,10 +847,15 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
     .inviteintroduce div h5{font-size:1.6em;padding:1em 0 1em 1.3em;margin-left:1em;}
     .inviteintroduce a{font-size:1em;padding:1.6em 1em;}
     .inviterank{margin-top:1.2em;}
-    .inviterank li{padding-bottom:6em;}
+    .inviterank li{padding-bottom:3em;}
     .inviterank li img{padding:0.6em;}
     .inviterank li p{font-size:2.2rem;padding:0.6em 0;}
-    .inviterank li h6{font-size:2.2rem;}
+    .inviterank li h6{font-size:1.8rem;}
+    .inviterankxs{margin-bottom:2em;}
+    .inviterankxs li{padding:0.2em 1.3em;}
+    .inviterankxs li img{height:3em;}
+    .inviterankxs li p,.inviterankxs li h5,.inviterankxs li h6{font-size:1.8rem;}
+    .inviterankxs li h5{width:62%;}
     /*邀请记录样式---------------------------------------------------------------------------------*/
     .inviterecord li{padding:0 1em;height:4em;}
     .inviterecord li img{margin-top:0.38em;margin-right:1.3em;}
@@ -983,10 +1007,15 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
     .inviteintroduce div h5{font-size:1.6em;padding:1em 0 1em 1.3em;margin-left:1em;}
     .inviteintroduce a{font-size:1em;padding:1.8em 1em;}
     .inviterank{margin-top:1.2em;}
-    .inviterank li{padding-bottom:6em;}
+    .inviterank li{padding-bottom:2.5em;}
     .inviterank li img{padding:0.5em;}
     .inviterank li p{font-size:1.9rem;padding:0.5em 0;}
-    .inviterank li h6{font-size:1.9rem;}
+    .inviterank li h6{font-size:1.6rem;}
+    .inviterankxs{margin-bottom:2em;}
+    .inviterankxs li{padding:0.3em 1.3em;}
+    .inviterankxs li img{height:2.8em;}
+    .inviterankxs li p,.inviterankxs li h5,.inviterankxs li h6{font-size:1.6rem;}
+    .inviterankxs li h5{width:61%;}
     /*邀请记录样式---------------------------------------------------------------------------------*/
     .inviterecord li{padding:0 1em;height:3.8em;}
     .inviterecord li img{width:13%;margin-top:0.38em;margin-right:1.3em;}
@@ -1139,10 +1168,15 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
     .inviteintroduce div h5{font-size:1.5em;padding:1em 0 1em 1.3em;margin-left:0.8em;}
     .inviteintroduce a{font-size:1em;padding:1.4em 1em;}
     .inviterank{margin-top:1.2em;}
-    .inviterank li{padding-bottom:5em;}
+    .inviterank li{padding-bottom:2.5em;}
     .inviterank li img{padding:0.4em;}
     .inviterank li p{font-size:1.8rem;padding:0.3em 0;}
-    .inviterank li h6{font-size:1.8rem;}
+    .inviterank li h6{font-size:1.5rem;}
+    .inviterankxs{margin-bottom:2em;}
+    .inviterankxs li{padding:0.2em 1.2em;}
+    .inviterankxs li img{height:2.5em;}
+    .inviterankxs li p,.inviterankxs li h5,.inviterankxs li h6{font-size:1.5rem;}
+    .inviterankxs li h5{width:61%;}
     /*邀请记录样式---------------------------------------------------------------------------------*/
     .inviterecord li{padding:0 1em;height:3.8em;}
     .inviterecord li img{width:15%;margin-top:0.38em;margin-right:1em;}
