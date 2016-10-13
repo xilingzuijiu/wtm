@@ -141,7 +141,13 @@ public class PageController extends BaseController{
                 MemberInfoDto memberInfoDto = memberService.thirdPlatLogin(userInfoParams.get("unionid"),0);
                 Cookie thirdLogin=new Cookie("thirdLogin",URLEncoder.encode(JSON.toJSONString(memberInfoDto.getThirdLogin()),"UTF-8"));
                 thirdLogin.setMaxAge(30*24*60*60);
+                Cookie access_token=new Cookie("access_token",hashMap.get("access_token"));
+                access_token.setMaxAge(2*60*60);
+                Cookie refresh_token=new Cookie("refresh_token",hashMap.get("refresh_token"));
+                refresh_token.setMaxAge(30*24*60*60);
                 response.addCookie(thirdLogin);
+                response.addCookie(access_token);
+                response.addCookie(refresh_token);
                 ModelAndView modelAndView=new ModelAndView("wap/mycenter.html");
 //                request.getRequestDispatcher("/frontPage/wap/register.jsp").forward(request,response);
                 return modelAndView;

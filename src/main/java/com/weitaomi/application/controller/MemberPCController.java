@@ -13,11 +13,13 @@ import com.weitaomi.systemconfig.exception.BusinessException;
 import com.weitaomi.systemconfig.exception.DBException;
 import com.weitaomi.systemconfig.exception.InfoException;
 import com.weitaomi.systemconfig.util.DateUtils;
+import com.weitaomi.systemconfig.util.HmacSHA256Utils;
 import com.weitaomi.systemconfig.util.HttpRequestUtils;
 import com.weitaomi.systemconfig.util.StringUtil;
 import com.weitaomi.systemconfig.wechat.WechatConfig;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.bouncycastle.jcajce.provider.asymmetric.rsa.DigestSignatureSpi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -286,5 +288,19 @@ public class MemberPCController extends BaseController {
             throw new BusinessException("用户ID为空");
         }
         return AjaxResult.getOK(memberService.modifyBirth(memberId,birth));
+    }
+    /**
+     * 修改密码
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/signature", method = RequestMethod.POST)
+    public AjaxResult signature(String jsapi_ticket){
+        String nonceStr="'weitaomiApp'";
+        String url="http://www.weitaomi.cn/frontPage/wap/myinvite.html";
+        Long timeStamp=DateUtils.getUnixTimestamp();
+        String signParams="jsapi_ticket="+jsapi_ticket+"&noncestr="+nonceStr+"&timestamp="+timeStamp+"&url="+url;
+        String sign= HmacSHA256Utils.SHA(signParams);
+        return AjaxResult.getOK(sign);
     }
 }
