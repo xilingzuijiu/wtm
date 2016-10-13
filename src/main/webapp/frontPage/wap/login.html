@@ -57,12 +57,12 @@
                             $("#prompt").text("用户名不存在");
                             $('#prompt').delay(600).fadeOut(350);
                         } else {
-                            if (password == $.cookie("password")) {
-                                location.href = "index.html";
-                            } else {
+                            if (password!= $.cookie("password")) {
                                 $("#prompt").css("display", "block");
                                 $("#prompt").text("密码不正确，请重新输入");
                                 $('#prompt').delay(600).fadeOut(350);
+                            } else {
+                                location.href = "index.html";
                             }
                         }
                     }

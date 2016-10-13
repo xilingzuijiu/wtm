@@ -57,13 +57,17 @@ header{background:url("../img/MainViewImgae/top.png") no-repeat center top;heigh
 .gzhlist li input{display:block;font-size:2.2rem;color:#fff;margin:auto;width:45%;background:#68c1f4;border-radius:0.5em;-webkit-border-radius:0.5em;
     -moz-border-radius:0.5em;-ms-border-radius:0.5em;-o-border-radius:0.5em;padding:0.35em 0;font-weight:normal;outline:none;}
 /*任务奖励样式---------------------------------------------------------------------------------*/
-.daytask h5,.undotask h5{font-size:4rem;line-height:3em;padding-left:4%;background:#f9f9f9;color:#fa4a18;}
+.daytask h5,.undotask h5{font-size:4rem;line-height:3em;padding-left:4%;background:#f9f9f9;color:#fa4a18;font-weight:normal;}
 .daytask ul li,.undotask ul li,.downrecord li,.undorecord li{height:7em;overflow:hidden;padding:0 30px;border-top:#efefef 1px solid;}
 /*.daytask ul li a{-webkit-tap-highlight-color: rgba(0,0,0,0);-webkit-tap-highlight-color:transparent;outline:none;}*/
 .daytask ul li h6,.undotask ul li h6,.downrecord li h6,.undorecord li h6{padding-left:1.5em;background:url("../img/Person/mo.png") no-repeat left center;background-size:8.5%;
     font-weight:normal;font-size:3.2rem;color:#444;float:left;line-height:3.2em;width:12em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.daytask ul li p,.undotask ul li p,.downrecord li p,.undorecord li p{font-size:3.2rem;line-height:3.2em;color:#666;padding-right:2.5rem;
+.daytask ul li p,.undotask ul li p,.downrecord li p,.undorecord li p{font-size:3.2rem;line-height:3.2em;color:#999;padding-right:2.5rem;
     background:url("../img/next.png") no-repeat right center;background-size:1.2rem;float:right;}
+.undotask{display:none;}
+.undotask h5{color:#8dc6cd;}
+.daytask ul li h6,.daytask ul li p{color:#444;}
+.undotask ul li h6,.undotask ul li p{color:#999;}
 /*任务记录样式---------------------------------------------------------------------------------*/
 .testtap{overflow:hidden;background:#fa4a18;color:#fff;padding:2em 0;}
 .downtap,.undotap{float:right;width:50%;text-align:center;font-size:3rem;box-sizing: border-box;}
@@ -201,7 +205,7 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
 /*每日签到样式---------------------------------------------------------------------------------*/
 .daysignbox{display:none;position:absolute;left:0;top:0;}
 .daysign{position:relative;vertical-align:middle;}
-.signbutton{width:42%;position:absolute;left:28%;top:54.5%;height:10%;}
+.signbutton{width:45%;position:absolute;left:27.5%;top:55.9%;height:10.5%;opacity:0;}
 /*登录页面样式---------------------------------------------------------------------------------*/
 .accountimg{width:25%;border-radius:50%;display:block;margin:3em auto;}
 .login{margin-top:5em;}
@@ -214,8 +218,8 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
 .wordpage{font-size:3rem;width:80%;overflow:hidden;margin:auto;text-align:right;color:#666;padding:2em 0 2.5em 0;background:url("../img/loginway.png") no-repeat center bottom;background-size:100%;}
 .wordpage span{float:left;}
 .wxjump{display:block;margin:auto;padding-top:2em;width:13%;}
-#prompt{display:none;position:absolute;border-radius:0.5em;-webkit-border-radius:0.5em;-moz-border-radius:0.5em;
-    -ms-border-radius:0.5em;-o-border-radius:0.5em;padding:0.5em 1em;background:#333;text-align:center;
+#prompt{display:none;position:absolute;left:35%;top:80%;border-radius:0.5em;-webkit-border-radius:0.5em;-moz-border-radius:0.5em;
+    -ms-border-radius:0.5em;-o-border-radius:0.5em;padding:0.5em 1em;background:#333;text-align:center;opacity:0.8;
     color:#fff;margin:auto;width:7em;line-height:1.5;}
 /*注册页面样式---------------------------------------------------------------------------------*/
 .registerpage{font-size:5rem;color:#353535;font-weight:500;text-align:center;margin-bottom:2em;margin-top:1.5em;}
