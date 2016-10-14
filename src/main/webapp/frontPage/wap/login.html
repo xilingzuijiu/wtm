@@ -41,11 +41,14 @@
                                 }
                                 $.cookie("imageUrl", image, {expires: 30, path: "/frontPage/wap"})
                                 $.cookie("telephone", data.telephone, {expires: 30, path: "/frontPage/wap"})
+                                if(data.officialAccountList!=null&&data.officialAccountList!=undefined)
                                 $.cookie("officialAccountList", JSON.stringify(data.officialAccountList), {
                                     expires: 30,
                                     path: "/frontPage/wap"
                                 })
+                                if(data.thirdLogin!=null&&data.thirdLogin!=undefined)
                                 $.cookie("thirdLogin", JSON.stringify(data.thirdLogin), {expires: 30, path: "/frontPage/wap"})
+                                if(data.payList!=null&&data.payList!=undefined)
                                 $.cookie("payList", JSON.stringify(data.payList), {expires: 30, path: "/frontPage/wap"})
                                 location.href = "index.html";
                             }

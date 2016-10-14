@@ -10,8 +10,8 @@
     <script src="../../code/js/wap/common.js"></script>
     <script>
         $(function(){
-            $(".dayrecord input").click(function(){
-                location.href="myinvite.html";
+            $(".payconfirm").click(function(){
+                location.href="../invite.html";
             })
             var inviteheight=$(window).height();
             var eventheight=$(".eventintroduce").height();
@@ -29,9 +29,7 @@
                 $("#cover").css("display","none");
                 $(".eventintroduce").css("display","none");
                 $(".nogo").css("overflow","auto");
-                $(".abox").click(function(){
-                    $('.payconfirm').removeAttr("disabled");
-                })
+                $('.payconfirm').removeAttr("disabled");
             },false)
             $.cookie("memberId");
             $.ajax({
@@ -50,7 +48,6 @@
                     {
                         alert("获取数据失败")
                     }
-
                 },
                 error:function (data) {
                     alert("页面加载错误，请重试");
@@ -120,13 +117,12 @@
                     alert("页面加载错误，请重试");
                 }
             })
-        })
-        $("#inviterecord").click(function(){
-            $.ajax({
-
+            $("#inviterecord").click(function(){
+                location.href="inviterecord.html";
             })
-            location.href="inviterecord.html";
         })
+
+
     </script>
 </head>
 <body>

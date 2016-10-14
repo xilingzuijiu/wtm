@@ -24,7 +24,7 @@ html{}
     -moz-border-radius:10px;-o-border-radius:10px;-ms-border-radius:10px;-webkit-border-radius:10px;width:90%;
     height:100px;line-height:100px;text-align:center;margin:auto;margin-top:-8%;}
 .ivusage{ padding-top:0.8em;}
-.ivlogo{margin:auto;overflow:hidden;width:50%;padding-top:0.8em;}
+.ivlogo{margin:auto;overflow:hidden;width:40%;padding-top:0.8em;}
 .ivlogo img{display:block;float:left;width:48px;}
 .ivlogo h5{font-size:20px;color:#f94b16;line-height:23px;float:right;font-weight:700;margin:0;padding-top:2px;}
 #ivload{display:block;width:80%;text-decoration:none !important;color:#fff !important;background:#f94b16;
@@ -92,6 +92,7 @@ html{}
     .invite{padding-top:0.2em;}
     .ivwrap .ivtitle{width:60%;}
     .ivwrap .ivintroduce,.ivusage{font-size:12px;}
+    .ivlogo{width:43.5%;}
     .ivlogo h5{font-size:17px;}
     .invite #invitecode{height:80px;line-height:80px;}
 

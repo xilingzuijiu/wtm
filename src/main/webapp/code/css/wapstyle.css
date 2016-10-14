@@ -190,8 +190,9 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
 .inviterecord  li:nth-child(2n){background:#ddf3ff;}
 .inviterecord li img{float:left;width:12%;margin-top:0.5em;margin-right:2em;border-radius:50%;-webkit-border-radius:50%;
     -moz-border-radius:50%;-ms-border-radius:50%;-o-border-radius:50%;}
-.inviterecord li h5{float:left;font-size:3.2rem;line-height:3.2em;font-weight:normal;color:#444;}
+.inviterecord li h5{float:left;font-size:3.2rem;line-height:3.2em;font-weight:normal;color:#444;width:5em;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;}
 .inviterecord li p{float:right;font-size:2.3rem;line-height:4.5em;color:#666;}
+.nullp{display:none;color:#fa4a18;text-align:center;padding-top:70%;font-size:3.5rem;line-height:1.5;}
 /*我的邀请二维码样式---------------------------------------------------------------------------------*/
 .myinvite img{display:block;width:65%;margin:auto;padding:5em 0 5em 0;}
 .myinvite h5{font-size:4.2rem;color:#444;text-align:center;font-weight:normal;line-height:1.5;padding-bottom:1em;}
@@ -264,7 +265,7 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
 .selfinformation h6{font-weight:normal;font-size:2.1rem;color:#999;}
 .selfinformation .mywtm{width:5%;float:right;padding-top:2.5em;padding-right:2.2em;}
 .information li p input{text-align:right;color:#777;font-size:2.2rem;width:50%;line-height:2.6em;background:transparent;}
-.information li p select{border:none;outline:none;font-size:2.2rem;padding-left:30%;color:#777;width:3em;
+.information li p select{border:none;outline:none;font-size:2.2rem;padding-left:30%;color:#777;width:1.5em;
     appearance:none; -moz-appearance:none;-webkit-appearance:none;background:transparent;}
 .exit{background:none !important;}
 #darkcolor{display:none;position:absolute;left:0;top:0;z-index:18888;background-color:#000000;background: rgba(0, 0, 0, 0.7) !important;
@@ -384,6 +385,7 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
     .inviterecord li img{margin-top:0.7em;margin-right:2em;}
     .inviterecord li h5{font-size:5.2rem;line-height:3em;}
     .inviterecord li p{font-size:3.8rem;line-height:4.1em;}
+    .nullp{font-size:5.5rem;}
     /*我的邀请二维码样式---------------------------------------------------------------------------------*/
     .myinvite img{padding:6em 0 6em 0;}
     .myinvite h5{font-size:5.5rem;}
@@ -542,6 +544,7 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
     .inviterecord li img{margin-top:0.38em;margin-right:2em;}
     .inviterecord li h5{font-size:3rem;line-height:2.9em;}
     .inviterecord li p{font-size:2rem;line-height:4.4em;}
+    .nullp{font-size:3.3rem;}
     /*我的邀请码样式---------------------------------------------------------------------------------*/
     .myinvite img{padding:3em 0 3em 0;}
     .myinvite h5{font-size:3rem;line-height:1.3;padding-bottom:1em;}
@@ -594,13 +597,13 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
     .certiarea{margin:3em auto;}
 }
 @media screen and (min-width:415px) and (max-width:639px){
-    header{height:17em;}
+    header{height:15em;margin-bottom:1em;}
     .adress{padding-bottom:1.1em;}
     .ownerdetail .ownername{font-size:1.2em;width:12em;}
     .ownerdetail span{font-size:1.5em;line-height:1.7em;}
     .owner .money{margin-top:0.3em;}
     /*.flexslider, .slides li{height:15em;}*/
-    .homebanner{height:13em;}
+    .homebanner{height:12em;}
     .indexlist{padding-bottom:1em;}
     .indexlist li{margin-bottom:0;}
     .indexlist li .caption h3{font-size:1.4em;}
@@ -699,6 +702,7 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
     .inviterecord li img{margin-top:0.38em;margin-right:1.3em;}
     .inviterecord li h5{font-size:2.4rem;line-height:2.9em;}
     .inviterecord li p{font-size:1.6rem;line-height:4.2em;}
+    .nullp{font-size:2.6rem;}
     /*我的邀请码样式---------------------------------------------------------------------------------*/
     .myinvite img{padding:2.5em 0 2.5em 0;}
     .myinvite h5{font-size:2.4rem;line-height:1.3;padding-bottom:1em;}
@@ -743,6 +747,7 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
     .information li p{font-size:1.5rem;line-height:2.7em;width:50%;text-align:right;}
     .information li p img{width:29%;}
     .information li p input,.information li p select{font-size:1.5rem;}
+    .information li p select{width:5.5em;}
     /*认证公众号页面样式---------------------------------------------------------------------------------*/
     .certih5{font-size:2.2rem;margin-top:4em;}
     .certitext,.certiarea{font-size:1.7rem;padding:0.3em 0.7em;margin:0.7em auto;}
@@ -861,6 +866,7 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
     .inviterecord li img{margin-top:0.38em;margin-right:1.3em;}
     .inviterecord li h5{font-size:2.2rem;line-height:2.8em;}
     .inviterecord li p{font-size:1.3rem;line-height:4.6em;}
+    .nullp{font-size:2.3rem;}
     /*我的邀请码样式---------------------------------------------------------------------------------*/
     .myinvite img{padding:2.5em 0 3.5em 0;}
     .myinvite h5{font-size:2.3rem;line-height:1.4;}
@@ -904,6 +910,7 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
     .information li p{font-size:1.4rem;line-height:2.7em;width:50%;text-align:right;}
     .information li p img{width:33%;}
     .information li p input,.information li p select{font-size:1.4rem;}
+    .information li p select{width:5em;}
     /*认证公众号页面样式---------------------------------------------------------------------------------*/
     .certih5{font-size:2.1rem;margin-top:4em;}
     .certitext,.certiarea{font-size:1.6rem;padding:0.3em 0.7em;margin:0.5em auto;}
@@ -1021,6 +1028,7 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
     .inviterecord li img{width:13%;margin-top:0.38em;margin-right:1.3em;}
     .inviterecord li h5{font-size:2rem;line-height:2.9em;}
     .inviterecord li p{font-size:1.2rem;line-height:4.8em;}
+    .nullp{font-size:2.1rem;}
     /*我的邀请码样式---------------------------------------------------------------------------------*/
     .myinvite img{padding:2.5em 0 2.5em 0;}
     .myinvite h5{font-size:2.1rem;line-height:1.4;padding-bottom:1em;}
@@ -1064,6 +1072,7 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
     .information li p{font-size:1.3rem;line-height:2.6em;width:50%;text-align:right;}
     .information li p img{width:33%;}
     .information li p input,.information li p select{font-size:1.3rem;}
+    .information li p select{width:5em;}
     /*认证公众号页面样式---------------------------------------------------------------------------------*/
     .certih5{font-size:1.9rem;margin-top:4em;}
     .certitext,.certiarea{font-size:1.5rem;padding:0.3em 0.7em;margin:0.5em auto;}
@@ -1182,6 +1191,7 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
     .inviterecord li img{width:15%;margin-top:0.38em;margin-right:1em;}
     .inviterecord li h5{font-size:2rem;line-height:2.7em;}
     .inviterecord li p{font-size:1.2rem;line-height:4.3em;}
+    .nullp{font-size:1.8rem;}
     /*我的邀请码样式---------------------------------------------------------------------------------*/
     .myinvite img{padding:2.5em 0 2.5em 0;}
     .myinvite h5{font-size:2rem;line-height:1.4;padding-bottom:1.5em;}
@@ -1225,6 +1235,7 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
     .information li p{font-size:1rem;line-height:2.6em;width:50%;text-align:right;}
     .information li p input,.information li p select{font-size:1rem;}
     .information li p img{width:33%;}
+    .information li p select{width:4.5em;}
     /*认证公众号页面样式---------------------------------------------------------------------------------*/
     .certih5{font-size:1.8rem;margin-top:4em;}
     .certitext,.certiarea{font-size:1.4rem;padding:0.3em 0.7em;margin:0.5em auto;}
