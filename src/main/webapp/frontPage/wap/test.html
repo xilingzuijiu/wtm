@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0" name="viewport" />
+    <title>任务奖励</title>
+    <link href="../../code/css/base.css" rel="stylesheet" type="text/css"/>
+    <link href="../../code/css/wapstyle.css" rel="stylesheet" type="text/css"/>
+    <script src="../../code/js/wap/common.js"></script>
+    <script>
+        $(function(){
+            var signheight=$(window).height();
+            var signwidth=$(window).width();
+            $(".daysign").css("height",signheight);
+            $(".daysign").css("width",signwidth);
+            $.ajax({
+                type: 'post',
+                contentType: "application/json",
+                dataType: 'json',
+                url: '/pc/admin/memberTask/getMemberTaskInfo',
+                beforeSend: function (XMLHttpRequest) {
+                    getMemberRequestHeaderMsg(XMLHttpRequest)
+                },
+                success:function(params){
+                    var json=eval(params);
+                    if(json!=null&&josn.errorCode==0){
+                        var data=json.data;
+                        var li=document.createElement('li');
+                        var h6=document.createElement('h6');
+                        h6.innerHTML=data.taskName;
+                        var p=document.createElement('p');
+                        p.innerHTML=data.pointCount;
+                        document.body.appendChild(li);
+                        if(data.isFinished==0){
+                            document.getElementsByTagName('ul')[0].appendChild(li);
+                        }else{
+                            document.getElementsByTagName('ul')[1].appendChild(li);
+                        }
+                    } else
+                    {
+                        alert("获取数据失败")
+                    }
+                },error:function(data){
+                    alert("页面加载错误，请重试");
+                }
+            })
+            $("#daytaskul li").click(function(){
+
+
+            })
+
+
+            $(".signbutton").click(function(){
+                $.ajax({
+                    type: 'post',
+                    contentType: "application/json",
+                    dataType: 'json',
+                    url: '#',
+                    beforeSend: function (XMLHttpRequest) {
+                        getMemberRequestHeaderMsg(XMLHttpRequest)
+                    },
+                    success:function(params){
+                        var json=eval(params);
+                        if(json!=null&&json.errorCode==0){
+                            if(json.data){
+                                $(this).attr("src","../../code/img/MainViewImgae/signtwo.png");
+                                $(this).css("opacity","1");
+                                $("#prompt").css("display", "block");
+                                $("#prompt").text("签到成功");
+                                $('#prompt').delay(600).fadeOut(350);
+                                $(".daysignbox").delay(1000).hide(50);
+                                location.reload();
+                            }
+                        }
+                    }
+                })
+            })
+            $("#signday").click(function(){
+                $(".daysignbox").show();
+            })
+        })
+
+    </script>
+</head>
+<body>
+<div class="daytask">
+    <h5>每日任务</h5>
+    <ul id="daytaskul">
+        <!--<li id="signday">-->
+        <!--<h6>每日签到</h6>-->
+        <!--<p>10米</p>-->
+        <!--</li>-->
+        <!--<li id="dayshare">-->
+        <!--<h6>每日分享朋友</h6>-->
+        <!--<p>30米</p>-->
+        <!--</li>-->
+        <!--<li id="daycircle">-->
+        <!--<h6>每日分享朋友圈</h6>-->
+        <!--<p>30米</p>-->
+        <!--</li>-->
+    </ul>
+</div>
+<div class="undotask">
+    <h5>已完成任务</h5>
+    <ul id="undotaskul">
+        <li>
+            <h6>每日签到</h6>
+            <p>10米</p>
+        </li>
+        <li>
+            <h6>每日分享朋友圈</h6>
+            <p>30米</p>
+        </li>
+    </ul>
+</div>
+<div class="daysignbox">
+    <img class="daysign" src="../../code/img/MainViewImgae/abputsign2.png"/>
+    <img class="signbutton" src=""/>
+</div>
+<div id="prompt"></div>
+</body>
+</html>

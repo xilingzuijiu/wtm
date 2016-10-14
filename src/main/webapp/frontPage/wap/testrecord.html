@@ -5,83 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0" name="viewport" />
     <title>任务记录</title>
-    <link href="../../code/css/base.css" rel="stylesheet" type="text/css"/>
-    <link href="../../code/css/wapstyle.css" rel="stylesheet" type="text/css"/>
-    <script src="../../code/js/jquery.min.js"></script>
-    <script>
-        $(function(){
-            $(".undotap").click(function(){
-                $(".downrecord").css("display","none");
-                $(".undorecord").css("display","block");
-            });
-            $(".downtap").click(function(){
-                $(".undotap").css("color","#fff");
-                $(".downrecord").css("display","block");
-                $(".undorecord").css("display","none");
-            });
-
-            var li=document.createElement('li');
-            var h6=document.createElement('h6');
-            h6.innerHTML="每日签到";
-            var p3=document.createElement('p');
-            p3.innerHTML="10米";
-            li.appendChild(h6);
-            li.appendChild(p3);
-            document.body.appendChild(li);
-            document.getElementsByTagName('ul')[0].appendChild(li);
-            var li=document.createElement('li');
-            var h6=document.createElement('h6');
-            h6.innerHTML="每日签到报名";
-            var p3=document.createElement('p');
-            p3.innerHTML="10米";
-            li.appendChild(h6);
-            li.appendChild(p3);
-            document.body.appendChild(li);
-            document.getElementsByTagName('ul')[0].appendChild(li);
-            var li=document.createElement('li');
-            var h6=document.createElement('h6');
-            h6.innerHTML="每日服务号签到";
-            var p3=document.createElement('p');
-            p3.innerHTML="10米";
-            li.appendChild(h6);
-            li.appendChild(p3);
-            document.body.appendChild(li);
-            document.getElementsByTagName('ul')[1].appendChild(li);
-        })
-    </script>
+    <link href="../../code/css/common.css" rel="stylesheet" type="text/css"/>
+    <script src="../../code/js/wap/common.js"></script>
+    <script src="../../code/js/wap/testrecord.js"></script>
 </head>
 <body>
-<div class="testtap">
-    <p class="undotap"><a>待完成任务记录</a></p>
-    <p class="downtap"><a>已完成任务记录</a></p>
-</div>
-    <ul class="undorecord">
-        <!--<li>-->
-            <!--<h6>每日签到</h6>-->
-            <!--<p>10米</p>-->
-        <!--</li>-->
-        <!--<li>-->
-            <!--<h6>每日分享朋友</h6>-->
-            <!--<p>30米</p>-->
-        <!--</li>-->
-        <!--<li>-->
-            <!--<h6>每日分享朋友</h6>-->
-            <!--<p>30米</p>-->
-        <!--</li>-->
+<!--<div class="testtap">-->
+    <!--<p class="downtap">已完成任务记录</p>-->
+<!--</div>-->
+    <ul class="downrecord">
     </ul>
-<ul class="downrecord">
-    <!--<li>-->
-        <!--<h6>微信服务号签到</h6>-->
-        <!--<p>10米</p>-->
-    <!--</li>-->
-    <!--<li>-->
-        <!--<h6>每日签到</h6>-->
-        <!--<p>30米</p>-->
-    <!--</li>-->
-    <!--<li>-->
-        <!--<h6>每日分享朋友</h6>-->
-        <!--<p>30米</p>-->
-    <!--</li>-->
-</ul>
 </body>
 </html>

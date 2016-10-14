@@ -36,17 +36,6 @@ $(window).scroll(function(){
 //                    location.reload();
     }
 });
-//function getMemberRequestHeaderMsg(XMLHttpRequest){
-//    var memberId= $.cookie("memberId");
-//    if (memberId==null||memberId == undefined){
-//        Showbo.Msg.confirm("登录已过期请重新登录", function () {
-//            location.href="login.html";
-//        })
-//    }
-//    var password= $.cookie("password");
-//    XMLHttpRequest.setRequestHeader("memberId",memberId);
-//    XMLHttpRequest.setRequestHeader("from",2);
-//}
 function loadReadlist(){
     var request=JSON.stringify(new ArticleSerach(0,count,pageSize));
     console.log("count"+count);
