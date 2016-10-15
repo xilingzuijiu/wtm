@@ -11,7 +11,16 @@ var total=0;
 var count=1;
 var pageSize=7;
 $(function(){
-    loadofficiallist()
+    var thirdLogin=$.cookie("thirdLogin");
+    if (thirdLogin==null||thirdLogin==undefined||thirdLogin.length<=0){
+        var result=confirm("还未绑定微信，请先绑定微信再获取文章");
+        if(result){
+            location.href="/frontPage/wap/mycenter.html";
+        }else {location.href="/frontPage/wap/index.html";}
+    }else{
+        loadofficiallist();
+    }
+
 })
 $(window).scroll(function(){
     var scrollTop = $(this).scrollTop();               //滚动条距离顶部的高度
@@ -46,14 +55,14 @@ function loadofficiallist(){
         success: function (params) {
             var json = eval(params); //数组
             console.log("json数据为：" + params);
-            console.log($.cookie("memberId"));
+            console.log("memberId为"+$.cookie("memberId"));
             if (json != null && json.errorCode == 0) {
                 json.data.forEach(function(official){
                     var li = document.createElement("li");
                     li.className = "col-xs-4";
-                    li.setAttribute("onClick","officialSubmit(this)");
                     li.id = official.originId;
-                    hashMap.Set(li.id, official.addurl);
+                    hashMap.Set(li.id, official.addUrl);
+                    li.setAttribute("onClick","officialSubmit(this)");
                     var img = document.createElement('img');
                     img.setAttribute("src", official.imageUrl)
                     var h5 = document.createElement('h5');
@@ -72,6 +81,7 @@ function loadofficiallist(){
                     li.appendChild(input);
                     document.body.appendChild(li);
                     document.getElementsByTagName('ul')[0].appendChild(li);//动态添加文章（li标签）
+                    var officialUrl=hashMap.Get(li.id);
                 })
             }
         }
@@ -98,12 +108,11 @@ var officialSubmit = function(obj){
             var json = eval(params); //数组
             console.log("json数据为："+params)
             if (json!=null&&json.errorCode==0) {
-                obj.style.display='none';
+                //obj.style.display='none';
                 location.href=officialUrl;
             }else if (json!=null&&json.errorCode==4){
-                Showbo.Msg.alert(json.message, function () {
+                alert(json.message);
                     location.reload();
-                });
             }else{ alert("获取数据失败")}
         },
         error:function (data){

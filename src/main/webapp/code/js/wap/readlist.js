@@ -11,10 +11,15 @@ var total=0;
 var count=1;
 var pageSize=8;
 $(function(){
-    loadReadlist();
-//            setInterval(function () {
-//                location.reload()
-//            },30000)
+    var thirdLogin=$.cookie("thirdLogin");
+    if (thirdLogin==null||thirdLogin==undefined||thirdLogin.length<=0){
+        var result=confirm("还未绑定微信，请先绑定微信再获取文章");
+        if(result){
+            location.href="/frontPage/wap/mycenter.html";
+        }else {location.href="/frontPage/wap/index.html";}
+    }else{
+        loadReadlist();
+    }
 })
 $(window).scroll(function(){
     var scrollTop = $(this).scrollTop();               //滚动条距离顶部的高度
@@ -32,8 +37,6 @@ $(window).scroll(function(){
             p.innerHTML = "没有更多";
             $("body").append(p);
         }
-    }else if(scrollTop<=0){         //滚动条距离顶部的高度小于等于0
-//                    location.reload();
     }
 });
 function loadReadlist(){
@@ -47,9 +50,6 @@ function loadReadlist(){
         data:request,
         beforeSend: function (XMLHttpRequest) {
             getMemberRequestHeaderMsg(XMLHttpRequest)
-        },
-        header:{
-            "contentType":"application/json"
         },
         success: function (params) {
             var json = eval(params); //数组
@@ -112,7 +112,6 @@ var articleSubmit = function(obj){
     console.log(articleId);
     $.ajax({
         type: 'post',
-//                dataType: 'json',
         url: '/pc/admin/article/pcreadArticleRequest',
         data: {articleId:articleId},
         beforeSend: function (XMLHttpRequest) {
@@ -125,9 +124,8 @@ var articleSubmit = function(obj){
                 obj.style.display='none';
                 location.href=articleUrl;
             }else if (json!=null&&json.errorCode==4){
-                Showbo.Msg.alert(json.message, function () {
+                alert(json.message);
                     location.reload();
-                });
             }else{ alert("获取数据失败")}
         },
         error:function (data){

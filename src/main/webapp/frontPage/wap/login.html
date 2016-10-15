@@ -11,6 +11,7 @@
     <script src="../../code/js/jquery.cookie.js"></script>
     <script>
         $(function(){
+            var stext;
             $(".wxjump").click(function(){
                 location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx2282c57276f83fad&redirect_uri=http%3a%2f%2fwww.weitaomi.cn%2fwxRegisterOAuth&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
             })
@@ -18,60 +19,52 @@
                 $("#form").attr("enctype","multipart/form-data");
                 var memberName=$("#memberName").val();
                 var password=$("#password").val();
-                $.ajax({
-                    type: 'post',
-                    url: '/pc/admin/member/login',
-                    data: {mobileOrName:memberName,password:password},
-                    beforeSend: function (XMLHttpRequest) {
-                        XMLHttpRequest.setRequestHeader("from","2")
-                    },
-                    success: function (params) {
-                        var param = eval(params);
-                        if (param != null && param.errorCode == 0) {
-                            var data = param.data
-                            if (data.id != null) {
-                                $.cookie("memberId", data.id, {expires: 30, path: "/frontPage/wap"})
-                                $.cookie("memberName", encodeURI(data.memberName), {expires: 30, path: "/frontPage/wap"})
-                                $.cookie("password", data.password, {expires: 30, path: "/frontPage/wap"})
-                                $.cookie("birth", data.birth, {expires: 30, path: "/frontPage/wap"})
-                                $.cookie("sex", data.sex, {expires: 30, path: "/frontPage/wap"})
-                                var image = data.imageUrl;
-                                if (image.indexOf("http") < 0) {
-                                    image = "http://weitaomi.b0.upaiyun.com" + image
+                        $.ajax({
+                            type: 'post',
+                            url: '/pc/admin/member/login',
+                            data: {mobileOrName:memberName,password:password},
+                            beforeSend: function (XMLHttpRequest) {
+                                XMLHttpRequest.setRequestHeader("from","2")
+                            },
+                            success: function (params) {
+                                var param = eval(params);
+                                if (param != null && param.errorCode == 0) {
+                                    var data = param.data;
+                                    if (data.id != null){
+                                        $.cookie("memberId", data.id, {expires: 30, path: "/frontPage/wap"})
+                                        $.cookie("memberName", encodeURI(data.memberName), {expires: 30, path: "/frontPage/wap"})
+                                        $.cookie("password", data.password, {expires: 30, path: "/frontPage/wap"})
+                                        $.cookie("birth", data.birth, {expires: 30, path: "/frontPage/wap"})
+                                        $.cookie("sex", data.sex, {expires: 30, path: "/frontPage/wap"})
+                                        var image = data.imageUrl;
+                                        if (image.indexOf("http") < 0) {
+                                            image = "http://weitaomi.b0.upaiyun.com" + image
+                                        }
+                                        $.cookie("imageUrl", image, {expires: 30, path: "/frontPage/wap"})
+                                        $.cookie("telephone", data.telephone, {expires: 30, path: "/frontPage/wap"})
+                                        if(data.officialAccountList!=null&&data.officialAccountList!=undefined)
+                                            $.cookie("officialAccountList", JSON.stringify(data.officialAccountList), {
+                                                expires: 30,
+                                                path: "/frontPage/wap"
+                                            })
+                                        if(data.thirdLogin!=null&&data.thirdLogin!=undefined)
+                                            $.cookie("thirdLogin", JSON.stringify(data.thirdLogin), {expires: 30, path: "/frontPage/wap"})
+                                        if(data.payList!=null&&data.payList!=undefined)
+                                            $.cookie("payList", JSON.stringify(data.payList), {expires: 30, path: "/frontPage/wap"})
+                                        location.href = "index.html";
+                                    }
+                                } else if (params.errorCode == 4) {
+                            alert(params.message)
                                 }
-                                $.cookie("imageUrl", image, {expires: 30, path: "/frontPage/wap"})
-                                $.cookie("telephone", data.telephone, {expires: 30, path: "/frontPage/wap"})
-                                if(data.officialAccountList!=null&&data.officialAccountList!=undefined)
-                                $.cookie("officialAccountList", JSON.stringify(data.officialAccountList), {
-                                    expires: 30,
-                                    path: "/frontPage/wap"
-                                })
-                                if(data.thirdLogin!=null&&data.thirdLogin!=undefined)
-                                $.cookie("thirdLogin", JSON.stringify(data.thirdLogin), {expires: 30, path: "/frontPage/wap"})
-                                if(data.payList!=null&&data.payList!=undefined)
-                                $.cookie("payList", JSON.stringify(data.payList), {expires: 30, path: "/frontPage/wap"})
-                                location.href = "index.html";
                             }
-                        } else if (errorCode == 4) {
-                            alert(data.message)
-                        }
-                        if (memberName != decodeURI($.cookie("memberName"))) {
-                            $("#prompt").css("display", "block");
-                            $("#prompt").text("用户名不存在");
-                            $('#prompt').delay(600).fadeOut(350);
-                        } else {
-                            if (password!= $.cookie("password")) {
-                                $("#prompt").css("display", "block");
-                                $("#prompt").text("密码不正确，请重新输入");
-                                $('#prompt').delay(600).fadeOut(350);
-                            } else {
-                                location.href = "index.html";
-                            }
-                        }
-                    }
-                });
+                        });
             })
         })
+        function fastalert(stext){
+            $("#prompt").css("display", "block");
+            $("#prompt").text(stext);
+            $('#prompt').delay(800).fadeOut(350);
+        }
     </script>
 </head>
 <body>
@@ -83,7 +76,8 @@
         <input class="payconfirm loginbutton" type="button" value="登录"/>
     </form>
 </div>
-<p class="wordpage"><span><a href="forgetcode.html"> 忘记密码</a></span><a href="Register.html"> 注册</a></p>
+<p class="wordpage"><a href="/frontPage/wap/register.html"> 还没有账号？&nbsp立即<span>注册</span>&nbsp马上领钱</a></p>
+<!--<span><a href="/frontPage/wap/forgetcode.html">忘记密码</a></span>-->
 <img class="wxjump" src="../../code/img/regist/wxLoginLogo.png"/>
 <div id="prompt"></div>
 </body>

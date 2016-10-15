@@ -26,7 +26,7 @@
             $(".myinviteway").css("top",inviteheight-wayheight);
             $(".myinviteway").css("left",invitewidth/2-waywidth/2);
             $("#imgaccount").click(function(){
-                $("#darkcolor").css("display","block");
+                $("#cover").css("display","block");
                 $(".myinviteway").css("display","block");
                 $(".nogo").css("height",inviteheight);
                 $(".nogo").css("overflow","hidden");
@@ -34,15 +34,15 @@
                 $("select").attr("disabled","disabled");
             })
             $("#myinvitecancle").click(function(){
-                $("#darkcolor").css("display","none");
+                $("#cover").css("display","none");
                 $(".myinviteway").css("display","none");
                 $(".nogo").css("overflow","auto");
                 $('#demo1').removeAttr("disabled");
                 $('select').removeAttr("disabled");
             })
-            var obj=document.getElementById("darkcolor");
+            var obj=document.getElementById("cover");
             obj.addEventListener("touchstart",function(e){
-                $("#darkcolor").css("display","none");
+                $("#cover").css("display","none");
                 $(".myinviteway").css("display","none");
                 $(".nogo").css("overflow","auto");
                 $(".time").click(function(){
@@ -61,24 +61,21 @@
                     location.href="login.html";
                 }
             })
-//            $(".openbusy").click(function(){
+            //商家平台
+//            if($.cookie("officialAccountList")!=null){
 //                $(".openbusy").css("display","none");
 //                $(".shop").css("display","block");
-////                location.href="certificategzh.html";
-//            })
-            if($.cookie("officialAccountList")!=null){
-                $(".openbusy").css("display","none");
-                $(".shop").css("display","block");
-                $("#one").click(function(){
-                    location.href="#";
-                })
-                $("#two").click(function(){
-                    location.href="#";
-                })
-                $("#three").click(function(){
-                    location.href="#";
-                })
-            }
+//                $("#one").click(function(){
+//                    location.href="#";
+//                })
+//                $("#two").click(function(){
+//                    location.href="#";
+//                })
+//                $("#three").click(function(){
+//                    location.href="#";
+//                })
+//            }
+
             $("#demo1").on("blur", function () {
                 modifyBirth();
             })
@@ -91,6 +88,7 @@
         function modifyBirth(){
             var date =$("#demo1").val() ;
             date = date.replace(/-/g,'/');
+            console.log("日期是"+date);
             var timestamp = new Date(date).getTime()/1000;
             $.ajax({
                 url:"/pc/admin/member/modifyBirth",
@@ -109,30 +107,37 @@
                 }
             })
         }
-        var getMemberRequestHeaderMsg=function(XMLHttpRequest){
-            var memberId= $.cookie("memberId");
-            if (memberId==null||memberId == undefined){
-                Showbo.Msg.confirm("登录已过期请重新登录", function () {
-                    location.href="login.html"
-                })
-            }
-            var password= $.cookie("password");
-            XMLHttpRequest.setRequestHeader("memberId",memberId);
-            XMLHttpRequest.setRequestHeader("from",2);
-        }
+//        var getMemberRequestHeaderMsg=function(XMLHttpRequest){
+//            var memberId= $.cookie("memberId");
+//            if (memberId==null||memberId == undefined){
+//                Showbo.Msg.confirm("登录已过期请重新登录", function () {
+//                    location.href="login.html"
+//                })
+//            }
+//            var password= $.cookie("password");
+//            XMLHttpRequest.setRequestHeader("memberId",memberId);
+//            XMLHttpRequest.setRequestHeader("from",2);
+//        }
         function initilizePage(){
             if($.cookie("memberId")==null||$.cookie("memberId")==undefined){
-                Showbo.Msg.alert("登录超时，请重新登录", function () {
+                    alert("登录超时，请重新登录");
                     location.href="login.html"
-                })
             }
             $("#headimg").text(decodeURI($.cookie("memberName")))
             $(".accounttel>h6>span").text($.cookie("telephone"))
             $(".photoimg").attr("src",$.cookie("imageUrl"));
             $("#demo1").val(getLocalTime($.cookie("birth")));
-            var sex=$.cookie("sex");
-            $(".sexmi").find("option[value="+sex+"]").attr("selected",true);
-            var thirdLogin=$.cookie("thirdLogin")
+            var sex=parseInt($.cookie("sex"));
+//            $(".sexmi").find("option[value="+sex+"]").attr("selected",true);
+            switch (sex){
+                case 0:
+                    $(".sexmi").text("保密");
+                case 1:
+                    $(".sexmi").text("男");
+                case 2:
+                    $(".sexmi").text("女");
+            }
+            var thirdLogin=$.cookie("thirdLogin");
             if (thirdLogin==null||thirdLogin==undefined||thirdLogin.length<=0){
                 $("#wechat>p").text("未绑定微信")
             } else{
@@ -166,21 +171,17 @@
         <li>
             <h6>性别</h6>
             <p class="sexmi">
-                <select>
-                    <option value="2" >保密</option>
-                    <option value="0">男</option>
-                    <option value="1">女</option>
-                </select></p>
+                <!--<select>-->
+                    <!--<option value="2" >保密</option>-->
+                    <!--<option value="0">男</option>-->
+                    <!--<option value="1">女</option>-->
+                <!--</select></p>-->
         </li>
     </ul>
     <ul class="information">
         <li id="wechat">
             <h6>绑定微信号</h6>
             <p>未绑定微信号</p>
-        </li>
-        <li>
-            <h6>修改登录密码</h6>
-            <p></p>
         </li>
         <li>
             <h6>客服电话</h6>
@@ -192,19 +193,19 @@
             <h6>退出当前账户</h6>
         </li>
     </ul>
-    <img class="openbusy" src="../../code/img/Person/shop.png"/>
-    <ul class="information shop">
-        <li id="one">
-            <h6>发布任务</h6>
-        </li>
-        <li id="two">
-            <h6>修改登录密码</h6>
-        </li>
-        <li id="three">
-            <h6>客服电话</h6>
-        </li>
-    </ul>
-    <div id="darkcolor"></div>
+    <!--<img class="openbusy" src="../../code/img/Person/shop.png"/>-->
+    <!--<ul class="information shop">-->
+        <!--<li id="one">-->
+            <!--<h6>发布任务</h6>-->
+        <!--</li>-->
+        <!--<li id="two">-->
+            <!--<h6>修改登录密码</h6>-->
+        <!--</li>-->
+        <!--<li id="three">-->
+            <!--<h6>客服电话</h6>-->
+        <!--</li>-->
+    <!--</ul>-->
+    <div id="cover"></div>
     <ul class="myinviteway">
         <li>拍照</li>
         <li>从相册选择</li>

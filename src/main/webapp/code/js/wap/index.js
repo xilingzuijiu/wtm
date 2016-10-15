@@ -92,9 +92,9 @@ function updateMyscore(){
 function getMemberRequestHeaderMsg(XMLHttpRequest){
     var memberId= $.cookie("memberId");
     if (memberId==null||memberId == undefined){
-        Showbo.Msg.confirm("登录已过期请重新登录", function () {
+        alert("登录已过期请重新登录");
             location.href="login.html"
-        })
+
     }
     var password= $.cookie("password");
     XMLHttpRequest.setRequestHeader("memberId",memberId);
