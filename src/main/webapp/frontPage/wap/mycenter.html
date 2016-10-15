@@ -5,14 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0" name="viewport" />
     <title>个人中心</title>
-    <link href="../../code/css/base.css" rel="stylesheet" type="text/css"/>
-    <link href="../../code/css/showBo.css" rel="stylesheet" type="text/css"/>
-    <link href="../../code/css/wapstyle.css" rel="stylesheet" type="text/css"/>
+    <link href="../../code/css/common.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="../../code/css/lCalendar.css">
-    <script src="../../code/js/jquery.min.js"></script>
-    <script src="../../code/js/jquery.cookie.js"></script>
+    <script src="../../code/js/wap/common.js"></script>
     <script src="../../code/js/lCalendar.js"></script>
-    <script src="../../code/js/showBo.js"></script>
     <script>
         $(function(){
             initilizePage()
@@ -21,6 +17,8 @@
                 'trigger': '#demo1',
                 'type': 'date'
             });//日期插件
+
+
             var inviteheight=$(window).height();
             var invitewidth=$(window).width();
             var wayheight=$(".myinviteway").height();
@@ -55,13 +53,19 @@
                 })
             },false)
             $(".mywtm").click(function(){
-                location.href="myinvite.html";
+                location.href="../invite.html";
             })
-            $(".openbusy").click(function(){
-                $(".openbusy").css("display","none");
-                $(".shop").css("display","block");
-//                location.href="certificategzh.html";
+            $(".exit").click(function(){
+                var result=confirm("退出当前账号后不会删除任何历史数据，下次登录依然可以使用本账号。");
+                if(result){
+                    location.href="login.html";
+                }
             })
+//            $(".openbusy").click(function(){
+//                $(".openbusy").css("display","none");
+//                $(".shop").css("display","block");
+////                location.href="certificategzh.html";
+//            })
             if($.cookie("officialAccountList")!=null){
                 $(".openbusy").css("display","none");
                 $(".shop").css("display","block");
@@ -140,7 +144,7 @@
         }
     </script>
 </head>
-<body class="myinformation">
+<body class="myinformation padding0">
 <div class="nogo">
     <div class="selfinformation">
         <div id="imgaccount">
