@@ -22,7 +22,8 @@ public class WechatConfig {
     public static final String SUCCESS= "SUCCESS";
     public static final String FAIL= "FAILURE";
 
-
+    public static String access_token="123";
+    public static Long token_updatetime=0L;
 
 
 

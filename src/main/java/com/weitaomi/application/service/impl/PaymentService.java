@@ -63,6 +63,9 @@ public class PaymentService implements IPaymentService {
         if ((Integer) params.get("payType") == (PayType.WECHAT_APP.getValue())) {
             params.put("out_trade_no", AlipayConfig.payCode_prefix + payCode);
         }
+        if ((Integer) params.get("payType") == (PayType.WECHAT_WEB.getValue())) {
+            params.put("out_trade_no", AlipayConfig.payCode_prefix + payCode);
+        }
         if ((Integer) params.get("payType") == (PayType.ALIPAY_APP.getValue())) {
             params.put("trade_no", AlipayConfig.payCode_prefix + payCode);
         }

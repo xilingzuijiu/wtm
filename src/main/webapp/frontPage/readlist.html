@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="10">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0" name="viewport"/>
     <title>阅读列表</title>
@@ -119,11 +120,11 @@
                 }
             });
 
-            if (isAndroid) {
-                setInterval(function () {
-                    location.reload()
-                }, 10000)
-            }
+//            if (isAndroid) {
+//                setInterval(function () {
+//                    location.reload()
+//                }, 10000)
+//            }
         })
         var articleSubmit = function (obj) {
             var articleId = obj.getAttribute("id");

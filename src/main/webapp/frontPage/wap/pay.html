@@ -8,6 +8,7 @@
     <link href="../../code/css/base.css" rel="stylesheet" type="text/css"/>
     <link href="../../code/css/wapstyle.css" rel="stylesheet" type="text/css"/>
     <script src="../../code/js/jquery.min.js"></script>
+    <script src="../../code/js/jquery.cookie.js"></script>
     <script>
         $(function(){
             var height=$(".payway h3").height();
@@ -18,6 +19,10 @@
                 $('label').removeAttr('class') && $(this).attr('class', 'checked');
                 $('input[type="radio"]').removeAttr('checked') && $('#' + radioId).attr('checked', 'checked');
             });
+
+            $("#pay").click(function () {
+                location.href="/pay?"+"memberId="+ $.cookie("memberId")+"&amount="+$("#amount").val()+"&payType=4"
+            })
         })
     </script>
 </head>
@@ -31,14 +36,14 @@
 <div class="paymuch">
     <h3>请选择充值金额</h3>
 <div>充值金额￥
-    <input type="text" value="" placeholder="请输入金额" autofocus/>元 </div>
+    <input id="amount" type="text" value="" placeholder="请输入金额" autofocus/>元 </div>
     <ol class="paydetails">
         <li><span>*</span>到账时间最快当天，通常为第二天到账</li>
         <li><span>*</span><strong>周末、法定节假日不处理提现</strong>（周五周六顺延至周一，周日顺延至周二）</li>
         <li><span>*</span>所有账户充值均人工审核，审核完成后由系统自动充值</li>
     </ol>
 </div>
-<input class="payconfirm" type="button" value="确认"/>
+<input id="pay" class="payconfirm" type="button" value="确认"/>
 
 </body>
 </html>

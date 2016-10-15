@@ -6,7 +6,8 @@ package com.weitaomi.application.model.enums;
 public enum PayType {
     ALIPAY_APP(1,"支付宝手机APP支付"),
     ALIPAY_WEB(2,"支付宝网页支付"),
-    WECHAT_APP(3,"微信app支付");
+    WECHAT_APP(3,"微信app支付"),
+    WECHAT_WEB(4,"微信Wap支付");
     private Integer value;
     private String desc;
 

@@ -290,17 +290,33 @@ public class MemberPCController extends BaseController {
         return AjaxResult.getOK(memberService.modifyBirth(memberId,birth));
     }
     /**
-     * 修改密码
+     * 签名
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/signature", method = RequestMethod.POST)
-    public AjaxResult signature(String jsapi_ticket){
-        String nonceStr="'weitaomiApp'";
-        String url="http://www.weitaomi.cn/frontPage/wap/myinvite.html";
-        Long timeStamp=DateUtils.getUnixTimestamp();
-        String signParams="jsapi_ticket="+jsapi_ticket+"&noncestr="+nonceStr+"&timestamp="+timeStamp+"&url="+url;
-        String sign= HmacSHA256Utils.SHA(signParams);
-        return AjaxResult.getOK(sign);
+    public AjaxResult signature(Long timestamp){
+        NameValuePair[] nameValue = new NameValuePair[3];
+        nameValue[1]=new BasicNameValuePair("grant_type","client_credential");
+        nameValue[0]=new BasicNameValuePair("appid", WechatConfig.MCH_APPID);
+        nameValue[2]=new BasicNameValuePair("secret",WechatConfig.wxAppSecret);
+        try {
+            String params=HttpRequestUtils.get("https://api.weixin.qq.com/cgi-bin/token",nameValue);
+            Map params_map=JSON.parseObject(params);
+            NameValuePair[] nameValue1 = new NameValuePair[2];
+            nameValue1[0]=new BasicNameValuePair("access_token",(String)params_map.get("access_token"));
+            nameValue1[1]=new BasicNameValuePair("type","jsapi");
+            String jsapi=HttpRequestUtils.get("https://api.weixin.qq.com/cgi-bin/ticket/getticket",nameValue1);
+            Map jsapi_map=JSON.parseObject(jsapi);
+            String nonceStr="weitaomiApp";
+            String url="http://www.weitaomi.cn/frontPage/wap/myinvite.html";
+            String signParams="jsapi_ticket="+jsapi_map.get("ticket")+"&noncestr="+nonceStr+"&timestamp="+timestamp+"&url="+url;
+            System.out.println("==========>signParams="+signParams);
+            String sign= HmacSHA256Utils.SHA(signParams);
+            return AjaxResult.getOK(sign);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
