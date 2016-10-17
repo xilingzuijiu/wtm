@@ -69,5 +69,5 @@ var recordSubmit=function(obj){
     var taskHistoryId=parseInt(obj.getAttribute("id"));
     console.log(taskHistoryId);
     $.cookie("taskHistoryId", taskHistoryId, {expires: 0.01, path: "/frontPage/wap/taskdetails.html"})
-    location.href="taskdetails.html";
+    location.href="/frontPage/wap/taskdetails.html";
 }

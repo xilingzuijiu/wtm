@@ -66,7 +66,7 @@
                             var errorCode=data.errorCode
                             if (errorCode==0){
                                 if (data.data){
-                                    location.href="login.html";
+                                    location.href="/frontPage/wap/login.html";
                                 }
                             } else if (errorCode==4){
                                 alert(data.message)
@@ -76,29 +76,6 @@
                 }
             })
         })
-//        $.fn.serializeObject = function() {
-//            var o = {};
-//            var a = this.serializeArray();
-//            $.each(a, function() {
-//                if (o[this.name]) {
-//                    if (!o[this.name].push) {
-//                        o[this.name] = [o[this.name]];
-//                    }
-//                    o[this.name].push(this.value || '');
-//                } else {
-//                    o[this.name] = this.value || '';
-//                }
-//            });
-//            return o;
-//        };
-//        function getRegeisterParams(requestObj){
-//            var invitedCode = requestObj.invitedCode
-//            var identifyCode = requestObj.identifyCode
-//            delete requestObj.invitedCode
-//            delete requestObj.identifyCode
-//            var obj=new ReuqestObj(requestObj,invitedCode,identifyCode)
-//            return JSON.stringify(obj)
-//        }
     </script>
 </head>
 </head>

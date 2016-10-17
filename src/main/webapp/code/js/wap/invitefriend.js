@@ -100,7 +100,9 @@ $(function(){
                         li.appendChild(h6);
                         document.body.appendChild(li);
                         document.getElementsByTagName('ul')[1].appendChild(li);
-                        p.innerHTML="0"+(j+1);
+                        if(j==9){
+                            p.innerHTML=j+1;
+                        }else{p.innerHTML="0"+(j+1);}
                         img.setAttribute('src',json.data[j].imageUrl);
                         h6.innerHTML=json.data[j].shareCounts;
                         h5.innerHTML=json.data[j].memberName;
@@ -116,6 +118,6 @@ $(function(){
         }
     })
     $("#inviterecord").click(function(){
-        location.href="inviterecord.html";
+        location.href="/frontPage/wap/inviterecord.html";
     })
 })

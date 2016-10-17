@@ -15,7 +15,7 @@ header{background:url("../img/MainViewImgae/top.png") no-repeat center top;heigh
 .owner .photo{margin-left:4%;float:left;width:17%;border-radius:60%;-webkit-border-radius:60%;-moz-border-radius:60%;
     -o-border-radius:60%;-ms-border-radius:60%;border:#fff 0.2em solid;}
 .ownerdetail{float:left;padding-left:3%;}
-.ownerdetail .ownername{font-size:2.5rem;color:#ffe7b9;width:16em;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;}
+.ownerdetail .ownername{font-size:2.5rem;color:#ffe7b9;width:13em;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;}
 .ownerdetail span{font-size:4rem;color:#ffe7b9;display:block;line-height:2;}
 .owner .money{color:#fff;text-align:right;padding-right:3%;padding:1.1em 3%;
     background:url("../img/MainViewImgae/stripes.png") no-repeat right center;background-size:100%;float:right;margin-top:1.5em;}
@@ -181,7 +181,7 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
 .inviterankxs li:last-child{border-bottom:#eee 1px solid;}
 .inviterankxs li img{height:5em;border-radius:50%;display:table-cell;}
 .inviterankxs li p,.inviterankxs li h5,.inviterankxs li h6{display:table-cell;font-size:2.5rem;font-weight:normal;width:10%;vertical-align:middle;}
-.inviterankxs li h5{width:64%;}
+.inviterankxs li h5{width:64%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 /*邀请记录样式---------------------------------------------------------------------------------*/
 .inviterecord{}
 .inviterecord li{overflow:hidden;padding:0 1em;height:7em;}
@@ -291,7 +291,7 @@ ol li{text-indent:0;}
     .adress span{font-size:5.5rem;padding-bottom:0.3em;}
     .adress p{font-size:3.5rem;}
     .adress #adressname{font-size:2.5em;}
-    .ownerdetail .ownername{font-size:2.5em;width:14em;}
+    .ownerdetail .ownername{font-size:2.5em;width:12em;}
     .ownerdetail span{font-size:6.5rem;line-height:1.9;}
     .ownerdetail .ownername{font-size:4rem;}
     .owner .money{padding:1.5em 3%;margin-top:1.2em;}
@@ -459,6 +459,7 @@ ol li{text-indent:0;}
     .ownerdetail span{font-size:1.5em;}
     .owner .money{margin-top:0.7em;}
     .owner .money p{font-size:1.75rem;}
+    .owner .money span{font-size:2.4rem;}
     .homebanner{height:15em;}
     /*.flexslider, .slides li{margin-top:0.6em;height:18em;}*/
     .indexlist{padding-bottom:1.5em;}
