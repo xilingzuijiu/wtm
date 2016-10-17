@@ -93,7 +93,7 @@ function getMemberRequestHeaderMsg(XMLHttpRequest){
     var memberId= $.cookie("memberId");
     if (memberId==null||memberId == undefined){
         alert("登录已过期请重新登录");
-            location.href="login.html"
+            location.href="/frontPage/wap/login.html"
 
     }
     var password= $.cookie("password");

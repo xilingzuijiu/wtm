@@ -21,9 +21,9 @@ var enchashment={
                         location.reload()
                     })
                 } else if (errorCode==4){
-                    Showbo.Msg.alert(data.message, function () {
+                    alert(data.message);
                         location.reload()
-                    })
+
                 }
             }
         })
@@ -31,9 +31,10 @@ var enchashment={
     getMemberRequestHeaderMsg:function(XMLHttpRequest) {
         var memberId = $.cookie("memberId");
         if (memberId == null || memberId == undefined) {
-            Showbo.Msg.confirm("登录已过期请重新登录", function () {
+            var result=confirm("登录已过期请重新登录");
+            if(result){
                 location.href = "/frontPage/wap/login.html"
-            })
+            }
         }
         var password= $.cookie("password");
         XMLHttpRequest.setRequestHeader("memberId",memberId);
@@ -44,7 +45,7 @@ var enchashment={
         var payAccounts= decodeURI($.cookie("payList"));
         var thirdLogin= decodeURI($.cookie("thirdLogin"));
         if (thirdLogin==null||thirdLogin==undefined){
-            Showbo.Msg.alert("未绑定微信或者登录已过期");
+            alert("未绑定微信或者登录已过期");
             return;
         }
         var thirdLogin= JSON.parse($.cookie("thirdLogin"));

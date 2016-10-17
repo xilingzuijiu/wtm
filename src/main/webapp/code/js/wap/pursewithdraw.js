@@ -10,9 +10,10 @@ var puser={
     getMemberRequestHeaderMsg:function(XMLHttpRequest){
     var memberId= $.cookie("memberId");
     if (memberId==null||memberId == undefined){
-        Showbo.Msg.confirm("登录已过期请重新登录", function () {
+        var result=confirm("登录已过期请重新登录");
+        if(result){
             location.href="/frontPage/wap/login.html"
-        })
+        }
     }
     var password= $.cookie("password");
     XMLHttpRequest.setRequestHeader("memberId",memberId);
