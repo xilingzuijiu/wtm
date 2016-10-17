@@ -15,6 +15,7 @@ $(function(){
         $(".eventintroduce").css("display","block");
         $(".nogo").css("height",inviteheight);
         $(".nogo").css("overflow","hidden");
+        $(".nullbox").css("display","block");
         $(".payconfirm").attr("disabled","disabled");
     })
     var obj=document.getElementById("cover");

@@ -53,7 +53,7 @@
 //                })
 //            },false)
             $(".mywtm").click(function(){
-                location.href="../invite.html";
+                location.href="../invite.html?memberId="+ $.cookie('memberId');
             })
             $(".exit").click(function(){
                 var result=confirm("退出当前账号后不会删除任何历史数据，下次登录依然可以使用本账号。");
@@ -107,21 +107,10 @@
                 }
             })
         }
-//        var getMemberRequestHeaderMsg=function(XMLHttpRequest){
-//            var memberId= $.cookie("memberId");
-//            if (memberId==null||memberId == undefined){
-//                Showbo.Msg.confirm("登录已过期请重新登录", function () {
-//                    location.href="login.html"
-//                })
-//            }
-//            var password= $.cookie("password");
-//            XMLHttpRequest.setRequestHeader("memberId",memberId);
-//            XMLHttpRequest.setRequestHeader("from",2);
-//        }
         function initilizePage(){
             if($.cookie("memberId")==null||$.cookie("memberId")==undefined){
                     alert("登录超时，请重新登录");
-                    location.href="login.html"
+                    location.href="/frontPage/wap/login.html"
             }
             $("#headimg").text(decodeURI($.cookie("memberName")))
             $(".accounttel>h6>span").text($.cookie("telephone"))

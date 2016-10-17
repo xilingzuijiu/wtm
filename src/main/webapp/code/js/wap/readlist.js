@@ -65,7 +65,7 @@ function loadReadlist(){
                     hashMap.Set(li.id, article.url);
                     div1.className = "col-xs-3 listimg";
                     var img = document.createElement('img');
-                    img.setAttribute("src", article.imageUrl);
+                    img.setAttribute("src",article.imageUrl);
                     div1.appendChild(img);
                     var div2 = document.createElement('div');
                     div2.className = "readdetails col-xs-6";

@@ -35,8 +35,8 @@ $(function(){
                                 success:function(params){
                                     var json=eval(params);
                                     if(json!=null&&json.errorCode==0) {
-                                        $(this).attr("src", "../../code/img/MainViewImgae/signtwo.png");
                                         $(this).css("opacity", "1");
+                                        $(this).attr("src", "../../code/img/MainViewImgae/signtwo.png");
                                         $("#prompt").css("display", "block");
                                         $("#prompt").text(json.message);
                                         $('#prompt').delay(600).fadeOut(350);
