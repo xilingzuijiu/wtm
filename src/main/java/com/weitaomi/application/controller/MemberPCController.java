@@ -254,6 +254,22 @@ public class MemberPCController extends BaseController {
         }
         return AjaxResult.getOK(memberScoreService.getMemberScoreById(memberId));
     }
+
+    /**
+     * 获取用户可用余额和公众号信息
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getAvaliableScoreAndWxInfo",method = RequestMethod.POST)
+    AjaxResult getAvaliableScoreAndWxInfo(HttpServletRequest request){
+        Long memberId=this.getUserId(request);
+        if (memberId==null){
+            throw new BusinessException("用户ID为空");
+        }
+        return AjaxResult.getOK(memberScoreService.getAvaliableScoreAndWxInfo(memberId));
+    }
+
     /**
      * 微信服务号签到
      * @param map

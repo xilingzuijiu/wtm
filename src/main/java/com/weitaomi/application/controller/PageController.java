@@ -3,6 +3,7 @@ package com.weitaomi.application.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.weitaomi.application.controller.baseController.BaseController;
+import com.weitaomi.application.model.bean.Member;
 import com.weitaomi.application.model.bean.ThirdLogin;
 import com.weitaomi.application.model.dto.MemberInfoDto;
 import com.weitaomi.application.model.dto.RequestFrom;
@@ -93,7 +94,7 @@ public class PageController extends BaseController {
             }
             if (memberId != null) {
                 MemberInfoDto memberInfoDto = memberService.thirdPlatLogin(userInfoParams.get("unionid"), 0);
-                ModelAndView modelAndView = new ModelAndView("/wap/index.jsp");
+                ModelAndView modelAndView = new ModelAndView("/wap/index.html");
                 Cookie idCookie = new Cookie("memberId", memberInfoDto.getId().toString());
                 idCookie.setMaxAge(30 * 24 * 60 * 60);
                 Cookie memberName = new Cookie("memberName", URLEncoder.encode(memberInfoDto.getMemberName()));
@@ -152,25 +153,53 @@ public class PageController extends BaseController {
             userInfoRequestParams[1] = new BasicNameValuePair("openid", hashMap.get("openid"));
             userInfoRequestParams[2] = new BasicNameValuePair("lang", "zh_CN");
             String userInfo = HttpRequestUtils.get("https://api.weixin.qq.com/sns/userinfo", userInfoRequestParams);
-            Map<String, String> userInfoParams = (Map<String, String>) JSONObject.parse(userInfo);
-            Long memberIdTemp = thirdLoginMapper.getMemberIdByUnionId(userInfoParams.get("unionid"));
+            Map<String, Object> userInfoParams = (Map<String, Object>) JSONObject.parse(userInfo);
+            Long memberIdTemp = thirdLoginMapper.getMemberIdByUnionId((String)userInfoParams.get("unionid"));
+            System.out.println(JSON.toJSONString(userInfo));
             if (memberIdTemp == null) {
                 Long memberId=Long.valueOf(request.getParameter("memberId"));
                 ThirdLogin thirdLogin=new ThirdLogin();
-                thirdLogin.setOpenId(userInfoParams.get("openid"));
-                thirdLogin.setUnionId(userInfoParams.get("unionid"));
-                thirdLogin.setSex(Integer.valueOf(userInfoParams.get("sex")));
-                thirdLogin.setNickname(userInfoParams.get("nickname"));
-                thirdLogin.setImageFiles(userInfoParams.get("headimgurl"));
+                thirdLogin.setOpenId((String)userInfoParams.get("openid"));
+                thirdLogin.setUnionId((String)userInfoParams.get("unionid"));
+                System.out.println(userInfoParams.get("sex").toString());
+                thirdLogin.setSex(Integer.valueOf(userInfoParams.get("sex").toString()));
+                thirdLogin.setType(0);
+                thirdLogin.setNickname((String)userInfoParams.get("nickname"));
+                thirdLogin.setImageFiles((String)userInfoParams.get("headimgurl"));
                 boolean isSuccess= memberService.bindThirdPlat(memberId, thirdLogin);
                 if (isSuccess) {
+                    Member member=memberMapper.selectByPrimaryKey(memberId);
+                    Cookie sex = new Cookie("sex", member.getSex().toString());
+                    sex.setMaxAge(30 * 24 * 60 * 60);
+                    Cookie memberName = new Cookie("memberName", URLEncoder.encode(member.getMemberName()));
+                    memberName.setMaxAge(30 * 24 * 60 * 60);
+                    Cookie birth = new Cookie("birth", member.getBirth().toString());
+                    birth.setMaxAge(30 * 24 * 60 * 60);
+                    Cookie passWord = new Cookie("password", member.getPassword());
+                    passWord.setMaxAge(30 * 24 * 60 * 60);
+                    String imageUrl = member.getImageUrl();
+                    if (!imageUrl.startsWith("http")) {
+                        imageUrl = "http://weitaomi.b0.upaiyun.com" + imageUrl;
+                    }
+                    Cookie image = new Cookie("imageUrl", imageUrl);
+                    image.setMaxAge(30 * 24 * 60 * 60);
+                    Cookie telephone = new Cookie("telephone", member.getTelephone().toString());
+                    telephone.setMaxAge(30 * 24 * 60 * 60);
                     Cookie wxInfo = new Cookie("thirdLogin", URLEncoder.encode(JSON.toJSONString(thirdLogin), "UTF-8"));
                     wxInfo.setMaxAge(30 * 24 * 60 * 60);
                     Cookie access_token = new Cookie("access_token", hashMap.get("access_token"));
                     access_token.setMaxAge(2 * 60 * 60);
                     Cookie refresh_token = new Cookie("refresh_token", hashMap.get("refresh_token"));
                     refresh_token.setMaxAge(30 * 24 * 60 * 60);
+                    Cookie member1 = new Cookie("memberId",memberId.toString());
+                    member1.setMaxAge(30 * 24 * 60 * 60);
                     response.addCookie(wxInfo);
+                    response.addCookie(member1);
+                    response.addCookie(sex);
+                    response.addCookie(memberName);
+                    response.addCookie(birth);
+                    response.addCookie(image);
+                    response.addCookie(telephone);
                     response.addCookie(access_token);
                     response.addCookie(refresh_token);
                     ModelAndView modelAndView = new ModelAndView("wap/mycenter.html");

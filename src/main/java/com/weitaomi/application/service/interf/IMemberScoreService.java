@@ -5,6 +5,7 @@ import com.weitaomi.application.model.bean.MemberScoreFlow;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by supumall on 2016/7/8.
@@ -34,5 +35,11 @@ public interface IMemberScoreService {
      */
     public MemberScore getMemberScoreById(Long memberId);
 
+    /**
+     * 获取用户可用余额和公众号信息
+     * @param memberId
+     * @return
+     */
+    Map getAvaliableScoreAndWxInfo(long memberId);
     Integer updateAvaliableScore();
 }

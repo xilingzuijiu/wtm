@@ -12,21 +12,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0" name="viewport" />
     <title>首页</title>
-    <link rel="stylesheet" href="../../code/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../code/css/bootstrap-theme.min.css">
-    <link href="../../code/css/base.css" rel="stylesheet" type="text/css"/>
-    <link href="../../code/css/wapstyle.css" rel="stylesheet" type="text/css"/>
+    <link href="../../code/css/common.css" rel="stylesheet" type="text/css"/>
     <script src="../../code/js/wap/common.js"></script>
+    <script src="../../code/js/wap/daysign.js"></script>
     <script>
         var u = navigator.userAgent;
         var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;//android终端
         var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);// ios终端
         $(document).ready(function () {
             $(".owner img").click(function(){
-                location.href="mycenter.html";
+                location.href="/frontPage/wap/mycenter.html";
             })
-            var index=0;//index只是定义的一个变量，可以是任意名称。
             updateMyscore();
+            $(".ownername>span").text(decodeURI($.cookie("memberName")))
+            var imageUrl=$.cookie("imageUrl");
+            $(".owner img").attr("src",imageUrl);
+            //banner图
+            var index=0;
             var liwidth=$(document.body).width();
             var leftwidth=liwidth*2.5%
                     console.log(leftwidth);
@@ -44,12 +46,18 @@
                 }
                 $(".homebanner ul").animate({right: -index * liwi},400);
             }
+            //钱包刷新
             setInterval(show,2000);
             getLocation();
             $(".money").click(function (){
-                updateMyscore()
+                updateMyscore();
+                $("#prompt").fadeIn(500);
+                $("#prompt").text("刷新成功");
+                $('#prompt').delay(600).fadeOut(350);
             })
-//            document.addEventListener('touchstart', touchStart);
+            $("#bannerinvite").click(function(){
+                location.href="../invite.html?memberId="+ $.cookie('memberId');
+            })
         })
     </script>
 </head>
@@ -57,34 +65,34 @@
 <header>
     <div class="adress">
         <span class="glyphicon glyphicon-map-marker"></span>
-        <p id="addressname">俄罗斯</p>
+        <p id="addressname">中国</p>
     </div>
     <div class="owner">
-        <img class="photo" src="../../code/img/MainViewImgae/women.jpg"/>
+        <img class="photo" src=""/>
         <div class="ownerdetail">
-            <h3 class="ownername"><span>黎沙</span>一款玩着就会赚钱的APP一款玩着就会赚钱的APP</h3>
+            <h3 class="ownername"><span>微淘米</span>一款玩就可以赚钱的APP</h3>
         </div>
         <div class="money">
-            <p><span>38.0</span>米<br/>我的钱包</p>
+            <p><span>0</span>米<br/>我的钱包</p>
         </div>
     </div>
 </header>
 <div class="homebanner swiper-container">
     <ul class="swiper-wrapper">
         <li class="swiper-slide">
-            <a href="rewards.html"> <img src="../../code/img/fahongbao.png"/></a>
+            <img class="signday" src="../../code/img/fahongbao.png"/>
         </li>
         <li class="swiper-slide">
-            <a href="myinvite.html"><img src="../../code/img/yaohaoyou.png"/></a>
+            <img id="bannerinvite" src="../../code/img/yaohaoyou.png"/>
         </li>
         <li class="swiper-slide">
-            <a href="rewards.html"><img src="../../code/img/fahongbao.png"/></a>
+            <img  class="signday" src="../../code/img/fahongbao.png"/>
         </li>
     </ul>
 </div>
 <ul class="row indexlist">
     <li class="col-xs-4">
-        <a class="thumbnail" href="readlist.html">
+        <a class="thumbnail" href="/frontPage/wap/readlist.html">
             <img src="../../code/img/MainViewImgae/read.png" >
             <div class="caption">
                 <h3>文章列表</h3>
@@ -92,7 +100,7 @@
         </a>
     </li>
     <li class="col-xs-4">
-        <a class="thumbnail" href="gongzhonghao.html">
+        <a class="thumbnail" href="/frontPage/wap/gongzhonghao.html">
             <img src="../../code/img/MainViewImgae/attention.png" >
             <div class="caption">
                 <h3>关注公众号</h3>
@@ -100,7 +108,7 @@
         </a>
     </li>
     <li class="col-xs-4">
-        <a class="thumbnail" href="pursewithdraw.html">
+        <a class="thumbnail" href="/frontPage/wap/pursewithdraw.html">
             <img src="../../code/img/MainViewImgae/mymoney.png" >
             <div class="caption">
                 <h3>钱包提现</h3>
@@ -108,15 +116,7 @@
         </a>
     </li>
     <li class="col-xs-4">
-        <a class="thumbnail" href="rewards.html">
-            <img src="../../code/img/MainViewImgae/new.png" >
-            <div class="caption">
-                <h3>任务奖励</h3>
-            </div>
-        </a>
-    </li>
-    <li class="col-xs-4">
-        <a class="thumbnail" href="mycenter.html">
+        <a class="thumbnail" href="/frontPage/wap/mycenter.html">
             <img src="../../code/img/MainViewImgae/person.png" >
             <div class="caption">
                 <h3>个人中心</h3>
@@ -124,23 +124,32 @@
         </a>
     </li>
     <li class="col-xs-4">
-        <a class="thumbnail" href="invitefriend.html">
+        <a class="thumbnail" href="/frontPage/wap/testrecord.html">
+            <img src="../../code/img/MainViewImgae/about.png" >
+            <div class="caption">
+                <h3>任务记录</h3>
+            </div>
+        </a>
+    </li>
+
+    <li class="col-xs-4">
+        <a class="thumbnail" href="/frontPage/wap/invitefriend.html">
             <img src="../../code/img/MainViewImgae/friend.png" >
             <div class="caption">
                 <h3>邀请好友</h3>
             </div>
         </a>
     </li>
-    <li class="col-xs-4">
-        <a class="thumbnail" href="question.html">
-            <img src="../../code/img/MainViewImgae/tasknotes.png" >
+    <li class="col-xs-4 signday">
+        <a class="thumbnail">
+            <img src="../../code/img/MainViewImgae/new.png" >
             <div class="caption">
-                <h3>常见问题</h3>
+                <h3>每日签到</h3>
             </div>
         </a>
     </li>
     <li class="col-xs-4">
-        <a class="thumbnail" href="rewardrules.html">
+        <a class="thumbnail" href="/frontPage/wap/rewardrules.html">
             <img src="../../code/img/MainViewImgae/help.png" >
             <div class="caption">
                 <h3>奖励规则</h3>
@@ -148,13 +157,20 @@
         </a>
     </li>
     <li class="col-xs-4">
-        <a class="thumbnail" href="testrecord.html">
-            <img src="../../code/img/MainViewImgae/about.png" >
+        <a class="thumbnail" href="/frontPage/wap/question.html">
+            <img src="../../code/img/MainViewImgae/tasknotes.png" >
             <div class="caption">
-                <h3>任务记录</h3>
+                <h3>常见问题</h3>
             </div>
         </a>
     </li>
+
+
 </ul>
+<div class="daysignbox">
+    <img class="daysign" src="../../code/img/MainViewImgae/abputsign2.png"/>
+    <img class="signbutton" src=""/>
+</div>
+<div id="prompt"></div>
 </body>
 </html>

@@ -16,7 +16,7 @@ public interface IMemberService {
      * @param registerMsg
      * @return
      */
-   public Boolean register(RegisterMsg registerMsg);
+   public MemberInfoDto register(RegisterMsg registerMsg);
 
     /**
      * 获取验证码

@@ -17,9 +17,8 @@ var enchashment={
                 var data=eval(params)
                 var errorCode=data.errorCode
                 if (errorCode==0){
-                    Showbo.Msg.alert("提现申请成功", function () {
+                    alert("提现申请成功")
                         location.reload()
-                    })
                 } else if (errorCode==4){
                     alert(data.message);
                         location.reload()
@@ -79,4 +78,24 @@ function Approve(accountNumber,accountName,amount,payType,memberId,remark){
     this.payType=payType
     this.memberId=memberId
     this.remark=remark
+}
+
+function initilizePage(){
+    $.ajax({
+        url:"/pc/admin/member/getAvaliableScoreAndWxInfo",
+        type:"post",
+        beforeSend: function (XMLHttpRequest) {
+            enchashment.getMemberRequestHeaderMsg(XMLHttpRequest)
+        } ,
+        success: function (params) {
+            var data=eval(params)
+            var errorCode=data.errorCode
+            if (errorCode==0){
+                $("#cashon span").text((data.data.avaliableScore/100).toFixed(2))
+                $("#cashaccount").text(data.data.nickname)
+            } else if (errorCode==4){
+                alert(data.message);
+            }
+        }
+    })
 }

@@ -64,4 +64,7 @@
             </trim>
         </trim>
     </select>
+    <select id="getAvaliableScoreAndWxInfo" resultType="java.util.Map">
+        select s.avaliableScore,l.nickname from wtm_member_score s LEFT JOIN wtm_third_login l ON s.memberId=l.memberId WHERE s.memberId=#{memberId};
+    </select>
 </mapper>

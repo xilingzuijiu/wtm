@@ -11,6 +11,7 @@ import com.weitaomi.systemconfig.exception.BusinessException;
 import com.weitaomi.systemconfig.exception.InfoException;
 import com.weitaomi.systemconfig.util.DateUtils;
 import com.weitaomi.systemconfig.util.PropertiesUtil;
+import com.weitaomi.systemconfig.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by supumall on 2016/7/8.
@@ -203,6 +205,15 @@ public class MemberScoreService implements IMemberScoreService {
         MemberScore memberScore = memberScoreMapper.getMemberScoreByMemberId(memberId);
         memberScoreMapper.updateOneAvaliableMemberScore(memberId,DateUtils.getUnixTimestamp(DateUtils.date2Str(new Date(),DateUtils.yyyyMMdd),DateUtils.yyyyMMdd)-7*24*60*60);
         return memberScore;
+    }
+
+    @Override
+    public Map getAvaliableScoreAndWxInfo(long memberId) {
+        Map map=memberScoreMapper.getAvaliableScoreAndWxInfo(memberId);
+        if (StringUtil.isEmpty((String)map.get("nickname"))){
+            throw new InfoException("未获取到微信信息，请绑定微信或者联系客服人员");
+        }
+        return map;
     }
 
     @Override

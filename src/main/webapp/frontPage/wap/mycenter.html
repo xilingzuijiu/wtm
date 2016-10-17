@@ -109,6 +109,7 @@
         }
         function initilizePage(){
             if($.cookie("memberId")==null||$.cookie("memberId")==undefined){
+                console.log("获取cookie内容失败:"+$.cookie("memberId"))
                     alert("登录超时，请重新登录");
                     location.href="/frontPage/wap/login.html"
             }
@@ -133,9 +134,13 @@
                 $("#wechat>p").text("已绑定微信")
             }
         }
-        var getLocalTime=function(nS){
-            return new Date(parseInt(nS) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
+
+        function getLocalTime(nS) {
+            return new Date(parseInt(nS) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ').replace(/上午|下午/,'');
         }
+//        var getLocalTime=function(nS){
+//            return new Date(parseInt(nS) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
+//        }
     </script>
 </head>
 <body class="myinformation padding0">

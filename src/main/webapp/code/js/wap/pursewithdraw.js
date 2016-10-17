@@ -4,8 +4,8 @@
 
 var puser={
     purseDataDeal: function (data) {
-        $(".pursebag>h6>span").text(data.memberScore/100)
-        $(".pursebag>p>span").text(data.avaliableScore/100)
+        $(".pursebag>h6>span").text((data.memberScore/100).toFixed(2))
+        $(".pursebag>p>span").text((data.avaliableScore/100).toFixed(2))
     },
     getMemberRequestHeaderMsg:function(XMLHttpRequest){
     var memberId= $.cookie("memberId");

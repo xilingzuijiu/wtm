@@ -52,7 +52,7 @@ public class MemberService extends BaseService implements IMemberService {
 
     @Override
     @Transactional
-    public Boolean register(RegisterMsg registerMsg) {
+    public MemberInfoDto register(RegisterMsg registerMsg) {
         if (registerMsg == null || registerMsg.getMember() == null) {
             throw new BusinessException("注册参数不能为空");
         }
@@ -165,7 +165,8 @@ public class MemberService extends BaseService implements IMemberService {
             }
         }
         cacheService.setCacheByKey(registerKey,1,null);
-        return true;
+
+        return memberMapper.getMemberByTelephone(registerMsg.getMember().getTelephone());
     }
 
     @Override
@@ -201,7 +202,7 @@ public class MemberService extends BaseService implements IMemberService {
             throw new InfoException("用户信息为空");
         }
         member.setSex(thirdLogin.getSex());
-        if (thirdLogin.getImageFiles().contains("http")){
+        if (!StringUtil.isEmpty(thirdLogin.getImageFiles())&&thirdLogin.getImageFiles().contains("http")){
             member.setImageUrl(thirdLogin.getImageFiles());
         }
         memberMapper.updateByPrimaryKeySelective(member);
