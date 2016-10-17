@@ -61,7 +61,7 @@ function loadofficiallist(){
             var json = eval(params); //数组
             console.log("json数据为：" + params);
             console.log("memberId为"+$.cookie("memberId"));
-            if (json != null && json.errorCode == 0) {
+            if (json.data!= null && json.errorCode == 0) {
                 json.data.forEach(function(official){
                     var li = document.createElement("li");
                     li.className = "col-xs-4";
@@ -88,6 +88,8 @@ function loadofficiallist(){
                     document.getElementsByTagName('ul')[0].appendChild(li);//动态添加文章（li标签）
                     var officialUrl=hashMap.Get(li.id);
                 })
+            }else{
+                $(".nullp").css("display","block");
             }
         }
     })

@@ -232,9 +232,9 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
 .wordpage{font-size:3rem;width:80%;overflow:hidden;margin:auto;text-align:center;color:#68c1f4;padding:2em 0 2.5em 0;background:url("../img/loginway.png") no-repeat center bottom;background-size:100%;}
 .wordpage span{color:#fa4a18;}
 .wxjump{display:block;margin:auto;padding-top:2em;width:13%;}
-#prompt{display:none;position:absolute;left:35%;top:80%;border-radius:0.5em;-webkit-border-radius:0.5em;-moz-border-radius:0.5em;
+#prompt{display:none;position:absolute;left:40%;top:80%;border-radius:0.5em;-webkit-border-radius:0.5em;-moz-border-radius:0.5em;
     -ms-border-radius:0.5em;-o-border-radius:0.5em;padding:0.5em 1em;background:#333;text-align:center;opacity:0.8;
-    color:#fff;margin:auto;width:7em;line-height:1.5;}
+    color:#fff;margin:auto;width:7em;line-height:1.5;font-size:2rem;}
 /*注册页面样式---------------------------------------------------------------------------------*/
 .registerpage{font-size:5rem;color:#353535;font-weight:500;text-align:center;margin-bottom:2em;margin-top:1.5em;}
 #registerForm input{display:block;border:#d33711 1px solid;width:80%;box-sizing:border-box;margin:auto;height:2.7em;
@@ -293,7 +293,7 @@ ol li{text-indent:0;}
 
 @media all and (min-width:800px){
     header{height:33em;}
-    .adress{padding-bottom:4em;padding-top:0.8em;}
+    .adress{padding-bottom:2em;padding-top:0.8em;}
     .adress span{font-size:5.5rem;padding-bottom:0.3em;}
     .adress p{font-size:3.5rem;}
     .adress #adressname{font-size:2.5em;}
@@ -429,6 +429,7 @@ ol li{text-indent:0;}
     .loginbutton{padding:0.6em 0 !important;margin-top:4em !important;}
     .wordpage{font-size:4.5rem;padding:2em 0 2.5em 0;}
     .wxjump{padding-top:2em;}
+    #prompt{left:40%;padding:0.5em 1em;width:7em;font-size:3rem;}
     /*注册页面样式---------------------------------------------------------------------------------*/
     .registerpage{font-size:6.5rem;margin-bottom:2em;margin-top:1.5em;}
     #registerForm input{height:2.7em;margin-bottom:0.9em;font-size:4.5rem;padding-left:13%;}
@@ -605,6 +606,7 @@ ol li{text-indent:0;}
     .loginbutton{padding:0.6em 0 !important;margin-top:3em !important;}
     .wordpage{font-size:2.2rem;padding:1.5em 0 2.5em 0;}
     .wxjump{padding-top:1.5em;}
+    #prompt{left:40%;padding:0.5em 1em;font-size:1.8rem;}
     /*注册页面样式---------------------------------------------------------------------------------*/
     .registerpage{font-size:3.5rem;margin-bottom:1.8em;margin-top:1.2em;}
     #registerForm input{height:2.5em;margin-bottom:0.9em;font-size:2.8rem;padding-left:13%;}
@@ -638,7 +640,9 @@ ol li{text-indent:0;}
 }
 @media screen and (min-width:415px) and (max-width:639px){
     header{height:15em;margin-bottom:1em;}
-    .adress{padding-bottom:1.1em;}
+    .adress{padding-bottom:0.8em;}
+    .adress span{font-size:2.8rem;}
+    .adress p{font-size:2rem;}
     .ownerdetail{padding-left:3%;}
     .ownerdetail .ownername{font-size:1.2em;width:12em;}
     .ownerdetail span{font-size:1.5em;line-height:1.7em;}
@@ -780,6 +784,7 @@ ol li{text-indent:0;}
     .loginbutton{padding:0.6em 0 !important;margin-top:3em !important;}
     .wordpage{font-size:1.9rem;padding:1.5em 0 2.5em 0;}
     .wxjump{padding-top:1.5em;}
+    #prompt{left:40%;padding:0.5em 1em;font-size:1.5rem;}
     /*注册页面样式---------------------------------------------------------------------------------*/
     .registerpage{font-size:3rem;margin-bottom:1.8em;margin-top:1.2em;}
     #registerForm input{height:2.5em;margin-bottom:0.9em;font-size:2.3rem;padding-left:13%;}
@@ -960,6 +965,7 @@ ol li{text-indent:0;}
     .loginbutton{padding:0.6em 0 !important;margin-top:3em !important;}
     .wordpage{font-size:1.8rem;padding:1.5em 0 2em 0;}
     .wxjump{padding-top:2.5em;}
+    #prompt{left:40%;padding:0.5em 1em;font-size:1.3rem;}
     /*注册页面样式---------------------------------------------------------------------------------*/
     .registerpage{font-size:2.8rem;margin-bottom:1.8em;margin-top:1.2em;}
     #registerForm input{height:2.5em;margin-bottom:0.9em;font-size:2rem;padding-left:11%;}
@@ -1139,6 +1145,7 @@ ol li{text-indent:0;}
     .loginbutton{padding:0.6em 0 !important;margin-top:3.5em !important;}
     .wordpage{font-size:1.7rem;padding:1.2em 0 1.7em 0;}
     .wxjump{padding-top:1.5em;}
+    #prompt{left:40%;padding:0.5em 1em;font-size:1.3rem;}
     /*注册页面样式---------------------------------------------------------------------------------*/
     .registerpage{font-size:2.7rem;margin-bottom:1.5em;margin-top:1em;}
     #registerForm input{height:2.5em;margin-bottom:0.9em;font-size:1.8rem;padding-left:11%;}
@@ -1178,7 +1185,7 @@ ol li{text-indent:0;}
     .adress p{font-size:1em;}
     .adress #adressname{font-size:1em;}
     .ownerdetail{padding-left:2.5%;}
-    .ownerdetail .ownername{font-size:1em;width:11em;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;}
+    .ownerdetail .ownername{font-size:1em;width:12em;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;}
     .ownerdetail span{font-size:1.7rem;line-height:1.8em;}
     .owner .money{padding:0.3em 2%;margin-top:0.2em;}
     .owner .money p{font-size:1em;}
@@ -1319,6 +1326,7 @@ ol li{text-indent:0;}
     .loginbutton{padding:0.6em 0 !important;margin-top:2.5em !important;}
     .wordpage{font-size:1.5rem;padding:1em 0 1.5em 0;}
     .wxjump{padding-top:1em;}
+    #prompt{left:40%;padding:0.5em 1em;font-size:1.1rem;}
     /*注册页面样式---------------------------------------------------------------------------------*/
     .registerpage{font-size:2.7rem;margin-bottom:1.5em;margin-top:1em;}
     #registerForm input{height:2.5em;margin-bottom:0.9em;font-size:1.5rem;padding-left:11%;}

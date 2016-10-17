@@ -56,7 +56,10 @@ function loadReadlist(){
             console.log("json数据为：" + params);
             console.log($.cookie("memberId"));
             if (json!=null&&json.errorCode==0){
-                total=json.data.total
+                total=json.data.total;
+                if(total<=0){
+                    $("body").text("暂时没有未完成阅读文章")
+                }
                 json.data.list.forEach(function (article) {
                     var li = document.createElement("li");
                     li.setAttribute("onClick", "articleSubmit(this)");
