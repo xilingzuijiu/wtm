@@ -65,26 +65,26 @@ $(function(){
                 var length=json.data.length;
                 if(length==1){
                     $("#Noone").css("display","table-cell");
-                    $("#Noone img").attr("src",'http://weitaomi.b0.upaiyun.com'+json.data[0].imageUrl);
+                    $("#Noone img").attr("src",json.data[0].imageUrl);
                     $("#Noone p").text(json.data[0].shareCounts+"米");
                     $("#Noone h6").text(json.data[0].memberName);
                 }else if(length==2){
                     $(".inviterank li:not('#Nothree')").css("display","table-cell");
                     for(var i=0;i<2;i++){
-                        $(".inviterank li").eq(i).find('img').attr("src",'http://weitaomi.b0.upaiyun.com'+json.data[1-i].imageUrl);
+                        $(".inviterank li").eq(i).find('img').attr("src",json.data[1-i].imageUrl);
                         $(".inviterank li").eq(i).find('p').text(json.data[1-i].shareCounts+"米");
                         $(".inviterank li").eq(i).find('h6').text(json.data[1-i].memberName);
                     }
                 }else{
                     $(".inviterank li").css("display","table-cell");
                     for(var i=0;i<3;i++){
-                        $("#Noone img").attr("src",'http://weitaomi.b0.upaiyun.com'+json.data[1].imageUrl);
+                        $("#Noone img").attr("src",json.data[1].imageUrl);
                         $("#Noone p").text(json.data[1].shareCounts+"米");
                         $("#Noone h6").text(json.data[1].memberName);
-                        $("#Notwo img").attr("src",'http://weitaomi.b0.upaiyun.com'+json.data[0].imageUrl);
+                        $("#Notwo img").attr("src",json.data[0].imageUrl);
                         $("#Notwo p").text(json.data[0].shareCounts+"米");
                         $("#Notwo h6").text(json.data[0].memberName);
-                        $("#Nothree img").attr("src",'http://weitaomi.b0.upaiyun.com'+json.data[2].imageUrl);
+                        $("#Nothree img").attr("src",json.data[2].imageUrl);
                         $("#Nothree p").text(json.data[2].shareCounts+"米");
                         $("#Nothree h6").text(json.data[2].memberName);
                     }
@@ -101,7 +101,7 @@ $(function(){
                         document.body.appendChild(li);
                         document.getElementsByTagName('ul')[1].appendChild(li);
                         p.innerHTML="0"+(j+1);
-                        img.setAttribute('src','http://weitaomi.b0.upaiyun.com'+json.data[j].imageUrl);
+                        img.setAttribute('src',json.data[j].imageUrl);
                         h6.innerHTML=json.data[j].shareCounts;
                         h5.innerHTML=json.data[j].memberName;
                     }

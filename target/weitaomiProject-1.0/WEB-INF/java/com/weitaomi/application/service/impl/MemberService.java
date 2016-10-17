@@ -7,6 +7,7 @@ import com.weitaomi.application.service.interf.ICacheService;
 import com.weitaomi.application.service.interf.IMemberScoreService;
 import com.weitaomi.application.service.interf.IMemberService;
 import com.weitaomi.application.service.interf.IMemberTaskHistoryService;
+import com.weitaomi.systemconfig.constant.SystemConfig;
 import com.weitaomi.systemconfig.exception.BusinessException;
 import com.weitaomi.systemconfig.exception.InfoException;
 import com.weitaomi.systemconfig.util.*;
@@ -126,7 +127,12 @@ public class MemberService extends BaseService implements IMemberService {
             newMemberId = memberTemp.getId();
             String code = StringUtil.toSerialNumber(newMemberId);
             if (!StringUtil.isEmpty(thirdLogin.getImageFiles())) {
-                String imageUrl = this.uploadShowImage(newMemberId, thirdLogin.getImageFiles(), "jpg");
+                String imageUrl="";
+                if (memberTemp.getSource().equals("WAP")){
+                    imageUrl=thirdLogin.getImageFiles();
+                }else {
+                    imageUrl = this.uploadShowImage(newMemberId, thirdLogin.getImageFiles(), "jpg");
+                }
                 memberTemp.setImageUrl(imageUrl);
             }
             memberTemp.setInvitedCode(code);
@@ -195,6 +201,9 @@ public class MemberService extends BaseService implements IMemberService {
             throw new InfoException("用户信息为空");
         }
         member.setSex(thirdLogin.getSex());
+        if (thirdLogin.getImageFiles().contains("http")){
+            member.setImageUrl(thirdLogin.getImageFiles());
+        }
         memberMapper.updateByPrimaryKeySelective(member);
         Integer num = thirdLoginMapper.insertSelective(thirdLogin);
         return num > 0 ? true : false;
@@ -381,9 +390,9 @@ public class MemberService extends BaseService implements IMemberService {
     public String uploadShowImage(Long memberId, String imageFiles, String imageType) {
         String imageUrl = "/member/showImage/" + memberId + DateUtils.getUnixTimestamp() + "." + imageType;
         if (super.uploadImage(imageUrl, imageFiles)) {
-            memberMapper.upLoadMemberShowImage(memberId, imageUrl);
+            memberMapper.upLoadMemberShowImage(memberId, SystemConfig.UPYUN_PREFIX+imageUrl);
         }
-        return imageUrl;
+        return SystemConfig.UPYUN_PREFIX+imageUrl;
     }
 
     @Override

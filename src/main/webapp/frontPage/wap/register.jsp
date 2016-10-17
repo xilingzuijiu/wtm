@@ -96,6 +96,7 @@
     String city=(String)request.getAttribute("city");
     String province=(String)request.getAttribute("province");
     String unionid=(String)request.getAttribute("unionid");
+    String headimgurl=(String)request.getAttribute("headimgurl");
 %>
 <h3 class="registerpage">微淘米账户注册表</h3>
 <form id="registerForm">
@@ -113,6 +114,7 @@
     <input type="hidden" name="city" value="<%= city %>" >
     <input type="hidden" name="openid" value="<%= openid %>" >
     <input type="hidden" name="sex" value="<%= sex %>" >
+    <input type="hidden" name="imageFiles" value="<%= headimgurl %>" >
 
 </form>
 <a id="register" class="payconfirm"> 注&nbsp&nbsp册</a>

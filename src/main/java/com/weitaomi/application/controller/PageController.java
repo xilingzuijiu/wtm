@@ -153,21 +153,30 @@ public class PageController extends BaseController {
             userInfoRequestParams[2] = new BasicNameValuePair("lang", "zh_CN");
             String userInfo = HttpRequestUtils.get("https://api.weixin.qq.com/sns/userinfo", userInfoRequestParams);
             Map<String, String> userInfoParams = (Map<String, String>) JSONObject.parse(userInfo);
-            Long memberId = thirdLoginMapper.getMemberIdByUnionId(userInfoParams.get("unionid"));
-            if (memberId == null) {
-                MemberInfoDto memberInfoDto = memberService.thirdPlatLogin(userInfoParams.get("unionid"), 0);
-                Cookie thirdLogin = new Cookie("thirdLogin", URLEncoder.encode(JSON.toJSONString(memberInfoDto.getThirdLogin()), "UTF-8"));
-                thirdLogin.setMaxAge(30 * 24 * 60 * 60);
-                Cookie access_token = new Cookie("access_token", hashMap.get("access_token"));
-                access_token.setMaxAge(2 * 60 * 60);
-                Cookie refresh_token = new Cookie("refresh_token", hashMap.get("refresh_token"));
-                refresh_token.setMaxAge(30 * 24 * 60 * 60);
-                response.addCookie(thirdLogin);
-                response.addCookie(access_token);
-                response.addCookie(refresh_token);
-                ModelAndView modelAndView = new ModelAndView("wap/mycenter.html");
+            Long memberIdTemp = thirdLoginMapper.getMemberIdByUnionId(userInfoParams.get("unionid"));
+            if (memberIdTemp == null) {
+                Long memberId=Long.valueOf(request.getParameter("memberId"));
+                ThirdLogin thirdLogin=new ThirdLogin();
+                thirdLogin.setOpenId(userInfoParams.get("openid"));
+                thirdLogin.setUnionId(userInfoParams.get("unionid"));
+                thirdLogin.setSex(Integer.valueOf(userInfoParams.get("sex")));
+                thirdLogin.setNickname(userInfoParams.get("nickname"));
+                thirdLogin.setImageFiles(userInfoParams.get("headimgurl"));
+                boolean isSuccess= memberService.bindThirdPlat(memberId, thirdLogin);
+                if (isSuccess) {
+                    Cookie wxInfo = new Cookie("thirdLogin", URLEncoder.encode(JSON.toJSONString(thirdLogin), "UTF-8"));
+                    wxInfo.setMaxAge(30 * 24 * 60 * 60);
+                    Cookie access_token = new Cookie("access_token", hashMap.get("access_token"));
+                    access_token.setMaxAge(2 * 60 * 60);
+                    Cookie refresh_token = new Cookie("refresh_token", hashMap.get("refresh_token"));
+                    refresh_token.setMaxAge(30 * 24 * 60 * 60);
+                    response.addCookie(wxInfo);
+                    response.addCookie(access_token);
+                    response.addCookie(refresh_token);
+                    ModelAndView modelAndView = new ModelAndView("wap/mycenter.html");
 //                request.getRequestDispatcher("/frontPage/wap/register.jsp").forward(request,response);
-                return modelAndView;
+                    return modelAndView;
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();

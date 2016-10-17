@@ -81,7 +81,7 @@
             })
             $("#wechat").click(function(){
                 if ($("#wechat>p").text()=="未绑定微信"){
-                    location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx2282c57276f83fad&redirect_uri=http%3a%2f%2fwww.weitaomi.cn%2fblindWXOAuth&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+                    location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx2282c57276f83fad&redirect_uri=http%3a%2f%2fwww.weitaomi.cn%2fblindWXOAuth%3fmemberId%3d"+ $.cookie("memberId")+"&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
                 }
             })
         })

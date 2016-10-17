@@ -11,6 +11,7 @@ import com.weitaomi.application.model.mapper.*;
 import com.weitaomi.application.service.interf.IMemberScoreService;
 import com.weitaomi.application.service.interf.IMemberTaskHistoryService;
 import com.weitaomi.application.service.interf.IMemberTaskPoolService;
+import com.weitaomi.systemconfig.constant.SystemConfig;
 import com.weitaomi.systemconfig.exception.BusinessException;
 import com.weitaomi.systemconfig.exception.InfoException;
 import com.weitaomi.systemconfig.util.DateUtils;
@@ -123,7 +124,7 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
             String imageUrl = "/article/showImage/" + DateUtils.getUnixTimestamp() + "."+image.substring(image.indexOf("image/")+6,image.indexOf("base64")-1);
             this.uploadImage(imageUrl,image.substring(image.indexOf("base64")+7));
             if (!StringUtil.isEmpty(imageUrl)){
-                article.setImageUrl(imageUrl);
+                article.setImageUrl(SystemConfig.UPYUN_PREFIX+imageUrl);
             }
         }
         article.setCreateTime(DateUtils.getUnixTimestamp());

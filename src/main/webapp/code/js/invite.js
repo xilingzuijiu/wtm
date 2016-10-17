@@ -137,12 +137,13 @@ function WxReuqestObj(obj,invtedCode,identifyCode,thirdLoginInfo){
     this.thirdLogin=thirdLoginInfo
     this.flag=1
 }
-function ThirdLoginInfo(openid,unionid,sex,nickname){
+function ThirdLoginInfo(openid,unionid,sex,nickname,imageFiles){
     this.type=0
     this.nickname=nickname
     this.sex=sex
     this.unionId=unionid
     this.openId=openid
+    this.imageFiles=imageFiles
 }
 function getWxRegeisterParams(requestObj){
     var invitedCode = requestObj.invitedCode
@@ -150,6 +151,7 @@ function getWxRegeisterParams(requestObj){
     var openid=requestObj.openid
     var province=requestObj.province
     var unionid=requestObj.unionid
+    var imageFiles=requestObj.imageFiles
     var city=requestObj.city
     var nickname=requestObj.memberName
     var sex=requestObj.sex
@@ -157,7 +159,8 @@ function getWxRegeisterParams(requestObj){
     delete requestObj.identifyCode
     delete requestObj.unionid
     delete requestObj.openid
-    var thirdLoginInfo=new ThirdLoginInfo(openid,unionid,sex,nickname)
+    delete requestObj.imageFiles
+    var thirdLoginInfo=new ThirdLoginInfo(openid,unionid,sex,nickname,imageFiles)
     var obj=new WxReuqestObj(requestObj,invitedCode,identifyCode,thirdLoginInfo)
     return JSON.stringify(obj)
 }

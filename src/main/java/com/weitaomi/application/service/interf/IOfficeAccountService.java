@@ -44,7 +44,6 @@ public interface IOfficeAccountService {
      * @param officialAccountMsg
      * @return
      */
-    @Transactional
     boolean markAddRecord(Long memberId, OfficialAccountMsg officialAccountMsg);
 
     /**

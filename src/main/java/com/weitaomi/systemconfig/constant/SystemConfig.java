@@ -5,4 +5,5 @@ package com.weitaomi.systemconfig.constant;
  */
 public class SystemConfig {
     public static Integer TASK_CACHE_TIME=60*60;
+    public static String UPYUN_PREFIX="http://weitaomi.b0.upaiyun.com";
 }

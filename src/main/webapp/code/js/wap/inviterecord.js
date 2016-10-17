@@ -15,7 +15,7 @@ $(function() {
                 json.data.forEach(function (invitelist) {
                     var li = document.createElement("li");
                     var img = document.createElement('img');
-                    img.setAttribute("src", 'http://weitaomi.b0.upaiyun.com' + invitelist.imageUrl);
+                    img.setAttribute("src",  invitelist.imageUrl);
                     var h5 = document.createElement('h5');
                     h5.innerHTML = invitelist.memberName;
                     var p = document.createElement('p');
