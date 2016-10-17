@@ -55,11 +55,8 @@ function loadReadlist(){
             var json = eval(params); //数组
             console.log("json数据为：" + params);
             console.log($.cookie("memberId"));
-            if (json!=null&&json.errorCode==0){
+            if (json.data.list!=null&&json.errorCode==0){
                 total=json.data.total;
-                if(total<=0){
-                    $("body").text("暂时没有未完成阅读文章")
-                }
                 json.data.list.forEach(function (article) {
                     var li = document.createElement("li");
                     li.setAttribute("onClick", "articleSubmit(this)");
@@ -96,6 +93,8 @@ function loadReadlist(){
                     document.body.appendChild(li);
                     document.getElementsByTagName('ul')[0].appendChild(li);//动态添加文章（li标签）
                 })
+            }else if(json.data.list==null&&json.errorCode==0){
+                $(".nullp").css("display","block");
             }
             else
             {
