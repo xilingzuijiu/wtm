@@ -9,7 +9,7 @@ var hashMap = {
 }
 var total=0;
 var count=1;
-var pageSize=8;
+var pageSize=14;
 $(function(){
     var thirdLogin=$.cookie("thirdLogin");
     if (thirdLogin==null||thirdLogin==undefined||thirdLogin.length<=0){
@@ -63,24 +63,24 @@ function loadReadlist(){
                     li.id = article.id;
                     var div1 = document.createElement('div');
                     hashMap.Set(li.id, article.url);
-                    div1.className = "col-xs-3 listimg";
+                    div1.className = "col-xs-2 listimg";
                     var img = document.createElement('img');
                     img.setAttribute("src",article.imageUrl);
                     div1.appendChild(img);
                     var div2 = document.createElement('div');
-                    div2.className = "readdetails col-xs-6";
+                    div2.className = "readdetails col-xs-7";
                     var h5 = document.createElement('h5');
                     h5.className="articltitle";
                     h5.innerHTML = article.title;
-                    var h6 = document.createElement('h6');
-                    h6.innerHTML = article.articleAbstract;
+                    //var h6 = document.createElement('h6');
+                    //h6.innerHTML = article.articleAbstract;
                     var p = document.createElement('p');
                     p.innerHTML = "剩余阅读数："
                     var span = document.createElement('span');
                     span.innerHTML = article.readIncreaseNumber;//阅读数名称修改
                     p.appendChild(span);
                     div2.appendChild(h5);
-                    div2.appendChild(h6);
+                    //div2.appendChild(h6);
                     div2.appendChild(p);
                     var div3 = document.createElement('div');
                     div3.className = "checkanniu col-xs-3";

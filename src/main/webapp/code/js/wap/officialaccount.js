@@ -69,7 +69,8 @@ function loadofficiallist(){
                     hashMap.Set(li.id, official.addUrl);
                     li.setAttribute("onClick","officialSubmit(this)");
                     var img = document.createElement('img');
-                    img.setAttribute("src", official.imageUrl)
+                    img.setAttribute("src", official.imageUrl);
+
                     var h5 = document.createElement('h5');
                     h5.innerHTML = official.username;
                     var p = document.createElement('p');
@@ -79,7 +80,7 @@ function loadofficiallist(){
                     p.appendChild(span);
                     var input = document.createElement('input');
                     input.setAttribute("type", "button");
-                    input.setAttribute("value", "求关注");
+                    input.setAttribute("value", "点头像关注");
                     li.appendChild(img);
                     li.appendChild(h5);
                     li.appendChild(p);
@@ -94,6 +95,7 @@ function loadofficiallist(){
         }
     })
 }
+
 var officialSubmit = function(obj){
 //            var unionId=JSON.parse($.cookie("thirdLogin")).unionId;
     var originId=obj.getAttribute("id");
