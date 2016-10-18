@@ -7,9 +7,9 @@ html{font-size:62.5% !important;}
 .margin0{margin:0 !important;}
 .fl{float:left !important;}
 header{background:url("../img/MainViewImgae/top.png") no-repeat center top;height:23em;background-size:100%;padding:0 !important;overflow:hidden;margin-bottom:1.5em;}
-.adress{color:#fff;text-align:center;width:20%;padding-top:0.5em;padding-bottom:2em;}
-.adress span{font-size:4rem;}
-.adress p{font-size:2.5rem;line-height:1.7;}
+.adress{color:#fff;text-align:center;width:20%;padding-top:1.5em;padding-bottom:2.5em;}
+.adress span{font-size:4rem;padding-left:0.5em;}
+.adress p{font-size:2.5rem;line-height:1.7;float:right;}
 .adress #adressname{font-size:1.5em;}
 .owner{overflow:hidden;width:100%;}
 .owner .photo{margin-left:4%;float:left;width:17%;border-radius:60%;-webkit-border-radius:60%;-moz-border-radius:60%;
@@ -18,9 +18,10 @@ header{background:url("../img/MainViewImgae/top.png") no-repeat center top;heigh
 .ownerdetail .ownername{font-size:2.5rem;color:#ffe7b9;width:13em;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;}
 .ownerdetail span{font-size:4rem;color:#ffe7b9;display:block;line-height:2;}
 .owner .money{color:#fff;text-align:right;padding-right:3%;padding:1.1em 3%;
-    background:url("../img/MainViewImgae/stripes.png") no-repeat right center;background-size:100%;float:right;margin-top:1.5em;}
-.owner .money p{line-height:1.5em;font-size:2.4rem;}
+    background:url("../img/MainViewImgae/stripes5.png") no-repeat right center;background-size:100%;float:right;margin-top:1.5em;}
+.owner .money p{line-height:1.5em;font-size:2.4rem;text-align:center;}
 .owner .money span{font-size:2.9rem;}
+.mymoney{text-align:right !important;}
 .homebanner{position:relative;width:95%;margin:auto;height:18em;overflow:hidden;}
 .homebanner ul{overflow:hidden;position:absolute;right:0;top:0;}
 .homebanner ul li{float:right;}
@@ -80,8 +81,11 @@ header{background:url("../img/MainViewImgae/top.png") no-repeat center top;heigh
 .taskdetailsbody{border-top:#eee 1px solid;border-bottom:#eee 1px solid;}
 .taskdetailsbody li{border-bottom:#eee 1px solid;margin:0 2em;overflow:hidden;}
 .taskdetailsbody li:last-child{border:none;}
-.taskdetailsbody li h6{font-size:3.5rem;color:#666;font-weight:normal;float:left;line-height:3;}
-.taskdetailsbody li p{font-size:3rem;color:#666;float:right;line-height:3.3;}
+.taskdetailsbody li h6{font-size:3.5rem;color:#666;font-weight:normal;line-height:3;}
+.taskdetailsbody li .tasktimehead{float:left;}
+.taskdetailsbody li p{font-size:3rem;color:#666;line-height:3.3;}
+.taskdetailsbody li .tasktime{float:right;}
+.taskdetailsbody li .taskname{line-height:2;}
 /*钱包提现样式---------------------------------------------------------------------------------*/
 .pursetop{font-size:3rem;line-height:96px;padding-right:30px;text-align:right;}
 .pursetop a{-webkit-tap-highlight-color: rgba(0,0,0,0);-webkit-tap-highlight-color: transparent;outline:none;}
@@ -188,7 +192,7 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
 .inviterankxs li:last-child{border-bottom:#eee 1px solid;}
 .inviterankxs li img{height:5em;border-radius:50%;display:table-cell;}
 .inviterankxs li p,.inviterankxs li h5,.inviterankxs li h6{display:table-cell;font-size:2.5rem;font-weight:normal;width:10%;vertical-align:middle;}
-.inviterankxs li h5{width:64%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.inviterankxs li h5{width:63%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 /*邀请记录样式---------------------------------------------------------------------------------*/
 .inviterecord{}
 .inviterecord li{overflow:hidden;padding:0 1em;height:7em;}
@@ -293,7 +297,7 @@ ol li{text-indent:0;}
 
 @media all and (min-width:800px){
     header{height:33em;}
-    .adress{padding-bottom:2em;padding-top:0.8em;}
+    .adress{padding-bottom:3em;padding-top:2.5em;}
     .adress span{font-size:5.5rem;padding-bottom:0.3em;}
     .adress p{font-size:3.5rem;}
     .adress #adressname{font-size:2.5em;}
@@ -465,6 +469,7 @@ ol li{text-indent:0;}
 @media screen and (min-width:640px) and (max-width:719px){
     header{height:20em;margin-bottom:0.3em;}
     .adress p{font-size:2rem;}
+    .adress span{font-size:2.8rem;margin-left:0.5em;}
     .ownerdetail{padding-left:2.5%;}
     .ownerdetail .ownername{font-size:1.5em;}
     .ownerdetail span{font-size:1.5em;}
@@ -640,12 +645,12 @@ ol li{text-indent:0;}
 }
 @media screen and (min-width:415px) and (max-width:639px){
     header{height:15em;margin-bottom:1em;}
-    .adress{padding-bottom:0.8em;}
-    .adress span{font-size:2.8rem;}
+    .adress{padding-bottom:2em;width:25%;padding-top:1em;}
+    .adress span{font-size:2.8rem;margin-left:0.3em;}
     .adress p{font-size:2rem;}
     .ownerdetail{padding-left:3%;}
     .ownerdetail .ownername{font-size:1.2em;width:12em;}
-    .ownerdetail span{font-size:1.5em;line-height:1.7em;}
+    .ownerdetail span{font-size:1.5em;line-height:2.2;}
     .owner .money{margin-top:0.3em;padding:0.7em 3%;}
     .owner .money p{font-size:1.7rem;}
     .owner .money span{font-size:2.1rem;}
@@ -820,16 +825,17 @@ ol li{text-indent:0;}
 @media screen and (min-width:376px) and (max-width:414px){
     .headerbox{padding:0 2.5em;}
     header{height:13em;margin-bottom:0.8em;}
-    .adress{padding-bottom:0.5em;}
-    .adress span{font-size:1.2em;}
-    .adress p{font-size:1em;}
+    .adress{padding-bottom:1.7em;padding-top:1em;}
+    .adress span{font-size:1.8rem;}
+    .adress p{font-size:1.5rem;}
     .adress #adressname{font-size:1em;}
-    .ownerdetail{padding-left:2.5%;}
-    .ownerdetail .ownername{font-size:1.6rem;width:12em;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;}
+    .ownerdetail{padding-left:2%;}
+    .ownerdetail .ownername{font-size:1.6rem;width:11.5em;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;}
     .ownerdetail span{font-size:2.1rem;line-height:2;}
+    .owner .photo{margin-left:2%;}
     .owner .money{padding:0.5em 3%;margin-top:0.4em;}
-    .owner .money p{font-size:1.55rem;}
-    .owner .money span{font-size:1.9rem;}
+    .owner .money p{font-size:1.5rem;}
+    .owner .money span{font-size:1.8rem;}
     /*.flexslider, .slides li{margin-top:0.5em;height:11.5em;}*/
     .homebanner{margin-top:0.5em;height:11em;}
     .indexlist{padding-bottom:0.5em;}
@@ -936,7 +942,7 @@ ol li{text-indent:0;}
     .inviterankxs li{padding:0.2em 1.3em;}
     .inviterankxs li img{height:3em;}
     .inviterankxs li p,.inviterankxs li h5,.inviterankxs li h6{font-size:1.8rem;}
-    .inviterankxs li h5{width:62%;}
+    .inviterankxs li h5{width:60%;}
     /*邀请记录样式---------------------------------------------------------------------------------*/
     .inviterecord li{padding:0 1em;height:4em;}
     .inviterecord li img{margin-top:0.38em;margin-right:1.3em;}
@@ -1000,13 +1006,13 @@ ol li{text-indent:0;}
 }
 @media screen and (min-width:321px) and (max-width:375px){
     header{height:11.3em;margin-bottom:0;}
-    .adress{padding-bottom:0.5em;}
+    .adress{padding-bottom:1.8em;padding-top:0.8em;}
     .adress span{font-size:1.2em}
     .adress p{font-size:1em;}
     .adress #adressname{font-size:1em;}
     .ownerdetail{padding-left:2.5%;}
-    .ownerdetail .ownername{font-size:1.4rem;width:12em;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;}
-    .ownerdetail span{font-size:1.8rem;line-height:1.8em;}
+    .ownerdetail .ownername{font-size:1.4rem;width:11.5em;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;}
+    .ownerdetail span{font-size:1.8rem;line-height:2.2;}
     .owner .money{padding:0.3em 2%;margin-top:0.2em;}
     .owner .money p{font-size:1em;}
     .owner .money span{font-size:1.1em;}
@@ -1116,7 +1122,7 @@ ol li{text-indent:0;}
     .inviterankxs li{padding:0.3em 1.3em;}
     .inviterankxs li img{height:2.8em;}
     .inviterankxs li p,.inviterankxs li h5,.inviterankxs li h6{font-size:1.6rem;}
-    .inviterankxs li h5{width:61%;}
+    .inviterankxs li h5{width:60%;}
     /*邀请记录样式---------------------------------------------------------------------------------*/
     .inviterecord li{padding:0 1em;height:3.8em;}
     .inviterecord li img{width:13%;margin-top:0.38em;margin-right:1.3em;}
@@ -1180,16 +1186,17 @@ ol li{text-indent:0;}
 }
 @media screen and (max-width:320px){
     header{height:10em;margin-bottom:0;}
-    .adress{padding-bottom:0.2em;}
+    .adress{width:25%;padding-bottom:1.5em;padding-top:1em;}
     .adress span{font-size:1.2em;}
     .adress p{font-size:1em;}
     .adress #adressname{font-size:1em;}
-    .ownerdetail{padding-left:2.5%;}
-    .ownerdetail .ownername{font-size:1em;width:12em;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;}
-    .ownerdetail span{font-size:1.7rem;line-height:1.8em;}
+    .ownerdetail{padding-left:2%;}
+    .ownerdetail .ownername{font-size:1.3rem;width:11.5em;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;}
+    .ownerdetail span{font-size:1.7rem;line-height:2;}
+    .owner .photo{margin-left:2%;}
     .owner .money{padding:0.3em 2%;margin-top:0.2em;}
-    .owner .money p{font-size:1em;}
-    .owner .money span{font-size:1.1em;}
+    .owner .money p{font-size:1.1rem;}
+    .owner .money span{font-size:1.4rem;}
     /*.flexslider, .slides li{margin-top:0.7em;height:9em;}*/
     .homebanner{margin-top:0.7em;height:8em;}
     .indexlist{padding-bottom:0;}
@@ -1297,7 +1304,7 @@ ol li{text-indent:0;}
     .inviterankxs li{padding:0.2em 1.2em;}
     .inviterankxs li img{height:2.5em;}
     .inviterankxs li p,.inviterankxs li h5,.inviterankxs li h6{font-size:1.5rem;}
-    .inviterankxs li h5{width:61%;}
+    .inviterankxs li h5{width:60%;text-align:left;}
     /*邀请记录样式---------------------------------------------------------------------------------*/
     .inviterecord li{padding:0 1em;height:3.8em;}
     .inviterecord li img{width:15%;margin-top:0.38em;margin-right:1em;}

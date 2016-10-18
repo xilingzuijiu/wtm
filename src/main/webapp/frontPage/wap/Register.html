@@ -4,6 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0" name="viewport" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="HandheldFriendly" content="true">
     <title>注册页面</title>
     <link href="../../code/css/base.css" rel="stylesheet" type="text/css"/>
     <link href="../../code/css/wapstyle.css" rel="stylesheet" type="text/css"/>
@@ -12,7 +14,6 @@
     <script type="text/javascript" src="../../code/js/invite.js"></script>
     <script>
         $(function(){
-
             $("#sendVerifyCode").click( function (){
                 var telephone = $("#telephone").val().trim();
                 if (telephone==null || !telephone.match(/^1\d{10}$/)){

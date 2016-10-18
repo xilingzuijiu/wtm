@@ -16,8 +16,8 @@ $(function(){
             var json=eval(params);
             if(json.data!=null&&json.errorCode==0){
                 $(".taskdetailsheader h5").text(json.data[0].taskName);
-                $(".taskdetailsheader h6").text(json.data[0].pointCount);
-                $(".taskdetailsbody .taskname").text(json.data[0].taskName);
+                $(".taskdetailsheader h6").text(json.data[0].pointCount+"米");
+                $(".taskdetailsbody .taskname").text(json.data[0].taskDesc);
                 var timestamp=json.data[0].createTime;
                 $(".taskdetailsbody .tasktime").html(format(timestamp));
             }else {
