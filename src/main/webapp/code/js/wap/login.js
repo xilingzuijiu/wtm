@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2016/10/17 0017.
- */
 $(function(){
     var stext;
     $(".wxjump").click(function(){
@@ -58,4 +55,9 @@ function fastalert(stext){
     $("#prompt").css("display", "block");
     $("#prompt").text(stext);
     $('#prompt').delay(800).fadeOut(350);
+}
+function initilizePage(){
+    if($.cookie("memberId")!=null&&$.cookie("memberId")!=undefined){
+        location.href="frontPage/wap/index.html"
+    }
 }

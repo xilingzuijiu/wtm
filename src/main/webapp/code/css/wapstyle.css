@@ -266,6 +266,7 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
 .information li:last-child{border:none !important;}
 .information li h6{font-size:2.6rem;line-height:2.2em;height:2.2em;float:left;font-weight:normal;}
 .information li p{float:right;overflow:hidden;font-size:2.2rem;line-height:2.6em;color:#999;text-align:right;}
+.information li p a{color:#999;}
 .selfinformation{overflow:hidden;}
 .selfinformation .photoimg{width:16%;float:left;}
 .selfinformation{padding:1em 2em;}
