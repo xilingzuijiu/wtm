@@ -84,7 +84,7 @@ function updateMyscore(){
             var json=eval(data)
             if(json.errorCode==0){
                 var obj=json.data
-                //$(".money>p>span").text(obj.memberScore)
+                $(".money>p>span").text(obj.memberScore.toFixed(2))
             }
         }
     })

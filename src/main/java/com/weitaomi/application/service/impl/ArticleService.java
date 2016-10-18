@@ -171,7 +171,9 @@ public class ArticleService implements IArticleService {
         ArticleReadRecord articleReadRecord=new ArticleReadRecord();
         articleReadRecord.setArticleId(articleId);
         articleReadRecord.setMemberId(memberId);
-        articleReadRecord.setCreateTime(time);
+        if (time!=null&&time>0) {
+            articleReadRecord.setCreateTime(time);
+        }
         List<ArticleReadRecord> articleReadRecordList=articleReadRecordMapper.select(articleReadRecord);
         if (articleReadRecordList.isEmpty()||articleReadRecordList.size()>1){
             throw new InfoException("文章不存在或者已阅读");
@@ -190,6 +192,7 @@ public class ArticleService implements IArticleService {
         taskPool.setTotalScore(score);
         Article article=articleMapper.selectByPrimaryKey(articleId);
         OfficialAccount account=officalAccountMapper.selectByPrimaryKey(article.getOfficialAccountId());
+        Double singleScore=taskPool.getSingleScore();
         if (score<taskPool.getSingleScore()){
             taskPool.setTotalScore(0D);
             taskPool.setLimitDay(0L);
@@ -197,11 +200,11 @@ public class ArticleService implements IArticleService {
             taskPool.setSingleScore(0D);
             taskPool.setIsPublishNow(0);
             memberScoreService.addMemberScore(account.getMemberId(), 6L,1,score.doubleValue(), UUIDGenerator.generate());
-            JpushUtils.buildRequest("您发布的任务积分已不足，任务终止",account.getMemberId());
+            JpushUtils.buildRequest("您发布的任务米币已不足，任务终止",account.getMemberId());
         }
         taskPoolMapper.updateByPrimaryKeySelective(taskPool);
-        memberTaskHistoryService.addMemberTaskToHistory(memberId,6L, BigDecimal.valueOf(taskPool.getSingleScore()).multiply(taskPool.getRate()).doubleValue(),1,"阅读文章"+article.getTitle(),null,null);
-        memberScoreService.addMemberScore(memberId,3L,1,BigDecimal.valueOf(taskPool.getSingleScore()).multiply(taskPool.getRate()).doubleValue(),UUIDGenerator.generate());
+        memberTaskHistoryService.addMemberTaskToHistory(memberId,6L, BigDecimal.valueOf(taskPool.getSingleScore()).multiply(taskPool.getRate()).doubleValue(),1,"阅读文章'"+article.getTitle()+"'",null,null);
+        memberScoreService.addMemberScore(memberId,3L,1,BigDecimal.valueOf(singleScore).multiply(taskPool.getRate()).doubleValue(),UUIDGenerator.generate());
         return true;
     }
 

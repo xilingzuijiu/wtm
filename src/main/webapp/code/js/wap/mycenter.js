@@ -3,11 +3,13 @@
  */
 $(function(){
     initilizePage()
-    var calendar = new lCalendar();
-    calendar.init({
-        'trigger': '#demo1',
-        'type': 'date'
-    });//日期插件
+    if ($.cookie("birth")==null||$.cookie("birth")==undefined) {
+        var calendar = new lCalendar();
+        calendar.init({
+            'trigger': '#demo1',
+            'type': 'date'
+        });//日期插件
+    }
 
 
 //            var inviteheight=$(window).height();
@@ -68,7 +70,9 @@ $(function(){
 //            }
 
     $("#demo1").on("blur", function () {
-        modifyBirth();
+        if ($.cookie("birth")==null||$.cookie("birth")==undefined) {
+            modifyBirth();
+        }
     })
     $("#wechat").click(function(){
         if ($("#wechat>p").text()=="未绑定微信"){
@@ -126,9 +130,20 @@ function initilizePage(){
     }
 }
 
-function getLocalTime(nS) {
-    return new Date(parseInt(nS) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ').replace(/上午|下午/,'');
-}
+function getLocalTime(timestamp) {
+    console.log(timestamp);
+    function add0(y) {
+        return y < 10 ? '0' + y : y
+    }
+    var time = new Date(timestamp * 1000);
+    var y = time.getFullYear();
+    var m = time.getMonth() + 1;
+    var d = time.getDate();
+    var h = time.getHours();
+    var mm = time.getMinutes();
+    var s = time.getSeconds();
+    return add0(y) + '-' +add0(m) + '-' + add0(d);
+}//时间戳变换格式
 //        var getLocalTime=function(nS){
 //            return new Date(parseInt(nS) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
 //        }

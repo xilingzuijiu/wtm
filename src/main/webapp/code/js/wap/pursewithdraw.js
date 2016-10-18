@@ -83,7 +83,18 @@ var puser={
             document.getElementsByTagName('ul')[0].appendChild(li);
         })
     },
-     getLocalTime:function(nS){
-    return new Date(parseInt(nS) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
+     getLocalTime:function(timestamp){
+             console.log(timestamp);
+             function add0(y) {
+                 return y < 10 ? '0' + y : y
+             }
+             var time = new Date(timestamp * 1000);
+             var y = time.getFullYear();
+             var m = time.getMonth() + 1;
+             var d = time.getDate();
+             var h = time.getHours();
+             var mm = time.getMinutes();
+             var s = time.getSeconds();
+             return add0(y) + '/' +add0(m) + '/' + add0(d) + ' ' + add0(h) + ':' + add0(mm)+ ':' + add0(s);
 }
 }

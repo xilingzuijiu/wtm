@@ -97,6 +97,10 @@ public class PageController extends BaseController {
                 ModelAndView modelAndView = new ModelAndView("/wap/index.html");
                 Cookie idCookie = new Cookie("memberId", memberInfoDto.getId().toString());
                 idCookie.setMaxAge(30 * 24 * 60 * 60);
+                Cookie sex = new Cookie("sex", memberInfoDto.getSex().toString());
+                sex.setMaxAge(30 * 24 * 60 * 60);
+                Cookie birth = new Cookie("birth", memberInfoDto.getBirth().toString());
+                birth.setMaxAge(30 * 24 * 60 * 60);
                 Cookie memberName = new Cookie("memberName", URLEncoder.encode(memberInfoDto.getMemberName()));
                 memberName.setMaxAge(30 * 24 * 60 * 60);
                 Cookie passWord = new Cookie("password", memberInfoDto.getPassword());
@@ -119,6 +123,8 @@ public class PageController extends BaseController {
                 Cookie payList = new Cookie("payList", URLEncoder.encode(JSON.toJSONString(memberInfoDto.getPayAccountsList()), "UTF-8"));
                 payList.setMaxAge(30 * 24 * 60 * 60);
                 response.addCookie(idCookie);
+                response.addCookie(sex);
+                response.addCookie(birth);
                 response.addCookie(memberName);
                 response.addCookie(passWord);
                 response.addCookie(image);

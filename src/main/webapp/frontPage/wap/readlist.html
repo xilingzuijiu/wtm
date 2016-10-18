@@ -14,6 +14,17 @@
     <link href="../../code/css/common.css" rel="stylesheet" type="text/css"/>
     <script src="../../code/js/wap/common.js"></script>
     <script src="../../code/js/wap/readlist.js"></script>
+    <script>
+        $(function () {
+            reurl()
+        })
+        function reurl() {
+            if ($.cookie($.cookie("memberId")+"readMark")==null||$.cookie($.cookie("memberId")+"readMark")==undefined){
+                $.cookie($.cookie("memberId")+"readMark",0);
+                location.reload()
+            }
+        }
+    </script>
 </head>
 <body>
 <ul class="wapreadlist">
@@ -29,6 +40,6 @@
     <!--</div>-->
     <!--</li>-->
 </ul>
-<p class="nullp">暂时没有未关注公众号</p>
+<p class="nullp">没有可用阅读文章</p>
 </body>
 </html>

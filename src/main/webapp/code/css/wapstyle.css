@@ -112,7 +112,7 @@ header{background:url("../img/MainViewImgae/top.png") no-repeat center top;heigh
 .payway div,.paymuch div,.cashway a{height:7.5em;overflow:hidden;padding:0 4rem;border-bottom:#eee 1px solid;}
 .payway div input{display:none;}
 .payway label,.paymuch div,.cashway p{font-size:3.5rem;line-height:3em;color:#666;}
-.payway label{padding-left: 3.5em;cursor: pointer;background:url(../../code/img/paywaytwo.png) no-repeat left center;background-size:13%;position:relative;}
+.payway label{padding-left: 3.5em;cursor: pointer;background:url(../../code/img/pay/payradio.png) no-repeat left center;background-size:13%;position:relative;}
 .payway label span{color:transparent;}
 label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left center;background-size:13%;}
 .payway img{width:14%;padding-right:0.2em;position:absolute;left:25%;top:0.01em;}

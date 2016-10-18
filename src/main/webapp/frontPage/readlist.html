@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="10">
+    <!--<meta http-equiv="refresh" content="10">-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0" name="viewport"/>
     <title>阅读列表</title>
     <link href="../code/css/base.css" rel="stylesheet" type="text/css"/>
     <link href="../code/css/style.css" rel="stylesheet" type="text/css"/>
     <script src="../code/js/jquery.min.js"></script>
+    <script src="../code/js/jquery.cookie.js"></script>
     <script>
         var memberId;
         var requestTime;
@@ -119,7 +120,7 @@
                     alert("页面加载错误，请重试");
                 }
             });
-
+            reurl()
 //            if (isAndroid) {
 //                setInterval(function () {
 //                    location.reload()
@@ -145,7 +146,9 @@
                     var json = eval(params); //数组
                     console.log("json数据为：" + params)
                     if (json != null && json.errorCode == 0) {
-                        obj.style.display = 'none';
+                        obj.remove()
+                        $.cookie(memberId+requestTime,'',{expires:-1})
+//                        obj.style.display = 'none';
 //                        window.open(articleUrl)
                         location.href = articleUrl;
 //
@@ -161,7 +164,12 @@
                 }
             })
         }
-
+        function reurl() {
+            if ($.cookie(memberId+requestTime)==null||$.cookie(memberId+requestTime)==undefined){
+                $.cookie(memberId+requestTime,0);
+                location.reload()
+            }
+        }
     </script>
 </head>
 <body>

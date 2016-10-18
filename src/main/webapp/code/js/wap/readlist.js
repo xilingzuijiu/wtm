@@ -124,6 +124,7 @@ var articleSubmit = function(obj){
             console.log("json数据为："+params)
             if (json!=null&&json.errorCode==0) {
                 obj.style.display='none';
+                $.cookie($.cookie("memberId")+"readMark",'',{expires:-1})
                 location.href=articleUrl;
             }else if (json!=null&&json.errorCode==4){
                 alert(json.message);

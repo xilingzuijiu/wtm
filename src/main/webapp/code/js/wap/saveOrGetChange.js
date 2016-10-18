@@ -22,7 +22,6 @@ var enchashment={
                 } else if (errorCode==4){
                     alert(data.message);
                         location.reload()
-
                 }
             }
         })
