@@ -91,12 +91,15 @@ function updateMyscore(){
         }
     })
 }
+var count=0;
 function getMemberRequestHeaderMsg(XMLHttpRequest){
     var memberId= $.cookie("memberId");
     if (memberId==null||memberId == undefined){
+        if (count<1){
         alert("登录已过期请重新登录");
+            count++;
             location.href="/frontPage/wap/login.html"
-
+        }
     }
     var password= $.cookie("password");
     XMLHttpRequest.setRequestHeader("memberId",memberId);

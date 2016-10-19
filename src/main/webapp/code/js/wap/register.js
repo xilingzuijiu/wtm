@@ -38,8 +38,11 @@ $(function(){
         var request =getRegeisterParams(requestObj);
         if(!$("#memberName").val()){
             alert("用户名不能为空");
-        }else if($("#password").val().length<6){
-            alert("密码长度不能小于6位");
+        }else if($("#memberName").val().length>10){
+            alert("您输入的用户名过长");
+        }
+        else if($("#password").val().length<6||$("#password").val().length>16){
+            alert("密码长度必须为6到16位");
         }else{
             $.ajax({
                 type: 'post',

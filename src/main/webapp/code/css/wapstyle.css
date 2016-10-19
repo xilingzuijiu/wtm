@@ -139,7 +139,7 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
 .wxcash li p{color:#fa4a18;}
 .wxcash li h6,.wxcash li p,.wxcash li p select{line-height:3.6em;float:left;font-size:2.8rem;}
 .wxcash li p select{line-height:1 !important;padding-top:1.2em;margin-left:0;float:left;
-    width:90%;border:none;outline:none;color:#fa4a18;padding-right:2em;
+    width:90%;border:none;outline:none;color:#fa4a18;padding-right:2em;outline-style:none;
     appearance:none; -moz-appearance:none;-webkit-appearance:none;background:transparent;}
 .wxcash li p option{font-size:3rem;color:#333;}
 .wxcashnext{float:right;width:2.5%;padding-top:2.4em;padding-right:2%;}

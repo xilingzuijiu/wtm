@@ -50,11 +50,10 @@
 
             });
             $("#ivload").click(function() {
-                EV_modeAlerst('envon')
+                EV_modeAlert('envon');
                 var invitedCode=$("#target").text().trim();
                 $("#invitedcode").val(invitedCode)
             })
-
            $("#sendVerifyCode").click( function (){
                 var telephone = $("#telephone").val().trim();
                 if (telephone==null || !telephone.match(/^1\d{10}$/)){
@@ -128,7 +127,7 @@
 </div>
 <div class="ivwrap">
         <img class="ivbanner"src="../code/img/banner2.png"/>
-    <p class="ivintroduce">好友通过您的邀请码注册,即送您<span>150米币</span><br/>平台还将给您好友收入<span>10%</span>的奖励</p>
+    <p class="ivintroduce">好友通过您的邀请码注册,即送您<span>50米币</span><br/>平台还将给您好友收入<span>10%</span>的奖励</p>
     <div class="invite">
         <img src="../code/img/invite.png"/>
         <div id="invitecode"  data-clipboard-action="copy" data-clipboard-target="#target"><span id="target">dvFgba</span></div>
