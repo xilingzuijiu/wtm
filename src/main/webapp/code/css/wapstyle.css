@@ -573,8 +573,8 @@ ol li{text-indent:0;}
     .inviteintroduce a{font-size:1.5em;padding:1.8em 1em;}
     .inviterank{margin-top:2em;}
     .inviterank li{padding-bottom:5em;}
-    .inviterank li img{padding:0.9em;}
-    .inviterank li p{font-size:2.8rem;padding:0.8em 0;}
+    .inviterank li .personimg{padding:0.8em;}
+    .inviterank li p{font-size:2.5rem;padding:0.8em 0;}
     .inviterank li h6{font-size:2.3rem;}
     .inviterankxs{margin-bottom:5em;}
     .inviterankxs li{padding:0.4em 1.8em;}
@@ -750,8 +750,8 @@ ol li{text-indent:0;}
     .inviteintroduce a{font-size:1.2em;padding:1.9em 1em;}
     .inviterank{margin-top:1.2em;}
     .inviterank li{padding-bottom:3.5em;}
-    .inviterank li img{padding:0.7em;}
-    .inviterank li p{font-size:2.4rem;padding:0.7em 0;}
+    .inviterank li .personimg{padding:0.7em;}
+    .inviterank li p{font-size:2rem;padding:0.7em 0;}
     .inviterank li h6{font-size:1.9rem;}
     .inviterankxs{margin-bottom:2em;}
     .inviterankxs li{padding:0.2em 1.5em;}
@@ -931,8 +931,8 @@ ol li{text-indent:0;}
     .inviteintroduce a{font-size:1em;padding:1.6em 1em;}
     .inviterank{margin-top:1.2em;}
     .inviterank li{padding-bottom:3em;}
-    .inviterank li img{padding:0.6em;}
-    .inviterank li p{font-size:2.2rem;padding:0.6em 0;}
+    .inviterank li .personimg{padding:0.6em;}
+    .inviterank li p{font-size:1.9rem;padding:0.6em 0;}
     .inviterank li h6{font-size:1.8rem;}
     .inviterankxs{margin-bottom:2em;}
     .inviterankxs li{padding:0.2em 1.3em;}
@@ -1110,8 +1110,8 @@ ol li{text-indent:0;}
     .inviteintroduce a{font-size:1em;padding:1.8em 1em;}
     .inviterank{margin-top:1.2em;}
     .inviterank li{padding-bottom:2.5em;}
-    .inviterank li img{padding:0.5em;}
-    .inviterank li p{font-size:1.9rem;padding:0.5em 0;}
+    .inviterank li .personimg{padding:0.5em;}
+    .inviterank li p{font-size:1.7rem;padding:0.5em 0;}
     .inviterank li h6{font-size:1.6rem;}
     .inviterankxs{margin-bottom:2em;}
     .inviterankxs li{padding:0.3em 1.3em;}
@@ -1291,8 +1291,8 @@ ol li{text-indent:0;}
     .inviteintroduce a{font-size:1em;padding:1.4em 1em;}
     .inviterank{margin-top:1.2em;}
     .inviterank li{padding-bottom:2.5em;}
-    .inviterank li img{padding:0.4em;}
-    .inviterank li p{font-size:1.8rem;padding:0.3em 0;}
+    .inviterank li .personimg{padding:0.4em;}
+    .inviterank li p{font-size:1.6rem;padding:0.3em 0;}
     .inviterank li h6{font-size:1.5rem;}
     .inviterankxs{margin-bottom:2em;}
     .inviterankxs li{padding:0.2em 1.2em;}
@@ -1346,7 +1346,7 @@ ol li{text-indent:0;}
     .selfinformation .mywtm{width:11.5%;padding-top:1em;padding-right:1.1em;}
     .information li{padding:0.3em 0;background-size:2%;padding-right:1.1em;}
     .information li h6{font-size:1.4rem;line-height:2.3em;}
-    .information li p{font-size:1rem;line-height:2.6em;width:50%;text-align:right;}
+    .information li p{font-size:1rem;line-height:2.6em;width:60%;text-align:right;}
     .information li p input,.information li p select{font-size:1rem;}
     .information li p img{width:33%;}
     .information li p select{width:4.5em;}

@@ -85,7 +85,9 @@ function loadReadlist(){
                     var div3 = document.createElement('div');
                     div3.className = "checkanniu col-xs-2";
                     var a = document.createElement('a');
-                    a.innerHTML = "13:00";
+                    var timestamp=article.createTime;
+                    a.innerHTML =format(timestamp);
+
                     div3.appendChild(a);
                     li.appendChild(div1);
                     li.appendChild(div2);
@@ -142,3 +144,20 @@ function ArticleSerach(searchWay,pageIndex,pageSize){
     this.pageIndex=pageIndex
     this.pageSize=pageSize
 }
+function format(timestamp) {
+    console.log(timestamp);
+    function add0(y) {
+        return h < 10 ? '0' + y : y
+    }
+    var time = new Date(timestamp * 1000);
+    var y = time.getFullYear();
+    var m = time.getMonth() + 1;
+    var d = time.getDate();
+    var h = time.getHours();
+    var mm = time.getMinutes();
+    if(String(mm).length==1){
+        mm="0"+time.getMinutes();
+    }
+    var s = time.getSeconds();
+    return add0(h) + ':' + add0(mm);
+}//时间戳变换格式

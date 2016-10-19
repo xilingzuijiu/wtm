@@ -3,10 +3,12 @@
  */
 var total=0;
 var pageSize=11;
-var pageIndex=0;
+var pageIndex=1;
 $(function(){
     loadrecord();
+
 })
+console.log("count"+pageIndex);
 $(window).scroll(function(){
     var scrollTop = $(this).scrollTop();               //滚动条距离顶部的高度
     var scrollHeight = $(document).height();                   //当前页面的总高度
@@ -14,7 +16,7 @@ $(window).scroll(function(){
     if(scrollTop + windowHeight >= scrollHeight){        //距离顶部+当前高度 >=文档总高度 即代表滑动到底部
         console.log(Math.ceil(total/pageSize)+"shi");
         pageIndex++;
-        if(pageIndex<Math.ceil(total/pageSize)){
+        if(pageIndex<=Math.ceil(total/pageSize)){
             loadrecord();
         }
         if(pageIndex==Math.ceil(total/pageSize)){
@@ -29,13 +31,13 @@ $(window).scroll(function(){
 });
 function loadrecord(){
     var memberId= $.cookie("memberId");
-    console.log("count"+pageIndex);
     console.log("countsize"+pageSize);
+    console.log("现在的页数是"+pageIndex);
     $.ajax({
         type: 'post',
         dataType: 'json',
         url: '/pc/admin/memberTask/getMemberTaskInfo',
-        data:{memberId:memberId,pageSize:pageSize,pageIndex:pageIndex,type:1},
+        data:{memberId:memberId,pageIndex:pageIndex,pageSize:pageSize,type:1},
         beforeSend: function (XMLHttpRequest) {
             getMemberRequestHeaderMsg(XMLHttpRequest)
         },

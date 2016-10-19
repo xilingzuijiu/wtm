@@ -42,6 +42,12 @@ function format(timestamp) {
     var d = time.getDate();
     var h = time.getHours();
     var mm = time.getMinutes();
+    if(String(mm).length==1){
+        mm="0"+time.getMinutes();
+    }
     var s = time.getSeconds();
+    if(String(s).length==1){
+        s="0"+time.getSeconds();
+    }
     return add0(y) + '/' +add0(m) + '/' + add0(d) + ' ' + add0(h) + ':' + add0(mm)+ ':' + add0(s);
 }//时间戳变换格式

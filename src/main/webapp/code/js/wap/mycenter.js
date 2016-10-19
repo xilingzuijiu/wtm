@@ -49,12 +49,12 @@ $(function(){
     $(".mywtm").click(function(){
         location.href="../invite.html?memberId="+ $.cookie('memberId');
     })
-    $(".exit").click(function(){
-        var result=confirm("退出当前账号后不会删除任何历史数据，下次登录依然可以使用本账号。");
-        if(result){
-            location.href="/frontPage/wap/login.html";
-        }
-    })
+    //$(".exit").click(function(){
+    //    var result=confirm("退出当前账号后不会删除任何历史数据，下次登录依然可以使用本账号。");
+    //    if(result){
+    //        location.href="/frontPage/wap/login.html";
+    //    }
+    //})
     //商家平台
 //            if($.cookie("officialAccountList")!=null){
 //                $(".openbusy").css("display","none");
@@ -118,8 +118,10 @@ function initilizePage(){
     switch (sex){
         case 0:
             $(".sexmi").text("保密");
+            break;
         case 1:
             $(".sexmi").text("男");
+            break;
         case 2:
             $(".sexmi").text("女");
     }
