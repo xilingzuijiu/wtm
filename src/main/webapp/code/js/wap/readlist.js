@@ -9,7 +9,7 @@ var hashMap = {
 }
 var total=0;
 var count=1;
-var pageSize=14;
+var pageSize=15;
 $(function(){
     var thirdLogin=$.cookie("thirdLogin");
     if (thirdLogin==null||thirdLogin==undefined||thirdLogin.length<=0){
@@ -68,7 +68,7 @@ function loadReadlist(){
                     img.setAttribute("src",article.imageUrl);
                     div1.appendChild(img);
                     var div2 = document.createElement('div');
-                    div2.className = "readdetails col-xs-7";
+                    div2.className = "readdetails col-xs-8";
                     var h5 = document.createElement('h5');
                     h5.className="articltitle";
                     h5.innerHTML = article.title;
@@ -83,9 +83,9 @@ function loadReadlist(){
                     //div2.appendChild(h6);
                     div2.appendChild(p);
                     var div3 = document.createElement('div');
-                    div3.className = "checkanniu col-xs-3";
+                    div3.className = "checkanniu col-xs-2";
                     var a = document.createElement('a');
-                    a.innerHTML = "阅读";
+                    a.innerHTML = "13:00";
                     div3.appendChild(a);
                     li.appendChild(div1);
                     li.appendChild(div2);

@@ -65,28 +65,28 @@ $(function(){
             if(json.data!=null&&json.errorCode==0){
                 var length=json.data.length;
                 if(length==1){
-                    $("#Noone").css("display","table-cell");
-                    $("#Noone img").attr("src",json.data[0].imageUrl);
-                    $("#Noone p").text(json.data[0].shareCounts+"米");
-                    $("#Noone h6").text(json.data[0].memberName);
+                    $("#Notwo").css("display","table-cell");
+                    $("#Notwo .personimg").attr("src",json.data[0].imageUrl);
+                    $("#Notwo p strong").text(json.data[0].shareCounts+"米");
+                    $("#Notwo h6").text(json.data[0].memberName);
                 }else if(length==2){
                     $(".inviterank li:not('#Nothree')").css("display","table-cell");
                     for(var i=0;i<2;i++){
-                        $(".inviterank li").eq(i).find('img').attr("src",json.data[1-i].imageUrl);
-                        $(".inviterank li").eq(i).find('p').text(json.data[1-i].shareCounts+"米");
+                        $(".inviterank li").eq(i).find('.personimg').attr("src",json.data[1-i].imageUrl);
+                        $(".inviterank li").eq(i).find('strong').text(json.data[1-i].shareCounts+"米");
                         $(".inviterank li").eq(i).find('h6').text(json.data[1-i].memberName);
                     }
                 }else{
                     $(".inviterank li").css("display","table-cell");
                     for(var i=0;i<3;i++){
-                        $("#Noone img").attr("src",json.data[1].imageUrl);
-                        $("#Noone p").text(json.data[1].shareCounts+"米");
+                        $("#Noone .personimg").attr("src",json.data[1].imageUrl);
+                        $("#Noone p strong").text(json.data[1].shareCounts+"米");
                         $("#Noone h6").text(json.data[1].memberName);
-                        $("#Notwo img").attr("src",json.data[0].imageUrl);
-                        $("#Notwo p").text(json.data[0].shareCounts+"米");
+                        $("#Notwo .personimg").attr("src",json.data[0].imageUrl);
+                        $("#Notwo p strong").text(json.data[0].shareCounts+"米");
                         $("#Notwo h6").text(json.data[0].memberName);
-                        $("#Nothree img").attr("src",json.data[2].imageUrl);
-                        $("#Nothree p").text(json.data[2].shareCounts+"米");
+                        $("#Nothree .personimg").attr("src",json.data[2].imageUrl);
+                        $("#Nothree p strong").text(json.data[2].shareCounts+"米");
                         $("#Nothree h6").text(json.data[2].memberName);
                     }
                     for(var j=3;j<length;j++){

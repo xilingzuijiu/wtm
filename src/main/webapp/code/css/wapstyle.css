@@ -37,14 +37,12 @@ header{background:url("../img/MainViewImgae/top.png") no-repeat center top;heigh
 .wapreadlist li{overflow:hidden;border-top:#f1f1f1 1px solid;}
 .wapreadlist li:first-child{border:none;}
 .wapreadlist .listimg{padding:0 !important;margin:0;}
-.wapreadlist li img{width:85%;float:left;margin:0.5em 0;}
+.wapreadlist li img{width:75%;float:left;margin:0.5em 0;}
 .checkanniu{padding:0;}
-.checkanniu a{display:block;float:right;font-size:2rem;color:#fff;background:#68c1f4;border-radius:0.5em;-webkit-border-radius:0.5em;
-    -moz-border-radius:0.5em;-ms-border-radius:0.5em;-o-border-radius:0.5em;padding:0.3em 1em;margin-top:1.7em;font-weight:normal;
-    margin-right:0.8em;text-decoration:none !important;}
-.checkanniu a:hover{color:#fff;background:#ccc;}
-.readdetails{padding-left:0;padding-top:1em;padding-right:0;}
-.readdetails h5{font-size:3rem;line-height:1.7;overflow:hidden;color:#363636;text-overflow:ellipsis;white-space:nowrap;}
+.checkanniu a{display:block;float:right;font-size:2.1rem;border-radius:0.5em;margin-top:0.8em;font-weight:normal;
+    margin-right:0.8em;text-decoration:none !important;color:#989898;}
+.readdetails{padding-left:0;padding-top:0.9em;padding-right:0;}
+.readdetails h5{font-size:2.7rem;line-height:1.7;overflow:hidden;color:#363636;text-overflow:ellipsis;white-space:nowrap;}
 .readdetails p{font-size:2rem;color:#989898;line-height:1.5;}
 .readdetails p span{color:#68c1f4;}
 .loadmore{text-align:center;font-size:3rem;color:#aaa;font-weight:normal;padding:0.5em 0;}
@@ -122,7 +120,7 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
 .paydetails li,.cashwaydetails li{font-size:2.5rem;line-height:4rem;color:#666;}
 .paydetails li span,.cashwaydetails li span{margin-right:1em;}
 .paydetails li strong,.cashwaydetails li strong{color:#f00;font-weight:normal;}
-.nullbox{width:85%;overflow:hidden;position:absolute;left:7.5%;top:70%;}
+.nullbox{display:none;width:85%;overflow:hidden;position:absolute;left:7.5%;top:70%;}
 .payconfirm{font-size:3.5rem;display:block;margin: 15rem auto;width:80%;padding:1.4rem 0;text-decoration:none !important;border-radius:0.5em;
     -webkit-border-radius:0.5em;-moz-border-radius:0.5em;-ms-border-radius:0.5em;-o-border-radius:0.5em;  box-shadow:0px 1px 2px #aaa;
     background:#fa4a18;color:#fff;border:none;outline:none;-webkit-tap-highlight-color: rgba(0,0,0,0);  -webkit-tap-highlight-color:transparent;  }
@@ -169,8 +167,8 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
 .dayrecord .invitereward{padding-top:2em;display:table;}
 .dayrecord h6{font-size:3.5rem;color:#f3dd27;text-align:center;display:table-cell;width:5em;
     background:url("../img/invite/ticket.png") no-repeat center center;background-size:70%;padding:1em 2em;}
-.dayrecord p{font-size:2.5rem;color:#666;text-align:right;display:table-cell;}
-.dayrecord p span{font-size:3.5rem;color:#af8976;}
+.dayrecord p{font-size:2.6rem;color:#666;width:13em;text-align:left;line-height:1.5;vertical-align:middle;display:table-cell;}
+.dayrecord p span{font-size:3.8rem;color:#af8976;}
 .dayinvite input{width:85%;margin-top:1em;margin-bottom:3em;}
 .inviteintroduce div{border-top:#fa4a18 1px solid;overflow:hidden;}
 .inviteintroduce .totalbox{background:#fff8d6;border:none;}
@@ -180,11 +178,13 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
 .inviteintroduce div .rewardmibi{text-align:center;padding-left:0;margin:0;}
 .inviteintroduce div .rewardmibi span{color:#fa4a18;}
 .inviterank{overflow:hidden;display:table;margin-top:2em;width:100%;}
-.inviterank li{width:30%;text-align:center;vertical-align: bottom;display:table-cell;padding-bottom:5em;display:none;}
+.inviterank li{width:30%;text-align:center;vertical-align: bottom;padding-bottom:5em;display:none;}
 .inviterank li:nth-child(2){width:40%;}
-.inviterank li img{border-radius:50%;-webkit-border-radius:50%;-moz-border-radius:50%;-ms-border-radius:50%;
+.inviterank li .personimg{border-radius:50%;-webkit-border-radius:50%;-moz-border-radius:50%;-ms-border-radius:50%;
     -o-border-radius:50%;width:60%;padding:1em;background:url("../img/invite/rankbg4.png") no-repeat center center;}
-.inviterank li p{font-size:3rem;padding:1em 0;color:#af8976;}
+.inviterank li p{font-size:3rem;padding:1em 0;color:#af8976;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.inviterank li p span{color:#fa4a18;}
+.inviterank li p strong{font-weight:normal;}
 .inviterank li h6{font-size:2.5rem;font-weight:normal;width:6em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin:auto;}
 .inviterankxs li{border-top:#eee 1px solid;padding:0.5em 2em;box-sizing:border-box;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;
     -ms-box-sizing:border-box;-o-box-sizing:border-box;display:table;width:100%;}
@@ -311,11 +311,11 @@ ol li{text-indent:0;}
     .indexlist li{margin-bottom:2em;}
     .indexlist li .caption h3{font-size:3em;}
     .wapreadlist{padding:1.5em 2em 0 2em;}
-    .wapreadlist li img{margin:1em 0;}
-    .readdetails{padding-top:2em;}
-    .readdetails h5{font-size:4.5rem;}
+    .wapreadlist li img{margin:0.5em 0;}
+    .readdetails{padding-top:1.5em;}
+    .readdetails h5{font-size:4.2rem;}
     .readdetails p{font-size:3.2rem;}
-    .checkanniu a{font-size:2.5rem;margin-top:2.2em;padding:0.5em 1.3em;margin-right:1em;}
+    .checkanniu a{font-size:3.2rem;margin-top:1em;margin-right:1em;}
     .loadmore{font-size:4rem;}
     /*关注公众号样式---------------------------------------------------------------------------------*/
     .gzhlist{padding-top:1.8em;}
@@ -482,11 +482,11 @@ ol li{text-indent:0;}
     .indexlist li img{width:50%;}
     .indexlist li .caption h3{font-size:1.5em;}
     /*阅读列表样式---------------------------------------------------------------------------------*/
-    .wapreadlist li img{padding:0;margin:0.3em 0;}
-    .readdetails{padding-top:0.8em;}
-    .readdetails h5{font-size:2.3rem;line-height:1.9;}
+    .wapreadlist li img{padding:0;display:block;margin:0.5em auto;width:70%;}
+    .readdetails{padding-top:0.8em;margin-left:-0.8em;}
+    .readdetails h5{font-size:2rem;line-height:1.7;}
     .readdetails p{font-size:1.6rem;}
-    .checkanniu a{font-size:1.4rem;margin-top:2em;padding:0.5em 1.3em;margin-right:0.7em;}
+    .checkanniu a{font-size:1.6rem;margin-top:1em;margin-right:0.7em;}
     .loadmore{font-size:2.2rem;padding:0.5em 0;}
     /*关注公众号样式---------------------------------------------------------------------------------*/
     .gzhlist{padding-top:1.2em;}
@@ -565,7 +565,7 @@ ol li{text-indent:0;}
     /*邀请好友活动说明样式------------------------*/
     .dayrecord img{padding:2.5em 0;}
     .dayrecord div{padding-top:2em;}
-    .dayrecord h6{font-size:3rem;padding:1em 2em;}
+    .dayrecord h6{font-size:3rem;}
     .dayrecord p{font-size:2.4rem;}
     .dayrecord p span{font-size:3.1rem;}
     .dayinvite input{margin-top:1em;margin-bottom:3em;}
@@ -659,11 +659,11 @@ ol li{text-indent:0;}
     .indexlist li .caption h3{font-size:1.4em;}
     /*阅读列表样式---------------------------------------------------------------------------------*/
     .wapreadlist{padding:0.8em 1.5em 0 1.5em;}
-    .wapreadlist li img{margin:0.7em 0;}
-    .readdetails{padding-top:0.9em;}
-    .readdetails h5{font-size:2rem;}
+    .wapreadlist li img{margin:0.4em 0;}
+    .readdetails{padding-top:0.9em;padding-top:0.7em;}
+    .readdetails h5{font-size:1.6rem;}
     .readdetails p{font-size:1.3rem;}
-    .checkanniu a{font-size:1.3rem;margin-top:2em;padding:0.4em 1.3em;margin-right:0.2em;}
+    .checkanniu a{font-size:1.3rem;margin-top:1em;margin-right:0.2em;}
     .loadmore{font-size:1.9rem;padding:0.3em 0;}
     /*关注公众号样式---------------------------------------------------------------------------------*/
     .gzhlist{padding-top:0.7em;}
@@ -742,8 +742,8 @@ ol li{text-indent:0;}
     /*邀请好友活动说明样式------------------------*/
     .dayrecord img{padding:1.8em 0;}
     .dayrecord div{padding-top:1em;}
-    .dayrecord h6{font-size:2.3rem;padding:1em 2em;}
-    .dayrecord p{font-size:1.8rem;}
+    .dayrecord h6{font-size:2.2rem;}
+    .dayrecord p{font-size:1.9rem;}
     .dayrecord p span{font-size:2.3rem;}
     .dayinvite input{margin-top:1em;margin-bottom:3em;}
     .inviteintroduce div h5{font-size:2em;padding:1em 0 1em 1.3em;margin-left:1em;}
@@ -840,16 +840,16 @@ ol li{text-indent:0;}
     .indexlist li img{width:70%;}
     .indexlist li .caption h3{font-size:1.05em;}
     /*阅读列表样式---------------------------------------------------------------------------------*/
-    .wapreadlist li img{margin:0.5em 0;}
-    .readdetails{padding-top:0.7em;}
-    .readdetails h5{font-size:1.8rem;}
+    .wapreadlist li img{margin:0.4em 0;}
+    .readdetails{padding-top:0.4em;}
+    .readdetails h5{font-size:1.6rem;}
     .readdetails p{font-size:1.3rem;}
-    .checkanniu a{font-size:1.1rem;margin-top:1.5em;padding:0.4em 1.2em;margin-right:0.2em;}
+    .checkanniu a{font-size:1.3rem;margin-top:1em;margin-right:0.2em;}
     .loadmore{font-size:1.7rem;padding:0.3em 0;}
     /*关注公众号样式---------------------------------------------------------------------------------*/
     .gzhlist{padding-top:0.5em;}
     .gzhlist li{padding-left:10px;padding-right:10px;}
-    .gzhlist li img{width:100%;}
+    .gzhlist li img{width:90%;}
     .gzhlist li h5{font-size:1.4em;margin-top:0.2em;}
     .gzhlist li p{font-size:0.85em;padding:0.1em 0 0.1em 0;}
     .gzhlist li input{font-size:1.2rem;padding:0.3em 0;}
@@ -1019,16 +1019,16 @@ ol li{text-indent:0;}
     .indexlist li .caption h3{font-size:1em;padding-top:0.7em;}
     /*阅读列表样式---------------------------------------------------------------------------------*/
     .wapreadlist{padding:0.7em 1.2em 0 1.2em;}
-    .wapreadlist li img{margin:0.5em 0;}
+    .wapreadlist li img{margin:0.4em 0;}
     .readdetails{padding-top:0.7em;}
-    .readdetails h5{font-size:1.55rem;}
+    .readdetails h5{font-size:1.4rem;line-height:1.2;}
     .readdetails p{font-size:1.2rem;}
-    .checkanniu a{font-size:1rem;margin-top:1.4em;padding:0.4em 1.3em;margin-right:0.2em;}
+    .checkanniu a{font-size:1.2rem;margin-top:1.1em;margin-right:0.2em;}
     .loadmore{font-size:1.5rem;padding:0.1em 0;}
     /*关注公众号样式---------------------------------------------------------------------------------*/
     .gzhlist{padding-top:0.5em;}
     .gzhlist li{padding:0 0.3em 1.5em 0.3em;}
-    .gzhlist li img{width:95%;}
+    .gzhlist li img{width:85%;}
     .gzhlist li h5{font-size:1.3em;margin-top:0.2em;}
     .gzhlist li p{font-size:0.85em;padding:0;}
     .gzhlist li input{font-size:1.15rem;padding:0.3em 0}
@@ -1200,16 +1200,16 @@ ol li{text-indent:0;}
     .indexlist li .caption h3{font-size:0.8em;padding-top:0.5em;}
     /*阅读列表样式---------------------------------------------------------------------------------*/
     .wapreadlist{padding:0.7em 1.1em 0 1.1em;}
-    .wapreadlist li img{margin:0.5em 0;}
-    .readdetails{padding-top:0.5em;}
-    .readdetails h5{font-size:1.4rem;}
+    .wapreadlist li img{margin:0.3em 0;}
+    .readdetails{padding-top:0.3em;}
+    .readdetails h5{font-size:1.3rem;line-height:1.5;}
     .readdetails p{font-size:0.8rem;line-height:1.2;}
-    .checkanniu a{font-size:0.9rem;margin-top:1.2em;padding:0.35em 1.2em;margin-right:0em;}
+    .checkanniu a{font-size:0.9rem;margin-top:0.5em;margin-right:0em;}
     .loadmore{font-size:1.5rem;padding:0.1em 0;}
     /*关注公众号样式---------------------------------------------------------------------------------*/
     .gzhlist{padding-top:0.5em;}
     .gzhlist li{padding:0 0 1.5em 0;}
-    .gzhlist li img{width:90%;}
+    .gzhlist li img{width:80%;}
     .gzhlist li h5{font-size:1.3em;margin-top:0.2em;}
     .gzhlist li p{font-size:0.5rem;padding:0;}
     .gzhlist li input{font-size:1rem;padding:0.35em 0;}
