@@ -9,7 +9,6 @@ var getLocation = function () {
         date: new Date().getTime()//获取当前时间方法
     };
     //默认城市
-    jQuery.cookie('VPIAO_MOBILE_DEFAULTCITY', JSON.stringify(defCity), { expires: 1, path: '/' })
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
                 var lat = position.coords.latitude;
@@ -35,15 +34,19 @@ var getLocation = function () {
                 switch (error.code) {
                     case 1:
                         alert("位置服务被拒绝。");
+                        jQuery.cookie('VPIAO_MOBILE_DEFAULTCITY', JSON.stringify(defCity), { expires: 1, path: '/' })
                         break;
                     case 2:
                         alert("暂时获取不到位置信息。");
+                        jQuery.cookie('VPIAO_MOBILE_DEFAULTCITY', JSON.stringify(defCity), { expires: 1, path: '/' })
                         break;
                     case 3:
                         alert("获取位置信息超时。");
+                        jQuery.cookie('VPIAO_MOBILE_DEFAULTCITY', JSON.stringify(defCity), { expires: 1, path: '/' })
                         break;
                     default:
                         alert("未知错误。");
+                        jQuery.cookie('VPIAO_MOBILE_DEFAULTCITY', JSON.stringify(defCity), { expires: 1, path: '/' })
                         break;
                 }
                 var curCity = {
@@ -52,10 +55,9 @@ var getLocation = function () {
                     date: new Date().getTime()
                 };
                 //默认城市
-                $.cookie('VPIAO_MOBILE_DEFAULTCITY', JSON.stringify(curCity), { expires: 1, path: '/' });
+                $.cookie('VPIAO_MOBILE_DEFAULTCITY', JSON.stringify(curCity), { expires: 3, path: '/' });
             }, { timeout: 5000, enableHighAccuracy: true });
     } else {
-        alert("你的浏览器不支持获取地理位置信息。");
     }
 };
 

@@ -28,13 +28,21 @@ public class WechatPayService implements IPayStrategyService {
     @Override
     public String getPaymentParams(Map<String, Object> param) {
         Map<String,String> params=new HashMap<>();
-        params.put("appid", WechatConfig.APP_ID);
-        params.put("mch_id",WechatConfig.MCHID);
+        if ((int)param.get("sourceType")==0) {
+            params.put("trade_type","APP");
+            params.put("appid", WechatConfig.APP_ID);
+            params.put("mch_id", WechatConfig.MCHID);
+        }
+        if ((int)param.get("sourceType")==1) {
+            params.put("trade_type","JSAPI");
+            params.put("openid",(String)param.get("openId"));
+            params.put("appid", WechatConfig.MCH_APPID);
+            params.put("mch_id", WechatConfig.MCHID_OFFICIAL);
+        }
         params.put("nonce_str", UUIDGenerator.generate());
         params.put("body","微淘米会员充值");
         params.put("out_trade_no",param.get("out_trade_no").toString());
         params.put("notify_url",WechatConfig.NOTIFY_URL);
-        params.put("trade_type","APP");
         String amountTemp=(String)param.get("amount");
         double amount=Double.valueOf(amountTemp) * 100;
         int balance=(int)amount;
@@ -42,7 +50,7 @@ public class WechatPayService implements IPayStrategyService {
         params.put("spbill_create_ip",param.get("spbill_create_ip").toString());
         params=this.paraFilter(params);
         String pre_sign= StringUtil.formatParaMap(params);
-        pre_sign=pre_sign+"&key="+WechatConfig.API_KEY;
+        pre_sign=pre_sign+"&key="+((int)param.get("sourceType")==0?WechatConfig.API_KEY:WechatConfig.OFFICIAL_API_KEY);
         String sign= DigestUtils.md5Hex(pre_sign).toUpperCase();
         params.put("sign",sign);
         WechatPayParams wechatPayParams=JSONObject.parseObject(JSON.toJSONString(params),WechatPayParams.class);

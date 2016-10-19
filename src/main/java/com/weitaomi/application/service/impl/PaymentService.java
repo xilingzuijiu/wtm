@@ -54,6 +54,8 @@ public class PaymentService implements IPaymentService {
     @Autowired
     private PaymentApproveMapper approveMapper;
     @Autowired
+    private ThirdLoginMapper thirdLoginMapper;
+    @Autowired
     private MemberPayAccountsMapper memberPayAccountsMapper;
 
     @Override
@@ -62,9 +64,13 @@ public class PaymentService implements IPaymentService {
         String payCode = this.getTradeNo();
         if ((Integer) params.get("payType") == (PayType.WECHAT_APP.getValue())) {
             params.put("out_trade_no", AlipayConfig.payCode_prefix + payCode);
+            params.put("sourceType",0);
         }
         if ((Integer) params.get("payType") == (PayType.WECHAT_WEB.getValue())) {
+            ThirdLogin thirdLogin=thirdLoginMapper.getThirdlogInDtoMemberId((Long)params.get("memberId"));
+            params.put("openId",thirdLogin.getOpenId());
             params.put("out_trade_no", AlipayConfig.payCode_prefix + payCode);
+            params.put("sourceType",1);
         }
         if ((Integer) params.get("payType") == (PayType.ALIPAY_APP.getValue())) {
             params.put("trade_no", AlipayConfig.payCode_prefix + payCode);

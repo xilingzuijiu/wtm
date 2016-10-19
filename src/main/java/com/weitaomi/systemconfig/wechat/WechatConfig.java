@@ -11,8 +11,14 @@ public class WechatConfig {
     public static final String  MCH_APPID="wx2282c57276f83fad";
     //商户号
     public static final String  MCHID="1368374602";
+
+    //商户号
+    public static final String  MCHID_OFFICIAL="1399826502";
+
+
     //  API密钥，在商户平台设置
     public static final String API_KEY = "0510weitaomi1138131xxxx2303woyun";
+    public static final String OFFICIAL_API_KEY = "weitaomiappgongzhonghaopayanquan";
     //预支付接口
     public static final String PRE_PAY_URL= "https://api.mch.weixin.qq.com/pay/unifiedorder";
     //批量付款接口

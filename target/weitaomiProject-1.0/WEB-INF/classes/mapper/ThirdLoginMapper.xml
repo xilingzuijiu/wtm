@@ -10,6 +10,7 @@
     <result column="unionId" property="unionId" jdbcType="VARCHAR" />
     <result column="memberId" property="memberId" jdbcType="BIGINT" />
     <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="sourceType" property="sourceType" jdbcType="INTEGER" />
     <result column="nickname" property="nickname" jdbcType="VARCHAR" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="createTime" property="createTime" jdbcType="BIGINT" />

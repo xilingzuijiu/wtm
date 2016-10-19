@@ -29,6 +29,11 @@ public class ThirdLogin extends BaseModel {
      */
     @Column(name = "type")
     private Integer type;
+    /**
+     * 类型 0：微信，1：支付宝，2：QQ
+     */
+    @Column(name = "sourceType")
+    private Integer sourceType;
 
     /**
      * 昵称
@@ -192,5 +197,21 @@ public class ThirdLogin extends BaseModel {
 
     public void setSex(Integer sex) {
         this.sex = sex;
+    }
+
+    /**
+     * 获取类型 0：微信，1：支付宝，2：QQ
+     * @return sourceType 类型 0：微信，1：支付宝，2：QQ
+     */
+    public Integer getSourceType() {
+        return this.sourceType;
+    }
+
+    /**
+     * 设置类型 0：微信，1：支付宝，2：QQ
+     * @param sourceType 类型 0：微信，1：支付宝，2：QQ
+     */
+    public void setSourceType(Integer sourceType) {
+        this.sourceType = sourceType;
     }
 }

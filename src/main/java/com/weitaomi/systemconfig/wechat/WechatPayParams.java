@@ -13,6 +13,11 @@ public class WechatPayParams {
     @XStreamAlias("appid")
     private String appid;
     /**
+     * openid
+     */
+    @XStreamAlias("openid")
+    private String openid;
+    /**
      * 商户号
      */
     @XStreamAlias("mch_id")
@@ -217,5 +222,21 @@ public class WechatPayParams {
      */
     public void setMch_id(String mch_id) {
         this.mch_id = mch_id;
+    }
+
+    /**
+     * 获取openid
+     * @return openid openid
+     */
+    public String getOpenid() {
+        return this.openid;
+    }
+
+    /**
+     * 设置openid
+     * @param openid openid
+     */
+    public void setOpenid(String openid) {
+        this.openid = openid;
     }
 }

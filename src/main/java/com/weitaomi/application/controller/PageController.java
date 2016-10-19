@@ -172,6 +172,7 @@ public class PageController extends BaseController {
                 thirdLogin.setType(0);
                 thirdLogin.setNickname((String)userInfoParams.get("nickname"));
                 thirdLogin.setImageFiles((String)userInfoParams.get("headimgurl"));
+                thirdLogin.setSourceType(1);
                 boolean isSuccess= memberService.bindThirdPlat(memberId, thirdLogin);
                 if (isSuccess) {
                     Member member=memberMapper.selectByPrimaryKey(memberId);

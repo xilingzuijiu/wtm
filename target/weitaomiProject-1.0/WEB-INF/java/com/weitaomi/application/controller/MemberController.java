@@ -51,6 +51,10 @@ public class MemberController  extends BaseController {
             Member member=registerMsg.getMember();
             if (member!=null){
                 member.setSource(source);
+                ThirdLogin thirdLogin = registerMsg.getThirdLogin();
+                if (thirdLogin!=null){
+                    thirdLogin.setSourceType(1);
+                }
                 return AjaxResult.getOK(memberService.register(registerMsg));
             }
         }
@@ -87,6 +91,7 @@ public class MemberController  extends BaseController {
     public AjaxResult bindThirdPlat(HttpServletRequest request,@RequestBody ThirdLogin thirdLogin)
             throws BusinessException, DBException, ParseException {
         Long memberId=this.getUserId(request);
+        thirdLogin.setSourceType(1);
         return AjaxResult.getOK(memberService.bindThirdPlat(memberId,thirdLogin));
     }
     /**

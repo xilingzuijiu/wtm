@@ -63,12 +63,7 @@ public class PaymentController extends BaseController{
         }
         return AjaxResult.getOK();
     }
-    @ResponseBody
-    @RequestMapping(value = "/patchAliPayCustomers", method = RequestMethod.POST)
-    public AjaxResult patchAliPayCustomers(@RequestBody List<PaymentApprove> approveList){
-        paymentService.patchAliPayCustomers(approveList);
-        return AjaxResult.getOK();
-    }
+
     @ResponseBody
     @RequestMapping(value = "/patchWechatCustomers", method = RequestMethod.POST)
     public AjaxResult patchWechatCustomers(@RequestBody List<PaymentApprove> approveList){

@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.weitaomi.application.controller.baseController.BaseController;
 import com.weitaomi.application.model.bean.Member;
 import com.weitaomi.application.model.bean.TaskPool;
+import com.weitaomi.application.model.bean.ThirdLogin;
 import com.weitaomi.application.model.dto.PublishReadRequestDto;
 import com.weitaomi.application.model.dto.RegisterMsg;
 import com.weitaomi.application.service.interf.*;
@@ -207,6 +208,10 @@ public class MemberPCController extends BaseController {
             Member member=registerMsg.getMember();
             if (member!=null){
                 member.setSource(source);
+                ThirdLogin thirdLogin = registerMsg.getThirdLogin();
+                if (thirdLogin!=null){
+                    thirdLogin.setSourceType(1);
+                }
                 return AjaxResult.getOK(memberService.register(registerMsg));
             }
         }

@@ -47,7 +47,9 @@
             }
             //钱包刷新
             setInterval(show,2000);
-            getLocation();
+            if ($.cookie("VPIAO_MOBILE_DEFAULTCITY")==null||$.cookie("VPIAO_MOBILE_DEFAULTCITY")==undefined) {
+                getLocation();
+            }
             $(".money").click(function (){
                 updateMyscore();
                     $("#prompt").fadeIn(500);

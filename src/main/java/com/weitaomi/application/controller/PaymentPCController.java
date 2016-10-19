@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -74,6 +75,12 @@ public class PaymentPCController extends BaseController{
             map.put("paySign",DigestUtils.md5Hex(pre_sign).toUpperCase());
             return AjaxResult.getOK(map);
         }
+        return AjaxResult.getOK();
+    }
+    @ResponseBody
+    @RequestMapping(value = "/patchAliPayCustomers", method = RequestMethod.POST)
+    public AjaxResult patchAliPayCustomers(@RequestBody List<PaymentApprove> approveList){
+        paymentService.patchAliPayCustomers(approveList);
         return AjaxResult.getOK();
     }
 }
