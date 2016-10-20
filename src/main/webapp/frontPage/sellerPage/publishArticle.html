@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../code/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../code/css/showBo.css"/>
+    <meta name="viewport" content="width=device-width,inital-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title>发布文章任务页</title>
+    <style>
+        body{
+            font-family: "Microsoft Yahei UI", "Helvetica Neue", Helvetica, Arial, sans-serif, "Microsoft YaHei";
+            font-size: 16px;
+            background: #FFFBE6;
+            text-align: center;
+        }
+        .info{
+            color:#0059b2;
+            font-size: 12px;
+        }
+        .red{
+            color: #c12e2a;
+        }
+        #root{
+            width: 850px;
+            MARGIN-RIGHT: auto; MARGIN-LEFT: auto;
+        }
+        .form-control{
+            width:335px;
+        }
+        .submit{
+            float:left;
+            width: 700px;
+            margin-top:28px;
+        }
+        .root div{
+            float:left;
+        }
+        .col-sm-8{
+            margin-top: 15px
+        }
+    </style>
+    <script src="../../code/js/sellerPage/publishAccounts.js"></script>
+    <script>
+        var memberId;
+        var time;
+        var addressArr;
+        $(function(){
+                memberId=$.cookie("memberId");
+                $("#memberId").val(memberId);
+                time=GetQueryString("time");
+                $.ajax({
+                    type: 'post',
+                    dataType: 'json',
+                    url: '/pc/admin/member/getMemberArticlePublishMsg',
+                    data: {memberId:memberId,time:time},
+                    success: function (params) {
+                        var json = eval(params); //数组
+                        if (json!=null&&json.errorCode==0){
+                            var data=eval(json.data);
+                            deal(data)
+                        }else Showbo.Msg.alert("获取微信公众号列表失败")
+                    },
+                    error:function (data){
+                        Showbo.Msg.alert("页面加载错误，请重试");
+                    }
+//                headers:{
+//                    "Access-Control-Allow-Origin":"",
+//                    "Access-Control-Allow-Headers":"X-Requested-With",
+//                    "memberId":memberId
+//                }
+                    });
+                }
+        )
+        var imagefile='';
+//        function selectImage(file){
+//            if(!file.files || !file.files[0]){
+//                return;
+//            }
+//            var reader = new FileReader();
+//            reader.onload = function(evt){
+//                $('#image').src = evt.target.result;
+//                imagefile = evt.target.result;
+//            }
+//            reader.readAsDataURL(file.files[0]);
+//        }
+        function selectImage(file){
+            //console.log(this.files[0]);
+            lrz(file.files[0],{width:150,height:150},function(rst){
+                imagefile = rst.base64;
+                console.log(imagefile)
+            });
+        };
+        function publish() {
+            $("#form").attr("enctype","multipart/form-data")
+            var obj=$("#form").serializeObject()
+            obj["imageFile"]=imagefile
+            var request=JSON.stringify(obj)
+            $.ajax({
+                type: 'post',
+                dataType: 'json',
+                contentType: "application/json",
+                url: '/pc/admin/member/publishReadRequest',
+                data: request,
+                success: function (data) {
+                    console.log(data)
+                    var json = eval(data); //数组
+                    if (json!=null&&json.errorCode==0){
+                        Showbo.Msg.alert(json.data, function () {
+                            location.reload()
+                        })
+                    }else if (json!=null&&json.errorCode==4){
+                        Showbo.Msg.alert(json.message)
+                    }
+                },
+                error:function (data){
+                    console.log(data)
+                    Showbo.Msg.alert("页面加载错误，请重试");
+                }
+            })
+        }
+
+    </script>
+</head>
+<body style="margin: 50px;">
+<div id="root">
+<form id="form" method="post">
+    <div class="form-group">
+        <div class="col-sm-8">
+            <label class="col-sm-4 control-label">账户可用余额：</label>
+            <div class="input-group" id="total">
+                <input type="text" class="form-control" id="amount" readonly="true"/>
+                <div class="input-group-addon">米币</div>
+            </div>
+        </div>
+    </div><br/>
+    <div class="form-group">
+        <div class="col-sm-8" id="div0">
+            <label class="col-sm-4 control-label">要发布文章任务的公众号：</label>
+            <select name="officialAccountsId" class="form-control" id="select1">
+                <option value="1">微淘米APP</option>
+            </select>
+            <input name="memberId" type="hidden" value="1" id="memberId" />
+        </div><br/>
+        <div class="col-sm-8" id="articleLink">
+            <label class="col-sm-4 control-label">要发布文章的链接</label>
+            <input type="text" class="form-control" name="articleUrl" />
+        </div><br/>
+        <div class="col-sm-8">
+            <label class="col-sm-4 control-label">要发布文章的标题/简介</label>
+            <input type="text" class="form-control" onfocus="if (value =='不能超过200字...'){value =''}" name="title" value="不能超过200字..."/>
+        </div><br/>
+        <div class="col-sm-8">
+            <label class="col-sm-4 control-label" >上传文章展示图片</label>
+            <input type="file" class="form-control" id="imagefile" id="" onchange="selectImage(this);"/>
+        </div><br/>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-8 ">
+            <label class="col-sm-4 control-label">单次阅读奖励：</label>
+            <div class="input-group">
+                <input type="text" class="form-control" onchange="changeScore(this.value)" name="singleScore" id="input1" readonly="true" value="1"/>
+                <div class="input-group-addon">米币</div>
+            </div>
+            <span class="info">（单次消费米币额度乘以关注数量，不得大于拥有米币总额度）</span>
+        </div>
+
+    </div><br/>
+    <div class="form-group">
+        <div class="col-sm-8" >
+            <label class="col-sm-4 control-label">需要的阅读数：</label>
+            <div class="input-group">
+                <input type="text" class="form-control" name="needNumber" id="input2" onchange="checkAmount(this.value)"/>
+                <div class="input-group-addon">次</div>
+            </div>
+            <span class="info">奖励米币数和关注数量必须均大于零</span>
+        </div>
+
+    </div><br/>
+
+    <div class="form-group">
+        <div class="col-sm-8" id="div2">
+            <label class="col-sm-4 control-label">求关注时间限制（天）：</label>
+            <select name="limitDay" class="form-control" id="select2">
+                <option value="0">0</option>
+            </select>
+        </div>
+
+    </div>
+    <div class="form-group">
+        <div class="col-sm-8">
+            <label class="col-sm-4 control-label">执行状态：</label>
+            <select name="isPublishNow" class="form-control">
+                <option value="1">立即执行</option>
+                <option value="0">保存稍后执行</option>
+            </select>
+        </div>
+        </div>
+</form>
+<div class="submit" style="text-align: center">
+    <button class="btn btn-primary" id="button" onclick="publish()">提交任务</button>
+</div>
+</div>
+</body>
+</html>

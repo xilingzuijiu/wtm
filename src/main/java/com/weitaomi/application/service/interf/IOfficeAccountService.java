@@ -66,4 +66,6 @@ public interface IOfficeAccountService {
     public List<OfficialAccount> getOfficialAccountList(Long memberId);
 
     boolean updateOfficialAccountList(Long accountId,Integer isOpen);
+
+    void addOfficialAccount(Long memberId,String addUrl,String remark);
 }

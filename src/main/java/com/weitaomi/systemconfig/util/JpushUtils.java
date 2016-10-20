@@ -84,7 +84,14 @@ public class JpushUtils {
     }
 
     public static PushPayload buildPushObject_all_all_alert(String content) {
-        return PushPayload.alertAll(content);
+        return PushPayload.newBuilder()
+                .setPlatform(Platform.all())
+                .setAudience(Audience.all())
+                .setNotification(Notification.alert(content))
+                .setOptions(Options.newBuilder()
+                        .setApnsProduction(true)
+                        .build())
+                .build();
     }
 
     public static PushPayload buildPushObject_all_alias_alert(String alias,String content) {
@@ -100,6 +107,9 @@ public class JpushUtils {
                 .setPlatform(Platform.all())
                 .setAudience(Audience.tag(memberId.toString()))
                 .setNotification(Notification.alert(alert))
+                .setOptions(Options.newBuilder()
+                .setApnsProduction(true)
+                        .build())
                 .build();
     }
     public static PushPayload buildPushObject_ios_tagAnd_alertWithExtrasAndMessage(String alert,String msgContent) {

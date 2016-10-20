@@ -85,5 +85,16 @@ public class OfficialAccountsPCController extends BaseController{
         Long memberId=super.getUserId(request);
         return AjaxResult.getOK(officeAccountService.signOfficialAccountMsgList(memberId));
     }
-
+    /**
+     * 添加公众号
+     * @param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/addOfficialAccount",method = RequestMethod.POST)
+    public AjaxResult addOfficialAccount(HttpServletRequest request,String addUrl,String remark){
+        Long memberId=super.getUserId(request);
+        officeAccountService.addOfficialAccount(memberId,addUrl,remark);
+        return AjaxResult.getOK();
+    }
 }

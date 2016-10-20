@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../code/css/bootstrap.min.css"/>
+    <style>
+        body{
+            font-family: "Microsoft Yahei UI", "Helvetica Neue", Helvetica, Arial, sans-serif, "Microsoft YaHei";
+            font-size: 16px;
+            background: #FFFBE6;
+        }
+        .ucenter {
+            width: 850px;
+            MARGIN-RIGHT: auto;
+            MARGIN-LEFT: auto;
+            margin-top: 75px;
+        }
+    </style>
+    <script language='javascript' src='../../code/js/jquery.min.js'></script>
+    <script language='javascript' src="../../code/js/jquery.cookie.js"></script>
+    <script>
+        $(function () {
+            $("#cetificate").click(function () {
+                var addUrl='https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=APPADDURL==&scene=110#wechat_redirect';
+                var articleUrl=$("#artileUrl").val()
+                var remark=$("#remark").val()
+                addUrl=addUrl.replace('APPADDURL',articleUrl.substring(articleUrl.indexOf('__biz=')+6,articleUrl.indexOf('==&')))
+                $.ajax({
+                    url:"/pc/admin/official/addOfficialAccount",
+                    type:"post",
+                    data:{addUrl:addUrl,remark:remark},
+                    beforeSend: function (XMLHttpRequest) {
+                        getMemberRequestHeaderMsg(XMLHttpRequest)
+                    } ,
+                    success: function (params) {
+
+                    }
+                })
+            })
+        })
+        var getMemberRequestHeaderMsg=function(XMLHttpRequest) {
+            var memberId = $.cookie("memberId");
+            if (memberId == null || memberId == undefined) {
+                var result=confirm("登录已过期请重新登录");
+                if(result){
+                    location.href = "/frontPage/wtmpc/login.html"
+                }
+            }
+            var password= $.cookie("password");
+            XMLHttpRequest.setRequestHeader("memberId",memberId);
+            XMLHttpRequest.setRequestHeader("from",1);
+        }
+    </script>
+</head>
+<body>
+    <div class="ucenter">
+        <form action="" method="post">
+                <label>输入要提交公众号的任意一篇文章链接：</label>
+                <input  id="artileUrl" type="text" class="form-control" onfocus="if (value =='输入文章链接...'){value =''}" name="article"
+                       value="输入文章链接..."/>
+                <label>公众号描述：</label><br/>
+                <textarea id="remark"  cols="103" rows="6"  name="remark" placeholder="输入公众号描述..."></textarea>
+        </form>
+        <div class="recShareBox" id="cetificate">
+            <input type="submit" value="点击认证"
+                   style="width:80px;height:30px;border:1px solid #44b549;background:#44b549;font-size:14px;color:#fff;border-radius:5px;cursor:pointer;margin-top:20px;">
+        </div>
+
+    </div>
+
+</body>
+</html>

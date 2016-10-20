@@ -112,7 +112,7 @@ function initilizePage(){
     $("#headimg").text(decodeURI($.cookie("memberName")))
     $(".accounttel>h6>span").text($.cookie("telephone"))
     $(".photoimg").attr("src",$.cookie("imageUrl"));
-    $("#demo1").val(getLocalTime(($.cookie("birth")==null||$.cookie("birth")==undefined)?$.cookie("birth"):0));
+    $("#demo1").val(getLocalTime(($.cookie("birth")==null||$.cookie("birth")==undefined)?0:$.cookie("birth")));
     var sex=parseInt($.cookie("sex"));
 //            $(".sexmi").find("option[value="+sex+"]").attr("selected",true);
     switch (sex){

@@ -295,4 +295,17 @@ public class OfficeAccountService implements IOfficeAccountService {
         officialAccount.setIsOpen(isOpen);
         return officalAccountMapper.updateByPrimaryKeySelective(officialAccount)==1?true:false;
     }
+
+    @Override
+    public void addOfficialAccount(Long memberId, String addUrl, String remark) {
+        Map<String,String> map=new HashMap<>();
+        map.put("addUrl",addUrl);
+        map.put("memberId",memberId.toString());
+        map.put("remark",remark);
+        try {
+            HttpRequestUtils.postString("http://www.weitaomi.com.cn/index.php/kfz/login/index",JSON.toJSONString(map));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -203,7 +203,7 @@ public class ArticleService implements IArticleService {
             JpushUtils.buildRequest("您发布的任务米币已不足，任务终止",account.getMemberId());
         }
         taskPoolMapper.updateByPrimaryKeySelective(taskPool);
-        memberTaskHistoryService.addMemberTaskToHistory(memberId,6L, BigDecimal.valueOf(taskPool.getSingleScore()).multiply(taskPool.getRate()).doubleValue(),1,"阅读文章'"+article.getTitle()+"'",null,null);
+        memberTaskHistoryService.addMemberTaskToHistory(memberId,6L, BigDecimal.valueOf(taskPool.getSingleScore()).multiply(taskPool.getRate()).doubleValue(),1,"阅读文章-"+article.getTitle(),null,null);
         memberScoreService.addMemberScore(memberId,3L,1,BigDecimal.valueOf(singleScore).multiply(taskPool.getRate()).doubleValue(),UUIDGenerator.generate());
         return true;
     }
@@ -235,7 +235,7 @@ public class ArticleService implements IArticleService {
             JpushUtils.buildRequest("您发布的文章"+article.getTitle()+"阅读任务已经完成，任务终止",account.getMemberId());
         }
         taskPoolMapper.updateByPrimaryKeySelective(taskPool);
-        memberTaskHistoryService.addMemberTaskToHistory(memberId,6L, BigDecimal.valueOf(taskPool.getSingleScore()).multiply(taskPool.getRate()).doubleValue(),1,"阅读文章"+article.getTitle(),null,null);
+        memberTaskHistoryService.addMemberTaskToHistory(memberId,6L, BigDecimal.valueOf(taskPool.getSingleScore()).multiply(taskPool.getRate()).doubleValue(),1,"阅读文章-"+article.getTitle(),null,null);
         memberScoreService.addMemberScore(memberId,3L,1,BigDecimal.valueOf(taskPool.getSingleScore()).multiply(taskPool.getRate()).doubleValue(),UUIDGenerator.generate());
         return true;
     }
