@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.weitaomi.application.model.mapper.WTMAccountMessageMapper" >
+  <resultMap id="BaseResultMap" type="com.weitaomi.application.model.bean.WTMAccountMessage" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="expires_in" property="expires_in" jdbcType="INTEGER" />
+    <result column="token_time" property="token_time" jdbcType="TIMESTAMP" />
+    <result column="ysid" property="ysid" jdbcType="LONGVARCHAR" />
+    <result column="appid" property="appid" jdbcType="LONGVARCHAR" />
+    <result column="appSecret" property="appSecret" jdbcType="LONGVARCHAR" />
+    <result column="token" property="token" jdbcType="LONGVARCHAR" />
+    <result column="EncodingAESKey" property="encodingAESKey" jdbcType="LONGVARCHAR" />
+    <result column="access_token" property="access_token" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <update id="updateToken">
+    update wtm_weitaomi_accounts_message wam set wam.access_token = #{token}, wam.token_time=#{time} where id=1 ;
+  </update>
+</mapper>

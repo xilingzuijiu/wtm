@@ -9,6 +9,7 @@ import com.weitaomi.application.model.dto.MemberInfoDto;
 import com.weitaomi.application.model.dto.RequestFrom;
 import com.weitaomi.application.model.enums.PayType;
 import com.weitaomi.application.model.mapper.ThirdLoginMapper;
+import com.weitaomi.application.model.mapper.WTMAccountMessageMapper;
 import com.weitaomi.application.service.interf.IMemberService;
 import com.weitaomi.application.service.interf.IPaymentService;
 import com.weitaomi.systemconfig.dataFormat.AjaxResult;
@@ -44,7 +45,8 @@ import java.util.Map;
 public class PageController extends BaseController {
     @Autowired
     private ThirdLoginMapper thirdLoginMapper;
-
+    @Autowired
+    private WTMAccountMessageMapper messageMapper;
     @RequestMapping("")
     public String indexPage() {
         return "wtmpc/index.html";
@@ -240,6 +242,7 @@ public class PageController extends BaseController {
                 accessToken = (String) params_map.get("access_token");
                 WechatConfig.access_token = accessToken;
                 WechatConfig.token_updatetime = DateUtils.getUnixTimestamp();
+                messageMapper.updateToken(DateUtils.getTime(DateUtils.getUnixTimestamp(),DateUtils.standard),accessToken);
             }
             NameValuePair[] nameValue1 = new NameValuePair[2];
             nameValue1[0] = new BasicNameValuePair("access_token", WechatConfig.access_token);
@@ -261,21 +264,20 @@ public class PageController extends BaseController {
             if ((Integer)param.get("payType")==(PayType.WECHAT_WEB.getValue())){
                 Map map= JSON.parseObject(paramString);
                 String nonce=(String)map.get("noncestr");
-                String pre_sign="appId="+map.get("appid")+"&nonceStr="+nonce+"&package=prepay_id="+map.get("prepayid")+"&timestamp="+map.get("timestamp")+"&key="+ WechatConfig.API_KEY;
-
-
+                String pre_sign="appId="+map.get("appid")+"&nonceStr="+nonce+"&package=prepay_id="+map.get("prepayid")+"&signType=MD5"+"&timeStamp="+map.get("timestamp")+"&key="+ WechatConfig.OFFICIAL_API_KEY;
+                System.out.println("prePaySign=="+pre_sign);
                 modelAndView.addObject("pay_timestamp",map.get("timestamp"));
                 modelAndView.addObject("nonceStrPay",nonce);
                 modelAndView.addObject("prepayid",map.get("prepayid"));
-                modelAndView.addObject("paySign",DigestUtils.md5Hex(pre_sign).toUpperCase());
-                modelAndView.addObject("pay_timestamp",map.get("timestamp"));
+                String signature=DigestUtils.md5Hex(pre_sign).toUpperCase();
+                System.out.println("签名为:"+signature);
+                modelAndView.addObject("paySign",signature);
 
             }
             modelAndView.addObject("nonceStr",nonceStr);
             modelAndView.addObject("timestamp",timestamp);
             modelAndView.addObject("signature",sign);
             modelAndView.addObject("appid",WechatConfig.MCH_APPID);
-            modelAndView.addObject("nonceStr",nonceStr);
             return modelAndView;
         } catch (IOException e) {
             e.printStackTrace();

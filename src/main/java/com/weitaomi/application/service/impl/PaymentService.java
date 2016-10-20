@@ -233,8 +233,18 @@ public class PaymentService implements IPaymentService {
             String randomkey = UUIDGenerator.generate();
             String code = this.getTradeNo();
             Map<String, String> params = new HashMap<>();
-            params.put("mch_appid", WechatConfig.APP_ID);
-            params.put("mchid", WechatConfig.MCHID);
+            ThirdLogin thirdLogin=thirdLoginMapper.getThirdLoginByOpenId(approve.getAccountNumber());
+            String key ="";
+            if (thirdLogin.getSourceType()==0){
+                params.put("mch_appid", WechatConfig.APP_ID);
+                params.put("mchid", WechatConfig.MCHID);
+                key=WechatConfig.API_KEY;
+            }
+            if (thirdLogin.getSourceType()==1){
+                params.put("mch_appid", WechatConfig.MCH_APPID);
+                params.put("mchid", WechatConfig.MCHID_OFFICIAL);
+                key=WechatConfig.OFFICIAL_API_KEY;
+            }
             params.put("nonce_str", randomkey);
             params.put("partner_trade_no", code);
             params.put("openid", approve.getAccountNumber());
@@ -243,15 +253,23 @@ public class PaymentService implements IPaymentService {
             params.put("desc", "付款到个人账户");
             params.put("spbill_create_ip", ip);
             String pre_sign = StringUtil.formatParaMap(params);
-            pre_sign = pre_sign + "&key=" + WechatConfig.API_KEY;
+            pre_sign = pre_sign + "&key=" + key;
             String sign = DigestUtils.md5Hex(pre_sign).toUpperCase();
 
             WechatBatchPayParams wechatBatchPayParams = new WechatBatchPayParams();
             wechatBatchPayParams.setAmount(amount.toString());
             wechatBatchPayParams.setCheck_name("NO_CHECK");
             wechatBatchPayParams.setDesc("付款到个人账户");
-            wechatBatchPayParams.setMch_appid(WechatConfig.APP_ID);
-            wechatBatchPayParams.setMchid(WechatConfig.MCHID);
+
+            if (thirdLogin.getSourceType()==0){
+                wechatBatchPayParams.setMch_appid(WechatConfig.APP_ID);
+                wechatBatchPayParams.setMchid(WechatConfig.MCHID);
+            }
+            if (thirdLogin.getSourceType()==1){
+                wechatBatchPayParams.setMch_appid(WechatConfig.MCH_APPID);
+                wechatBatchPayParams.setMchid(WechatConfig.MCHID_OFFICIAL);
+            }
+
             wechatBatchPayParams.setNonce_str(randomkey);
             wechatBatchPayParams.setOpenid(approve.getAccountNumber());
             wechatBatchPayParams.setPartner_trade_no(code);
@@ -261,7 +279,7 @@ public class PaymentService implements IPaymentService {
             xStream.autodetectAnnotations(true);
             String xml = xStream.toXML(wechatBatchPayParams);
             try {
-                String result = ClientCustomSSL.connectKeyStore(WechatConfig.BATCH_PAY_URL, xml);
+                String result = ClientCustomSSL.connectKeyStore(WechatConfig.BATCH_PAY_URL, xml,thirdLogin.getSourceType());
                 WechatBatchPayResult wechat = StreamUtils.toBean(result, WechatBatchPayResult.class);
                 if (wechat != null) {
                     if (wechat.getResult_code().equals(WechatConfig.SUCCESS) && wechat.getReturn_code().equals(WechatConfig.SUCCESS)) {

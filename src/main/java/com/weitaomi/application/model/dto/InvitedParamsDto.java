@@ -14,6 +14,10 @@ public class InvitedParamsDto {
      * 邀请总奖励
      */
     private Long totalScore;
+    /**
+     * 邀请码
+     */
+    private String invitedCode;
 
 
     /**
@@ -46,5 +50,21 @@ public class InvitedParamsDto {
      */
     public void setTotalScore(Long totalScore) {
         this.totalScore = totalScore;
+    }
+
+    /**
+     * 获取邀请码
+     * @return invitedCode 邀请码
+     */
+    public String getInvitedCode() {
+        return this.invitedCode;
+    }
+
+    /**
+     * 设置邀请码
+     * @param invitedCode 邀请码
+     */
+    public void setInvitedCode(String invitedCode) {
+        this.invitedCode = invitedCode;
     }
 }

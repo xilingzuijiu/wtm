@@ -27,4 +27,7 @@
   <select id="getThirdlogInDtoMemberId" resultType="com.weitaomi.application.model.dto.ThirdLoginDto">
      select login.*,m.sex from wtm_third_login login LEFT JOIN wtm_member m  ON m.id=login.memberId WHERE login.memberId=#{memberId}
   </select>
+  <select id="getThirdLoginByOpenId" resultType="com.weitaomi.application.model.bean.ThirdLogin">
+    select * from wtm_third_login login where login.openId=#{openId}
+  </select>
 </mapper>

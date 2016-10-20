@@ -13,7 +13,7 @@ public class MessagePushTest {
     public void testPushMessage(){
         String value="{\"id\":7,\"message\":\"hello World\"}";
 //        for (int i = 0; i < 5; i++) {
-            JpushUtils.buildRequest("这是一条通知，通知给memberId={}的用户",3L);
+            JpushUtils.buildRequest("这是一条通知，通知给memberId={}的用户",5L);
             try {
                 Thread.sleep(5000L);
             } catch (InterruptedException e) {

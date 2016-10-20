@@ -52,18 +52,28 @@ import org.apache.http.util.EntityUtils;
  */
 public class ClientCustomSSL {
 
-    public static String connectKeyStore(String url,String xml) throws Exception{
+    public static String connectKeyStore(String url,String xml,int flag) throws Exception{
         KeyStore keyStore  = KeyStore.getInstance("PKCS12");
-        FileInputStream instream = new FileInputStream(new File("src\\main\\java\\com\\weitaomi\\systemconfig\\wechat\\apiclient_cert.p12"));
+        File file=null;
+        char[] arr=null;
+        if (flag==0){
+            file=new File("src\\main\\java\\com\\weitaomi\\systemconfig\\wechat\\apiclient_cert.p12");
+            arr=WechatConfig.MCHID.toCharArray();
+        }
+        if (flag==1){
+            file=new File("src\\main\\java\\com\\weitaomi\\systemconfig\\wechat\\apiclient_certwx.p12");
+            arr=WechatConfig.MCHID_OFFICIAL.toCharArray();
+        }
+        FileInputStream instream = new FileInputStream(file);
         try {
-            keyStore.load(instream, WechatConfig.MCHID.toCharArray());
+            keyStore.load(instream, arr);
         } finally {
             instream.close();
         }
 
         // Trust own CA and all self-signed certs
         SSLContext sslcontext = SSLContexts.custom()
-                .loadKeyMaterial(keyStore, WechatConfig.MCHID.toCharArray())
+                .loadKeyMaterial(keyStore, arr)
                 .build();
         // Allow TLSv1 protocol only
         SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(

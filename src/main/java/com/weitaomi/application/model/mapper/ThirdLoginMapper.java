@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Param;
 
 public interface ThirdLoginMapper extends IBaseMapper<ThirdLogin> {
     public ThirdLogin getThirdLoginInfo(@Param("unionId") String unionId);
+    public ThirdLogin getThirdLoginByOpenId(@Param("openId") String openId);
     public ThirdLoginDto getThirdlogInDtoMemberId(@Param("memberId") Long memberId);
     Long getMemberIdByUnionId(@Param("unionId") String unionId);
     ThirdLogin getUnionIdByMemberId(@Param("memberId") Long memberId);
