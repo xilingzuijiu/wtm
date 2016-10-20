@@ -15,18 +15,20 @@
         $(function(){
             $("nav h5").click(function(){
                 $("nav h5:not(this)").removeClass("wpcactive");
+                $("nav h5").lastChild.removeClass("wpcactive");
                 $(this).addClass("wpcactive");
-                if($(this).index()==6){
+                $(".busienter h5").click(function(){
                     $(this).removeClass("wpcactive");
-                    $(this).css("color","#fbf");
-                }
+                    $(this).css("color","#fff");
+                })
+
+
                 //滑动到锚链接
                  var href=$(this).parent().attr("href");
                     var top=$(href).offset().top; $(this).parent().blur();
                     $("body,html").animate({scrollTop:top-93},500); return false;})
             $("#loadapp").click(function(){
                 window.location.href="http://a.app.qq.com/o/simple.jsp?pkgname=com.woyun.weitaomi";
-
             })
             })
     </script>
@@ -56,7 +58,7 @@
             </div>
         </a>
         <a href="#contact" class="nava"><h5>联系我们</h5></a>
-        <a href="#" class="nava busienter"><h5>商家入口</h5></a>
+        <a href="#" class="nava busienter"><h5>商家入口→</h5></a>
     </nav>
         <!--<div class="loadapp">-->
             <!--<a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.woyun.weitaomi"></a>-->

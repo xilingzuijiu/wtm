@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="微淘米一款玩着就能赚钱的APP">
+    <meta name="keywords" content="玩赚,APP,玩着赚钱,赚钱,公众号,关注,阅读,关注公众号,阅读文章">
+    <link rel="shortcut icon" href="../../code/img/wtm.ico"/>
+    <title>商家管理平台</title>
+    <link href="../../code/css/base.css" rel="stylesheet" type="text/css"/>
+    <link href="../../code/css/stylepc.css" rel="stylesheet" type="text/css"/>
+    <script src="../../code/js/jquery.min.js"></script>
+    <script src="../../code/js/jquery.cookie.js"></script>
+    <script>
+        $(function(){
+            $(".slideul li").click(function() {
+                $(".slideul li:not(this)").removeClass("slideactive");
+                $(this).addClass("slideactive");
+
+            })
+//            var count=0;
+//            $(".slideul .oneli").click(function() {
+//                console.log($(this).index())
+//                switch($(this).index()){
+//                    case 0:
+//                            if(count==0){
+//                                $(this).css("background","url('../../code/img/pc/tijiaog1.png') no-repeat 13px center");
+//                                $(this).css("background-size","18px");
+//                                count++;
+//                            }else{
+//                                $(this).css("background","url('../../code/img/pc/tijiaog.png') no-repeat 13px center");
+//                                $(this).css("background-size","18px");
+//                                count--;
+//                            }
+//                        break;
+//                    case 1:
+//                        if(count==0) {
+//                            $(this).css("background", "url('../../code/img/pc/m_icon5.png') no-repeat 13px center");
+//                            $(this).css("background-size", "18px");
+//                            count++;
+//                        }else {
+//                            $(this).css("background","url('../../code/img/pc/m_icon4.png') no-repeat 13px center");
+//                            $(this).css("background-size","18px");
+//                            count--;
+//                        }
+//                        break;
+//                    case 2:
+//                        if(count==0) {
+//                            $(this).css("background", "url('../../code/img/pc/m_icon5.png') no-repeat 13px center");
+//                            $(this).css("background-size", "18px");
+//                            count++;
+//                        }else {
+//                            $(this).css("background","url('../../code/img/pc/m_icon4.png') no-repeat 13px center");
+//                            $(this).css("background-size","18px");
+//                            count--;
+//                        }
+//                        break;
+//                    case 3:
+//                        if(count==0) {
+//                            $(this).css("background", "url('../../code/img/pc/task1.png') no-repeat 13px center");
+//                            $(this).css("background-size", "18px");
+//                        }
+//                            else {
+//                                $(this).css("background", "url('../../code/img/pc/task.png') no-repeat 13px center");
+//                                $(this).css("background-size", "18px");
+//                                count--;
+//                            }
+//                        }
+//            })
+
+
+
+        })
+
+
+    </script>
+</head>
+<body class="dark">
+<header>
+    <div class="headerbox">
+        <div class="logo">
+            <img src="../../code/img/headerlogo.png"/>
+        </div>
+        <p class="loginenter">微淘米商家登录入口</p>
+    </div>
+</header>
+<div class="blank busblank"></div>
+<div class="content">
+    <div class="slide">
+        <ul class="slideul">
+            <li id="tgzh" class="slideactive oneli">
+                <a><span>添加公众号</span></a>
+            </li>
+            <li id="fread" class="oneli">
+                <a><span>发布阅读</span></a>
+            </li>
+            <li id="fgzh" class="oneli">
+                <a><span>发布关注</span></a>
+            </li>
+            <li id="gtask" class="oneli">
+                <a id="gtaskoa">
+                    <span>任务管理</span>
+                    <ul class="threeul">
+                        <li class="slideactive">我的公众号one</li>
+                        <li>我的公众号two</li>
+                        <li>我的公众号three</li>
+                        <li>我的公众号four</li>
+                        <li>我的公众号five</li>
+                    </ul>
+                </a>
+
+
+            </li>
+        </ul>
+
+    </div>
+
+</div>
+<div class="copyright copylogin">
+    <div class="copybox logincopybox">
+        <div class="copyleft logincopyleft">
+            <img src="../../code/img/copylogo.png"/>
+            <h5>一款玩着就能赚钱的APP</h5>
+        </div>
+        <div class="wxright">
+            <div class="gongzhonghao logingzh">
+                <img src="../../code/img/gzh.png"/>
+                <h6>扫码关注公众号</h6>
+            </div>
+            <div class="app loginapp">
+                <img src="../../code/img/appc.png"/>
+                <h6>扫码下载APP</h6>
+            </div>
+            <p>扫描左方二维码<br/>关注公众号，<br/>下载APP，<br/>更多惊喜等待你哦！</p>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <p>版权信息：©微淘米</p>
+</div>
+</body>
+</html>
