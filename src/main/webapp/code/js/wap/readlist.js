@@ -20,25 +20,28 @@ $(function(){
     }else{
         loadReadlist();
     }
+
 })
-$(window).scroll(function(){
-    var scrollTop = $(this).scrollTop();               //滚动条距离顶部的高度
-    var scrollHeight = $(document).height();                   //当前页面的总高度
-    var windowHeight = $(this).height();                   //当前可视的页面高度
-    if(scrollTop + windowHeight >= scrollHeight){        //距离顶部+当前高度 >=文档总高度 即代表滑动到底部
-        console.log(Math.ceil(total/pageSize)+"shi");
-        count++;
-        if(count<=Math.ceil(total/pageSize)){
-            loadReadlist();
-        }
-        if(count==Math.ceil(total/pageSize)){
-            var p = document.createElement('p');
-            p.className="loadmore"
-            p.innerHTML = "没有更多";
-            $("body").append(p);
-        }
-    }
-});
+//$(window).scroll(function(){
+//    var scrollTop = $(this).scrollTop();               //滚动条距离顶部的高度
+//    var scrollHeight = $(document).height();                   //当前页面的总高度
+//    var windowHeight = $(this).height();                   //当前可视的页面高度
+//    if(scrollTop + windowHeight >= scrollHeight){        //距离顶部+当前高度 >=文档总高度 即代表滑动到底部
+//        console.log(Math.ceil(total/pageSize)+"shi");
+//        count++;
+//        if(count<=Math.ceil(total/pageSize)){
+//            loadReadlist();
+//        }
+//        if(count==Math.ceil(total/pageSize)){
+//            var p = document.createElement('p');
+//            p.className="loadmore"
+//            p.innerHTML = "没有更多";
+//            $("body").append(p);
+//        }
+//    }
+//});
+
+
 function loadReadlist(){
     var request=JSON.stringify(new ArticleSerach(0,count,pageSize));
     console.log("count"+count);
@@ -55,8 +58,8 @@ function loadReadlist(){
             var json = eval(params); //数组
             console.log("json数据为：" + params);
             console.log($.cookie("memberId"));
-            if (json.data.list!=null&&json.errorCode==0){
-                total=json.data.total;
+            if (json.data.list != null && json.errorCode == 0) {
+                total = json.data.total;
                 json.data.list.forEach(function (article) {
                     var li = document.createElement("li");
                     li.setAttribute("onClick", "articleSubmit(this)");
@@ -65,12 +68,12 @@ function loadReadlist(){
                     hashMap.Set(li.id, article.url);
                     div1.className = "col-xs-2 listimg";
                     var img = document.createElement('img');
-                    img.setAttribute("src",article.imageUrl);
+                    img.setAttribute("src", article.imageUrl);
                     div1.appendChild(img);
                     var div2 = document.createElement('div');
                     div2.className = "readdetails col-xs-8";
                     var h5 = document.createElement('h5');
-                    h5.className="articltitle";
+                    h5.className = "articltitle";
                     h5.innerHTML = article.title;
                     //var h6 = document.createElement('h6');
                     //h6.innerHTML = article.articleAbstract;
@@ -85,8 +88,8 @@ function loadReadlist(){
                     var div3 = document.createElement('div');
                     div3.className = "checkanniu col-xs-2";
                     var a = document.createElement('a');
-                    var timestamp=article.createTime;
-                    a.innerHTML =format(timestamp);
+                    var timestamp = article.createTime;
+                    a.innerHTML = format(timestamp);
 
                     div3.appendChild(a);
                     li.appendChild(div1);
@@ -94,13 +97,27 @@ function loadReadlist(){
                     li.appendChild(div3);
                     document.body.appendChild(li);
                     document.getElementsByTagName('ul')[0].appendChild(li);//动态添加文章（li标签）
+
                 })
-            }else if(json.data.list==null&&json.errorCode==0){
-                $(".nullp").css("display","block");
+            } else if (json.data.list == null && json.errorCode == 0) {
+                $(".nullp").css("display", "block");
             }
-            else
-            {
+            else {
                 alert("获取数据失败")
+            }
+            console.log("total" + total);
+            if (total <= pageSize) {
+                console.log("a");
+                $(".loadmore").empty();
+            } else {
+                $(".loadmore").click(function () {
+                    if (count <= Math.ceil(total / pageSize)) {
+                        loadReadlist();
+                    }
+                    if (count == Math.ceil(total / pageSize)) {
+                        $(".loadmore").innerHTML = "正在加载";
+                    }
+                })
             }
         },
         error:function (data) {

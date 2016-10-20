@@ -44,6 +44,7 @@ $(function(){
             if(json.data!=null&&json.errorCode==0){
                 $(".invitedScore").text(json.data.invitedScore);
                 $("#totalScore").text(json.data.totalScore);
+                $("#invitecode").text(json.data.invitedCode);
             }else
             {
                 alert("获取数据失败")
