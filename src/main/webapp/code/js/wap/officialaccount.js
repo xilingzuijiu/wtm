@@ -27,24 +27,45 @@ $(function(){
         loadofficiallist();
     }
 })
+//$(window).scroll(function(){
+//    var scrollTop = $(this).scrollTop();               //滚动条距离顶部的高度
+//    var scrollHeight = $(document).height();                   //当前页面的总高度
+//    var windowHeight = $(this).height();                   //当前可视的页面高度
+//    if(scrollTop + windowHeight >= scrollHeight){        //距离顶部+当前高度 >=文档总高度 即代表滑动到底部
+//        console.log(Math.ceil(total/pageSize)+"shi");
+//        count++;
+//        if(count<=Math.ceil(total/pageSize)){
+//            loadofficiallist();
+//        }
+//        if(count==Math.ceil(total/pageSize)){
+//            var p = document.createElement('p');
+//            p.className="loadmore"
+//            p.innerHTML = "没有更多";
+//            $("body").append(p);
+//        }
+//    }else if(scrollTop<=0){         //滚动条距离顶部的高度小于等于0
+////                    location.reload();
+//    }
+//});
 $(window).scroll(function(){
     var scrollTop = $(this).scrollTop();               //滚动条距离顶部的高度
     var scrollHeight = $(document).height();                   //当前页面的总高度
     var windowHeight = $(this).height();                   //当前可视的页面高度
     if(scrollTop + windowHeight >= scrollHeight){        //距离顶部+当前高度 >=文档总高度 即代表滑动到底部
-        console.log(Math.ceil(total/pageSize)+"shi");
-        count++;
-        if(count<=Math.ceil(total/pageSize)){
-            loadofficiallist();
+        console.log(Math.ceil(total/pageSize)+1+"shi");
+        if(count<=Math.ceil(total/pageSize)+1){
+            $(".loadmore").css("visibility","visible");
+            $(".loadmore").click(function(){
+                count++;;
+                $(this).css("visibility","hidden");
+                loadrecord();
+            })
         }
-        if(count==Math.ceil(total/pageSize)){
-            var p = document.createElement('p');
-            p.className="loadmore"
-            p.innerHTML = "没有更多";
-            $("body").append(p);
+        if(count>Math.ceil(total/pageSize)){
+            $(".loadmore").css("display","none");
         }
     }else if(scrollTop<=0){         //滚动条距离顶部的高度小于等于0
-//                    location.reload();
+        //location.reload();
     }
 });
 function loadofficiallist(){

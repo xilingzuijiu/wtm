@@ -45,7 +45,7 @@ header{background:url("../img/MainViewImgae/top.png") no-repeat center top;heigh
 .readdetails h5{font-size:2.7rem;line-height:1.7;overflow:hidden;color:#363636;text-overflow:ellipsis;white-space:nowrap;}
 .readdetails p{font-size:2rem;color:#989898;line-height:1.5;}
 .readdetails p span{color:#68c1f4;}
-.loadmore{text-align:center;font-size:3rem;color:#aaa;line-height:2.5;font-weight:normal;padding:0.5em 0;}
+.loadmore{text-align:center;font-size:3rem;color:#aaa;line-height:2.5;font-weight:normal;padding:0.5em 0;visibility:hidden;}
 /*关注公众号样式---------------------------------------------------------------------------------*/
 .gzhlist{border-top:#eee 1px solid;padding-top:1.5em;overflow:hidden;}
 .gzhlist li{text-align:center;padding-bottom:3rem;}
@@ -295,6 +295,7 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
 .ruletitle{font-size:3.5rem;line-height:2;color:#68c1f4;}
 .rulebody,ol li{color:#666;font-size:2.7rem;line-height:1.8;font-weight:normal;padding-bottom:1em;text-indent:2em;}
 ol li{text-indent:0;}
+.markrules{font-size:2.7rem;color:#fa4a18;}
 
 @media all and (min-width:800px){
     header{height:33em;}
@@ -464,6 +465,7 @@ ol li{text-indent:0;}
     .questionrules{padding:0 1.2em;}
     .ruletitle{font-size:4.5rem;line-height:2;}
     .rulebody,ol li{font-size:3.6rem;line-height:1.8;padding-bottom:1em;}
+    .markrules{font-size:3.6rem;}
 
 }
 @media screen and (min-width:640px) and (max-width:719px){
@@ -641,6 +643,7 @@ ol li{text-indent:0;}
     .questionrules{padding:0 1.2em;}
     .ruletitle{font-size:2.5rem;line-height:2;}
     .rulebody,ol li{font-size:1.9rem;line-height:1.8;padding-bottom:1em;}
+    .markrules{font-size:1.9rem;}
 }
 @media screen and (min-width:415px) and (max-width:639px){
     header{height:15em;margin-bottom:1em;}
@@ -819,6 +822,7 @@ ol li{text-indent:0;}
     .questionrules{padding:0 1em;}
     .ruletitle{font-size:2.4rem;line-height:2;}
     .rulebody,ol li{font-size:1.8rem;line-height:1.8;padding-bottom:1em;}
+    .markrules{font-size:1.8rem;}
 }
 @media screen and (min-width:376px) and (max-width:414px){
     .headerbox{padding:0 2.5em;}
@@ -1000,6 +1004,7 @@ ol li{text-indent:0;}
     .questionrules{padding:0 1em;}
     .ruletitle{font-size:2.2rem;line-height:2;}
     .rulebody,ol li{font-size:1.7rem;line-height:1.8;padding-bottom:1em;}
+    .markrules{font-size:1.7rem;}
 }
 @media screen and (min-width:321px) and (max-width:375px){
     header{height:11.3em;margin-bottom:0;}
@@ -1179,6 +1184,7 @@ ol li{text-indent:0;}
     .questionrules{padding:0 1em;}
     .ruletitle{font-size:2rem;line-height:2;}
     .rulebody,ol li{font-size:1.6rem;line-height:1.8;padding-bottom:1em;}
+    .markrules{font-size:1.6rem;}
 }
 @media screen and (max-width:320px){
     header{height:10em;margin-bottom:0;}
@@ -1360,6 +1366,7 @@ ol li{text-indent:0;}
     .questionrules{padding:0 1em;}
     .ruletitle{font-size:1.9rem;line-height:2;}
     .rulebody,ol li{font-size:1.5rem;line-height:1.8;padding-bottom:0.8em;}
+    .markrules{font-size:1.5rem;}
 }
 
 

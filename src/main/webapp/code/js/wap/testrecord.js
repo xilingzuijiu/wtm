@@ -6,27 +6,28 @@ var pageSize=11;
 var pageIndex=1;
 $(function(){
     loadrecord();
-
-})
+});
 console.log("count"+pageIndex);
 $(window).scroll(function(){
     var scrollTop = $(this).scrollTop();               //滚动条距离顶部的高度
     var scrollHeight = $(document).height();                   //当前页面的总高度
     var windowHeight = $(this).height();                   //当前可视的页面高度
     if(scrollTop + windowHeight >= scrollHeight){        //距离顶部+当前高度 >=文档总高度 即代表滑动到底部
-        console.log(Math.ceil(total/pageSize)+"shi");
-        pageIndex++;
-        if(pageIndex<=Math.ceil(total/pageSize)){
-            loadrecord();
+        console.log(Math.ceil(total/pageSize)+1+"shi");
+        console.log("pageIndex是"+pageIndex);
+        if(pageIndex<=Math.ceil(total/pageSize)+1){
+           $(".loadmore").css("visibility","visible");
+            $(".loadmore").click(function(){
+                pageIndex++;
+                $(this).css("visibility","hidden");
+                loadrecord();
+            })
         }
-        if(pageIndex==Math.ceil(total/pageSize)){
-            var p = document.createElement('p');
-            p.className="loadmore"
-            p.innerHTML = "没有更多";
-            $("body").append(p);
+        if(pageIndex>Math.ceil(total/pageSize)){
+            $(".loadmore").css("display","none");
         }
     }else if(scrollTop<=0){         //滚动条距离顶部的高度小于等于0
-//                    location.reload();
+                    //location.reload();
     }
 });
 function loadrecord(){
