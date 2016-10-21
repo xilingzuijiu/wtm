@@ -9,7 +9,7 @@ var hashMap = {
 }
 var total=0;
 var count=1;
-var pageSize=15;
+var pageSize=13;
 $(function(){
     var thirdLogin=$.cookie("thirdLogin");
     if (thirdLogin==null||thirdLogin==undefined||thirdLogin.length<=0){
@@ -22,24 +22,39 @@ $(function(){
     }
 
 })
-//$(window).scroll(function(){
-//    var scrollTop = $(this).scrollTop();               //滚动条距离顶部的高度
-//    var scrollHeight = $(document).height();                   //当前页面的总高度
-//    var windowHeight = $(this).height();                   //当前可视的页面高度
-//    if(scrollTop + windowHeight >= scrollHeight){        //距离顶部+当前高度 >=文档总高度 即代表滑动到底部
-//        console.log(Math.ceil(total/pageSize)+"shi");
-//        count++;
-//        if(count<=Math.ceil(total/pageSize)){
+$(window).scroll(function(){
+    var scrollTop = $(this).scrollTop();               //滚动条距离顶部的高度
+    var scrollHeight = $(document).height();                   //当前页面的总高度
+    var windowHeight = $(this).height();                   //当前可视的页面高度
+    if(scrollTop + windowHeight >= scrollHeight){        //距离顶部+当前高度 >=文档总高度 即代表滑动到底部
+        console.log(Math.ceil(total/pageSize)+"shi");
+        count++;
+        if(count<=Math.ceil(total/pageSize)){
+            loadReadlist();
+        }
+        if(count==Math.ceil(total/pageSize)){
+            var p = document.createElement('p');
+            p.className="loadmore"
+            p.innerHTML = "没有更多";
+            $("body").append(p);
+        }
+    }
+});
+
+//console.log("total" + total);
+//if (total <= pageSize) {
+//    console.log("a");
+//    $(".loadmore").empty();
+//} else {
+//    $(".loadmore").click(function () {
+//        if (count <= Math.ceil(total / pageSize)) {
 //            loadReadlist();
 //        }
-//        if(count==Math.ceil(total/pageSize)){
-//            var p = document.createElement('p');
-//            p.className="loadmore"
-//            p.innerHTML = "没有更多";
-//            $("body").append(p);
+//        if (count == Math.ceil(total / pageSize)) {
+//            $(".loadmore").innerHTML = "正在加载";
 //        }
-//    }
-//});
+//    })
+//}
 
 
 function loadReadlist(){
@@ -105,20 +120,6 @@ function loadReadlist(){
             else {
                 alert("获取数据失败")
             }
-            console.log("total" + total);
-            if (total <= pageSize) {
-                console.log("a");
-                $(".loadmore").empty();
-            } else {
-                $(".loadmore").click(function () {
-                    if (count <= Math.ceil(total / pageSize)) {
-                        loadReadlist();
-                    }
-                    if (count == Math.ceil(total / pageSize)) {
-                        $(".loadmore").innerHTML = "正在加载";
-                    }
-                })
-            }
         },
         error:function (data) {
             console.log(data)
@@ -127,6 +128,7 @@ function loadReadlist(){
 
     })
 }
+
 var articleSubmit = function(obj){
     var articleId=obj.getAttribute("id");
     var articleUrl=hashMap.Get(articleId);

@@ -18,15 +18,30 @@
     <script src="../../code/js/wap/pursewithdraw.js"></script>
     <script>
         $(function(){
-            puser.updateMyscore()
-            var height=window.screen.availHeight;//获取屏幕高度
-            $(".pursebag").css("height",height*0.5);
-            $(".pay").click(function(){
-                location.href="pay.html";
-            })
-            $(".cash").click(function(){
-                location.href="cash.html";
-            })
+            var thirdLogin=$.cookie("thirdLogin");
+                puser.updateMyscore()
+                var height=window.screen.availHeight;//获取屏幕高度
+                $(".pursebag").css("height",height*0.5);
+                $(".pay").click(function(){
+                    if (thirdLogin==null||thirdLogin==undefined||thirdLogin.length<=0){
+                        var result=confirm("还未绑定微信，请先绑定微信再获取文章");
+                        if(result){
+                            location.href="/frontPage/wap/mycenter.html";
+                        }else {location.href="/frontPage/wap/index.html";}
+                    }else{
+                        location.href="pay.html";
+                    }
+                });
+                $(".cash").click(function(){
+                    if (thirdLogin==null||thirdLogin==undefined||thirdLogin.length<=0){
+                        var result=confirm("还未绑定微信，请先绑定微信再获取文章");
+                        if(result){
+                            location.href="/frontPage/wap/mycenter.html";
+                        }else {location.href="/frontPage/wap/index.html";}
+                    }else {
+                        location.href = "cash.html";
+                    }
+                })
         })
     </script>
 </head>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="微淘米一款玩着就能赚钱的APP">
+    <meta name="keywords" content="玩赚,APP,玩着赚钱,赚钱,公众号,关注,阅读,关注公众号,阅读文章">
+    <link rel="shortcut icon" href="../../code/img/wtm.ico"/>
+    <title>任务管理页面</title>
+    <link href="../../code/css/base.css" rel="stylesheet" type="text/css"/>
+    <link href="../../code/css/stylepc.css" rel="stylesheet" type="text/css"/>
+    <script src="../../code/js/jquery.min.js"></script>
+    <script src="../../code/js/jquery.cookie.js"></script>
+    <script>
+        $(function() {
+            $(".slideul li").click(function () {
+                $(".slideul li:not(this)").removeClass("slideactive");
+                $(this).addClass("slideactive");
+            })
+        })
+    </script>
+</head>
+<body class="dark">
+<header>
+    <div class="headerbox">
+        <div class="logo">
+            <img src="../../code/img/headerlogo.png"/>
+        </div>
+        <p class="loginenter">微淘米商家登录入口</p>
+    </div>
+</header>
+<div class="blank busblank"></div>
+<div class="content">
+    <div class="slide">
+        <div class="twonav">商家管理平台</div>
+        <ul class="slideul">
+            <li id="tgzh" class="slideactive oneli">
+                <a><span>添加公众号</span></a>
+            </li>
+            <li id="fread" class="oneli">
+                <a><span>发布阅读</span></a>
+            </li>
+            <li id="fgzh" class="oneli">
+                <a><span>发布关注</span></a>
+            </li>
+            <li id="gtask" class="oneli">
+                <a id="gtaskoa">
+                    <span>任务管理</span>
+                    <ul class="threeul">
+                        <li>我的公众号one</li>
+                        <li>我的公众号two</li>
+                        <li>我的公众号three</li>
+                        <li>我的公众号four</li>
+                        <li>我的公众号five</li>
+                    </ul>
+                </a>
+            </li>
+        </ul>
+        <div class="twonavtel">0532-80801188</div>
+    </div>
+    <div class="middlecontent">
+        <div class="gzhtask">
+            <h5>关注任务</h5>
+            <div class="gtaskbox">
+                <ul class="readtaskul">
+                    <li class="readlibox">
+                        <ul class="smallul">
+                            <li class="smallibox">
+                                <h6>任务状态</h6>
+                                <p><label><input type="checkbox" value="上线">已上线</label></p>
+                            </li>
+                            <li class="smallibox">
+                                <h6>单个任务奖励</h6>
+                                <p>1</p>
+                            </li>
+                            <li class="smallibox">
+                                <h6>所需数量</h6>
+                                <p>6836</p>
+                            </li>
+                            <li class="smallibox">
+                                <h6>发布时间</h6>
+                                <p>2016-10-05-11:30:28</p>
+                            </li>
+                            <li class="smallibox">
+                                <h6>剩余时间</h6>
+                                <p>0天23时44分41秒</p>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="tasksmalltitle">
+                    <h5>单个任务奖励单个任务奖励单个任务奖励</h5>
+                    <h6>￥0.01</h6>
+                    <p>支付米币</p>
+                </div>
+            </div>
+        </div>
+        <div class="readtask">
+            <h5>阅读任务</h5>
+            <div class="gtaskbox">
+            <ul class="readtaskul">
+                <li class="readlibox">
+                    <ul class="smallul">
+                        <li class="smallibox">
+                            <h6>任务状态</h6>
+                            <p><label><input type="checkbox" value="上线">已上线</label></p>
+                        </li>
+                        <li class="smallibox">
+                            <h6>单个任务奖励</h6>
+                            <p>1</p>
+                        </li>
+                        <li class="smallibox">
+                            <h6>所需数量</h6>
+                            <p>6836</p>
+                        </li>
+                        <li class="smallibox">
+                            <h6>发布时间</h6>
+                            <p>2016-10-05-11:30:28</p>
+                        </li>
+                        <li class="smallibox">
+                            <h6>剩余时间</h6>
+                            <p>0天23时44分41秒</p>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="tasksmalltitle">
+                <h5>单个任务奖励单个任务奖励单个任务奖励</h5>
+                <h6>￥0.01</h6>
+                <p>支付米币</p>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="copyright copylogin">
+    <div class="copybox logincopybox">
+        <div class="copyleft logincopyleft">
+            <img src="../../code/img/copylogo.png"/>
+            <h5>一款玩着就能赚钱的APP</h5>
+        </div>
+        <div class="wxright">
+            <div class="gongzhonghao logingzh">
+                <img src="../../code/img/gzh.png"/>
+                <h6>扫码关注公众号</h6>
+            </div>
+            <div class="app loginapp">
+                <img src="../../code/img/appc.png"/>
+                <h6>扫码下载APP</h6>
+            </div>
+            <p>扫描左方二维码<br/>关注公众号，<br/>下载APP，<br/>更多惊喜等待你哦！</p>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <p>版权信息：©微淘米</p>
+</div>
+</body>
+</html>

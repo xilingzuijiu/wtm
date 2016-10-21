@@ -15,59 +15,57 @@
             $(".slideul li").click(function() {
                 $(".slideul li:not(this)").removeClass("slideactive");
                 $(this).addClass("slideactive");
-
-            })
+            });
+            $(".middlecontent").html()
 //            var count=0;
-//            $(".slideul .oneli").click(function() {
-//                console.log($(this).index())
+//            $(".oneli").click(function(){
+//                console.log($(this).index());
 //                switch($(this).index()){
 //                    case 0:
 //                            if(count==0){
-//                                $(this).css("background","url('../../code/img/pc/tijiaog1.png') no-repeat 13px center");
-//                                $(this).css("background-size","18px");
-//                                count++;
-//                            }else{
+//                                $(this).removeClass("tijiaog");
 //                                $(this).css("background","url('../../code/img/pc/tijiaog.png') no-repeat 13px center");
 //                                $(this).css("background-size","18px");
+//                                $(this).siblings().css("background","none");
+//                                count++;
+//                            }else{
+//                                $(this).css("background","none");
+//                                $(this).addClass("tijiaog");
 //                                count--;
 //                            }
 //                        break;
-//                    case 1:
+//                    case 1|2:
 //                        if(count==0) {
-//                            $(this).css("background", "url('../../code/img/pc/m_icon5.png') no-repeat 13px center");
-//                            $(this).css("background-size", "18px");
+//                            $(this).removeClass("m_icon4");
+//                            $(this).css("background", "url('../../code/img/pc/m_icon4.png') no-repeat 13px center");
+//                            $(this).css("background-size","18px");
+//                            $(this).siblings().css("background","none");
 //                            count++;
 //                        }else {
-//                            $(this).css("background","url('../../code/img/pc/m_icon4.png') no-repeat 13px center");
-//                            $(this).css("background-size","18px");
-//                            count--;
-//                        }
-//                        break;
-//                    case 2:
-//                        if(count==0) {
-//                            $(this).css("background", "url('../../code/img/pc/m_icon5.png') no-repeat 13px center");
-//                            $(this).css("background-size", "18px");
-//                            count++;
-//                        }else {
-//                            $(this).css("background","url('../../code/img/pc/m_icon4.png') no-repeat 13px center");
-//                            $(this).css("background-size","18px");
+//                            $(this).css("background","none");
+//                            $(this).addClass("m_icon4");
 //                            count--;
 //                        }
 //                        break;
 //                    case 3:
 //                        if(count==0) {
-//                            $(this).css("background", "url('../../code/img/pc/task1.png') no-repeat 13px center");
-//                            $(this).css("background-size", "18px");
+//                            $(this).removeClass("task");
+//                            $(this).css("background", "url('../../code/img/pc/task.png') no-repeat 13px center");
+//                            $(this).css("background-size","18px");
+//                            $(this).siblings().css("background","none");
+//                            count++;
 //                        }
 //                            else {
-//                                $(this).css("background", "url('../../code/img/pc/task.png') no-repeat 13px center");
-//                                $(this).css("background-size", "18px");
+//                                $(this).css("background", "none");
+//                                $(this).addClass("task");
 //                                count--;
 //                            }
 //                        }
 //            })
-
-
+//            $(".threeul li").click(function() {
+//                $(".threeul li:not(this)").removeClass("threeulactive");
+//                $(this).addClass("threeulactive");
+//            })
 
         })
 
@@ -86,34 +84,37 @@
 <div class="blank busblank"></div>
 <div class="content">
     <div class="slide">
+        <div class="twonav">商家管理平台</div>
         <ul class="slideul">
-            <li id="tgzh" class="slideactive oneli">
+            <li id="tgzh" class="slideactive tijiaog oneli">
                 <a><span>添加公众号</span></a>
             </li>
-            <li id="fread" class="oneli">
+            <li id="fread" class="m_icon4 oneli">
                 <a><span>发布阅读</span></a>
             </li>
-            <li id="fgzh" class="oneli">
+            <li id="fgzh" class="m_icon4 oneli">
                 <a><span>发布关注</span></a>
             </li>
-            <li id="gtask" class="oneli">
+            <li id="gtask" class="task oneli">
                 <a id="gtaskoa">
                     <span>任务管理</span>
                     <ul class="threeul">
-                        <li class="slideactive">我的公众号one</li>
+                        <li>我的公众号one</li>
                         <li>我的公众号two</li>
                         <li>我的公众号three</li>
                         <li>我的公众号four</li>
                         <li>我的公众号five</li>
                     </ul>
                 </a>
-
-
             </li>
         </ul>
-
+        <div class="twonavtel">0532-80801188</div>
     </div>
-
+    <div class="middlecontent">
+        <iframe src="/frontPage/sellerPage/addofficial.html" width="840" height="700" frameborder="0" scrolling="no" >
+            <a href="/frontPage/sellerPage/addofficial.html">你的浏览器不支持iframe页面嵌套，请点击这里访问页面内容。</a>
+        </iframe>
+    </div>
 </div>
 <div class="copyright copylogin">
     <div class="copybox logincopybox">
@@ -137,5 +138,6 @@
 <div class="footer">
     <p>版权信息：©微淘米</p>
 </div>
+
 </body>
 </html>
