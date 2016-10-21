@@ -8,6 +8,7 @@ import com.weitaomi.application.model.bean.OfficialAccount;
 import com.weitaomi.application.model.bean.TaskPool;
 import com.weitaomi.application.model.dto.*;
 import com.weitaomi.application.model.mapper.*;
+import com.weitaomi.application.service.interf.ICacheService;
 import com.weitaomi.application.service.interf.IMemberScoreService;
 import com.weitaomi.application.service.interf.IMemberTaskHistoryService;
 import com.weitaomi.application.service.interf.IMemberTaskPoolService;
@@ -48,6 +49,8 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
     private MemberScoreMapper memberScoreMapper;
     @Autowired
     private ArticleMapper articleMapper;
+    @Autowired
+    private ICacheService cacheService;
     @Override
     @Transactional
     public String uploadAddTaskPool(TaskPool taskPool) {
@@ -152,7 +155,12 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
         taskPool.setSingleScore(publishReadRequestDto.getSingleScore());
         taskPool.setNeedNumber(publishReadRequestDto.getNeedNumber());
         taskPool.setCreateTime(DateUtils.getUnixTimestamp());
-        taskPool.setRate(BigDecimal.valueOf(0.8));
+        String rateTemp= cacheService.getCacheByKey("task:rate:percent",String.class);
+        Double rate=0.5;
+        if (StringUtil.isEmpty(rateTemp)){
+            rate = Double.valueOf(rateTemp);
+        }
+        taskPool.setRate(BigDecimal.valueOf(rate));
         MemberScore memberScore=memberScoreMapper.getMemberScoreByMemberId(publishReadRequestDto.getMemberId());
         if (memberScore.getMemberScore().doubleValue()-taskPool.getNeedNumber()*taskPool.getSingleScore()<0){
             throw new InfoException("账户可用积分不足，请充值~么么哒~");

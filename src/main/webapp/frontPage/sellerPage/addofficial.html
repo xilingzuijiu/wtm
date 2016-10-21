@@ -24,32 +24,20 @@ width:600px;
                 var addUrl='https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=APPADDURL==&scene=110#wechat_redirect';
                 var articleUrl=$("#artileUrl").val()
                 var remark=$("#remark").val()
-                addUrl=addUrl.replace('APPADDURL',articleUrl.substring(articleUrl.indexOf('__biz=')+6,articleUrl.indexOf('==&')))
-                $.ajax({
-                    url:"/pc/admin/official/addOfficialAccount",
-                    type:"post",
-                    data:{addUrl:addUrl,remark:remark},
-                    beforeSend: function (XMLHttpRequest) {
-                        getMemberRequestHeaderMsg(XMLHttpRequest)
-                    } ,
-                    success: function (params) {
-
+                var memberId = $.cookie("memberId");
+                if (memberId == null || memberId == undefined) {
+                    var result=confirm("登录已过期请重新登录");
+                    if(result){
+                        location.href = "/frontPage/wtmpc/login.html"
                     }
-                })
+                }else {
+                addUrl=addUrl.replace('APPADDURL',articleUrl.substring(articleUrl.indexOf('__biz=')+6,articleUrl.indexOf('==&')))
+                var url=encodeURIComponent(addUrl)
+                location.href='http://www.weitaomi.com.cn/index.php/kfz/login/index?addUrl='+url+"&remark="+remark+"&memberId="+memberId
+                }
+
             })
         })
-        var getMemberRequestHeaderMsg=function(XMLHttpRequest) {
-            var memberId = $.cookie("memberId");
-            if (memberId == null || memberId == undefined) {
-                var result=confirm("登录已过期请重新登录");
-                if(result){
-                    location.href = "/frontPage/wtmpc/login.html"
-                }
-            }
-            var password= $.cookie("password");
-            XMLHttpRequest.setRequestHeader("memberId",memberId);
-            XMLHttpRequest.setRequestHeader("from",1);
-        }
     </script>
 </head>
 <body>

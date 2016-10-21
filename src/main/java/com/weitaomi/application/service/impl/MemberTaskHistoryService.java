@@ -190,6 +190,7 @@ public class MemberTaskHistoryService  implements IMemberTaskHistoryService {
         if (StringUtil.isEmpty(openId)){
             throw new BusinessException("获取用户信息失败");
         }
+        logger.info("服务号签到，用户openId为:"+openId);
         Long memberId=wtmOfficialMemberMapper.getMemberIdByOpenId(openId);
         if (memberId==null){
             return "没有微淘米账号,请下载微淘米APP注册";

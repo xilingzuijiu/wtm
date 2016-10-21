@@ -16,7 +16,7 @@ public interface IMemberService {
      * @param registerMsg
      * @return
      */
-   public MemberInfoDto register(RegisterMsg registerMsg);
+   public MemberInfoDto register(RegisterMsg registerMsg,Integer sourceType);
 
     /**
      * 获取验证码
@@ -31,7 +31,7 @@ public interface IMemberService {
      * @param thirdLogin
      * @return
      */
-    public Boolean bindThirdPlat(Long memberId,ThirdLogin thirdLogin);
+    public Boolean bindThirdPlat(Long memberId,ThirdLogin thirdLogin,Integer sourceType);
 
     /**
      * 会员登陆
@@ -39,7 +39,7 @@ public interface IMemberService {
      * @param password
      * @return
      */
-    public MemberInfoDto login(String mobileOrName, String password);
+    public MemberInfoDto login(String mobileOrName, String password,Integer sourceType);
 
     /**
      * 第三方登陆
@@ -47,7 +47,7 @@ public interface IMemberService {
      * @param type
      * @return
      */
-    public MemberInfoDto thirdPlatLogin(String openId,Integer type);
+    public MemberInfoDto thirdPlatLogin(String openId,Integer type,Integer sourceType);
 
     /**
      * 获取用户信息

@@ -55,7 +55,7 @@ public class MemberController  extends BaseController {
                 if (thirdLogin!=null){
                     thirdLogin.setSourceType(1);
                 }
-                return AjaxResult.getOK(memberService.register(registerMsg));
+                return AjaxResult.getOK(memberService.register(registerMsg,0));
             }
         }
         return AjaxResult.getError();
@@ -92,7 +92,7 @@ public class MemberController  extends BaseController {
             throws BusinessException, DBException, ParseException {
         Long memberId=this.getUserId(request);
         thirdLogin.setSourceType(1);
-        return AjaxResult.getOK(memberService.bindThirdPlat(memberId,thirdLogin));
+        return AjaxResult.getOK(memberService.bindThirdPlat(memberId,thirdLogin,0));
     }
     /**
      * 会员登陆
@@ -104,7 +104,7 @@ public class MemberController  extends BaseController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public AjaxResult login(@RequestParam("mobileOrName")String mobileOrName,@RequestParam("password") String password){
         logger.info("开始登录");
-        return AjaxResult.getOK(memberService.login(mobileOrName, password));
+        return AjaxResult.getOK(memberService.login(mobileOrName, password,0));
     }
     /**
      * 第三方平台登陆
@@ -115,7 +115,7 @@ public class MemberController  extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/thirdPlatLogin", method = RequestMethod.POST)
     public AjaxResult thirdPlatLogin(@RequestParam("unionId")String unionId, @RequestParam("type")Integer type){
-        return AjaxResult.getOK(memberService.thirdPlatLogin(unionId, type));
+        return AjaxResult.getOK(memberService.thirdPlatLogin(unionId, type,0));
     }
     /**
      * 获取用户信息

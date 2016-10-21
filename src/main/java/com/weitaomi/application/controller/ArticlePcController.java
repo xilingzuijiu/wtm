@@ -28,7 +28,7 @@ public class ArticlePcController extends BaseController {
     @RequestMapping(value = "/getAllArticle",method = RequestMethod.POST)
     public AjaxResult getAllArticle(HttpServletRequest request, @RequestBody(required = false) ArticleSearch articleSearch){
         Long memberId=this.getUserId(request);
-        return AjaxResult.getOK(articleService.getAllArticle(memberId,articleSearch));
+        return AjaxResult.getOK(articleService.getAllArticle(memberId,articleSearch,1));
     }
     /**
      * 阅读文章

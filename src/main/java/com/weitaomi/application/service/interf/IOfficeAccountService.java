@@ -56,7 +56,7 @@ public interface IOfficeAccountService {
      * @param memberId
      * @return
      */
-    public List<OfficialAccountMsg> getOfficialAccountMsg(Long memberId,String unionId);
+    public List<OfficialAccountMsg> getOfficialAccountMsg(Long memberId,String unionId,Integer sourceType);
 
     /**
      * 获取商户公众号列表
@@ -67,5 +67,5 @@ public interface IOfficeAccountService {
 
     boolean updateOfficialAccountList(Long accountId,Integer isOpen);
 
-    void addOfficialAccount(Long memberId,String addUrl,String remark);
+    String addOfficialAccount(Long memberId,String addUrl,String remark);
 }

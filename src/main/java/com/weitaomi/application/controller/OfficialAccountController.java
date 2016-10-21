@@ -42,7 +42,7 @@ public class OfficialAccountController extends BaseController{
     @RequestMapping(value = "/getFollowOfficialAccountList",method = RequestMethod.POST)
     public AjaxResult getFollowOfficialAccountList(HttpServletRequest httpServletRequest,String unionId){
         Long memberId=super.getUserId(httpServletRequest);
-        return AjaxResult.getOK(officeAccountService.getOfficialAccountMsg(memberId,unionId));
+        return AjaxResult.getOK(officeAccountService.getOfficialAccountMsg(memberId,unionId,0));
     }
 
     /**
@@ -94,7 +94,7 @@ public class OfficialAccountController extends BaseController{
         String unionId=params.get("unionId");
         String status=params.get("status");
         if (status.equals("0")) {
-            Long memberId = thirdLoginMapper.getMemberIdByUnionId(unionId);
+            Long memberId = thirdLoginMapper.getMemberIdByUnionId(unionId,0);
                 JpushUtils.buildRequest("任务五分钟之后即将失效，请尽快到服务号完成",memberId);
         }
         return AjaxResult.getOK();

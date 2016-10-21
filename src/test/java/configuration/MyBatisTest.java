@@ -81,7 +81,7 @@ public class MyBatisTest extends BaseContextCase {
 
     @Test
     public void testSelectSelf() {
-        Member member = memberMapper.getMemberByTelephone("13105187050");
+        Member member = memberMapper.getMemberByTelephone("13105187050",0);
         System.out.println(JSON.toJSONString(member));
     }
 
@@ -89,7 +89,7 @@ public class MyBatisTest extends BaseContextCase {
     public void testThridLoginMapper() {
         System.out.println("========================================>");
         System.out.println(UUIDGenerator.generate());
-        System.out.println(JSON.toJSONString(thirdLoginMapper.getThirdLoginInfo("123456")));
+        System.out.println(JSON.toJSONString(thirdLoginMapper.getThirdLoginInfo("123456",0)));
         System.out.println("========================================>");
 //        DigestUtils
     }

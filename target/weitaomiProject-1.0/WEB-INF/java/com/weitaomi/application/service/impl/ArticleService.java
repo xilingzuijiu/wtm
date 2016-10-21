@@ -56,9 +56,9 @@ public class ArticleService implements IArticleService {
     @Autowired
     private MemberMapper memberMapper;
     @Override
-    public Page<ArticleShowDto> getAllArticle(Long memberId,ArticleSearch articleSearch) {
+    public Page<ArticleShowDto> getAllArticle(Long memberId,ArticleSearch articleSearch,Integer sourceType) {
         if (articleSearch.getSearchWay()==0){
-            Map<String,Long> idMap= memberMapper.getIsFollowWtmAccount(memberId);
+            Map<String,Long> idMap= memberMapper.getIsFollowWtmAccount(memberId,sourceType);
             if (idMap!=null){
                 if (idMap.get("officialMemberId")==null){
                     throw new InfoException("未关注微淘米服务号");

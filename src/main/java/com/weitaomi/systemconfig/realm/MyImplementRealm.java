@@ -33,7 +33,7 @@ public class MyImplementRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         String username=String.valueOf(principalCollection.getPrimaryPrincipal());
-        Member member=memberMapper.getMemberByTelephone(username);
+        Member member=memberMapper.getMemberByTelephone(username,null);
         if (member!=null){
             return new SimpleAuthorizationInfo();
         } else {
@@ -53,7 +53,7 @@ public class MyImplementRealm extends AuthorizingRealm {
         return new SimpleAuthenticationInfo(username,serverDigest,super.getName());
     }
     private String getPassword(String username){
-        Member member=memberMapper.getMemberByMemberName(username);
+        Member member=memberMapper.getMemberByMemberName(username,null);
         if (member==null){
             throw new SystemException("shiro验证失败，该用户不存在或者无此权限");
         }else {

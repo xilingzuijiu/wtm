@@ -87,7 +87,7 @@ public class PageController extends BaseController {
 //            request.setAttribute("unionid",userInfoParams.get("unionid"));
 //            response.setContentType("text/html");
 //            response.setCharacterEncoding("UTF-8");
-            Long memberId = thirdLoginMapper.getMemberIdByUnionId(userInfoParams.get("unionid"));
+            Long memberId = thirdLoginMapper.getMemberIdByUnionId(userInfoParams.get("unionid"),1);
             if (memberId == null) {
                 ModelAndView modelAndView = new ModelAndView("wap/register.jsp");
                 modelAndView.addAllObjects(userInfoParams);
@@ -95,7 +95,7 @@ public class PageController extends BaseController {
                 return modelAndView;
             }
             if (memberId != null) {
-                MemberInfoDto memberInfoDto = memberService.thirdPlatLogin(userInfoParams.get("unionid"), 0);
+                MemberInfoDto memberInfoDto = memberService.thirdPlatLogin(userInfoParams.get("unionid"), 0,1);
                 ModelAndView modelAndView = new ModelAndView("/wap/index.html");
                 Cookie idCookie = new Cookie("memberId", memberInfoDto.getId().toString());
                 idCookie.setMaxAge(30 * 24 * 60 * 60);
@@ -162,20 +162,21 @@ public class PageController extends BaseController {
             userInfoRequestParams[2] = new BasicNameValuePair("lang", "zh_CN");
             String userInfo = HttpRequestUtils.get("https://api.weixin.qq.com/sns/userinfo", userInfoRequestParams);
             Map<String, Object> userInfoParams = (Map<String, Object>) JSONObject.parse(userInfo);
-            Long memberIdTemp = thirdLoginMapper.getMemberIdByUnionId((String)userInfoParams.get("unionid"));
+            Long memberIdTemp = thirdLoginMapper.getMemberIdByUnionId((String)userInfoParams.get("unionid"),1);
             System.out.println(JSON.toJSONString(userInfo));
             if (memberIdTemp == null) {
                 Long memberId=Long.valueOf(request.getParameter("memberId"));
                 ThirdLogin thirdLogin=new ThirdLogin();
                 thirdLogin.setOpenId((String)userInfoParams.get("openid"));
                 thirdLogin.setUnionId((String)userInfoParams.get("unionid"));
+                thirdLogin.setSourceType(1);
                 System.out.println(userInfoParams.get("sex").toString());
                 thirdLogin.setSex(Integer.valueOf(userInfoParams.get("sex").toString()));
                 thirdLogin.setType(0);
                 thirdLogin.setNickname((String)userInfoParams.get("nickname"));
                 thirdLogin.setImageFiles((String)userInfoParams.get("headimgurl"));
                 thirdLogin.setSourceType(1);
-                boolean isSuccess= memberService.bindThirdPlat(memberId, thirdLogin);
+                boolean isSuccess= memberService.bindThirdPlat(memberId, thirdLogin,1);
                 if (isSuccess) {
                     Member member=memberMapper.selectByPrimaryKey(memberId);
                     Cookie sex = new Cookie("sex", member.getSex().toString());

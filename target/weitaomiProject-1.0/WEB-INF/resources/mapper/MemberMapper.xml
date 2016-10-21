@@ -104,6 +104,9 @@
           LEFT JOIN wtm_third_login third ON third.memberId=m.id
           LEFT JOIN wtm_member_score score ON score.memberId=m.id
       WHERE m.telephone=#{telephone}
+    <if test="sourceType!=null">
+      AND third.sourceType=#{sourceType}
+    </if>
   </select>
 
   <select id="getByCellphoneAndPassword" resultMap="BaseResultMap">
@@ -118,6 +121,9 @@
     LEFT JOIN wtm_third_login third ON third.memberId=m.id
     LEFT JOIN wtm_member_score score ON score.memberId=m.id
      WHERE m.memberName=#{memberName}
+    <if test="sourceType!=null">
+      AND third.sourceType=#{sourceType}
+    </if>
   </select>
   <select id="getMemberByInviteCode" resultMap="BaseResultMap">
     select * from wtm_member m WHERE m.invitedCode=#{inviteCode}
@@ -131,11 +137,20 @@
       LEFT JOIN wtm_third_login third ON third.memberId=m.id
       LEFT JOIN wtm_member_score score ON score.memberId=m.id
      WHERE m.id=#{memberId}
+    <if test="sourceType!=null">
+      AND third.sourceType=#{sourceType}
+    </if>
   </select>
   <select id="getAllMemberId" resultType="java.lang.Long">
     select id from wtm_member
   </select>
   <select id="getIsFollowWtmAccount" resultType="java.util.Map">
-    select mem.id officialMemberId,login.id wechatId from wtm_third_login login LEFT JOIN wtm_weitaomi_official_member mem  ON login.unionId=mem.unionId WHERE login.memberId=#{memberId}
+    select mem.id officialMemberId,login.id wechatId from wtm_third_login login LEFT JOIN wtm_weitaomi_official_member mem  ON login.unionId=mem.unionId WHERE login.memberId=#{memberId} AND login.sourceType=#{sourceType}
+  </select>
+  <select id="getIsBindWxAccountsByMobile" resultType="java.lang.Integer">
+    select count(*) from wtm_member m LEFT JOIN wtm_third_login login ON login.memberId=m.id WHERE m.telephone=#{mobile} AND login.sourceType=#{sourceType};
+  </select>
+  <select id="getIsBindWxAccountsByMemberName" resultType="java.lang.Integer">
+select count(*) from wtm_member m LEFT JOIN wtm_third_login login ON login.memberId=m.id WHERE m.memberName=#{memberName} AND login.sourceType=#{sourceType};
   </select>
 </mapper>

@@ -13,6 +13,9 @@ import com.weitaomi.systemconfig.alipay.AlipaySubmit;
 import com.weitaomi.systemconfig.util.*;
 import com.weitaomi.systemconfig.wechat.*;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -24,6 +27,8 @@ import java.util.Map;
  */
 @Service
 public class WechatPayService implements IPayStrategyService {
+    private Logger logger= LoggerFactory.getLogger(WechatPayService.class);
+    @Autowired
     private PaymentApproveMapper paymentApproveMapper;
     @Override
     public String getPaymentParams(Map<String, Object> param) {
@@ -59,6 +64,7 @@ public class WechatPayService implements IPayStrategyService {
         String requestParams=xStream.toXML(wechatPayParams);
         try {
             String value=HttpRequestUtils.postString(WechatConfig.PRE_PAY_URL,requestParams);
+            logger.info("微信支付返回参数为:"+value);
             if (!StringUtil.isEmpty(value)){
                 WechatResultParams wechatResultParams= StreamUtils.toBean(value,WechatResultParams.class);
                 if (wechatResultParams.getResult_code().equals(WechatConfig.SUCCESS)&&wechatResultParams.getReturn_code().equals(WechatConfig.SUCCESS)){

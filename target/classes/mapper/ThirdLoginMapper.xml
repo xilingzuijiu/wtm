@@ -16,16 +16,22 @@
     <result column="createTime" property="createTime" jdbcType="BIGINT" />
   </resultMap>
   <select id="getThirdLoginInfo" resultType="com.weitaomi.application.model.bean.ThirdLogin">
-    select * from wtm_third_login login where login.unionId=#{unionId}
+    select * from wtm_third_login login where login.unionId=#{unionId} AND login.sourceType=#{sourceType}
   </select>
   <select id="getMemberIdByUnionId" resultType="java.lang.Long">
     select login.memberId from wtm_third_login login WHERE login.unionId=#{unionId}
+    <if test="sourceType!=null">
+      AND sourceType=#{sourceType}
+    </if>
   </select>
   <select id="getUnionIdByMemberId" resultType="com.weitaomi.application.model.bean.ThirdLogin">
-    select login.*,m.sex from wtm_third_login login LEFT JOIN wtm_member m  ON m.id=login.memberId WHERE login.memberId=#{memberId}
+    select login.*,m.sex from wtm_third_login login LEFT JOIN wtm_member m  ON m.id=login.memberId WHERE login.memberId=#{memberId} AND login.sourceType=#{sourceType}
   </select>
   <select id="getThirdlogInDtoMemberId" resultType="com.weitaomi.application.model.dto.ThirdLoginDto">
      select login.*,m.sex from wtm_third_login login LEFT JOIN wtm_member m  ON m.id=login.memberId WHERE login.memberId=#{memberId}
+     <if test="sourceType!=null">
+       AND sourceType=#{sourceType}
+     </if>
   </select>
   <select id="getThirdLoginByOpenId" resultType="com.weitaomi.application.model.bean.ThirdLogin">
     select * from wtm_third_login login where login.openId=#{openId}

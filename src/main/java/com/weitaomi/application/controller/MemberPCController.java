@@ -9,6 +9,7 @@ import com.weitaomi.application.model.bean.ThirdLogin;
 import com.weitaomi.application.model.dto.PublishReadRequestDto;
 import com.weitaomi.application.model.dto.RegisterMsg;
 import com.weitaomi.application.service.interf.*;
+import com.weitaomi.systemconfig.alipay.StringUtils;
 import com.weitaomi.systemconfig.dataFormat.AjaxResult;
 import com.weitaomi.systemconfig.exception.BusinessException;
 import com.weitaomi.systemconfig.exception.DBException;
@@ -54,6 +55,8 @@ public class MemberPCController extends BaseController {
     private IMemberTaskHistoryService memberTaskHistoryService;
     @Autowired
     private IMemberScoreService memberScoreService;
+    @Autowired
+    private ICacheService cacheService;
     /**
      * 获取用户信息
      * @throws ParseException    the parse exception
@@ -85,7 +88,12 @@ public class MemberPCController extends BaseController {
 //        Integer flag=Integer.valueOf(request.getHeader("flag"));
         taskPool.setTaskType(0);
         taskPool.setCreateTime(DateUtils.getUnixTimestamp());
-        taskPool.setRate(BigDecimal.valueOf(0.8));
+        String rateTemp= cacheService.getCacheByKey("task:rate:percent",String.class);
+        Double rate=0.5;
+        if (StringUtil.isEmpty(rateTemp)){
+            rate = Double.valueOf(rateTemp);
+        }
+        taskPool.setRate(BigDecimal.valueOf(rate));
         taskPool.setTotalScore(taskPool.getNeedNumber()*taskPool.getSingleScore());
         return AjaxResult.getOK(memberTaskPoolService.uploadAddTaskPool(taskPool));
     }
@@ -212,7 +220,7 @@ public class MemberPCController extends BaseController {
                 if (thirdLogin!=null){
                     thirdLogin.setSourceType(1);
                 }
-                return AjaxResult.getOK(memberService.register(registerMsg));
+                return AjaxResult.getOK(memberService.register(registerMsg,1));
             }
         }
         return AjaxResult.getError();
@@ -295,7 +303,7 @@ public class MemberPCController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public AjaxResult login(@RequestParam("mobileOrName")String mobileOrName,@RequestParam("password") String password){
-        return AjaxResult.getOK(memberService.login(mobileOrName, password));
+        return AjaxResult.getOK(memberService.login(mobileOrName, password,1));
     }
     /**
      * 修改密码

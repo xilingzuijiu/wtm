@@ -97,7 +97,7 @@ public class OfficeAccountService implements IOfficeAccountService {
         List<OfficeMember> officeMemberList=new ArrayList<>();
         List<Long> idList=new ArrayList<>();
         for (OfficialAccountMsg officialAccountMsg:list){
-            ThirdLoginDto thirdLoginDto=thirdLoginMapper.getThirdlogInDtoMemberId(memberId);
+            ThirdLoginDto thirdLoginDto=thirdLoginMapper.getThirdlogInDtoMemberId(memberId,0);
             String key=thirdLoginDto.getNickname()+":"+thirdLoginDto.getSex()+":"+officialAccountMsg.getOriginId();
             logger.info("key is {}",key);
             OfficialAccountWithScore officialAccountWithScore=officalAccountMapper.getOfficialAccountWithScoreById(officialAccountMsg.getOriginId());
@@ -147,7 +147,7 @@ public class OfficeAccountService implements IOfficeAccountService {
             String info="您还有未关注公众号，请到服务号内完成\n未完成任务将会在1小时后删除\n若领任务之前已关注，请标注这些公众号";
             throw new InfoException(info);
         }
-        ThirdLogin thirdLogin=thirdLoginMapper.getUnionIdByMemberId(memberId);
+        ThirdLogin thirdLogin=thirdLoginMapper.getUnionIdByMemberId(memberId,1);
         if (thirdLogin==null||StringUtil.isEmpty(thirdLogin.getUnionId())){
             throw new InfoException("用户唯一识别码为空");
         }
@@ -156,7 +156,7 @@ public class OfficeAccountService implements IOfficeAccountService {
         }
         List<OfficeMember> officeMemberList=new ArrayList<>();
         List<Long> idList=new ArrayList<>();
-        ThirdLoginDto thirdLoginDto=thirdLoginMapper.getThirdlogInDtoMemberId(memberId);
+        ThirdLoginDto thirdLoginDto=thirdLoginMapper.getThirdlogInDtoMemberId(memberId,1);
         String key=thirdLoginDto.getNickname()+":"+thirdLoginDto.getSex()+":"+officialAccountMsg.getOriginId();
         logger.info("key is {}",key);
         OfficialAccountWithScore officialAccountWithScore=officalAccountMapper.getOfficialAccountWithScoreById(officialAccountMsg.getOriginId());
@@ -196,11 +196,11 @@ public class OfficeAccountService implements IOfficeAccountService {
             if (officeMember==null){
                 throw new BusinessException("没有此用户记录");
             }
+            //增加积分以及积分记录
+            Long memberId=officeMember.getMemberId();
+            int num =  officeMemberMapper.deleteFollowAccountsMember(officeMember.getId());
+            if (num>0){
             if (DateUtils.getUnixTimestamp()-officeMember.getCreateTime()<7*24*60*60){
-                //增加积分以及积分记录
-                Long memberId=officeMember.getMemberId();
-                int num =  officeMemberMapper.deleteFollowAccountsMember(officeMember.getId());
-                if (num>0){
                     TaskPool taskPool = taskPoolMapper.getTaskPoolByOfficialId(officialAccountWithScore.getId(), 1);
                     memberScoreService.addMemberScore(memberId,7L, 1, -(taskPool.getRate().multiply(BigDecimal.valueOf(officialAccountWithScore.getScore()))).doubleValue(), UUIDGenerator.generate());
                 }
@@ -267,12 +267,12 @@ public class OfficeAccountService implements IOfficeAccountService {
     }
 
     @Override
-    public List<OfficialAccountMsg> getOfficialAccountMsg(Long memberId,String unionId) {
+    public List<OfficialAccountMsg> getOfficialAccountMsg(Long memberId,String unionId,Integer sourceType) {
         Member member=memberMapper.selectByPrimaryKey(memberId);
         if (member==null){
             throw new InfoException("用户信息为空");
         }
-        Map<String,Long> idMap= memberMapper.getIsFollowWtmAccount(memberId);
+        Map<String,Long> idMap= memberMapper.getIsFollowWtmAccount(memberId,sourceType);
         if (idMap!=null){
             if (idMap.get("officialMemberId")==null){
                 throw new InfoException("未关注微淘米服务号");
@@ -297,15 +297,17 @@ public class OfficeAccountService implements IOfficeAccountService {
     }
 
     @Override
-    public void addOfficialAccount(Long memberId, String addUrl, String remark) {
+    public String addOfficialAccount(Long memberId, String addUrl, String remark) {
         Map<String,String> map=new HashMap<>();
         map.put("addUrl",addUrl);
         map.put("memberId",memberId.toString());
         map.put("remark",remark);
         try {
-            HttpRequestUtils.postString("http://www.weitaomi.com.cn/index.php/kfz/login/index",JSON.toJSONString(map));
+           String url= HttpRequestUtils.postString("http://www.weitaomi.com.cn/index.php/kfz/login/index",JSON.toJSONString(map));
+            return url;
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
     }
 }

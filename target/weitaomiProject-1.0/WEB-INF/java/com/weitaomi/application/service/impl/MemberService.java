@@ -52,7 +52,7 @@ public class MemberService extends BaseService implements IMemberService {
 
     @Override
     @Transactional
-    public MemberInfoDto register(RegisterMsg registerMsg) {
+    public MemberInfoDto register(RegisterMsg registerMsg,Integer sourceType) {
         if (registerMsg == null || registerMsg.getMember() == null) {
             throw new BusinessException("注册参数不能为空");
         }
@@ -68,7 +68,7 @@ public class MemberService extends BaseService implements IMemberService {
         if (flag!=null&&flag==1){
             throw new InfoException("手机号已经被注册，请勿重复注册");
         }
-        Member memberExist = memberMapper.getMemberByTelephone(member.getTelephone());
+        Member memberExist = memberMapper.getMemberByTelephone(member.getTelephone(),null);
         if (memberExist != null) {
             throw new InfoException("手机号已经被注册");
         }
@@ -88,7 +88,7 @@ public class MemberService extends BaseService implements IMemberService {
         if (memberName == null || memberName.isEmpty()) {
             throw new BusinessException("用户名不能为空");
         }
-        Member memberFlag = memberMapper.getMemberByMemberName(memberName);
+        Member memberFlag = memberMapper.getMemberByMemberName(memberName,null);
         if (memberFlag != null) {
             throw new InfoException("用户名已经注册");
         }
@@ -119,7 +119,7 @@ public class MemberService extends BaseService implements IMemberService {
             if (thirdLogin.getOpenId() == null || thirdLogin.getOpenId().isEmpty()) {
                 throw new BusinessException("第三方OpenId为空");
             }
-            Long memberId=thirdLoginMapper.getMemberIdByUnionId(thirdLogin.getUnionId());
+            Long memberId=thirdLoginMapper.getMemberIdByUnionId(thirdLogin.getUnionId(),0);
             if (memberId!=null){
                 throw new InfoException("微信号已经绑定站内账号");
             }
@@ -140,6 +140,7 @@ public class MemberService extends BaseService implements IMemberService {
             memberMapper.updateByPrimaryKeySelective(memberTemp);
             thirdLogin.setMemberId(newMemberId);
             thirdLogin.setCreateTime(DateUtils.getUnixTimestamp());
+            thirdLogin.setSourceType(sourceType);
             thirdLoginMapper.insertSelective(thirdLogin);
         }
         if (registerMsg.getInvitedCode() != null && !registerMsg.getInvitedCode().isEmpty()) {
@@ -165,17 +166,21 @@ public class MemberService extends BaseService implements IMemberService {
             }
         }
         cacheService.setCacheByKey(registerKey,1,null);
-
-        return memberMapper.getMemberByTelephone(registerMsg.getMember().getTelephone());
+        if (registerMsg.getFlag() == 1) {
+            return memberMapper.getMemberByTelephone(registerMsg.getMember().getTelephone(), sourceType);
+        }else {
+            return memberMapper.getMemberByTelephone(registerMsg.getMember().getTelephone(), null);
+        }
     }
 
     @Override
     @Transactional
-    public Boolean bindThirdPlat(Long memberId, ThirdLogin thirdLogin) {
+    public Boolean bindThirdPlat(Long memberId, ThirdLogin thirdLogin,Integer sourceType) {
         if (thirdLogin == null) {
             throw new BusinessException("第三方注册信息为空");
         }
         thirdLogin.setMemberId(memberId);
+        thirdLogin.setSourceType(sourceType);
         if (thirdLogin.getOpenId() == null || thirdLogin.getOpenId().isEmpty()) {
             throw new BusinessException("第三方OpenId为空");
         }
@@ -188,11 +193,11 @@ public class MemberService extends BaseService implements IMemberService {
         if (thirdLogin.getType() == null) {
             throw new BusinessException("登陆平台类型为空");
         }
-        ThirdLogin thirdLoginFlag = thirdLoginMapper.getThirdLoginInfo(thirdLogin.getUnionId());
+        ThirdLogin thirdLoginFlag = thirdLoginMapper.getThirdLoginInfo(thirdLogin.getUnionId(),sourceType);
         if (thirdLoginFlag != null) {
             throw new InfoException("您已经绑定此账号");
         }
-        ThirdLogin thirdLogins = thirdLoginMapper.getUnionIdByMemberId(memberId);
+        ThirdLogin thirdLogins = thirdLoginMapper.getUnionIdByMemberId(memberId,sourceType);
         if (thirdLogins!=null){
             throw new InfoException("该账号已经绑定一个微信号，微信昵称为："+thirdLogins.getNickname());
         }
@@ -203,7 +208,9 @@ public class MemberService extends BaseService implements IMemberService {
         }
         member.setSex(thirdLogin.getSex());
         if (!StringUtil.isEmpty(thirdLogin.getImageFiles())&&thirdLogin.getImageFiles().contains("http")){
-            member.setImageUrl(thirdLogin.getImageFiles());
+            if (member.getImageUrl()=="http://weitaomi.b0.upaiyun.com/member/showMessage/000000.png") {
+                member.setImageUrl(thirdLogin.getImageFiles());
+            }
         }
         memberMapper.updateByPrimaryKeySelective(member);
         Integer num = thirdLoginMapper.insertSelective(thirdLogin);
@@ -211,12 +218,16 @@ public class MemberService extends BaseService implements IMemberService {
     }
 
     @Override
-    public MemberInfoDto login(String mobileOrName, String password) {
+    public MemberInfoDto login(String mobileOrName, String password,Integer sourceType) {
         if (mobileOrName != null) {
             MemberInfoDto member = null;
             if (mobileOrName.matches("^[1][34578]\\d{9}$")) {
                 logger.info("手机登陆用户");
-                member = memberMapper.getMemberByTelephone(mobileOrName);
+                int num=memberMapper.getIsBindWxAccountsByMobile(mobileOrName,sourceType);
+                if (num<=0){
+                    sourceType=null;
+                }
+                member = memberMapper.getMemberByTelephone(mobileOrName,sourceType);
                 if (member == null) {
                     throw new InfoException("手机号未注册，请注册");
                 }
@@ -224,7 +235,11 @@ public class MemberService extends BaseService implements IMemberService {
                     throw new InfoException("用户已经被禁用，请联系客服人员");
                 }
             } else {
-                member = memberMapper.getMemberByMemberName(mobileOrName);
+                int num=memberMapper.getIsBindWxAccountsByMemberName(mobileOrName,sourceType);
+                if (num<=0){
+                    sourceType=null;
+                }
+                member = memberMapper.getMemberByMemberName(mobileOrName,sourceType);
                 if (member == null) {
                     throw new InfoException("用户不存在，请注册");
                 }
@@ -237,7 +252,9 @@ public class MemberService extends BaseService implements IMemberService {
             String key = "member:login:" + member.getId();
             Integer times = 60 * 60 * 24 * 30;
             cacheService.setCacheByKey(key, member, times);
-
+            if (sourceType==null){
+                member.setThirdLogin(null);
+            }
             return member;
         } else {
             throw new InfoException("用户名/密码为空");
@@ -245,11 +262,11 @@ public class MemberService extends BaseService implements IMemberService {
     }
 
     @Override
-    public MemberInfoDto thirdPlatLogin(String unionId, Integer type) {
+    public MemberInfoDto thirdPlatLogin(String unionId, Integer type,Integer sourceType) {
         if (unionId == null || unionId.isEmpty()) {
             throw new BusinessException("第三方OpenId为空");
         }
-        ThirdLogin thirdLogin = thirdLoginMapper.getThirdLoginInfo(unionId);
+        ThirdLogin thirdLogin = thirdLoginMapper.getThirdLoginInfo(unionId,sourceType);
         if (thirdLogin == null) {
             throw new BusinessException("该微信账号未绑定App账号，若有App账号，请登录后绑定微信，或者注册App账户并自动绑定微信");
         }
@@ -259,7 +276,7 @@ public class MemberService extends BaseService implements IMemberService {
         if (thirdLogin.getMemberId() == null) {
             throw new InfoException("该平台账号未绑定，请重新绑定");
         }
-        MemberInfoDto member = memberMapper.getMemberInfoById(thirdLogin.getMemberId());
+        MemberInfoDto member = memberMapper.getMemberInfoById(thirdLogin.getMemberId(),sourceType);
         if (member == null) {
             throw new InfoException("微信号未绑定，请重新注册");
         }
@@ -323,7 +340,7 @@ public class MemberService extends BaseService implements IMemberService {
             throw new InfoException("密码信息为空，请重新修改或者登录");
         }
         if (modifyPasswordDto.getFlag() == 0) {
-            Member member = memberMapper.getMemberByTelephone(modifyPasswordDto.getMobile());
+            Member member = memberMapper.getMemberByTelephone(modifyPasswordDto.getMobile(),0);
             if (member == null) {
                 throw new InfoException("用户不存在");
             }

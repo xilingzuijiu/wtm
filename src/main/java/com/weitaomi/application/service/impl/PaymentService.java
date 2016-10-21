@@ -67,7 +67,7 @@ public class PaymentService implements IPaymentService {
             params.put("sourceType",0);
         }
         if ((Integer) params.get("payType") == (PayType.WECHAT_WEB.getValue())) {
-            ThirdLogin thirdLogin=thirdLoginMapper.getThirdlogInDtoMemberId((Long)params.get("memberId"));
+            ThirdLogin thirdLogin=thirdLoginMapper.getThirdlogInDtoMemberId((Long)params.get("memberId"),1);
             params.put("openId",thirdLogin.getOpenId());
             params.put("out_trade_no", AlipayConfig.payCode_prefix + payCode);
             params.put("sourceType",1);
