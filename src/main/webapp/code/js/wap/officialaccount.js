@@ -9,7 +9,7 @@ var hashMap = {
 }
 var total=0;
 var count=1;
-var pageSize=7;
+var pageSize=15;
 $(function(){
     var height=$(window).height();
     var width=$(window).width();

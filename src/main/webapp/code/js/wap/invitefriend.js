@@ -2,6 +2,10 @@
  * Created by Administrator on 2016/10/15 0015.
  */
 $(function(){
+    var a=$("#Notwo .personimg").offsetWidth;
+    $("#Notwo .personimg").css("height",a);
+    console.log("图像宽度是"+a);
+
     var inviteheight=$(window).height();
     var eventheight=$(".eventintroduce").height();
     var payconfirmheight=Math.ceil($(".payconfirm").height());

@@ -2,7 +2,7 @@
  * Created by Administrator on 2016/10/14 0014.
  */
 var total=0;
-var pageSize=11;
+var pageSize=16;
 var pageIndex=1;
 $(function(){
     loadrecord();
