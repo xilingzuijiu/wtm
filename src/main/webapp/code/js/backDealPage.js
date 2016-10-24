@@ -49,12 +49,15 @@ function dealGetApproveData(data){
     total=data.total;
     var elements=approveHead;
     data.list.forEach(function (child) {
-        elements  = elements + getApproveListTr(child.payType,child.accountName,child.createTime,child.amount,child.isPaid,child.memberId)
+        var id=child.id;
+        elements  = elements + getApproveListTr(child.payType,child.accountName,child.createTime,child.amount,child.isPaid,child.memberId,child.id);
+
+        console.log("id是"+id);
     })
     return elements
 }
 
-function getApproveListTr(account,name,time,amount,isCheck,memberId) {
+function getApproveListTr(account,name,time,amount,isCheck,memberId,listid) {
     var checkState='';
     var payType='微信'
     if (account==1){
@@ -73,17 +76,19 @@ function getApproveListTr(account,name,time,amount,isCheck,memberId) {
     '<td>'+amount+'</td>' +
     '<td>'+'</td>' +
     '<td class="audit">'+
-        '<select onClick="selectSubmit(this)">'+
-        '<option id="0">'+'待审核'+'</option>'+
-        '<option id="1">'+'已审核'+'</option>'+
-        '<option id="2">'+'拒绝'+'</option>'+
+        '<select onClick="selectSubmit(this)" id="'+listid+'">'+
+        '<option>'+'待审核'+'</option>'+
+        '<option>'+'已审核'+'</option>'+
+        '<option>'+'拒绝'+'</option>'+
         '</select>'+
         '</td>' +
     '</tr>'
-    return approvecontent
+    return approvecontent;
 }
 var selecount=0;
 var selectSubmit=function(obj){
+    var id=$(".audit select").attr("id");
+    console.log("主体id是"+id);
     var index=$(".audit select").get(0).selectedIndex;
     index=parseInt(index);
     console.log("index是"+index);
@@ -107,10 +112,10 @@ var selectSubmit=function(obj){
                 if(isCheck<2){
                 console.log("索引号是"+index);
                 $.ajax({
-                    type: 'get',
+                    type: 'post',
                     dataType: 'json',
                     url: '/pc/admin/paymemberCallBack/patchWechatCustomers',
-                    data: {isCheck:index},
+                    data: {approveId:id,isApprove:isCheck,remark:view},
                     success: function (params){
                         var json = eval(params); //数组
                         console.log("json数据为：" + params)

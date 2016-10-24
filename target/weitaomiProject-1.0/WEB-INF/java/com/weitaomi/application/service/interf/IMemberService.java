@@ -47,7 +47,7 @@ public interface IMemberService {
      * @param type
      * @return
      */
-    public MemberInfoDto thirdPlatLogin(String openId,Integer type,Integer sourceType);
+    public MemberInfoDto thirdPlatLogin(String openId,String openid,Integer type,Integer sourceType);
 
     /**
      * 获取用户信息

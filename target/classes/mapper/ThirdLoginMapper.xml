@@ -16,7 +16,10 @@
     <result column="createTime" property="createTime" jdbcType="BIGINT" />
   </resultMap>
   <select id="getThirdLoginInfo" resultType="com.weitaomi.application.model.bean.ThirdLogin">
-    select * from wtm_third_login login where login.unionId=#{unionId} AND login.sourceType=#{sourceType}
+    select * from wtm_third_login login where login.unionId=#{unionId}
+    <if test="sourceType!=null">
+    AND sourceType=#{sourceType}
+  </if>
   </select>
   <select id="getMemberIdByUnionId" resultType="java.lang.Long">
     select login.memberId from wtm_third_login login WHERE login.unionId=#{unionId}
