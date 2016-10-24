@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -94,8 +95,8 @@ public class OfficialAccountController extends BaseController{
         String unionId=params.get("unionId");
         String status=params.get("status");
         if (status.equals("0")) {
-            Long memberId = thirdLoginMapper.getMemberIdByUnionId(unionId,0);
-                JpushUtils.buildRequest("任务五分钟之后即将失效，请尽快到服务号完成",memberId);
+            List<Long> memberId = thirdLoginMapper.getMemberIdByUnionId(unionId,0);
+                JpushUtils.buildRequest("任务五分钟之后即将失效，请尽快到服务号完成",memberId.get(0));
         }
         return AjaxResult.getOK();
     }

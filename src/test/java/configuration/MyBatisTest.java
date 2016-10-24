@@ -143,7 +143,7 @@ public class MyBatisTest extends BaseContextCase {
         approve.setMemberId(3L);
         List<PaymentApprove> approves=new ArrayList<>();
         approves.add(approve);
-        paymentService.patchWechatCustomers(approves,"192.168.0.77");
+//        paymentService.patchWechatCustomers(approves,"192.168.0.77");
 
 
     }

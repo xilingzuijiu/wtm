@@ -196,11 +196,9 @@ public class ArticleService implements IArticleService {
         if (score<taskPool.getSingleScore()){
             taskPool.setTotalScore(0D);
             taskPool.setLimitDay(0L);
-            taskPool.setNeedNumber(0);
-            taskPool.setSingleScore(0D);
             taskPool.setIsPublishNow(0);
             memberScoreService.addMemberScore(account.getMemberId(), 6L,1,score.doubleValue(), UUIDGenerator.generate());
-            JpushUtils.buildRequest("您发布的任务米币已不足，任务终止",account.getMemberId());
+            JpushUtils.buildRequest("您发布的文章"+article.getTitle()+"阅读任务已完成",account.getMemberId());
         }
         taskPoolMapper.updateByPrimaryKeySelective(taskPool);
         memberTaskHistoryService.addMemberTaskToHistory(memberId,6L, BigDecimal.valueOf(taskPool.getSingleScore()).multiply(taskPool.getRate()).doubleValue(),1,"阅读文章-"+article.getTitle(),null,null);

@@ -27,7 +27,7 @@ public interface IPaymentService {
 
     void patchAliPayCustomers(List<PaymentApprove> approveList);
 
-    String patchWechatCustomers(List<PaymentApprove> approveList,String ip);
+    String patchWechatCustomers(Long approveId,Integer isApprove,String remark,String ip);
 
     /**
      * 申请提现

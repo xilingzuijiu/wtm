@@ -35,6 +35,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -78,24 +79,15 @@ public class PageController extends BaseController {
             userInfoRequestParams[2] = new BasicNameValuePair("lang", "zh_CN");
             String userInfo = HttpRequestUtils.get("https://api.weixin.qq.com/sns/userinfo", userInfoRequestParams);
             Map<String, String> userInfoParams = (Map<String, String>) JSONObject.parse(userInfo);
-//            request.setAttribute("nickname",userInfoParams.get("nickname"));
-//            request.setAttribute("openid",userInfoParams.get("openid"));
-//            request.setAttribute("sex",userInfoParams.get("sex"));
-//            request.setAttribute("city",userInfoParams.get("city"));
-//            request.setAttribute("province",userInfoParams.get("province"));
-//            request.setAttribute("country",userInfoParams.get("country"));
-//            request.setAttribute("unionid",userInfoParams.get("unionid"));
-//            response.setContentType("text/html");
-//            response.setCharacterEncoding("UTF-8");
-            Long memberId = thirdLoginMapper.getMemberIdByUnionId(userInfoParams.get("unionid"),1);
-            if (memberId == null) {
+            List<Long> memberId = thirdLoginMapper.getMemberIdByUnionId(userInfoParams.get("unionid"),null);
+            if (memberId.isEmpty()) {
                 ModelAndView modelAndView = new ModelAndView("wap/register.jsp");
                 modelAndView.addAllObjects(userInfoParams);
 //                request.getRequestDispatcher("/frontPage/wap/register.jsp").forward(request,response);
                 return modelAndView;
             }
-            if (memberId != null) {
-                MemberInfoDto memberInfoDto = memberService.thirdPlatLogin(userInfoParams.get("unionid"), 0,1);
+            if (!memberId.isEmpty()) {
+                MemberInfoDto memberInfoDto = memberService.thirdPlatLogin(userInfoParams.get("unionid"),userInfoParams.get("openid"), 0,1);
                 ModelAndView modelAndView = new ModelAndView("/wap/index.html");
                 Cookie idCookie = new Cookie("memberId", memberInfoDto.getId().toString());
                 idCookie.setMaxAge(30 * 24 * 60 * 60);
@@ -162,15 +154,15 @@ public class PageController extends BaseController {
             userInfoRequestParams[2] = new BasicNameValuePair("lang", "zh_CN");
             String userInfo = HttpRequestUtils.get("https://api.weixin.qq.com/sns/userinfo", userInfoRequestParams);
             Map<String, Object> userInfoParams = (Map<String, Object>) JSONObject.parse(userInfo);
-            Long memberIdTemp = thirdLoginMapper.getMemberIdByUnionId((String)userInfoParams.get("unionid"),1);
+            List<Long> memberIdTemp = thirdLoginMapper.getMemberIdByUnionId((String)userInfoParams.get("unionid"),1);
             System.out.println(JSON.toJSONString(userInfo));
-            if (memberIdTemp == null) {
+            if (memberIdTemp.isEmpty()) {
                 Long memberId=Long.valueOf(request.getParameter("memberId"));
                 ThirdLogin thirdLogin=new ThirdLogin();
                 thirdLogin.setOpenId((String)userInfoParams.get("openid"));
                 thirdLogin.setUnionId((String)userInfoParams.get("unionid"));
                 thirdLogin.setSourceType(1);
-                System.out.println(userInfoParams.get("sex").toString());
+//                System.out.println(userInfoParams.get("sex").toString());
                 thirdLogin.setSex(Integer.valueOf(userInfoParams.get("sex").toString()));
                 thirdLogin.setType(0);
                 thirdLogin.setNickname((String)userInfoParams.get("nickname"));

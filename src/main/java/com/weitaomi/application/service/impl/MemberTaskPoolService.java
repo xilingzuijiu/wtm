@@ -110,10 +110,10 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
         if (StringUtil.isEmpty(publishReadRequestDto.getTitle())){
             throw new InfoException("文章标题不能为空");
         }
-        Article articleTemp=articleMapper.getArticleByUrl(publishReadRequestDto.getArticleUrl());
-        if (articleTemp!=null){
-            throw new InfoException("该文章已经发布过，请在个人相应公众号中查看");
-        }
+//        Article articleTemp=articleMapper.getArticleByUrl(publishReadRequestDto.getArticleUrl());
+//        if (articleTemp!=null){
+//            throw new InfoException("该文章已经发布过，请在个人相应公众号中查看");
+//        }
         article.setOfficialAccountId(publishReadRequestDto.getOfficialAccountsId());
         article.setUrl(publishReadRequestDto.getArticleUrl());
         if (!StringUtil.isEmpty(publishReadRequestDto.getTitle())){
@@ -209,7 +209,7 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
             taskPoolDtoList= taskPoolMapper.getTaskPoolArticleDto(officialAccountId,new RowBounds(pageIndex,pageSize));
         }
         if (type==0) {
-            taskPoolDtoList= taskPoolMapper.getTaskPoolAccountDto(officialAccountId,new RowBounds(0,0));
+            taskPoolDtoList= taskPoolMapper.getTaskPoolAccountDto(officialAccountId,new RowBounds(pageIndex,pageSize));
         }
         PageInfo<TaskPoolDto> taskPoolDtoPageInfo=new PageInfo<TaskPoolDto>(taskPoolDtoList);
         return Page.trans(taskPoolDtoPageInfo);

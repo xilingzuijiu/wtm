@@ -91,7 +91,7 @@ public class MemberController  extends BaseController {
     public AjaxResult bindThirdPlat(HttpServletRequest request,@RequestBody ThirdLogin thirdLogin)
             throws BusinessException, DBException, ParseException {
         Long memberId=this.getUserId(request);
-        thirdLogin.setSourceType(1);
+        thirdLogin.setSourceType(0);
         return AjaxResult.getOK(memberService.bindThirdPlat(memberId,thirdLogin,0));
     }
     /**
@@ -115,7 +115,7 @@ public class MemberController  extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/thirdPlatLogin", method = RequestMethod.POST)
     public AjaxResult thirdPlatLogin(@RequestParam("unionId")String unionId, @RequestParam("type")Integer type){
-        return AjaxResult.getOK(memberService.thirdPlatLogin(unionId, type,0));
+        return AjaxResult.getOK(memberService.thirdPlatLogin(unionId,null, type,0));
     }
     /**
      * 获取用户信息
@@ -184,7 +184,7 @@ public class MemberController  extends BaseController {
         return AjaxResult.getOK(memberService.modifyPassWord(memberId,modifyPasswordDto));
     }
     /**
-     * 修改密码
+     * 修改生日
      * @return
      */
     @ResponseBody

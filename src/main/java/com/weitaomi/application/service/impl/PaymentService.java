@@ -64,13 +64,13 @@ public class PaymentService implements IPaymentService {
         String payCode = this.getTradeNo();
         if ((Integer) params.get("payType") == (PayType.WECHAT_APP.getValue())) {
             params.put("out_trade_no", AlipayConfig.payCode_prefix + payCode);
-            params.put("sourceType",0);
+            params.put("sourceType", 0);
         }
         if ((Integer) params.get("payType") == (PayType.WECHAT_WEB.getValue())) {
-            ThirdLogin thirdLogin=thirdLoginMapper.getThirdlogInDtoMemberId((Long)params.get("memberId"),1);
-            params.put("openId",thirdLogin.getOpenId());
+            ThirdLogin thirdLogin = thirdLoginMapper.getThirdlogInDtoMemberId((Long) params.get("memberId"), 1);
+            params.put("openId", thirdLogin.getOpenId());
             params.put("out_trade_no", AlipayConfig.payCode_prefix + payCode);
-            params.put("sourceType",1);
+            params.put("sourceType", 1);
         }
         if ((Integer) params.get("payType") == (PayType.ALIPAY_APP.getValue())) {
             params.put("trade_no", AlipayConfig.payCode_prefix + payCode);
@@ -225,25 +225,27 @@ public class PaymentService implements IPaymentService {
 
     @Override
     @Transactional
-    public String patchWechatCustomers(List<PaymentApprove> approveList, String ip) {
+    public String patchWechatCustomers(Long approveId, Integer isApprove, String remark, String ip) {
         List<PaymentHistory> paymentHistoryList = new ArrayList<PaymentHistory>();
         Integer number = 0;
-        for (PaymentApprove approve : approveList) {
+        PaymentApprove approve = approveMapper.selectByPrimaryKey(approveId);
+        approve.setRemark(remark);
+        if (isApprove == 1) {
             Long amount = approve.getAmount().multiply(BigDecimal.valueOf(100)).longValue();
             String randomkey = UUIDGenerator.generate();
             String code = this.getTradeNo();
             Map<String, String> params = new HashMap<>();
-            ThirdLogin thirdLogin=thirdLoginMapper.getThirdLoginByOpenId(approve.getAccountNumber());
-            String key ="";
-            if (thirdLogin.getSourceType()==0){
+            ThirdLogin thirdLogin = thirdLoginMapper.getThirdLoginByOpenId(approve.getAccountNumber());
+            String key = "";
+            if (thirdLogin.getSourceType() == 0) {
                 params.put("mch_appid", WechatConfig.APP_ID);
                 params.put("mchid", WechatConfig.MCHID);
-                key=WechatConfig.API_KEY;
+                key = WechatConfig.API_KEY;
             }
-            if (thirdLogin.getSourceType()==1){
+            if (thirdLogin.getSourceType() == 1) {
                 params.put("mch_appid", WechatConfig.MCH_APPID);
                 params.put("mchid", WechatConfig.MCHID_OFFICIAL);
-                key=WechatConfig.OFFICIAL_API_KEY;
+                key = WechatConfig.OFFICIAL_API_KEY;
             }
             params.put("nonce_str", randomkey);
             params.put("partner_trade_no", code);
@@ -261,11 +263,11 @@ public class PaymentService implements IPaymentService {
             wechatBatchPayParams.setCheck_name("NO_CHECK");
             wechatBatchPayParams.setDesc("付款到个人账户");
 
-            if (thirdLogin.getSourceType()==0){
+            if (thirdLogin.getSourceType() == 0) {
                 wechatBatchPayParams.setMch_appid(WechatConfig.APP_ID);
                 wechatBatchPayParams.setMchid(WechatConfig.MCHID);
             }
-            if (thirdLogin.getSourceType()==1){
+            if (thirdLogin.getSourceType() == 1) {
                 wechatBatchPayParams.setMch_appid(WechatConfig.MCH_APPID);
                 wechatBatchPayParams.setMchid(WechatConfig.MCHID_OFFICIAL);
             }
@@ -279,7 +281,7 @@ public class PaymentService implements IPaymentService {
             xStream.autodetectAnnotations(true);
             String xml = xStream.toXML(wechatBatchPayParams);
             try {
-                String result = ClientCustomSSL.connectKeyStore(WechatConfig.BATCH_PAY_URL, xml,thirdLogin.getSourceType());
+                String result = ClientCustomSSL.connectKeyStore(WechatConfig.BATCH_PAY_URL, xml, thirdLogin.getSourceType());
                 WechatBatchPayResult wechat = StreamUtils.toBean(result, WechatBatchPayResult.class);
                 if (wechat != null) {
                     if (wechat.getResult_code().equals(WechatConfig.SUCCESS) && wechat.getReturn_code().equals(WechatConfig.SUCCESS)) {
@@ -312,14 +314,26 @@ public class PaymentService implements IPaymentService {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
-        if (number == approveList.size()) {
-            int num = paymentHistoryMapper.batchInsertPayHistory(paymentHistoryList);
-            if (num == number)
-                return "所有用户均提现成功";
-            else return "提现失败";
-        } else {
-            return "部分用户提现失败，请查看失败列表，重新审批";
+            if (number == 1) {
+                int num = paymentHistoryMapper.batchInsertPayHistory(paymentHistoryList);
+                if (num == number)
+                   return "提现审核成功";
+                else  throw new InfoException("提现审核失败");
+            } else {
+                throw new InfoException("部分用户提现失败，请查看失败列表，重新审批");
+            }
+        } else if (isApprove==0){
+            Double returnBackScore=approve.getAmount().multiply(BigDecimal.valueOf(100)).doubleValue();
+            MemberScoreFlow memberScoreFlow = memberScoreFlowMapper.getMemberScoreFlow(approve.getMemberId(), -approve.getAmount().multiply(BigDecimal.valueOf(100)).doubleValue(), approve.getCreateTime(), 2L, 0);
+            memberScoreFlow.setTypeId(8L);
+            memberScoreFlowMapper.updateByPrimaryKeySelective(memberScoreFlow);
+            memberScoreService.addMemberScore(approve.getMemberId(),8L,1,returnBackScore,UUIDGenerator.generate());
+            approve.setIsPaid(1);
+            approveMapper.updateByPrimaryKeySelective(approve);
+            return "审核已拒绝";
+
+        }else {
+            throw new InfoException("审批状态错误");
         }
     }
 

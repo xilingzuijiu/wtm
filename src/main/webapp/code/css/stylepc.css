@@ -130,25 +130,26 @@ nav .busienter h5{background:#68c1f4;color:#fff;padding:4px 7px;border-radius:5p
 .middlecontent{padding:0 60px 0 70px;margin-top:50px;float:right;overflow:hidden;min-height:720px;}
 .gtaskbox{border-radius:10px;-webkit-border-radius:10px;-ms-border-radius:10px;-moz-border-radius:10px;-o-border-radius:10px;border:#d4d4d4 1px solid;
     padding:0 12px;overflow:hidden;background:#fff;margin-bottom:8px;}
-.gzhtask{float:left;padding-right:35px;}
-.readtask{border-left:#cfcfcf 1px dashed;min-height:670px;float:right;padding-left:35px;}
+.gzhtask{float:left;padding-right:10px;}
+.readtask{border-left:#cfcfcf 1px dashed;min-height:670px;float:right;padding-left:15px;}
 .gzhtask h5,.readtask h5{font-size:25px;font-weight:normal;text-align:center;padding-bottom:20px;color:#333;}
 .smallul{padding-right:12px;padding:10px 12px 10px 0;}
-.smallibox h6,.smallibox h6,.smallibox p,.smallibox p,.tasksmalltitle p{font-size:15px;color:#666;font-weight:normal;line-height:25px;}
+.smallibox h6,.smallibox h6,.smallibox p,.smallibox p,.tasksmalltitle p{font-size:15px;color:#666;font-weight:normal;line-height:15px;}
 .smallibox{overflow:hidden;}
-.smallibox h6{float:left;}
+.smallibox h6{float:left;margin:0 !important;;}
 .smallibox p{float:right;}
-.readtaskul{border-right:#ededed 1px dashed;width:260px;float:left;}
+.readtaskul{border-right:#ededed 1px dashed;width:260px;float:left;margin:0 !important;;}
 .tasksmalltitle{float:right;padding-left:12px;}
 .tasksmalltitle h5{font-size:15px;color:#fa4a18;font-weight:normal;padding-top:15px;width:6em;height:20px;overflow:hidden;text-overflow:ellipsis;line-height:20px;}
 .tasksmalltitle h6{font-size:25px;padding-top:25px;padding-bottom:2px;text-align:center;}
 .tasksmalltitle p{text-align:center;}
 iframe{padding:}
 .content{background: #FFFBE6;}
+.taskcontent{width:840px;}
+.taskmiddle{margin:auto;overflow:hidden;min-height:720px;}
 
 
-
-.page{overflow:hidden;text-align:center;display:block !important;margin-left:16%;float:left;margin-top:40px;_margin-top:40px;}
+.page{overflow:hidden;text-align:center;display:block !important;width:400px;float:left;margin-top:40px;_margin-top:40px;}
 .page li{float:left;background:#fefefe;margin-right:5px;border-radius:5px;border:#dfdfdf 1px solid;}
 .page a{display:block;font-size:12px;color:#545454;line-height:25px;width:25px;}
 .pageactive{background:#f4832d !important;border:#f4832d 1px solid !important;}

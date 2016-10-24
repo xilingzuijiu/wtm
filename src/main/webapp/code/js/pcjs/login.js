@@ -18,27 +18,27 @@ $(function(){
                 if (param != null && param.errorCode == 0) {
                     var data = param.data;
                     if (data.id != null){
-                        $.cookie("memberId", data.id, {expires: 30, path: "/frontPage/wap"})
-                        $.cookie("memberName", encodeURI(data.memberName), {expires: 30, path: "/frontPage/wap"})
-                        $.cookie("password", data.password, {expires: 30, path: "/frontPage/wap"})
-                        $.cookie("birth", data.birth, {expires: 30, path: "/frontPage/wap"})
-                        $.cookie("sex", data.sex, {expires: 30, path: "/frontPage/wap"})
+                        $.cookie("memberId", data.id, {expires: 30, path: "/frontPage/sellerPage"})
+                        $.cookie("memberName", encodeURI(data.memberName), {expires: 30, path: "/frontPage/sellerPage"})
+                        $.cookie("password", data.password, {expires: 30, path: "/frontPage/sellerPage"})
+                        $.cookie("birth", data.birth, {expires: 30, path: "/frontPage/sellerPage"})
+                        $.cookie("sex", data.sex, {expires: 30, path: "/frontPage/sellerPage"})
                         var image = data.imageUrl;
                         if (image.indexOf("http") < 0) {
                             image = "http://weitaomi.b0.upaiyun.com" + image
                         }
-                        $.cookie("imageUrl", image, {expires: 30, path: "/frontPage/wap"})
-                        $.cookie("telephone", data.telephone, {expires: 30, path: "/frontPage/wap"})
+                        $.cookie("imageUrl", image, {expires: 30, path: "/frontPage/sellerPage"})
+                        $.cookie("telephone", data.telephone, {expires: 30, path: "/frontPage/sellerPage"})
                         if(data.officialAccountList!=null&&data.officialAccountList!=undefined)
                             $.cookie("officialAccountList", JSON.stringify(data.officialAccountList), {
                                 expires: 30,
-                                path: "/frontPage/wap"
+                                path: "/frontPage/sellerPage"
                             })
                         if(data.thirdLogin!=null&&data.thirdLogin!=undefined)
-                            $.cookie("thirdLogin", JSON.stringify(data.thirdLogin), {expires: 30, path: "/frontPage/wap"})
+                            $.cookie("thirdLogin", JSON.stringify(data.thirdLogin), {expires: 30, path: "/frontPage/sellerPage"})
                         if(data.payList!=null&&data.payList!=undefined)
-                            $.cookie("payList", JSON.stringify(data.payList), {expires: 30, path: "/frontPage/wap"})
-                        location.href = "/frontPage/wap/index.html";
+                            $.cookie("payList", JSON.stringify(data.payList), {expires: 30, path: "/frontPage/sellerPage"})
+                        location.href = "/frontPage/sellerPage/business.html";
                     }
                 } else if (params.errorCode == 4) {
                     alert(params.message)

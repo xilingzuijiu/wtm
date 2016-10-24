@@ -5,12 +5,15 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.Dom4JDriver;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
+import com.weitaomi.application.model.bean.PaymentApprove;
 import com.weitaomi.application.service.interf.IPaymentService;
+import com.weitaomi.systemconfig.alipay.HttpRequest;
 import com.weitaomi.systemconfig.dataFormat.AjaxResult;
 import com.weitaomi.systemconfig.exception.BusinessException;
 import com.weitaomi.systemconfig.exception.SystemException;
 import com.weitaomi.systemconfig.util.AjaxUtil;
 import com.weitaomi.systemconfig.util.HttpRequestUtils;
+import com.weitaomi.systemconfig.util.IpUtils;
 import com.weitaomi.systemconfig.util.StreamUtils;
 import com.weitaomi.systemconfig.wechat.WechatBatchPayParams;
 import com.weitaomi.systemconfig.wechat.WechatNotifyParams;
@@ -30,6 +33,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -74,7 +78,12 @@ public class PaymemberCallBackController {
         }
         return code;
     }
-
+    @ResponseBody
+    @RequestMapping(value = "/patchWechatCustomers", method = RequestMethod.POST)
+    public AjaxResult  patchWechatCustomers(Long approveId,Integer isApprove,String remark,HttpServletRequest request){
+       paymentService.patchWechatCustomers(approveId,isApprove,remark, IpUtils.getIpAddr(request));
+        return AjaxResult.getOK();
+    }
     @ResponseBody
     @RequestMapping(value = "getApproveList",method = RequestMethod.GET)
     public AjaxResult getApproveList(Integer pageIndex,Integer pageSize){

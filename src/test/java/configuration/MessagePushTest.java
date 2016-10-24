@@ -13,7 +13,7 @@ public class MessagePushTest {
     public void testPushMessage(){
         String value="{\"id\":7,\"message\":\"hello World\"}";
 //        for (int i = 0; i < 5; i++) {
-            JpushUtils.buildRequest("这是一条通知，通知给memberId={}的用户",5L);
+            JpushUtils.buildRequest("亲爱的微淘米玩家们，我们将于2016年10月24日下午12点20分升级版本，届时将有1-5分钟加载缓慢，请稍后再试~微淘小米祝小伙伴们周一愉快~",0L);
             try {
                 Thread.sleep(5000L);
             } catch (InterruptedException e) {
