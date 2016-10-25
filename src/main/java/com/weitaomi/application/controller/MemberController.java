@@ -114,8 +114,8 @@ public class MemberController  extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/thirdPlatLogin", method = RequestMethod.POST)
-    public AjaxResult thirdPlatLogin(@RequestParam("unionId")String unionId, @RequestParam("type")Integer type){
-        return AjaxResult.getOK(memberService.thirdPlatLogin(unionId,null, type,0));
+    public AjaxResult thirdPlatLogin(@RequestParam("unionId")String unionId, @RequestParam(value = "openId",required = false,defaultValue = "00000000")String openId, @RequestParam("type")Integer type){
+        return AjaxResult.getOK(memberService.thirdPlatLogin(unionId,openId,type,0));
     }
     /**
      * 获取用户信息
@@ -211,6 +211,19 @@ public class MemberController  extends BaseController {
             throw new InfoException("定位地址失败");
         }
         return AjaxResult.getOK(memberService.modifyMemberAddress(memberId,memberAddress));
+    }
+    /**
+     * 修改地址
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/modifyMemberName", method = RequestMethod.POST)
+    public AjaxResult modifyMemberName(HttpServletRequest request,String memberName){
+        Long memberId=this.getUserId(request);
+        if (StringUtil.isEmpty(memberName)){
+            throw new InfoException("账户名为空");
+        }
+        return AjaxResult.getOK(memberService.modifyMemberName(memberId,memberName));
     }
     /**
      * 验证验证码

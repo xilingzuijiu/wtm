@@ -15,7 +15,7 @@
     select * from wtm_member_invited_record r WHERE r.memberId=#{memberId};
   </select>
   <select id="getInvitedRecord" resultType="com.weitaomi.application.model.dto.InvitedRecord">
-    select m.imageUrl imageUrl,m.memberName memberName,s.memberScore,r.createTime invitedTime from wtm_member m LEFT JOIN wtm_member_invited_record r ON r.memberId=m.id LEFT JOIN wtm_member_score s ON s.memberId=m.id WHERE  r.parentId=#{parentID};
+    select m.imageUrl imageUrl,m.memberName memberName,s.memberScore,r.createTime invitedTime from wtm_member m LEFT JOIN wtm_member_invited_record r ON r.memberId=m.id LEFT JOIN wtm_member_score s ON s.memberId=m.id WHERE  r.parentId=#{parentID} order by r.createTime desc
   </select>
   <select id="getInvitedParamsDto" resultType="com.weitaomi.application.model.dto.InvitedParamsDto">
     SELECT

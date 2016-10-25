@@ -80,7 +80,9 @@ function changeScore(value){
     if(eval(total-number*value)<0){
         $("#div1").empty()
         $("#input1").val(0)
-        Showbo.Msg.alert("可用米币额度不足")
+        Showbo.Msg.confirm1("可用米币额度不足", function () {
+            gotocharge();
+        })
     }
 };
 
@@ -90,7 +92,9 @@ function checkAmount(value){
     var total = $("#amount").val();
     var number=$("#input1").val()
     if(eval(total-number*value)<0){
-        Showbo.Msg.alert("可用米币额度不足，请充值")
+        Showbo.Msg.confirm1("可用米币额度不足", function () {
+            gotocharge();
+        })
         $("#input2").val(0)
     }
     var i=1

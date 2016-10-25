@@ -23,14 +23,14 @@ public interface IOfficeAccountService {
     /**
      * 查看已关注公众号
      */
-    List<MemberAccountLabel> getOfficialAccountMsgList(Long memberId);
+    List<MemberAccountLabel> getOfficialAccountMsgList(Long memberId,Integer sourceType);
 
     /**
      * 更新已关注公众号
      * @param memberId
      * @return
      */
-    Integer signOfficialAccountMsgList(Long memberId);
+    Integer signOfficialAccountMsgList(Long memberId,Integer sourceType);
 
     /**
      * 推送关注任务

@@ -78,6 +78,13 @@ public interface IMemberService {
      * @return
      */
      boolean modifyMemberAddress(Long memberId, String  memberAddress);
+ /**
+     * 更新用户名
+     * @param memberId
+     * @param memberName
+     * @return
+     */
+     boolean modifyMemberName(Long memberId, String  memberName);
 
  /**
       * 上传用户头像

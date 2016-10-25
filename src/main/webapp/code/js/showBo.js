@@ -92,6 +92,10 @@ Showbo.Msg={
         //fn为回调函数，参数和show方法的一致
         this.show({buttons:{yes:'确认',no:'取消'},msg:msg,title:'提示',fn:fn});
     },
+    confirm1:function(msg,fn){
+        //fn为回调函数，参数和show方法的一致
+        this.show({buttons:{yes:'充值？',no:'取消'},msg:msg,title:'提示',fn:fn});
+    },
     prompt:function(labelWord,defaultValue,txtId,fn){
         if(!labelWord)labelWord='请输入：';
         if(!defaultValue)defaultValue="";

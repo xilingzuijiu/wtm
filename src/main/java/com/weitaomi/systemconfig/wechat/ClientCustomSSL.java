@@ -31,6 +31,7 @@ import java.security.KeyStore;
 
 import javax.net.ssl.SSLContext;
 
+import com.weitaomi.application.service.impl.LoadFileFactory;
 import com.weitaomi.systemconfig.util.HttpRequestUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -52,16 +53,14 @@ import org.apache.http.util.EntityUtils;
  */
 public class ClientCustomSSL {
 
-    public static String connectKeyStore(String url,String xml,int flag) throws Exception{
+    public static String connectKeyStore(String url,String xml,String path,int flag) throws Exception{
         KeyStore keyStore  = KeyStore.getInstance("PKCS12");
-        File file=null;
+        File file=LoadFileFactory.getFile(path);
         char[] arr=null;
         if (flag==0){
-            file=new File("src\\main\\java\\com\\weitaomi\\systemconfig\\wechat\\apiclient_cert.p12");
             arr=WechatConfig.MCHID.toCharArray();
         }
         if (flag==1){
-            file=new File("src\\main\\java\\com\\weitaomi\\systemconfig\\wechat\\apiclient_certwx.p12");
             arr=WechatConfig.MCHID_OFFICIAL.toCharArray();
         }
         FileInputStream instream = new FileInputStream(file);

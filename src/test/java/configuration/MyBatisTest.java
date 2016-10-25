@@ -134,16 +134,16 @@ public class MyBatisTest extends BaseContextCase {
     @Test
     public void testApprove(){
 
-        PaymentApprove approve=new PaymentApprove();
-        approve.setAccountNumber("oKfbJvp1_Bb-Xy1aqw6o4L5H55Y0");
-        approve.setAccountName("宁凡荣");
-        approve.setAmount(BigDecimal.valueOf(8.00));
-        approve.setCreateTime(1473393865L);
-        approve.setIsPaid(1);
-        approve.setMemberId(3L);
-        List<PaymentApprove> approves=new ArrayList<>();
-        approves.add(approve);
-//        paymentService.patchWechatCustomers(approves,"192.168.0.77");
+//        PaymentApprove approve=new PaymentApprove();
+//        approve.setAccountNumber("oKfbJvp1_Bb-Xy1aqw6o4L5H55Y0");
+//        approve.setAccountName("宁凡荣");
+//        approve.setAmount(BigDecimal.valueOf(8.00));
+//        approve.setCreateTime(1473393865L);
+//        approve.setIsPaid(1);
+//        approve.setMemberId(3L);
+//        List<PaymentApprove> approves=new ArrayList<>();
+//        approves.add(approve);
+        paymentService.patchWechatCustomers(1L,1,"","192.168.0.77");
 
 
     }

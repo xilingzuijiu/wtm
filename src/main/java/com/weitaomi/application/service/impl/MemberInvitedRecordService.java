@@ -1,10 +1,13 @@
 package com.weitaomi.application.service.impl;
 
+import com.github.pagehelper.PageInfo;
 import com.weitaomi.application.model.dto.InvitedParamsDto;
 import com.weitaomi.application.model.dto.InvitedRecord;
 import com.weitaomi.application.model.dto.TotalSharedMsg;
 import com.weitaomi.application.model.mapper.MemberInvitedRecordMapper;
 import com.weitaomi.application.service.interf.IMemberInvitedRecordService;
+import com.weitaomi.systemconfig.util.Page;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,12 +28,13 @@ public class MemberInvitedRecordService implements IMemberInvitedRecordService {
     }
 
     @Override
-    public List<InvitedRecord> getInvitedRecordList(Long memberId) {
-        List<InvitedRecord> invitedRecordList=memberInvitedRecordMapper.getInvitedRecord(memberId);
+    public Page<InvitedRecord> getInvitedRecordList(Long memberId, Integer pageIndex, Integer pageSize) {
+        List<InvitedRecord> invitedRecordList=memberInvitedRecordMapper.getInvitedRecord(memberId,new RowBounds(pageIndex,pageSize));
         if (invitedRecordList.isEmpty()){
             return null;
         }
-        return invitedRecordList;
+        PageInfo<InvitedRecord> pageInfo=new PageInfo<InvitedRecord>(invitedRecordList);
+        return Page.trans(pageInfo);
     }
     @Override
     public List<TotalSharedMsg> getTotalSharedMsg(){

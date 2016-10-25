@@ -4,6 +4,7 @@ import com.weitaomi.application.model.bean.MemberInvitedRecord;
 import com.weitaomi.application.model.dto.InvitedParamsDto;
 import com.weitaomi.application.model.dto.InvitedRecord;
 import com.weitaomi.application.model.dto.TotalSharedMsg;
+import com.weitaomi.systemconfig.util.Page;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ public interface IMemberInvitedRecordService {
      * @param memberId
      * @return
      */
-    public  List<InvitedRecord> getInvitedRecordList(Long memberId);
+    public Page<InvitedRecord> getInvitedRecordList(Long memberId, Integer pageIndex, Integer pageSize);
 
     /**
      * 获取邀请达人记录

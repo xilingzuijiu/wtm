@@ -34,7 +34,7 @@ public class MemberTaskHistoryController extends BaseController {
         return AjaxResult.getOK(memberTaskHistoryService.getMemberDailyTask(memberId));
     }
     /**
-     * 是否服务号签到
+     * 是否公众号签到
      * @param httpServletRequest
      * @return
      */

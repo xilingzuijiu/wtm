@@ -71,7 +71,7 @@ public class OfficialAccountsPCController extends BaseController{
     @RequestMapping(value = "/getOfficialAccountMsgList")
     public AjaxResult getOfficialAccountMsgList(HttpServletRequest request){
         Long memberId=super.getUserId(request);
-        return AjaxResult.getOK(officeAccountService.getOfficialAccountMsgList(memberId));
+        return AjaxResult.getOK(officeAccountService.getOfficialAccountMsgList(memberId,1));
     }
 
     /**
@@ -83,7 +83,7 @@ public class OfficialAccountsPCController extends BaseController{
     @RequestMapping(value = "/signOfficialAccountMsgList",method = RequestMethod.POST)
     public AjaxResult signOfficialAccountMsgList(HttpServletRequest request){
         Long memberId=super.getUserId(request);
-        return AjaxResult.getOK(officeAccountService.signOfficialAccountMsgList(memberId));
+        return AjaxResult.getOK(officeAccountService.signOfficialAccountMsgList(memberId,1));
     }
 
     /**

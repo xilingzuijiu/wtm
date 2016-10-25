@@ -284,7 +284,7 @@ public class MemberPCController extends BaseController {
     }
 
     /**
-     * 微信服务号签到
+     * 微信公众号签到
      * @param map
      * @return
      */
@@ -317,6 +317,19 @@ public class MemberPCController extends BaseController {
             throw new BusinessException("用户ID为空");
         }
         return AjaxResult.getOK(memberService.modifyBirth(memberId,birth));
+    }
+    /**
+     * 修改地址
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/modifyMemberName", method = RequestMethod.POST)
+    public AjaxResult modifyMemberName(HttpServletRequest request,String memberName){
+        Long memberId=this.getUserId(request);
+        if (StringUtil.isEmpty(memberName)){
+            throw new InfoException("账户名为空");
+        }
+        return AjaxResult.getOK(memberService.modifyMemberName(memberId,memberName));
     }
     /**
      * 签名

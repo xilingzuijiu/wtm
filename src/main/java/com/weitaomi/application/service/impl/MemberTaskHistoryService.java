@@ -190,12 +190,12 @@ public class MemberTaskHistoryService  implements IMemberTaskHistoryService {
         if (StringUtil.isEmpty(openId)){
             throw new BusinessException("获取用户信息失败");
         }
-        logger.info("服务号签到，用户openId为:"+openId);
-        Long memberId=wtmOfficialMemberMapper.getMemberIdByOpenId(openId);
-        if (memberId==null){
+        logger.info("公众号签到，用户openId为:"+openId);
+        List<Long> memberId=wtmOfficialMemberMapper.getMemberIdByOpenId(openId);
+        if (memberId.isEmpty()){
             return "没有微淘米账号,请下载微淘米APP注册";
         }
-        MemberScore memberScore = this.addDailyTask(memberId,10L);
+        MemberScore memberScore = this.addDailyTask(memberId.get(0),10L);
         if (memberScore!=null){
             return "签到成功，现在您可以返回APP领取任务";
         }

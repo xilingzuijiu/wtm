@@ -18,6 +18,6 @@
     select * from wtm_weitaomi_official_member m where m.unionId=#{unionId}
   </select>
   <select id="getMemberIdByOpenId" resultType="java.lang.Long">
-    select login.memberId from wtm_weitaomi_official_member m LEFT JOIN wtm_third_login login  ON m.unionId=login.unionId WHERE m.openId=#{openId} AND login.sourceType=1
+    select login.memberId from wtm_weitaomi_official_member m LEFT JOIN wtm_third_login login  ON m.unionId=login.unionId WHERE m.openId=#{openId}
   </select>
 </mapper>

@@ -195,7 +195,7 @@ public class MemberService extends BaseService implements IMemberService {
             throw new BusinessException("登陆平台类型为空");
         }
         List<ThirdLogin> thirdLoginFlag = thirdLoginMapper.getThirdLoginInfo(thirdLogin.getUnionId(),sourceType);
-        if (thirdLoginFlag != null) {
+        if (!thirdLoginFlag.isEmpty()) {
             throw new InfoException("您已经绑定此账号");
         }
         ThirdLogin thirdLogins = thirdLoginMapper.getUnionIdByMemberId(memberId,sourceType);
@@ -268,7 +268,7 @@ public class MemberService extends BaseService implements IMemberService {
             throw new BusinessException("第三方OpenId为空");
         }
         List<ThirdLogin> thirdLogin = thirdLoginMapper.getThirdLoginInfo(unionId,null);
-        if (thirdLogin == null) {
+        if (thirdLogin.isEmpty()) {
             throw new BusinessException("该微信账号未绑定App账号，若有App账号，请登录后绑定微信，或者注册App账户并自动绑定微信");
         }else {
             List<ThirdLogin> thirdLoginMsg = thirdLoginMapper.getThirdLoginInfo(unionId,sourceType);
@@ -298,7 +298,11 @@ public class MemberService extends BaseService implements IMemberService {
                 }else if (sourceType==1){
                     typeValue=0;
                 }
-                ThirdLogin thirdLoginMs = thirdLoginMapper.getThirdLoginInfo(unionId,typeValue).get(0);
+                List<ThirdLogin> thirdLoginMsList = thirdLoginMapper.getThirdLoginInfo(unionId,typeValue);
+                if (thirdLoginMsList.isEmpty()){
+                    throw new InfoException("该微信账号未绑定App账号，若有App账号，请登录后绑定微信，或者注册App账户并自动绑定微信");
+                }
+                ThirdLogin thirdLoginMs=thirdLoginMsList.get(0);
                 thirdLoginMs.setOpenId(openid);
                 thirdLoginMs.setSourceType(sourceType);
                 thirdLoginMs.setId(null);
@@ -429,6 +433,23 @@ public class MemberService extends BaseService implements IMemberService {
             member.setArea(address[2]);
             member.setMemberAddress(address[3]);
         }
+        int number = memberMapper.updateByPrimaryKeySelective(member);
+        return number > 0 ? true : false;
+    }
+    @Override
+    public boolean modifyMemberName(Long memberId, String memberName) {
+        Member member = memberMapper.selectByPrimaryKey(memberId);
+        if (member==null){
+            throw new InfoException("账户不存在");
+        }
+        if (memberName.equals(member.getMemberName())){
+            throw new InfoException("用户名不能相同");
+        }
+        Member member1=memberMapper.getMemberByMemberName(memberName,null);
+        if (member1!=null){
+            throw new InfoException("用户名已经存在");
+        }
+        member.setMemberName(memberName);
         int number = memberMapper.updateByPrimaryKeySelective(member);
         return number > 0 ? true : false;
     }

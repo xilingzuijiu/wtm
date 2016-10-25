@@ -12,10 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
@@ -55,9 +52,15 @@ public class MemberInvitedController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/getInvitedRecordList", method = RequestMethod.POST)
-    public AjaxResult getInvitedRecordList(HttpServletRequest request){
+    public AjaxResult getInvitedRecordList(HttpServletRequest request,@RequestParam(required = false) Integer pageIndex,@RequestParam(required = false) Integer pageSize){
         Long memberId=this.getUserId(request);
-        return AjaxResult.getOK(memberInvitedRecordService.getInvitedRecordList(memberId));
+        if (pageIndex==null){
+            pageIndex=0;
+        }
+        if (pageSize==null){
+            pageSize=0;
+        }
+        return AjaxResult.getOK(memberInvitedRecordService.getInvitedRecordList(memberId,pageIndex,pageSize));
     }
     /**
      * 获取分享达人

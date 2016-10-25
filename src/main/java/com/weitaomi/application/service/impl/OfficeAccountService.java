@@ -57,16 +57,16 @@ public class OfficeAccountService implements IOfficeAccountService {
      * 查看已关注公众号
      */
     @Override
-    public List<MemberAccountLabel> getOfficialAccountMsgList(Long memberId){
-        List<MemberAccountLabel> officialAccountNameList=officeMemberMapper.getOfficialAccountNameList(memberId);
+    public List<MemberAccountLabel> getOfficialAccountMsgList(Long memberId,Integer sourceType){
+        List<MemberAccountLabel> officialAccountNameList=officeMemberMapper.getOfficialAccountNameList(memberId,sourceType);
         return officialAccountNameList;
     }
     /**
      *更新已关注公众号
      */
     @Override
-    public Integer signOfficialAccountMsgList(Long memberId){
-        List<MemberAccountLabel> officialAccountNameList=officeMemberMapper.getOfficialAccountNameList(memberId);
+    public Integer signOfficialAccountMsgList(Long memberId,Integer sourceType){
+        List<MemberAccountLabel> officialAccountNameList=officeMemberMapper.getOfficialAccountNameList(memberId,sourceType);
         Integer num=officeMemberMapper.updateOfficialMemberList(memberId);
         for (MemberAccountLabel memberAccountLabel: officialAccountNameList) {
             String key = memberAccountLabel.getNickName() + ":" + memberAccountLabel.getSex() + ":" + memberAccountLabel.getOriginId();
@@ -80,7 +80,7 @@ public class OfficeAccountService implements IOfficeAccountService {
     public boolean pushAddRequest(Long memberId,AddOfficalAccountDto addOfficalAccountDto) {
         List<OfficeMember> officeMembers=officeMemberMapper.getOfficeMemberList(memberId);
         if (!officeMembers.isEmpty()){
-            String info="您还有未关注公众号，请到服务号内完成\n未完成任务将会在1小时后删除\n若领任务之前已关注，请标注这些公众号";
+            String info="您还有未关注公众号，请到公众号内完成\n未完成任务将会在1小时后删除\n若领任务之前已关注，请标注这些公众号";
             throw new InfoException(info);
         }
         if (addOfficalAccountDto==null){
@@ -144,7 +144,7 @@ public class OfficeAccountService implements IOfficeAccountService {
     public boolean markAddRecord(Long memberId, OfficialAccountMsg officialAccountMsg) {
         List<OfficeMember> officeMembers=officeMemberMapper.getOfficeMemberList(memberId);
         if (!officeMembers.isEmpty()){
-            String info="您还有未关注公众号，请到服务号内完成\n未完成任务将会在1小时后删除\n若领任务之前已关注，请标注这些公众号";
+            String info="您还有未关注公众号，请到公众号内完成\n未完成任务将会在1小时后删除\n若领任务之前已关注，请标注这些公众号";
             throw new InfoException(info);
         }
         ThirdLogin thirdLogin=thirdLoginMapper.getUnionIdByMemberId(memberId,1);
@@ -275,7 +275,7 @@ public class OfficeAccountService implements IOfficeAccountService {
         Map<String,Long> idMap= memberMapper.getIsFollowWtmAccount(memberId,sourceType);
         if (idMap!=null){
             if (idMap.get("officialMemberId")==null){
-                throw new InfoException("未关注微淘米服务号");
+                throw new InfoException("未关注微淘米公众号");
             }
         }
         List<OfficialAccountMsg> officialAccountMsgs=officalAccountMapper.getOfficialAccountMsg(memberId,unionId,member.getSex(),member.getProvince(),member.getCity());

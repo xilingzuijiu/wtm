@@ -68,7 +68,7 @@ public class OfficialAccountController extends BaseController{
     @RequestMapping(value = "/getOfficialAccountMsgList")
     public AjaxResult getOfficialAccountMsgList(HttpServletRequest request){
         Long memberId=super.getUserId(request);
-        return AjaxResult.getOK(officeAccountService.getOfficialAccountMsgList(memberId));
+        return AjaxResult.getOK(officeAccountService.getOfficialAccountMsgList(memberId,0));
     }
 
     /**
@@ -80,7 +80,7 @@ public class OfficialAccountController extends BaseController{
     @RequestMapping(value = "/signOfficialAccountMsgList",method = RequestMethod.POST)
     public AjaxResult signOfficialAccountMsgList(HttpServletRequest request){
         Long memberId=super.getUserId(request);
-        return AjaxResult.getOK(officeAccountService.signOfficialAccountMsgList(memberId));
+        return AjaxResult.getOK(officeAccountService.signOfficialAccountMsgList(memberId,0));
     }
 
 
@@ -96,7 +96,7 @@ public class OfficialAccountController extends BaseController{
         String status=params.get("status");
         if (status.equals("0")) {
             List<Long> memberId = thirdLoginMapper.getMemberIdByUnionId(unionId,0);
-                JpushUtils.buildRequest("任务五分钟之后即将失效，请尽快到服务号完成",memberId.get(0));
+                JpushUtils.buildRequest("任务五分钟之后即将失效，请尽快到公众号完成",memberId.get(0));
         }
         return AjaxResult.getOK();
     }

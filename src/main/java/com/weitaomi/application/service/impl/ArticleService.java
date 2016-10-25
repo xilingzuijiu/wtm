@@ -61,7 +61,7 @@ public class ArticleService implements IArticleService {
             Map<String,Long> idMap= memberMapper.getIsFollowWtmAccount(memberId,sourceType);
             if (idMap!=null){
                 if (idMap.get("officialMemberId")==null){
-                    throw new InfoException("未关注微淘米服务号");
+                    throw new InfoException("未关注微淘米公众号");
                 }
             }
             List<ArticleShowDto> articleShowDtoList=articleMapper.getAtricleList(memberId,articleSearch,new RowBounds(articleSearch.getPageIndex(),articleSearch.getPageSize()));
