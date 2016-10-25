@@ -9,7 +9,7 @@ var hashMap = {
 }
 var total=0;
 var count=1;
-var pageSize=16;
+var pageSize=13;
 $(function(){
     var thirdLogin=$.cookie("thirdLogin");
     if (thirdLogin==null||thirdLogin==undefined||thirdLogin.length<=0){
@@ -27,15 +27,15 @@ $(window).scroll(function(){
     var windowHeight = $(this).height();                   //当前可视的页面高度
     if(scrollTop + windowHeight >= scrollHeight){        //距离顶部+当前高度 >=文档总高度 即代表滑动到底部
         console.log(Math.ceil(total/pageSize)+1+"shi");
-        if(count<=Math.ceil(total/pageSize)+1){
+        if(count<Math.ceil(total/pageSize)+1){
             $(".loadmore").css("visibility","visible");
             $(".loadmore").click(function(){
                 count++;
                 $(this).css("visibility","hidden");
-                loadrecord();
+                loadReadlist();
             })
         }
-        if(count>Math.ceil(total/pageSize)){
+        if(count>=Math.ceil(total/pageSize)){
             $(".loadmore").css("display","none");
         }
     }else if(scrollTop<=0){         //滚动条距离顶部的高度小于等于0
@@ -54,7 +54,7 @@ function loadReadlist(){
         beforeSend: function (XMLHttpRequest) {
             getMemberRequestHeaderMsg(XMLHttpRequest)
         },
-        success: function (params) {
+        success: function (params){
             var json = eval(params); //数组
             console.log("json数据为：" + params);
             console.log($.cookie("memberId"));

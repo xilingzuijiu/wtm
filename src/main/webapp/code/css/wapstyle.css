@@ -282,6 +282,12 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
 .openbusy{display:block;width:80%;margin:auto;margin-top:4em;}
 .shop{display:none;}
 .shop li{background:none;}
+.changename{display:none;background:#fff;position:absolute;left:22%;top:40%;z-index:19999;padding:0.7em 2%;border-radius:0.5em;}
+.changename #changeaccountname{font-size:2.8rem;margin-top:0.5em;outline:none;border-bottom:#fa4a18 2px solid !important;padding:0.4em 0;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);-webkit-tap-highlight-color:transparent;}
+.changename p{font-size:2.4rem;color:#888;margin:0.5em 0;}
+#changenamesave{display:block;background:#fa4a18;color:#fff;border-radius:0.5em;padding:0.3em 7%;font-size:2.2rem;text-align:center;
+    margin:auto;margin-top:1.5em;margin-bottom:1em;outline:none;-webkit-tap-highlight-color: rgba(0,0,0,0);-webkit-tap-highlight-color:transparent;}
 /*认证公众号页面样式---------------------------------------------------------------------------------*/
 .certih5{font-weight:normal;width:80%;margin:auto;font-size:3.2rem;margin-top:5em;line-height:1.3;}
 .certitext,.certiarea{display:block;width:80%;font-size:3rem;background:#fafafa;border:#eee 1px solid;
@@ -456,6 +462,10 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
     .information li p{font-size:3rem;line-height:2.8em;}
     .information li p input,.information li p select{font-size:3rem;}
     .information li p img{width:25%;}
+    .changename{padding:0.7em 3%;border-radius:0.5em;}
+    .changename #changeaccountname{font-size:4rem;padding:0.5em 0;}
+    .changename p{font-size:3.1rem;margin:1em 0;}
+    #changenamesave{border-radius:0.5em;padding:0.4em 7%;font-size:3rem;margin-top:1.5em;margin-bottom:1em;}
     /*认证公众号页面样式---------------------------------------------------------------------------------*/
     .certih5{width:80%;font-size:4.5rem;margin-top:5em;line-height:1.3;}
     .certitext,.certiarea{font-size:3.5rem;padding:0.3em 0.7em;margin:1em auto;}
@@ -633,6 +643,10 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
     .information li p{font-size:1.8rem;line-height:2.7em;}
     .information li p img{width:15%;}
     .information li p input,.information li p select{font-size:1.8rem;}
+    .changename{left:26%;padding:0.5em 3%;border-radius:0.5em;}
+    .changename #changeaccountname{font-size:2.2rem;padding:0.3em 0;margin-top:0.7em;}
+    .changename p{font-size:1.8rem;margin:0.5em 0;}
+    #changenamesave{border-radius:0.5em;padding:0.3em 7%;font-size:1.8rem;margin-top:1.5em;margin-bottom:1em;}
     /*认证公众号页面样式---------------------------------------------------------------------------------*/
     .certih5{font-size:2.8rem;margin-top:5em;}
     .certitext,.certiarea{font-size:2.2rem;padding:0.3em 0.7em;margin:0.7em auto;}
@@ -811,6 +825,10 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
     .information li p img{width:29%;}
     .information li p input,.information li p select{font-size:1.5rem;}
     .information li p select{width:5.5em;}
+    .changename{left:24%;padding:0.5em 3%;border-radius:0.5em;}
+    .changename #changeaccountname{font-size:1.8rem;padding:0.3em 0;margin-top:0.5em;}
+    .changename p{font-size:1.5rem;margin:0.3em 0;}
+    #changenamesave{border-radius:0.5em;padding:0.3em 7%;font-size:1.5rem;margin-top:1em;margin-bottom:0.7em;}
     /*认证公众号页面样式---------------------------------------------------------------------------------*/
     .certih5{font-size:2.2rem;margin-top:4em;}
     .certitext,.certiarea{font-size:1.7rem;padding:0.3em 0.7em;margin:0.7em auto;}
@@ -993,6 +1011,10 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
     .information li p img{width:33%;}
     .information li p input,.information li p select{font-size:1.4rem;}
     .information li p select{width:5em;}
+    .changename{left:23%;padding:0.5em 3%;border-radius:0.5em;}
+    .changename #changeaccountname{font-size:1.8rem;padding:0.3em 0;margin-top:0.5em;}
+    .changename p{font-size:1.4rem;margin:0.3em 0;}
+    #changenamesave{border-radius:0.5em;padding:0.3em 7%;font-size:1.4rem;margin-top:1em;margin-bottom:0.7em;}
     /*认证公众号页面样式---------------------------------------------------------------------------------*/
     .certih5{font-size:2.1rem;margin-top:4em;}
     .certitext,.certiarea{font-size:1.6rem;padding:0.3em 0.7em;margin:0.5em auto;}
@@ -1173,6 +1195,10 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
     .information li p img{width:33%;}
     .information li p input{font-size:1.3rem;}
     .information li p select{width:5em;}
+    .changename{left:22%;padding:0.5em 3%;border-radius:0.5em;}
+    .changename #changeaccountname{font-size:1.65rem;padding:0.3em 0;margin-top:0.5em;}
+    .changename p{font-size:1.35rem;margin:0.1em 0;}
+    #changenamesave{border-radius:0.5em;padding:0.3em 7%;font-size:1.35rem;margin-top:1em;margin-bottom:0.7em;}
     /*认证公众号页面样式---------------------------------------------------------------------------------*/
     .certih5{font-size:1.9rem;margin-top:4em;}
     .certitext,.certiarea{font-size:1.5rem;padding:0.3em 0.7em;margin:0.5em auto;}
@@ -1341,7 +1367,7 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
     #sendVerifyCode{font-size:1rem !important;padding:0.9em 0;border-radius:0 0.5em 0.5em 0 !important;}
     #downtime{left:70%;top:0;font-size:1.28rem;padding:1.1em 0;}
     #register{margin:3.5em auto;}
-    /*个人资料页面样式---------------------------------------------------------------------------------*/
+    /*个人中心页面样式---------------------------------------------------------------------------------*/
     .myinformation{padding-top:0.9em;}
     .information,.selfinformation{padding:0 1em;margin-bottom:0.9em;}
     .selfinformation{padding:0.5em 1em;}
@@ -1355,6 +1381,10 @@ label.checked {background: url(../../code/img/pay/payradio.png) no-repeat left c
     .information li p input,.information li p select{font-size:1rem;}
     .information li p img{width:33%;}
     .information li p select{width:4.5em;}
+    .changename{left:22%;padding:0.5em 3%;border-radius:0.5em;}
+    .changename #changeaccountname{font-size:1.5rem;padding:0.3em 0;margin-top:0.5em;}
+    .changename p{font-size:1.2rem;margin:0.1em 0;}
+    #changenamesave{border-radius:0.5em;padding:0.3em 7%;font-size:1.2rem;margin-top:1em;margin-bottom:0.7em;}
     /*认证公众号页面样式---------------------------------------------------------------------------------*/
     .certih5{font-size:1.8rem;margin-top:4em;}
     .certitext,.certiarea{font-size:1.4rem;padding:0.3em 0.7em;margin:0.5em auto;}

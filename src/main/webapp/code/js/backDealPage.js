@@ -51,9 +51,8 @@ function dealGetApproveData(data){
     data.list.forEach(function (child) {
         var id=child.id;
         elements  = elements + getApproveListTr(child.payType,child.accountName,child.createTime,child.amount,child.isPaid,child.memberId,child.id);
-
         console.log("id是"+id);
-    })
+    });
     return elements
 }
 
@@ -76,7 +75,7 @@ function getApproveListTr(account,name,time,amount,isCheck,memberId,listid) {
     '<td>'+amount+'</td>' +
     '<td>'+'</td>' +
     '<td class="audit">'+
-        '<select onClick="selectSubmit(this)" id="'+listid+'">'+
+        '<select onchange="selectSubmit(this)" id="'+listid+'">'+
         '<option>'+'待审核'+'</option>'+
         '<option>'+'已审核'+'</option>'+
         '<option>'+'拒绝'+'</option>'+
@@ -93,23 +92,20 @@ var selectSubmit=function(obj){
     index=parseInt(index);
     console.log("index是"+index);
     console.log("selecount是"+selecount);
-        if(selecount!=0){
+        if(index!=0){
+            console.log("点击次数减过后"+selecount);
             var view=prompt("请输入审核意见","通过");
             $(".audit").prev().empty();
             $(".audit").prev().text(view);
             if(view){
                 var isCheck=0;
                 switch (index){
-                    case 0:
-                        isCheck=2;
-                        break;
                     case 1:
                         isCheck=1;
                         break;
                     case 2:
                         isCheck=0;
                 }
-                if(isCheck<2){
                 console.log("索引号是"+index);
                 $.ajax({
                     type: 'post',
@@ -124,19 +120,20 @@ var selectSubmit=function(obj){
                             $(".audit select").css("color","green");
                         } else {
                             $(".audit").prev().empty();
-                            alert("获取数据失败")
+                            alert("获取数据失败");
+                            $(".audit select option:first").prop("selected", 'selected');
                         }
                     },error:function(){
                         $(".audit").prev().empty();
                         alert("审核失败，请重新审核");
+                        $(".audit select option:first").prop("selected", 'selected');
                     }
                 })
+        }else{
+                $(".audit select option:first").prop("selected", 'selected');
             }
-            selecount--;
-}}else{
-            selecount++;
         }
-}
+};
 function getLocalTime(nS) {
     return new Date(parseInt(nS) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
 }

@@ -110,7 +110,7 @@
                 });
                 obj.on("click","a.jumpgo",function(){
                     var current = parseInt($("#selectcount").val());
-                    if(current>0){
+                    if(current>0&&current<=args.pageCount){
                     ms.fillHtml(obj,{"current":current,"pageCount":args.pageCount});
                     if(typeof(args.backFn)=="function"){
                         args.backFn(current);

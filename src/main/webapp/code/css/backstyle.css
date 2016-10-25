@@ -26,16 +26,6 @@ table tr td:last-child{width:30%;color:#f00;}
     table tr td{width:10%;}
     table tr td:first-child{width:45px;}
 }
-/*.page{overflow:hidden;text-align:center;margin:auto;padding-bottom:50px;float:right;margin-top:20px;_margin-top:20px;display:block !important;}*/
-/*.page li{float:left;background:#fefefe;margin-right:5px;border-radius:5px;border:#dfdfdf 1px solid;}*/
-/*.page a{display:block;font-size:12px;color:#545454;line-height:25px;width:25px;}*/
-/*.pageactive{background:#f4832d !important;border:#f4832d 1px solid !important;}*/
-/*.pageactive a{color:#fff !important;}*/
-/*.zero{width:42px !important;text-align:center;}*/
-/*.gltactive{color:#d3d3d3 !important;}*/
-/*.page .jump{padding-left:10px;}*/
-/*.page .jump input{background:#fff;border:#c5c5c5 1px solid;width:42px;height:25px;}*/
-
 .tcdPageCode{text-align:center;color: #545454;margin-top:40px;_margin-top:40px;margin-bottom:40px;}
 .tcdPageCode a{display: inline-block;color: #545454;height: 25px;	line-height: 25px;	padding: 0 10px;border: 1px solid #ddd;	margin: 0 2px;border-radius: 4px;vertical-align: middle;}
 .tcdPageCode a:hover{text-decoration: none;border: 1px solid #f4832d;}

@@ -11,8 +11,48 @@ $(function(){
             'type': 'date'
         });//日期插件
     }
-
-
+    //用户修改名称
+    $("#headimg").click(function(){
+        $("#cover").css("display","block");
+        $(".changename").css("display","block");
+        //var t=$("#changeaccountname").val();
+        //$("#changeaccountname").val("").focus().val(t)
+    })
+    var obj=document.getElementById("cover");
+    obj.addEventListener("touchstart",function(e){
+        $("#cover").css("display","none");
+        $(".changename").css("display","none");
+    },false)
+    $("#changenamesave").click(function(){
+        var originname=decodeURI($.cookie("memberName"))
+        console.log(originname);
+        var nowname=$("#changeaccountname").val();
+        console.log(nowname);
+        if(originname!=nowname){
+            $.ajax({
+                type:"post",
+                url:"/pc/admin/member/modifyMemberName",
+                data:{memberName:nowname},
+                beforeSend: function (XMLHttpRequest) {
+                    getMemberRequestHeaderMsg(XMLHttpRequest)
+                },
+                success:function(params){
+                    var json=eval(params);
+                    if(json!=null&&json.errorCode==0){
+                        $.cookie("memberName", encodeURI(nowname), {expires: 30, path: "/frontPage/wap"});
+                        $("#headimg").text(decodeURI($.cookie("memberName")));
+                        $("#prompt").fadeIn(500);
+                        $("#prompt").text("用户名修改成功");
+                        $('#prompt').delay(600).fadeOut(350);
+                        $("#cover").css("display","none");
+                        $(".changename").css("display","none");
+                    }else{
+                        alert(json.message);
+                    }
+                }
+            })
+        }
+    })
 //            var inviteheight=$(window).height();
 //            var invitewidth=$(window).width();
 //            var wayheight=$(".myinviteway").height();

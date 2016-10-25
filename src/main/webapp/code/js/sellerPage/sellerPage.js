@@ -18,7 +18,22 @@ function chooseMenu(number) {
 }
 
 function initializePage() {
-    $(".loginenter span").text($.cookie("memberName"))
+    $(".loginenter h5").text(decodeURI($.cookie("memberName")));
+    $.ajax({
+        url:"/pc/admin/member/updateMemberScore",
+        type:"post",
+        beforeSend: function (XMLHttpRequest) {
+            getMemberRequestHeaderMsg(XMLHttpRequest)
+        } ,
+        success: function (data) {
+            var json=eval(data)
+            if(json.errorCode==0){
+                var obj=json.data
+                $(".loginenter p span").text(obj.memberScore.toFixed(2))
+            }
+        }
+    })
+
     $.ajax({
         type: 'post',
         url: '/pc/admin/official/getOfficialAccountList',
