@@ -63,7 +63,7 @@ function getFollowTaskListByPage(officialId,pageIndex,pageSize){
     $.ajax({
         type: 'post',
         url: '/pc/admin/official/getTaskPoolDto',
-        data: {officialAccountId: officialId, type: 0,pageIndex:pageIndex,pageSize:pageSize},
+        data: {officialAccountId: officialId, type:0,pageIndex:pageIndex,pageSize:pageSize},
         success: function (params) {
             if (params.errorCode == 0) {
                 $("#followlist").empty()

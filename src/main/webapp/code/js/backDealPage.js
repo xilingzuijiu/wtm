@@ -70,10 +70,10 @@ function getApproveListTr(account,name,time,amount,isCheck,memberId,listid) {
     var approvecontent = '<tr class="list">' +
     '<td>'+payType+'</td>' +
     '<td>'+name+'</td>' +
-    '<td>'+memberId+'</td>' +
+    '<td id="one">'+memberId+'</td>' +
     '<td>'+getLocalTime(time)+'</td>' +
     '<td>'+amount+'</td>' +
-    '<td>'+'</td>' +
+    '<td>'+name+'</td>' +
     '<td class="audit">'+
         '<select onchange="selectSubmit(this)" id="'+listid+'">'+
         '<option>'+'待审核'+'</option>'+
@@ -86,17 +86,23 @@ function getApproveListTr(account,name,time,amount,isCheck,memberId,listid) {
 }
 var selecount=0;
 var selectSubmit=function(obj){
-    var id=$(".audit select").attr("id");
+    selecount++;
+    var id=obj.getAttribute("id");
     console.log("主体id是"+id);
-    var index=$(".audit select").get(0).selectedIndex;
+    //var index=$("select").get(0).selectedIndex;
+    var index=obj.selectedIndex;
     index=parseInt(index);
     console.log("index是"+index);
     console.log("selecount是"+selecount);
         if(index!=0){
+            selecount--;
             console.log("点击次数减过后"+selecount);
             var view=prompt("请输入审核意见","通过");
-            $(".audit").prev().empty();
-            $(".audit").prev().text(view);
+            //$("this").parent().prev().empty();
+            //$(".audit").prev().text(view);
+            var a=obj.parentNode.previousElementSibling;
+            a.innerHTML ="";
+            a.innerHTML =view;
             if(view){
                 var isCheck=0;
                 switch (index){
@@ -117,20 +123,27 @@ var selectSubmit=function(obj){
                         console.log("json数据为：" + params)
                         if (json != null && json.errorCode == 0){
                             var data = json.data;
-                            $(".audit select").css("color","green");
+                            obj.style.color="green";
                         } else {
-                            $(".audit").prev().empty();
+                            //$("this").parent().prev().empty();
+                            var a=obj.parentNode.previousElementSibling;
+                            a.innerHTML ="";
                             alert("获取数据失败");
-                            $(".audit select option:first").prop("selected", 'selected');
+                            //$(".audit select option:first").prop("selected", 'selected');
+                            obj.options[0].selected = true;
                         }
                     },error:function(){
-                        $(".audit").prev().empty();
+                        //$("this").parent().prev().empty();
+                        var a=obj.parentNode.previousElementSibling;
+                        a.innerHTML ="";
                         alert("审核失败，请重新审核");
-                        $(".audit select option:first").prop("selected", 'selected');
+                        //$(".audit select option:first").prop("selected", 'selected');
+                        obj.options[0].selected = true;
                     }
                 })
         }else{
-                $(".audit select option:first").prop("selected", 'selected');
+                //$(".audit select option:first").prop("selected", 'selected');
+                obj.options[0].selected = true;
             }
         }
 };

@@ -44,6 +44,8 @@ $(function(){
         else if($("#password").val().length<6||$("#password").val().length>16){
             alert("密码长度必须为6到16位");
         }else{
+            $("#register").attr('disabled', true);
+            $("#register").css('background', "#bebebe");
             $.ajax({
                 type: 'post',
                 url: '/pc/admin/member/register',
@@ -58,10 +60,14 @@ $(function(){
                     var errorCode=data.errorCode
                     if (errorCode==0){
                         if (data.data){
-                            location.href="/frontPage/wap/login.html";
+                            $("#prompt").fadeIn(500);
+                            $("#prompt").text("注册成功，5s后自动跳转到登录页面");
+                            $('#prompt').delay(600).fadeOut(350);
+                            setTimeout("location.href='/frontPage/wap/login.html'",5000);
                         }
                     } else if (errorCode==4){
-                        alert(data.message)
+                        alert(data.message);
+                        $("#register").attr('disabled', false);
                     }
                 }
             })
