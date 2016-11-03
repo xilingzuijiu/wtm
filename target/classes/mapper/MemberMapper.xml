@@ -145,12 +145,15 @@
     select id from wtm_member
   </select>
   <select id="getIsFollowWtmAccount" resultType="java.util.Map">
-    select mem.id officialMemberId,login.id wechatId from wtm_third_login login LEFT JOIN wtm_weitaomi_official_member mem  ON login.unionId=mem.unionId WHERE login.memberId=#{memberId} AND login.sourceType=#{sourceType}
+    select mem.id officialMemberId,login.id wechatId from wtm_third_login login LEFT JOIN wtm_weitaomi_official_member mem  ON login.unionId=mem.unionId WHERE login.memberId=#{memberId} AND mem.id>0
+    <if test="sourceType!=null">
+      AND login.sourceType=#{sourceType}
+    </if>
   </select>
   <select id="getIsBindWxAccountsByMobile" resultType="java.lang.Integer">
     select count(*) from wtm_member m LEFT JOIN wtm_third_login login ON login.memberId=m.id WHERE m.telephone=#{mobile} AND login.sourceType=#{sourceType};
   </select>
   <select id="getIsBindWxAccountsByMemberName" resultType="java.lang.Integer">
-select count(*) from wtm_member m LEFT JOIN wtm_third_login login ON login.memberId=m.id WHERE m.memberName=#{memberName} AND login.sourceType=#{sourceType};
+    select count(*) from wtm_member m LEFT JOIN wtm_third_login login ON login.memberId=m.id WHERE m.memberName=#{memberName} AND login.sourceType=#{sourceType};
   </select>
 </mapper>

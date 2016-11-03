@@ -27,6 +27,13 @@ public interface IMemberInvitedRecordService {
     public Page<InvitedRecord> getInvitedRecordList(Long memberId, Integer pageIndex, Integer pageSize);
 
     /**
+     * 临时获取用户邀请记录，后续前台版本更新需要删除
+     * @param memberId
+     * @return
+     */
+    public List<InvitedRecord> getInvitedRecordListTemp(Long memberId);
+
+    /**
      * 获取邀请达人记录
      * @return
      */

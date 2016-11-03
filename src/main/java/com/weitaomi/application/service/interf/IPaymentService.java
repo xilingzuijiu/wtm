@@ -35,7 +35,7 @@ public interface IPaymentService {
      * @param approve
      * @return
      */
-    MemberScore generatorPayParams(Long memberId, PaymentApprove approve);
+    MemberScore generatorPayParams(Long memberId, PaymentApprove approve,Integer sourceType);
 
     /**
      * 获取钱包信息

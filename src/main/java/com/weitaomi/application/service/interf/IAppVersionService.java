@@ -1,9 +1,11 @@
 package com.weitaomi.application.service.interf;
 
+import com.weitaomi.application.model.bean.WtmHistoryVersion;
+
 /**
  * Created by Administrator on 2016/9/12.
  */
 public interface IAppVersionService {
-    public String getCurrentVersion(Integer platFlag);
-    public boolean updateAppVersion(Integer platFlag,String version);
+    public Object getCurrentVersion(Integer platFlag,Integer flag);
+    public boolean updateAppVersion(Integer platFlag,String version,String link);
 }

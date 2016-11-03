@@ -37,15 +37,15 @@
         $(function () {
             var u = navigator.userAgent;
             var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;//android终端
+            var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);// ios终端
             memberId = GetQueryString('memberId');
             requestTime = GetQueryString('requestTime');
             console.log(memberId);
             console.log(requestTime);
             $.ajax({
-                type: 'get',
-                dataType: 'json',
+                type: 'post',
                 url: '/pc/admin/member/getArticleList',
-                data: {memberId: memberId, time: requestTime},
+                data: {memberId: memberId, requestTime: requestTime},
                 header: {
                     "Access-Control-Allow-Origin": "true"
                 },
@@ -114,18 +114,16 @@
                     } else {
                         alert("获取数据失败")
                     }
+                    $.cookie(memberId+requestTime,0);
                 },
                 error: function (data) {
                     console.log(data)
                     alert("页面加载错误，请重试");
                 }
             });
-            reurl()
-//            if (isAndroid) {
-//                setInterval(function () {
-//                    location.reload()
-//                }, 10000)
-//            }
+            if (isiOS) {
+                reurl()
+            }
         })
         var articleSubmit = function (obj) {
             var articleId = obj.getAttribute("id");
@@ -135,10 +133,9 @@
             var articleUrl = hashMap.Get(articleId);
             console.log(articleId);
             $.ajax({
-                type: 'get',
-                dataType: 'json',
+                type: 'post',
                 url: '/pc/admin/member/readArticleRequest',
-                data: {memberId: memberId, time: requestTime, articleId: articleId},
+                data: {memberId: memberId, requestTime: requestTime, articleId: articleId},
                 header: {
                     "Access-Control-Allow-Origin": "true"
                 },

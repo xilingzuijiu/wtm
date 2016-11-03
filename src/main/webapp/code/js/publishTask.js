@@ -23,7 +23,9 @@ function GetQueryString(name) {
     if(r!=null)return  unescape(r[2]); return null;
 };
 
-
+var u = navigator.userAgent;
+var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;//android终端
+var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);// ios终端
 
 function chooseProvince(value){
     var cityArea='<option value="">--全省--</option>';
@@ -81,7 +83,12 @@ function changeScore(value){
         $("#div1").empty()
         $("#input1").val(0)
         Showbo.Msg.confirm1("可用米币额度不足", function () {
-            gotocharge();
+            if(isAndroid){
+                myObj.gotocharge();
+            }
+            if (isiOS){
+                gotocharge();
+            }
         })
     }
 };
@@ -93,7 +100,12 @@ function checkAmount(value){
     var number=$("#input1").val()
     if(eval(total-number*value)<0){
         Showbo.Msg.confirm1("可用米币额度不足", function () {
-            gotocharge();
+            if(isAndroid){
+                myObj.gotocharge();
+            }
+            if (isiOS){
+                gotocharge();
+            }
         })
         $("#input2").val(0)
     }

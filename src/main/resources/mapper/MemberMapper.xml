@@ -145,7 +145,7 @@
     select id from wtm_member
   </select>
   <select id="getIsFollowWtmAccount" resultType="java.util.Map">
-    select mem.id officialMemberId,login.id wechatId from wtm_third_login login LEFT JOIN wtm_weitaomi_official_member mem  ON login.unionId=mem.unionId WHERE login.memberId=#{memberId}
+    select mem.id officialMemberId,login.id wechatId from wtm_third_login login LEFT JOIN wtm_weitaomi_official_member mem  ON login.unionId=mem.unionId WHERE login.memberId=#{memberId} AND mem.id>0
     <if test="sourceType!=null">
       AND login.sourceType=#{sourceType}
     </if>

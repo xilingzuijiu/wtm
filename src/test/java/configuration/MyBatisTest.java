@@ -208,5 +208,9 @@ public class MyBatisTest extends BaseContextCase {
             e.printStackTrace();
         }
     }
+    @Test
+    public void testPassword(){
+        System.out.println(new Sha256Hash("123456", "eMHM26").toString());
+    }
 }
 

@@ -30,6 +30,8 @@ public class WechatResultParams {
     private String err_code;
     @XStreamAlias("err_code_des")
     private String err_code_des;
+    @XStreamAlias("code_url")
+    private String code_url;
     @XStreamOmitField
     private Long timestamp;
 
@@ -128,5 +130,13 @@ public class WechatResultParams {
 
     public void setErr_code_des(String err_code_des) {
         this.err_code_des = err_code_des;
+    }
+
+    public String getCode_url() {
+        return this.code_url;
+    }
+
+    public void setCode_url(String code_url) {
+        this.code_url = code_url;
     }
 }

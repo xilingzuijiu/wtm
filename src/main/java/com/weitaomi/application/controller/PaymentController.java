@@ -74,7 +74,7 @@ public class PaymentController extends BaseController{
     @RequestMapping(value = "/generatorPayParams", method = RequestMethod.POST)
     public AjaxResult generatorPayParams(HttpServletRequest request,@RequestBody PaymentApprove approve){
         Long memberId=this.getUserId(request);
-        return AjaxResult.getOK(paymentService.generatorPayParams(memberId,approve));
+        return AjaxResult.getOK(paymentService.generatorPayParams(memberId,approve,0));
     }
     @ResponseBody
     @RequestMapping(value = "/getMemberWalletInfo", method = RequestMethod.POST)

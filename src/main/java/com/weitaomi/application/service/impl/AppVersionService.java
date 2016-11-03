@@ -1,13 +1,11 @@
 package com.weitaomi.application.service.impl;
 
-import com.alibaba.druid.filter.AutoLoad;
 import com.weitaomi.application.model.bean.WtmHistoryVersion;
 import com.weitaomi.application.model.dto.RequestFrom;
 import com.weitaomi.application.model.mapper.WtmHistoryVersionMapper;
 import com.weitaomi.application.service.interf.IAppVersionService;
 import com.weitaomi.systemconfig.exception.InfoException;
 import com.weitaomi.systemconfig.util.DateUtils;
-import com.weitaomi.systemconfig.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,19 +20,25 @@ public class AppVersionService implements IAppVersionService {
     private WtmHistoryVersionMapper wtmHistoryVersionMapper;
 
     @Override
-    public String getCurrentVersion(Integer platFlag) {
-        String version=wtmHistoryVersionMapper.getCurrentVersion(RequestFrom.getById(platFlag).getName());
-        if (StringUtil.isEmpty(version)){
-            version="1.0";
+    public Object getCurrentVersion(Integer platFlag,Integer flag) {
+        WtmHistoryVersion version=wtmHistoryVersionMapper.getCurrentVersion(RequestFrom.getById(platFlag).getName());
+        if (flag==0){
+            return version.getVersion();
         }
-        return version;
+        if (flag==1){
+            return version.getLink();
+        } else if (flag==2) {
+            return version;
+        }
+        return null;
     }
 
     @Override
-    public boolean updateAppVersion(Integer platFlag, String version) {
+    public boolean updateAppVersion(Integer platFlag, String version,String link) {
         WtmHistoryVersion wtmHistoryVersion=new WtmHistoryVersion();
         wtmHistoryVersion.setPlatform(RequestFrom.getById(platFlag).getName());
         wtmHistoryVersion.setVersion(version);
+        wtmHistoryVersion.setLink(link);
         List<WtmHistoryVersion> wtmHistoryVersionList=wtmHistoryVersionMapper.select(wtmHistoryVersion);
         if (!wtmHistoryVersionList.isEmpty()){
             throw new InfoException("改版本号已经更新过");

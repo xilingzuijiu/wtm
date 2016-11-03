@@ -52,7 +52,7 @@ public class MemberInvitedPCController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/getInvitedRecordList", method = RequestMethod.POST)
-    public AjaxResult getInvitedRecordList(HttpServletRequest request,@RequestParam(required = false) Integer pageIndex,@RequestParam(required = false) Integer pageSize){
+    public AjaxResult getInvitedRecordList(HttpServletRequest request,@RequestParam(required = false) Integer pageIndex,@RequestParam(required = false) Integer pageSize,@RequestParam(required = false) Integer type){
         Long memberId=this.getUserId(request);
         if (pageIndex==null){
             pageIndex=0;
@@ -60,7 +60,11 @@ public class MemberInvitedPCController extends BaseController {
         if (pageSize==null){
             pageSize=0;
         }
-        return AjaxResult.getOK(memberInvitedRecordService.getInvitedRecordList(memberId,pageIndex,pageSize));
+        if (type!=null&&type==1){
+            return AjaxResult.getOK(memberInvitedRecordService.getInvitedRecordList(memberId,pageIndex,pageSize));
+        }else {
+            return AjaxResult.getOK(memberInvitedRecordService.getInvitedRecordListTemp(memberId));
+        }
     }
     /**
      * 获取分享达人

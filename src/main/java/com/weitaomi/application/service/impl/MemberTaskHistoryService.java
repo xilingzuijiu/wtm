@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2016/8/16.
@@ -101,11 +102,20 @@ public class MemberTaskHistoryService  implements IMemberTaskHistoryService {
 
     @Override
     public Boolean isSignAccount(Long memberId){
-        MemberTask memberTask=memberTaskMapper.isSignAccount(memberId,DateUtils.getTodayZeroSeconds(),DateUtils.getTodayEndSeconds());
-        if (memberTask!=null){
-            return true;
+        List<Map<String,Long>> idMap= memberMapper.getIsFollowWtmAccount(memberId,0);
+        if (!idMap.isEmpty()){
+            if (idMap.get(0).get("officialMemberId")==null){
+                throw new InfoException("亲，您没有关注微淘米公众号哟~，请打开微信搜索‘微淘米APP’关注并置顶。点击右下方‘签到’就可以赚钱了~");
+            }
+            MemberTask memberTask=memberTaskMapper.isSignAccount(memberId,DateUtils.getTodayZeroSeconds(),DateUtils.getTodayEndSeconds());
+            if (memberTask!=null){
+                return true;
+            }else {
+                return false;
+            }
+        }else {
+            throw new InfoException("亲，您没有关注微淘米公众号哟~，请打开微信搜索‘微淘米APP’关注并置顶。点击右下方‘签到’就可以赚钱了~");
         }
-        return false;
     }
     @Override
     public boolean addMemberTaskToHistory(Long memberId, Long taskId, Double score, Integer flag,String detail,List<MemberTaskHistoryDetail> detailList,String taskFlag) {
@@ -187,15 +197,17 @@ public class MemberTaskHistoryService  implements IMemberTaskHistoryService {
 
     @Override
     public String signAccounts(String openId){
+        Long start=System.currentTimeMillis();
         if (StringUtil.isEmpty(openId)){
             throw new BusinessException("获取用户信息失败");
         }
         logger.info("公众号签到，用户openId为:"+openId);
         List<Long> memberId=wtmOfficialMemberMapper.getMemberIdByOpenId(openId);
-        if (memberId.isEmpty()){
+        if (memberId.isEmpty()||memberId.get(0)==null){
             return "没有微淘米账号,请下载微淘米APP注册";
         }
         MemberScore memberScore = this.addDailyTask(memberId.get(0),10L);
+        logger.info("请求时间为:"+(System.currentTimeMillis()-start));
         if (memberScore!=null){
             return "签到成功，现在您可以返回APP领取任务";
         }

@@ -129,9 +129,9 @@ public class MemberPCController extends BaseController {
      * @see
      */
     @ResponseBody
-    @RequestMapping(value = "/getArticleList", method = RequestMethod.GET)
-    public AjaxResult getArticleList(Long memberId,Long time){
-        return AjaxResult.getOK(articleService.getArticleReadRecordDto(memberId, time));
+    @RequestMapping(value = "/getArticleList", method = RequestMethod.POST)
+    public AjaxResult getArticleList(@RequestParam(value = "memberId") Long memberId,@RequestParam(value = "requestTime") Long requestTime){
+        return AjaxResult.getOK(articleService.getArticleReadRecordDto(memberId, requestTime));
     }
     /**
      * 阅读文章
@@ -139,9 +139,9 @@ public class MemberPCController extends BaseController {
      * @see
      */
     @ResponseBody
-    @RequestMapping(value = "/readArticleRequest", method = RequestMethod.GET)
-    public AjaxResult getArticleList(Long memberId,Long time,Long articleId){
-        return AjaxResult.getOK(articleService.readArticleRequest(memberId, time,articleId));
+    @RequestMapping(value = "/readArticleRequest", method = RequestMethod.POST)
+    public AjaxResult getArticleList(Long memberId,Long requestTime,Long articleId){
+        return AjaxResult.getOK(articleService.readArticleRequest(memberId, requestTime,articleId));
     }
 
     /**
@@ -151,8 +151,8 @@ public class MemberPCController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/updateAppVersion", method = RequestMethod.POST)
-    public AjaxResult updateAppVersion(Integer platFlag,String version){
-        return AjaxResult.getOK(appVersionService.updateAppVersion(platFlag, version));
+    public AjaxResult updateAppVersion(Integer platFlag,String version,@RequestParam(required = false) String link){
+        return AjaxResult.getOK(appVersionService.updateAppVersion(platFlag, version,link));
     }
     /**
      * 获取版本号
@@ -161,8 +161,8 @@ public class MemberPCController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/getAppVersion", method = RequestMethod.GET)
-    public AjaxResult getAppVersion(Integer platFlag){
-        return AjaxResult.getOK(appVersionService.getCurrentVersion(platFlag));
+    public AjaxResult getAppVersion(Integer platFlag,@RequestParam(required = false,defaultValue = "0") Integer flag){
+        return AjaxResult.getOK(appVersionService.getCurrentVersion(platFlag,flag));
     }
     /**
      * 取消关注通知
@@ -291,7 +291,6 @@ public class MemberPCController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/signAccount", method = RequestMethod.POST)
     public AjaxResult signAccount(@RequestBody Map map) {
-        System.out.println(JSON.toJSONString(map));
         return AjaxResult.getOK(memberTaskHistoryService.signAccounts((String)map.get("openid")));
     }
     /**

@@ -44,6 +44,12 @@ public class WechatPayService implements IPayStrategyService {
             params.put("appid", WechatConfig.MCH_APPID);
             params.put("mch_id", WechatConfig.MCHID_OFFICIAL);
         }
+        if ((int)param.get("sourceType")==2) {
+            params.put("trade_type","NATIVE");
+            params.put("openid",(String)param.get("openId"));
+            params.put("appid", WechatConfig.MCH_APPID);
+            params.put("mch_id", WechatConfig.MCHID_OFFICIAL);
+        }
         params.put("nonce_str", UUIDGenerator.generate());
         params.put("body","微淘米会员充值");
         params.put("out_trade_no",param.get("out_trade_no").toString());
@@ -80,6 +86,9 @@ public class WechatPayService implements IPayStrategyService {
                     String pre_sig= StringUtil.formatParaMap(parameters);
                     pre_sig=pre_sig+"&key="+WechatConfig.API_KEY;
                     parameters.put("sign",DigestUtils.md5Hex(pre_sig).toUpperCase());
+                    if (params.get("trade_type")=="NATIVE"){
+                        parameters.put("code_url",wechatResultParams.getCode_url());
+                    }
                     return JSON.toJSONString(parameters);
                 }
             }

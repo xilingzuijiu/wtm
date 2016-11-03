@@ -33,6 +33,8 @@ import javax.annotation.PostConstruct;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Created by supumall on 2016/7/22.
@@ -58,6 +60,7 @@ public class PaymentService implements IPaymentService {
     private ThirdLoginMapper thirdLoginMapper;
     @Autowired
     private MemberPayAccountsMapper memberPayAccountsMapper;
+    private Lock lock=new ReentrantLock();
     private String certFilePath0;
     private String certFilePath1;
     /**
@@ -79,9 +82,19 @@ public class PaymentService implements IPaymentService {
         }
         if ((Integer) params.get("payType") == (PayType.WECHAT_WEB.getValue())) {
             ThirdLogin thirdLogin = thirdLoginMapper.getThirdlogInDtoMemberId((Long) params.get("memberId"), 1);
-            params.put("openId", thirdLogin.getOpenId());
+            if (thirdLogin!=null) {
+                params.put("openId", thirdLogin.getOpenId());
+            }
             params.put("out_trade_no", AlipayConfig.payCode_prefix + payCode);
             params.put("sourceType", 1);
+        }
+        if ((Integer) params.get("payType") == (PayType.WECHAT_PC.getValue())) {
+            ThirdLogin thirdLogin = thirdLoginMapper.getThirdlogInDtoMemberId((Long) params.get("memberId"), 1);
+            if (thirdLogin!=null) {
+                params.put("openId", thirdLogin.getOpenId());
+            }
+            params.put("out_trade_no", AlipayConfig.payCode_prefix + payCode);
+            params.put("sourceType", 2);
         }
         if ((Integer) params.get("payType") == (PayType.ALIPAY_APP.getValue())) {
             params.put("trade_no", AlipayConfig.payCode_prefix + payCode);
@@ -316,6 +329,7 @@ public class PaymentService implements IPaymentService {
                             memberScoreFlow.setCreateTime(DateUtils.getUnixTimestamp());
                             MemberScore memberScore = memberScoreMapper.selectByPrimaryKey(memberScoreFlow.getMemberScoreId());
                             memberScore.setInValidScore(memberScore.getInValidScore().add(memberScoreFlow.getFlowScore()));
+                            memberScoreMapper.updateByPrimaryKeySelective(memberScore);
                             memberScoreFlowMapper.updateByPrimaryKeySelective(memberScoreFlow);
                             approveMapper.updateByPrimaryKeySelective(approve);
                             PaymentHistory paymentHistory = new PaymentHistory();
@@ -337,8 +351,10 @@ public class PaymentService implements IPaymentService {
                 }
                 if (number == 1) {
                     int num = paymentHistoryMapper.batchInsertPayHistory(paymentHistoryList);
-                    if (num == number)
+                    if (num == number) {
+                        JpushUtils.buildRequest("提现申请审核通过，请到微信查看零钱明细",approve.getMemberId());
                         return "提现审核成功";
+                    }
                     else throw new InfoException("提现审核失败");
                 } else {
                     throw new InfoException("用户提现失败，请重新审批");
@@ -352,7 +368,6 @@ public class PaymentService implements IPaymentService {
                 approve.setIsPaid(1);
                 approveMapper.updateByPrimaryKeySelective(approve);
                 return "审核已拒绝";
-
             } else {
                 throw new InfoException("审批状态错误");
             }
@@ -362,7 +377,7 @@ public class PaymentService implements IPaymentService {
 
     @Override
     @Transactional
-    public MemberScore generatorPayParams(Long memberId, PaymentApprove approve) {
+    public MemberScore generatorPayParams(Long memberId, PaymentApprove approve,Integer sourceType) {
         if (approve != null) {
             MemberScore memberScore = memberScoreMapper.getMemberScoreByMemberId(memberId);
             if (memberScore == null) {
@@ -370,6 +385,14 @@ public class PaymentService implements IPaymentService {
             }
             if (memberScore.getAvaliableScore().longValue() < approve.getAmount().multiply(BigDecimal.valueOf(100)).longValue()) {
                 throw new InfoException("提现金额大于可用金额");
+            }
+            if (StringUtil.isEmpty(approve.getAccountNumber())||StringUtil.isEmpty(approve.getAccountName())) {
+                ThirdLogin thirdLogin = thirdLoginMapper.getThirdlogInDtoMemberId(memberId, sourceType);
+                if (thirdLogin == null) {
+                    throw new InfoException("亲，抱歉没有获取到您的微信信息，请绑定微信或者联系客服人员吧");
+                }
+                approve.setAccountNumber(thirdLogin.getOpenId());
+                approve.setAccountName(thirdLogin.getNickname());
             }
             approve.setMemberId(memberId);
             approve.setCreateTime(DateUtils.getUnixTimestamp());
@@ -432,23 +455,30 @@ public class PaymentService implements IPaymentService {
     }
 
     private String getTradeNo() {
-        String key = "wtm:orderCode:max";
-        String payCode = cacheService.getCacheByKey(key, String.class);
-        if (StringUtils.isEmpty(payCode)) {
-            payCode = paymentHistoryMapper.getMaxPayCode();
+        try {
+            lock.lock();
+            String key = "wtm:orderCode:max";
+            String payCode = cacheService.getCacheByKey(key, String.class);
             if (StringUtils.isEmpty(payCode)) {
-                payCode = "100000000000";
-                Long orderNumer = Long.valueOf(payCode) + 1;
-                cacheService.setCacheByKey(key, orderNumer.toString(), null);
+                payCode = paymentHistoryMapper.getMaxPayCode();
+                if (StringUtils.isEmpty(payCode)) {
+                    payCode = "100000000000";
+                    Long orderNumer = Long.valueOf(payCode) + 1;
+                    cacheService.setCacheByKey(key, orderNumer.toString(), null);
+                } else {
+                    Long orderNumer = Long.valueOf(payCode) + 1;
+                    cacheService.setCacheByKey(key, orderNumer.toString(), null);
+                }
             } else {
                 Long orderNumer = Long.valueOf(payCode) + 1;
                 cacheService.setCacheByKey(key, orderNumer.toString(), null);
             }
-        } else {
-            Long orderNumer = Long.valueOf(payCode) + 1;
-            cacheService.setCacheByKey(key, orderNumer.toString(), null);
+            return payCode;
+        }catch (Exception e){
+            throw new BusinessException("业务错误");
+        }finally {
+            lock.unlock();
         }
-        return payCode;
     }
 
     private String getXMLString(String code, String msg) {

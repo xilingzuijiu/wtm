@@ -95,11 +95,11 @@ function checkAmount(value){
     }
     var i=1
     var eles='';
-    if(window.location.pathname=='/frontPage/sellerPage/publishAccounts.html') {
+    if(self.location.pathname=='/frontPage/sellerPage/publishAccounts.html') {
         i=parseInt(value/1000)+1
         eles= '<option value="'+i+'">'+i+'</option>';
     }
-    if(window.location.pathname=='/frontPage/sellerPage/publishArticle.html') {
+    if(self.location.pathname=='/frontPage/sellerPage/publishArticle.html') {
         if (value<30000) {
             i=1
         }
@@ -134,7 +134,7 @@ function deal(obj){
         '<div class="input-group-addon">米币</div>'
     $("#total").empty()
     $("#total").append(eleTotal)
-    if(window.location.pathname=='/frontPage/publishAccounts.html'){
+    if(self.location.pathname=='/frontPage/sellerPage/publishAccounts.html'){
         var provinces='<option value="">--全国--</option>';
         addressArr=obj.addressList;
         addressArr.forEach(function(province){

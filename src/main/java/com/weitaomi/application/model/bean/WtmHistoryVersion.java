@@ -18,6 +18,11 @@ public class WtmHistoryVersion extends BaseModel{
      */
     @Column(name = "version")
     private String version;
+    /**
+     * 下载链接
+     */
+    @Column(name = "link")
+    private String link;
 
     /**
      * 创建日期
@@ -77,5 +82,21 @@ public class WtmHistoryVersion extends BaseModel{
      */
     public void setCreateTime(Long createTime) {
         this.createTime = createTime;
+    }
+
+    /**
+     * 获取下载链接
+     * @return link 下载链接
+     */
+    public String getLink() {
+        return this.link;
+    }
+
+    /**
+     * 设置下载链接
+     * @param link 下载链接
+     */
+    public void setLink(String link) {
+        this.link = link;
     }
 }

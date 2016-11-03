@@ -58,12 +58,6 @@ public class ArticleService implements IArticleService {
     @Override
     public Page<ArticleShowDto> getAllArticle(Long memberId,ArticleSearch articleSearch,Integer sourceType) {
         if (articleSearch.getSearchWay()==0){
-            Map<String,Long> idMap= memberMapper.getIsFollowWtmAccount(memberId,sourceType);
-            if (idMap!=null){
-                if (idMap.get("officialMemberId")==null){
-                    throw new InfoException("未关注微淘米公众号");
-                }
-            }
             List<ArticleShowDto> articleShowDtoList=articleMapper.getAtricleList(memberId,articleSearch,new RowBounds(articleSearch.getPageIndex(),articleSearch.getPageSize()));
             PageInfo<ArticleShowDto> showDtoPage=new PageInfo<ArticleShowDto>(articleShowDtoList);
             return Page.trans(showDtoPage);
@@ -208,6 +202,10 @@ public class ArticleService implements IArticleService {
 
     @Override
     public Boolean pcreadArticleRequest(Long memberId, Long articleId) {
+        int num=articleReadRecordMapper.getArticleReadRecord(memberId, articleId);
+        if (num>0){
+            throw new InfoException("您已经在其他平台领取过该任务，请完成阅读~");
+        }
         ArticleReadRecord articleReadRecord=new ArticleReadRecord();
         articleReadRecord.setArticleId(articleId);
         articleReadRecord.setMemberId(memberId);

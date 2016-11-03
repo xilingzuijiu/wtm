@@ -12,6 +12,7 @@ import java.util.List;
 public interface MemberInvitedRecordMapper extends IBaseMapper<MemberInvitedRecord> {
     MemberInvitedRecord getMemberInvitedRecordByMemberId(@Param("memberId")Long memberId);
     List<InvitedRecord> getInvitedRecord(@Param("parentID") Long parentID, @Param("rowBounds") RowBounds rowBounds);
+    List<InvitedRecord> getInvitedRecord(@Param("parentID") Long parentID);
     InvitedParamsDto getInvitedParamsDto(@Param("memberId")Long memberId);
     List<TotalSharedMsg> getTotalSharedMsg();
 }

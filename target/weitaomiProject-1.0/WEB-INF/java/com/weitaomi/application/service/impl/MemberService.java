@@ -194,6 +194,10 @@ public class MemberService extends BaseService implements IMemberService {
         if (thirdLogin.getType() == null) {
             throw new BusinessException("登陆平台类型为空");
         }
+        List<ThirdLogin> thirdLoginTemp = thirdLoginMapper.getThirdLoginInfo(thirdLogin.getUnionId(),null);
+        if(!thirdLoginTemp.isEmpty() && memberId.longValue() != ((ThirdLogin)thirdLoginTemp.get(0)).getMemberId().longValue()) {
+            throw new InfoException("微淘米账号和和要绑定的微信不匹配，您已在其他终端绑定过一个账号，请绑定该账号");
+        }
         List<ThirdLogin> thirdLoginFlag = thirdLoginMapper.getThirdLoginInfo(thirdLogin.getUnionId(),sourceType);
         if (!thirdLoginFlag.isEmpty()) {
             throw new InfoException("您已经绑定此账号");
@@ -420,7 +424,7 @@ public class MemberService extends BaseService implements IMemberService {
         Member member = memberMapper.selectByPrimaryKey(memberId);
         member.setBirth(birth);
         int num = memberMapper.updateByPrimaryKeySelective(member);
-        return num > 0 ? true : false;
+        return num > 0;
     }
 
     @Override

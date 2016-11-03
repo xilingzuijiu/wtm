@@ -55,7 +55,7 @@ function initializePage() {
     })
 }
 function initializeTaskDetailPage(officialId) {
-    getFollowTaskListByPage(officialId,0,0,null)
+    getFollowTaskListByPage(officialId,1,3,null)
     getReadTaskListByPage(officialId,1,3,null)
 
 }

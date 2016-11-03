@@ -157,7 +157,7 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
         taskPool.setCreateTime(DateUtils.getUnixTimestamp());
         String rateTemp= cacheService.getCacheByKey("task:rate:percent",String.class);
         Double rate=0.5;
-        if (StringUtil.isEmpty(rateTemp)){
+        if (!StringUtil.isEmpty(rateTemp)){
             rate = Double.valueOf(rateTemp);
         }
         taskPool.setRate(BigDecimal.valueOf(rate));

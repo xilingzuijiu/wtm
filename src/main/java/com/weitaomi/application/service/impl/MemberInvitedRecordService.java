@@ -37,6 +37,14 @@ public class MemberInvitedRecordService implements IMemberInvitedRecordService {
         return Page.trans(pageInfo);
     }
     @Override
+    public List<InvitedRecord> getInvitedRecordListTemp(Long memberId) {
+        List<InvitedRecord> invitedRecordList=memberInvitedRecordMapper.getInvitedRecord(memberId);
+        if (invitedRecordList.isEmpty()){
+            return null;
+        }
+        return invitedRecordList;
+    }
+    @Override
     public List<TotalSharedMsg> getTotalSharedMsg(){
         List<TotalSharedMsg> totalSharedMsgList=memberInvitedRecordMapper.getTotalSharedMsg();
         if (totalSharedMsgList.isEmpty()){

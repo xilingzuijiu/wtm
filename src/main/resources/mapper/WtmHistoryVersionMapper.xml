@@ -8,9 +8,10 @@
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="platform" property="platform" jdbcType="VARCHAR" />
     <result column="version" property="version" jdbcType="VARCHAR" />
+    <result column="link" property="link" jdbcType="VARCHAR" />
     <result column="createTime" property="createTime" jdbcType="BIGINT" />
   </resultMap>
-  <select id="getCurrentVersion" resultType="java.lang.String">
-    select v.version from wtm_weitaomi_history_version v WHERE v.platform=#{platFlag} ORDER BY v.createTime DESC LIMIT 1
+  <select id="getCurrentVersion" resultType="com.weitaomi.application.model.bean.WtmHistoryVersion">
+    select * from wtm_weitaomi_history_version v WHERE v.platform=#{platFlag} ORDER BY v.createTime DESC LIMIT 1
   </select>
 </mapper>

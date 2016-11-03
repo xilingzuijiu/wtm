@@ -86,12 +86,12 @@
                 }
 
             })
-
-
             $("#register").click( function (){
                 $("#form").attr("enctype","multipart/form-data")
                 var requestObj = eval($("#registerForm").serializeObject())
-                var request =getRegeisterParams(requestObj)
+                var request =getRegeisterParams(requestObj);
+                $("#register").attr('disabled', true);
+                $("#register").css('background', "#bebebe");
                     $.ajax({
                         type: 'post',
                         url: '/pc/admin/member/register',
@@ -109,7 +109,8 @@
                                     download()
                                 }
                             } else if (errorCode==4){
-                                alert(data.message)
+                                alert(data.message);
+                                $("#register").attr('disabled', false);
                             }
                         }
 

@@ -57,7 +57,7 @@ public class PaymentPCController extends BaseController{
     @RequestMapping(value = "/generatorPayParams", method = RequestMethod.POST)
     public AjaxResult generatorPayParams(HttpServletRequest request,@RequestBody PaymentApprove approve){
         Long memberId=this.getUserId(request);
-        return AjaxResult.getOK(paymentService.generatorPayParams(memberId,approve));
+        return AjaxResult.getOK(paymentService.generatorPayParams(memberId,approve,1));
     }
     @ResponseBody
     @RequestMapping(value = "/getPaymentParams", method = RequestMethod.POST)
@@ -77,6 +77,30 @@ public class PaymentPCController extends BaseController{
         }
         return AjaxResult.getOK();
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/getPCPaymentParams", method = RequestMethod.POST)
+    public AjaxResult getPCPaymentParams(HttpServletRequest request,@RequestBody Map<String,Object> params){
+        Long memberId=this.getUserId(request);
+        RequestFrom requestFrom=this.getRequestFrom(request);
+        if (memberId==null){
+            throw new BusinessException("用户ID为空");
+        }
+        params.put("memberId",memberId);
+        if ((Integer)params.get("payType")==(PayType.WECHAT_APP.getValue())||(Integer)params.get("payType")==(PayType.WECHAT_WEB.getValue())||(Integer)params.get("payType")==(PayType.WECHAT_PC.getValue())){
+            params.put("spbill_create_ip", IpUtils.getIpAddr(request));
+        }
+        String paramString=paymentService.getPaymentParams(params);
+        if ((Integer)params.get("payType")==(PayType.WECHAT_APP.getValue())||(Integer)params.get("payType")==(PayType.WECHAT_WEB.getValue())||(Integer)params.get("payType")==(PayType.WECHAT_PC.getValue())){
+            Map map= JSON.parseObject(paramString);
+            return AjaxResult.getOK(map);
+        }
+        if ((Integer)params.get("payType")==(PayType.ALIPAY_APP.getValue())){
+            return AjaxResult.getOK(paramString);
+        }
+        return AjaxResult.getOK();
+    }
+
     @ResponseBody
     @RequestMapping(value = "/patchAliPayCustomers", method = RequestMethod.POST)
     public AjaxResult patchAliPayCustomers(@RequestBody List<PaymentApprove> approveList){

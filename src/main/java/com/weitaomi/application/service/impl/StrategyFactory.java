@@ -16,8 +16,8 @@ public class StrategyFactory {
         map.put(PayType.ALIPAY_APP.getValue(),new AlipayService());
         map.put(PayType.WECHAT_APP.getValue(),new WechatPayService());
         map.put(PayType.WECHAT_WEB.getValue(),new WechatPayService());
+        map.put(PayType.WECHAT_PC.getValue(),new WechatPayService());
     }
-
     public static StrategyFactory getFactory() {
         return factory;
     }

@@ -6,6 +6,7 @@ import com.weitaomi.application.model.dto.RequestFrom;
 import com.weitaomi.application.model.mapper.MemberMapper;
 import com.weitaomi.systemconfig.exception.BusinessException;
 import com.weitaomi.systemconfig.exception.InfoException;
+import com.weitaomi.systemconfig.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,13 +43,21 @@ public abstract class BaseController {
                 }else if (member.getSex()==3){
                     throw new InfoException("用户已经被禁用，请联系客服人员");
                 }
+                String wtmVersion=request.getHeader("wtmVersion");
+                String systemInfo=request.getHeader("version");
+                if (!StringUtil.isEmpty(wtmVersion)){
+                    logger.info("微淘米版本号：{},用户Id：{}",wtmVersion,sId);
+                }
+                if (!StringUtil.isEmpty(systemInfo)){
+                    logger.info("系统信息：{},用户Id：{}",systemInfo,sId);
+                }
+
                 return userId;
             } catch (NumberFormatException e) {
                 logger.warn("请求头memberId参数格式错误:{}", sId);
             }
 
         }
-
         return null;
     }
 
