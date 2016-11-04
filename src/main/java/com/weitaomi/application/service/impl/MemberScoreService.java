@@ -177,7 +177,7 @@ public class MemberScoreService implements IMemberScoreService {
                         MemberScoreFlow memberScoreFlow1 = new MemberScoreFlow();
                         memberScoreFlow1.setMemberId(memberInvitedRecord.getParentId());
                         memberScoreFlow1.setTypeId(3L);
-                        memberScoreFlow.setIsFinished(1);
+                        memberScoreFlow1.setIsFinished(1);
                         memberScoreFlow1.setDetail(memberScoreFlowType1.getTypeDesc());
                         memberScoreFlow1.setFlowScore(increaseScore.multiply(BigDecimal.valueOf(0.1)));
                         memberScoreFlow1.setMemberScoreAfter(memberScore1.getMemberScore());
