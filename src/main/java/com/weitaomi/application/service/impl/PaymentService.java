@@ -9,10 +9,7 @@ import com.weitaomi.application.model.bean.*;
 import com.weitaomi.application.model.dto.MemberScoreFlowDto;
 import com.weitaomi.application.model.enums.PayType;
 import com.weitaomi.application.model.mapper.*;
-import com.weitaomi.application.service.interf.ICacheService;
-import com.weitaomi.application.service.interf.IMemberScoreService;
-import com.weitaomi.application.service.interf.IPayStrategyContext;
-import com.weitaomi.application.service.interf.IPaymentService;
+import com.weitaomi.application.service.interf.*;
 import com.weitaomi.systemconfig.alipay.AlipayConfig;
 import com.weitaomi.systemconfig.alipay.AlipayNotify;
 import com.weitaomi.systemconfig.exception.BusinessException;
@@ -53,6 +50,8 @@ public class PaymentService implements IPaymentService {
     private MemberScoreFlowMapper memberScoreFlowMapper;
     @Autowired
     private IMemberScoreService memberScoreService;
+    @Autowired
+    private IMemberTaskHistoryService taskHistoryService;
     @Autowired
     private PaymentApproveMapper approveMapper;
     @Autowired
@@ -364,8 +363,10 @@ public class PaymentService implements IPaymentService {
                 memberScoreFlow.setTypeId(8L);
                 memberScoreFlowMapper.updateByPrimaryKeySelective(memberScoreFlow);
                 memberScoreService.addMemberScore(approve.getMemberId(), 8L, 1, returnBackScore, UUIDGenerator.generate());
+                taskHistoryService.addMemberTaskToHistory(approve.getMemberId(),13L,returnBackScore,1,null,null,null);
                 approve.setIsPaid(1);
                 approveMapper.updateByPrimaryKeySelective(approve);
+                JpushUtils.buildRequest(remark,approve.getMemberId());
                 return "审核已拒绝";
             } else {
                 throw new InfoException("审批状态错误");

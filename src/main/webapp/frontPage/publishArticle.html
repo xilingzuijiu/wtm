@@ -118,7 +118,7 @@
             });
             if(flag==0){
                 setTimeout(function () {
-                    Showbo.Msg.alert("任务发布成功", function () {
+                    Showbo.Msg.alert("提交审核成功", function () {
                         location.reload();
                     })
                 },5000);
@@ -196,14 +196,13 @@
         <label class="col-sm-4 control-label">执行状态：</label>
         <div class="col-sm-8">
             <select name="isPublishNow" class="form-control">
-                <option value="1">立即执行</option>
-                <option value="0">保存稍后执行</option>
+                <option value="0">提交审核</option>
             </select>
         </div>
     </div>
 </form>
 <div class="submit" style="text-align: center">
-    <button class="btn btn-primary" id="button" onclick="publish()">提交任务</button>
+    <button class="btn btn-primary" id="button" onclick="publish()">提交审核</button>
 </div>
 </body>
 </html>

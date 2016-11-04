@@ -89,7 +89,8 @@ public class TaskPool extends BaseModel {
      */
     @Column(name = "createTime")
     private Long createTime;
-
+    @Transient
+    private String randomKey;
     /**
      * 获取任务类型 0：求粉，1：阅读
      *
@@ -336,5 +337,13 @@ public class TaskPool extends BaseModel {
      */
     public void setLimitDay(Long limitDay) {
         this.limitDay = limitDay;
+    }
+
+    public String getRandomKey() {
+        return this.randomKey;
+    }
+
+    public void setRandomKey(String randomKey) {
+        this.randomKey = randomKey;
     }
 }

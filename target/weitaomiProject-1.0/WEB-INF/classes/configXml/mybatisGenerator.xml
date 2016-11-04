@@ -137,7 +137,11 @@
             <!--<property name="useActualColumnNames" value="true"/>-->
             <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
         <!--</table>-->
-        <table tableName="wtm_weitaomi_accounts_message"  domainObjectName="WTMAccountMessage">
+        <!--<table tableName="wtm_weitaomi_accounts_message"  domainObjectName="WTMAccountMessage">-->
+            <!--<property name="useActualColumnNames" value="true"/>-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+        <table tableName="wtm_account"  domainObjectName="Account">
             <property name="useActualColumnNames" value="true"/>
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>

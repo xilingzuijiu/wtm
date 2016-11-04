@@ -25,6 +25,12 @@
   <update id="updateTaskPoolWithScore">
     update wtm_task_pool pool set pool.totalScore =#{score}  where pool.id=#{taskId}
   </update>
+  <update id="patchCheckArticle">
+    update wtm_task_pool pool set pool.isPublishNow  = 1 where pool.id IN
+    <foreach collection="poolIdList" item="item" open="(" close=")" separator=",">
+      #{item}
+    </foreach>
+  </update>
   <select id="getTaskPoolByOfficialId" resultType="com.weitaomi.application.model.bean.TaskPool">
     select * from wtm_task_pool pool WHERE pool.officialAccountsId=#{officialAccountId} AND pool.isPublishNow=#{isPublishNow}
   </select>
@@ -45,5 +51,10 @@
   </select>
   <select id="getTaskPoolByArticleId" resultType="com.weitaomi.application.model.bean.TaskPool">
     select * from wtm_task_pool pool WHERE pool.articleId=#{articleId} AND pool.isPublishNow=#{isPublishNow}
+  </select>
+  <select id="getAtricleList" resultType="java.util.Map">
+    select a.url,a.imageUrl,a.title,a.articleAbstract,a.createTime,pool.id poolId
+    from wtm_article a LEFT JOIN wtm_task_pool pool ON pool.articleId = a.id
+    WHERE pool.isPublishNow=0 AND pool.totalScore>=pool.singleScore AND pool.totalScore>0 AND pool.id>0
   </select>
 </mapper>

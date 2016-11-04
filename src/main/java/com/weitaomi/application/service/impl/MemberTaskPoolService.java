@@ -169,7 +169,7 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
         int num = taskPoolMapper.insertSelective(taskPool);
         memberScoreService.addMemberScore(publishReadRequestDto.getMemberId(),5L,1,-taskPool.getNeedNumber()*taskPool.getSingleScore().doubleValue(),UUIDGenerator.generate());
         memberTaskHistoryService.addMemberTaskToHistory(publishReadRequestDto.getMemberId(),9L,-taskPool.getNeedNumber()*taskPool.getSingleScore().doubleValue(),1,"发布文章\""+publishReadRequestDto.getTitle()+"\"求阅读任务",null,null);
-        if (num>0) return "发布成功";
+        if (num>0) return "提交审核成功";
         return "发布失败";
     }
 

@@ -1,5 +1,7 @@
 package com.weitaomi.application.model.dto;
 
+import javax.persistence.Transient;
+
 /**
  * Created by Administrator on 2016/9/7.
  */
@@ -44,7 +46,8 @@ public class PublishReadRequestDto {
      * 是否立即发布
      */
     private Integer isPublishNow;
-
+    @Transient
+    private String randomKey;
 
     /**
      * 获取公众号ID
@@ -204,5 +207,13 @@ public class PublishReadRequestDto {
      */
     public void setMemberId(Long memberId) {
         this.memberId = memberId;
+    }
+
+    public String getRandomKey() {
+        return this.randomKey;
+    }
+
+    public void setRandomKey(String randomKey) {
+        this.randomKey = randomKey;
     }
 }

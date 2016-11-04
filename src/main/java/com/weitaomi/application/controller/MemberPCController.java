@@ -95,6 +95,14 @@ public class MemberPCController extends BaseController {
         }
         taskPool.setRate(BigDecimal.valueOf(rate));
         taskPool.setTotalScore(taskPool.getNeedNumber()*taskPool.getSingleScore());
+        String randomkey=taskPool.getRandomKey();
+        Integer rands=cacheService.getCacheByKey(taskPool.getMemberId()+":"+randomkey,Integer.class);
+        if (rands!=null&&rands==1){
+            throw new InfoException("任务已发布成功，请勿重复操作");
+        }
+        if (!StringUtil.isEmpty(randomkey)){
+            cacheService.setCacheByKey(taskPool.getMemberId()+":"+randomkey,1,10);
+        }
         return AjaxResult.getOK(memberTaskPoolService.uploadAddTaskPool(taskPool));
     }
     /**
@@ -109,6 +117,14 @@ public class MemberPCController extends BaseController {
             if (publishReadRequestDto.getImageFile().length()>2*1024*1024){
                 throw new InfoException("图片大小不得大于2M");
             }
+        }
+        String randomkey=publishReadRequestDto.getRandomKey();
+        Integer rands=cacheService.getCacheByKey(publishReadRequestDto.getMemberId()+":"+randomkey,Integer.class);
+        if (rands!=null&&rands==1){
+            throw new InfoException("任务已发布成功，请勿重复操作");
+        }
+        if (!StringUtil.isEmpty(randomkey)){
+            cacheService.setCacheByKey(publishReadRequestDto.getMemberId()+":"+randomkey,1,10);
         }
         return AjaxResult.getOK(memberTaskPoolService.uploadReadTaskPool(publishReadRequestDto));
     }

@@ -22,4 +22,7 @@
     LEFT JOIN wtm_article a ON a.id=r.articleId LEFT JOIN wtm_task_pool p ON p.articleId=a.id
           WHERE r.memberId=#{memberId} AND r.createTime=#{createTime} AND p.id>0 AND r.type=0
   </select>
+  <select id="getArticleReadRecord" resultType="java.lang.Integer">
+    select COUNT(*) from wtm_article_read_record a WHERE a.articleId=#{articleId} and a.memberId=#{memberId}
+  </select>
 </mapper>
