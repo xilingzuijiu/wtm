@@ -46,7 +46,7 @@ public class WechatPayService implements IPayStrategyService {
         }
         if ((int)param.get("sourceType")==2) {
             params.put("trade_type","NATIVE");
-            params.put("openid",(String)param.get("openId"));
+//            params.put("openid",(String)param.get("openId"));
             params.put("appid", WechatConfig.MCH_APPID);
             params.put("mch_id", WechatConfig.MCHID_OFFICIAL);
         }

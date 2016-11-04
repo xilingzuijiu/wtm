@@ -34,7 +34,7 @@ function loadinviterecord(){
         type:'post',
         dataType:'json',
         url:'/pc/admin/memberInvited/getInvitedRecordList',
-        data:{pageIndex:count,pageSize:pageSize,type:1},
+        data:{pageIndex:count,pageSize:pageSize},
         beforeSend: function (XMLHttpRequest) {
             getMemberRequestHeaderMsg(XMLHttpRequest)
         },

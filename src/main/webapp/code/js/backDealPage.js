@@ -1,4 +1,6 @@
-var approveHead = ' <tr class="list">' +
+
+
+var approveHead = ' <tr class="list" id="total">' +
     '<td>提现方式</td>' +
     '<td>用户账号</td>' +
     '<td>用户ID</td>' +
@@ -7,17 +9,19 @@ var approveHead = ' <tr class="list">' +
     '<td>处理意见</td>' +
     '<td>审批</td>' +
     '</tr>'
-function getApproveList(pageIndex,pageSize) {
-    if (typeof pageIndex =='undefine' || pageIndex ==null){
+
+function getApproveList(pageIndex,pageSize,checkNum) {
+    if (typeof pageIndex =='undefined' || pageIndex ==null){
         pageIndex=0
     }
-    if (typeof pageSize =='undefine' || pageSize ==null){
+    if (typeof pageSize =='undefined' || pageSize ==null){
         pageSize=0
     }
     //patchWechatCustomers
     $.ajax({
         type: 'get',
         dataType: 'json',
+        async:false,
         url: '/pc/admin/paymemberCallBack/getApproveList',
         data: {pageIndex:pageIndex,pageSize:pageSize},
         success: function (params){
@@ -28,16 +32,8 @@ function getApproveList(pageIndex,pageSize) {
                 $("table:first").empty();
                 var trs=dealGetApproveData(data);
                 $("table:first").append(trs);
-                pageCount=Math.ceil(total/pageSize);
-                console.log("最后是"+total);
-                $(".tcdPageCode").createPage({
-                    pageCount:pageCount,
-                    current:1,
-                    backFn:function(p){
-                        console.log("什么是"+p);
-                        getApproveList(p,pageSize);
-                    }
-                });
+                console.log("总数是"+total);
+                checkTotal=data.total
             } else {
                 alert("获取列表失败")
             }
@@ -45,20 +41,20 @@ function getApproveList(pageIndex,pageSize) {
     })
 }
 
+
 function dealGetApproveData(data){
     total=data.total;
     var elements=approveHead;
     data.list.forEach(function (child) {
         var id=child.id;
         elements  = elements + getApproveListTr(child.payType,child.accountName,child.createTime,child.amount,child.isPaid,child.memberId,child.id);
-        console.log("id是"+id);
     });
     return elements
 }
 
 function getApproveListTr(account,name,time,amount,isCheck,memberId,listid) {
     var checkState='';
-    var payType='微信'
+    var payType='微信';
     if (account==1){
         payType='支付宝'
     }

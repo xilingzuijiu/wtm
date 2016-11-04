@@ -3,16 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>微淘米后台管理系统</title>
+    <link rel="shortcut icon" href="../../code/img/wtm.ico"/>
     <link href="../../code/css/base.css" rel="stylesheet" type="text/css"/>
     <link href="../../code/css/backstyle.css" rel="stylesheet" type="text/css"/>
     <script src="../../code/js/jquery.min.js"></script>
     <script src="../../code/js/backDealPage.js"></script>
     <script src="../../code/js/page.js"></script>
     <script>
+        var checkTotal=0;
         $(function (){
             var pageSize=10;
             var pageIndex=1;
             getApproveList(pageIndex,pageSize);
+            var pagecount=Math.ceil(checkTotal/pageSize);
+            $(".tcdPageCode").createPage({
+                pageCount:pagecount,
+                current:pageIndex,
+                backFn:function(p){
+                    console.log("当前页是第"+p+"页");
+                    getApproveList(p,pageSize);
+                }
+            });
+            console.log("页码总数是"+checkTotal);
 //            var total=$(".atagactive").attr("name");
 //            console.log("总数是"+total);
 //
@@ -68,7 +80,7 @@
             //选项卡设置
             $("aside a").click(function () {
                 var index = $(this).index();
-                console.log(index)
+                console.log(index);
                 $("article table").eq(index).css("display", "block").siblings().css("display", "none");
                 $(this).siblings().removeClass("atagactive");
                 $(this).addClass("atagactive");
@@ -77,6 +89,7 @@
                 getApproveList(1,pageSize);
             })
         })
+
     </script>
 </head>
 <body>
@@ -85,7 +98,7 @@
 </header>
 <div class="content">
     <aside>
-        <a href="#" class="atagactive" id="withdrawApproveList" name="">提现申请</a>
+        <a href="#" class="atagactive" id="withdrawApproveList">提现申请</a>
         <a href="#">后台管理</a>
         <a href="#">提现申请</a>
     </aside>

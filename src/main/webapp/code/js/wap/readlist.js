@@ -72,7 +72,7 @@ function loadReadlist(){
                     img.setAttribute("src", article.imageUrl);
                     div1.appendChild(img);
                     var div2 = document.createElement('div');
-                    div2.className = "readdetails col-xs-8";
+                    div2.className = "readdetails col-xs-10";
                     var h5 = document.createElement('h5');
                     h5.className = "articltitle";
                     h5.innerHTML = article.title;
@@ -86,15 +86,16 @@ function loadReadlist(){
                     div2.appendChild(h5);
                     //div2.appendChild(h6);
                     div2.appendChild(p);
-                    var div3 = document.createElement('div');
-                    div3.className = "checkanniu col-xs-2";
-                    var a = document.createElement('a');
-                    var timestamp = article.createTime;
-                    a.innerHTML = format(timestamp);
-                    div3.appendChild(a);
+                    //var div3 = document.createElement('div');
+                    //div3.className = "checkanniu col-xs-2";
+                    //显示时间点
+                    //var a = document.createElement('a');
+                    //var timestamp = article.createTime;
+                    //a.innerHTML = format(timestamp);
+                    //div3.appendChild(a);//
                     li.appendChild(div1);
                     li.appendChild(div2);
-                    li.appendChild(div3);
+                    //li.appendChild(div3);
                     document.body.appendChild(li);
                     document.getElementsByTagName('ul')[0].appendChild(li);//动态添加文章（li标签）
                 })

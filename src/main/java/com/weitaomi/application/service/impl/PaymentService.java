@@ -19,7 +19,6 @@ import com.weitaomi.systemconfig.exception.BusinessException;
 import com.weitaomi.systemconfig.exception.InfoException;
 import com.weitaomi.systemconfig.util.*;
 import com.weitaomi.systemconfig.wechat.*;
-import jdk.management.resource.internal.ApproverGroup;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;

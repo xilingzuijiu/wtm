@@ -14,6 +14,10 @@ function chooseMenu(number) {
         case 2:
             $(".middlecontent iframe").attr("src", "/frontPage/sellerPage/publishAccounts.html");
             $(".middlecontent iframe a").attr("href", "/frontPage/sellerPage/publishAccounts.html");
+            break;
+        case 4:
+            $(".middlecontent iframe").attr("src", "/frontPage/sellerPage/paycash.html");
+            $(".middlecontent iframe a").attr("href", "/frontPage/sellerPage/paycash.html");
     }
 }
 
@@ -273,4 +277,12 @@ function formatSeconds(value) {
 }
 function changeState(obj){
     $(obj).find("option:selected").val()
+}
+
+function clearCookie() {
+    var keys = document.cookie.match(/[^ =;]+(?=\=)/g);
+    if (keys) {
+        for (var i = keys.length; i--;)
+            document.cookie = keys[i] + '=0;expires=' + new Date(0).toUTCString()
+    }
 }

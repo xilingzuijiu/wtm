@@ -2,8 +2,9 @@
  * Created by Administrator on 2016/10/18 0018.
  */
 $(function(){
+
     initilizePage()
-    if ($.cookie("birth")==null||$.cookie("birth")==undefined||$.cookie("birth")==0) {
+    if ($.cookie("birth")==null||$.cookie("birth")==undefined) {
         var calendar = new lCalendar();
         calendar.init({
             'trigger': '#demo1',
@@ -52,12 +53,65 @@ $(function(){
             })
         }
     })
+//            var inviteheight=$(window).height();
+//            var invitewidth=$(window).width();
+//            var wayheight=$(".myinviteway").height();
+//            var waywidth=$(".myinviteway").width();
+//            $(".myinviteway").css("top",inviteheight-wayheight);
+//            $(".myinviteway").css("left",invitewidth/2-waywidth/2);
+//            $("#imgaccount").click(function(){
+//                $("#cover").css("display","block");
+//                $(".myinviteway").css("display","block");
+//                $(".nogo").css("height",inviteheight);
+//                $(".nogo").css("overflow","hidden");
+//                $("#demo1").attr("disabled","disabled");
+//                $("select").attr("disabled","disabled");
+//            })
+//            $("#myinvitecancle").click(function(){
+//                $("#cover").css("display","none");
+//                $(".myinviteway").css("display","none");
+//                $(".nogo").css("overflow","auto");
+//                $('#demo1').removeAttr("disabled");
+//                $('select').removeAttr("disabled");
+//            })
+//            var obj=document.getElementById("cover");
+//            obj.addEventListener("touchstart",function(e){
+//                $("#cover").css("display","none");
+//                $(".myinviteway").css("display","none");
+//                $(".nogo").css("overflow","auto");
+//                $(".time").click(function(){
+//                    $('#demo1').removeAttr("disabled");
+//                })
+//                $(".sexmi").click(function(){
+//                    $('select').removeAttr("disabled");
+//                })
+//            },false)
     $(".mywtm").click(function(){
         location.href="../invite.html?memberId="+ $.cookie('memberId');
     })
+    //$(".exit").click(function(){
+    //    var result=confirm("退出当前账号后不会删除任何历史数据，下次登录依然可以使用本账号。");
+    //    if(result){
+    //        location.href="/frontPage/wap/login.html";
+    //    }
+    //})
+    //商家平台
+//            if($.cookie("officialAccountList")!=null){
+//                $(".openbusy").css("display","none");
+//                $(".shop").css("display","block");
+//                $("#one").click(function(){
+//                    location.href="#";
+//                })
+//                $("#two").click(function(){
+//                    location.href="#";
+//                })
+//                $("#three").click(function(){
+//                    location.href="#";
+//                })
+//            }
 
     $("#demo1").on("blur", function () {
-        if ($.cookie("birth")==null||$.cookie("birth")==undefined||$.cookie("birth")==0) {
+        if ($.cookie("birth")==null||$.cookie("birth")==undefined) {
             modifyBirth();
         }
     })
@@ -83,7 +137,6 @@ function modifyBirth(){
             var data=eval(params)
             var errorCode=data.errorCode
             if (errorCode==0){
-                $.cookie("birth",timestamp,{expires:30,path:"/frontPage/wap"})
             } else if (errorCode==4){
                 alert(data.message)
             }

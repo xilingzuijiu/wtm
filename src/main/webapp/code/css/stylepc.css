@@ -49,8 +49,11 @@ nav .busienter h5{background:#68c1f4;color:#fff;padding:4px 7px;border-radius:5p
 .footer{background:#2b3035;text-align:center;}
 .footer p{color:#fff;font-size:18px;padding:5px 0;}
 
-.loginenter{float:right;}
-.loginenter h5{font-size:20px;text-align:right;line-height:1.8;}
+.loginenter{float:right;padding-top:15px;}
+.leftenter{float:left;margin-right:20px;}
+.rightquit{float:right;font-size:15px;margin-top:5px;line-height:1.7;padding:0 20px;cursor:pointer;}
+.loginenter h5{font-size:20px;text-align:right;line-height:1.8;float:left;margin-right:5px;}
+.loginenter p{float:right;line-height:2;}
 .loginenter p span{font-size:17px;text-align:right;color:#fa4a18;}
 .bnbody{background:#68c1f4 url("../img/bg.jpg") no-repeat center top;height:600px;}
 .loginbox,.content{width:1200px;overflow:hidden;margin:auto;}
@@ -79,7 +82,7 @@ nav .busienter h5{background:#68c1f4;color:#fff;padding:4px 7px;border-radius:5p
 #memberName,#rmemberName{background:#fff url("../img/account.png") no-repeat 3px center;background-size:8%;}
 #password,#rpassword{background:#fff url("../img/password.png") no-repeat 6px center;background-size:6%;}
 .code{background:#fff url("../img/yangzhengma.png") no-repeat 4px center;background-size:8.5%;padding-left:28px !important;width:242px !important;}
-.loginbutton,#register{width:100% !important;box-shadow:0px 1px 2px #aaa;text-align:center;
+.loginbutton,#register{width:100% !important;box-shadow:0px 1px 2px #aaa;text-align:center;cursor:pointer;
     background:#fa4a18;color:#fff;padding-left:0 !important;font-size:15px;}
 .wordpage{font-size:15px;text-align:center;cursor:pointer;}
 .wordpage span{color:#fa4a18;}
@@ -110,10 +113,11 @@ nav .busienter h5{background:#68c1f4;color:#fff;padding:4px 7px;border-radius:5p
 #fread{background:url("../img/pc/m_icon4.png") no-repeat 13px center;}
 #fgzh{background:url("../img/pc/m_icon4.png") no-repeat 13px center;}
 #gtask{background:url("../img/pc/task.png") no-repeat 13px center;}
+#paymoney{background:url("../img/pc/pay.png") no-repeat 13px center;}
 /*.tijiaog{background:url("../img/pc/tijiaog.png") no-repeat 13px center;background-size:18px;}*/
 /*.m_icon4{background:url("../img/pc/m_icon4.png") no-repeat 13px center;background-size:18px;}*/
 /*.task{background:url("../img/pc/task.png") no-repeat 13px center;background-size:18px;}*/
-#tgzh,#fread,#fgzh,#gtask{background-size:18px;}
+#tgzh,#fread,#fgzh,#gtask,#paymoney{background-size:18px;}
 
 .threeul{width:220px;border:#bb0202 2px solid;background:#fff;position:absolute;left:220px;top:151px;text-align:right;display:none;}
 .threeul li{color:#353535;font-size:15px;}
@@ -121,11 +125,11 @@ nav .busienter h5{background:#68c1f4;color:#fff;padding:4px 7px;border-radius:5p
 .slideactive{border-left:#fa4a18 4px solid;border-right:#fff !important;}
 .threeulactive{border-left:#fa4a18 4px solid;border-right:#fff !important;color:#ff0000 !important;}
 .slideactive a span{color:#ff0000 !important;}
-.slideactive li{}
 .slideul #tgzh:hover a,.slideul #fread:hover a,.slideul #fgzh:hover a,.slideul #gtask:hover a{color:#ff0000;}
 .slideul #tgzh:hover{background:url("../img/pc/tijiaog1.png") no-repeat 13px center;background-size:18px;}
 .slideul #fread:hover,.slideul #fgzh:hover{background:url("../img/pc/m_icon5.png") no-repeat 13px center;background-size:18px;}
 .slideul #gtask:hover{background:url("../img/pc/task1.png") no-repeat 13px center;background-size:18px;}
+#paymoney:hover{background:url("../img/pc/pay1.png") no-repeat 13px center;background-size:18px;}
 .slideul #gtask:hover .threeul{display:block;}
 
 .middlecontent{padding:0 60px 0 70px;margin-top:50px;float:right;overflow:hidden;min-height:720px;}
@@ -149,7 +153,25 @@ iframe{padding:}
 .taskcontent{width:840px;}
 .taskmiddle{margin:auto;overflow:hidden;min-height:720px;}
 
-
+/*会员充值*/
+.payhead{margin:auto;text-align:center;font-size:18px;font-weight:bold;height:50px;line-height:50px;}
+.paymoney,.wepay,.saocode{background:#fcfcfc;border:#e1e1e1 1px solid;margin:auto;text-align:center;padding:15px 5px 5px 5px;height:40px;}
+.paymoney h5{font-size:15px;display:inline-block;}
+#cleckmoney{background:#fff;border:#f00 1px solid;color:#666;display:inline-block;outline:none;width:150px;
+    padding:5px;font-size:15px;border-radius:2px;}
+.moneylist{display:inline-block;margin:0;margin-left:20px;}
+.moneylist li{display:inline-block;border:#1d87d1 1px solid;color:#168ddf;border-radius:5px;padding:5px 0;width:65px;margin-right:5px;cursor:pointer;}
+.wepay{margin-top:30px;}
+.wepay p{display:inline-block;margin:0;padding-left:5px;vertical-align: top;}
+.saocode{padding:20px 15%;margin-top:30px;height:100%;background:#fff;overflow:hidden;zoom:1;}
+.saocode img{margin-left:9%;}
+.saocode .paycode{float:right;text-align:center;display:none;}
+.paycode h6{font-size:16px;margin-bottom:25px;padding-top:15px;}
+.confirmOrder{margin-top:30px;display:none;}
+.confirmOrder img{display:block;margin:auto;}
+.confirmOrder p{font-size:13px;color:#f00;text-align:center;}
+.confirmOrder p span{font-size:16px;color:#333;}
+/*分页页码*/
 .page{overflow:hidden;text-align:center;display:block !important;width:400px;float:left;margin-top:40px;_margin-top:40px;}
 .page li{float:left;background:#fefefe;margin-right:5px;border-radius:5px;border:#dfdfdf 1px solid;}
 .page a{display:block;font-size:12px;color:#545454;line-height:25px;width:25px;}
