@@ -20,6 +20,7 @@
         .red {
             color: #c12e2a;
         }
+        .important{color:#f00;font-size:18px;}
     </style>
     <script src="../code/js/publishAccounts.js"></script>
     <script>
@@ -87,18 +88,28 @@
                                 $("#singleScore").append(singleEle)
                             }
                     )
-                }
-        )
+            var randomKey=new Date().getTime();
+            console.log("当前时间戳是"+randomKey);
+            $(".submit").attr("id",randomKey);
+                })
 
         function publish() {
+            var flags=0;
+            var randomKey=$(".submit").attr("id");
+            console.log("时间戳是"+randomKey);
             var obj=$("#form").serializeObject();
-            var request = JSON.stringify(obj)
-            console.log(request)
+            var request = JSON.stringify(obj);
+            obj["randomKey"]=randomKey;
+            console.log(request);
+            $("#button").attr('disabled', true);
+            $("#button").css('background', "#bebebe");
+            $("#button").css('border', "#bebebe 1px solid");
             $.ajax({
                 type: 'post',
                 dataType: 'json',
                 contentType: "application/json",
                 url: '/pc/admin/member/publishAddRequest',
+                async:false,
                 data: request,
                 beforeSend: function (XMLHttpRequest) {
                     XMLHttpRequest.setRequestHeader("flag",flag)
@@ -108,17 +119,35 @@
                     if (json != null && json.errorCode == 0) {
 //                            console.log(data)
                         Showbo.Msg.alert(json.data, function () {
-                            location.reload()
+                            location.reload();
+                            flags++;
                         })
                     }
                     else {
-                        Showbo.Msg.alert("提交失败")
+                        Showbo.Msg.alert("任务内容不完善，请重新填写");
+                        $("#button").attr('disabled', false);
+                        $("#button").css('background', "");
+                        $("#button").css('border', "");
+                        flags++;
                     }
                 },
                 error: function (data) {
                     Showbo.Msg.alert("页面加载错误，请重试");
+                    $("#button").attr('disabled', false);
+                    $("#button").css('background', "");
+                    $("#button").css('border', "");
+                    flags++;
                 }
-            })
+            });
+            console.log(flags);
+            if(flags==0){
+                setTimeout(function () {
+                    Showbo.Msg.alert("任务发布成功", function () {
+                        location.reload();
+                        flags++;
+                    })
+                },5000);
+            }
         }
     </script>
 </head>
@@ -134,7 +163,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-4 control-label">要发布任务的公众号：</label>
+        <label class="col-sm-4 control-label"><span class="important">*</span>要发布任务的公众号：</label>
         <div class="col-sm-8" id="div0">
             <select name="officialAccountsId" class="form-control" id="select1">
                 <option value="1">微淘米APP</option>
@@ -144,7 +173,7 @@
 
     </div>
     <div class="form-group">
-        <label class="col-sm-4 control-label">需求关注数量：</label>
+        <label class="col-sm-4 control-label"><span class="important">*</span>需求关注数量：</label>
         <div class="col-sm-8 ">
             <div class="input-group">
                 <input type="text" class="form-control" name="needNumber" id="input2"
@@ -155,7 +184,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-4 control-label">关注时间限制（天）：</label>
+        <label class="col-sm-4 control-label"><span class="important">*</span>关注时间限制（天）：</label>
         <div class="col-sm-8" id="div2">
             <select name="limitDay" class="form-control" id="select2">
                 <option value="0">0</option>
@@ -209,7 +238,7 @@
         </div>
     </div>
 </form>
-<div style="text-align: center">
+<div class="submit" style="text-align: center">
     <button class="btn btn-primary" id="button" onclick="publish()">提交任务</button>
 </div>
 </body>

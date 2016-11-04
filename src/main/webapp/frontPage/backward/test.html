@@ -3,32 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="../../code/js/jquery.min.js"></script>
+    <link href="../../code/css/backcommon.css" rel="stylesheet" type="text/css"/>
+    <script src="../../code/js/backmanage/backcommon.js"></script>
     <style>
-        h5{font-size:0.5rem;}
+        h5{font-size:2rem;}
     </style>
     <script>
-            (function (doc, win) {
-                var docEl = doc.documentElement,
-                        resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
-                        recalc = function () {
-                            var clientWidth = docEl.clientWidth;
-                            alert("第一个宽度是"+clientWidth);
-                            if (!clientWidth) return;
-                            docEl.style.fontSize = 20 * (clientWidth / 320) + 'px';
-                            alert(docEl.style.fontSize);
-                        };
-                if (!doc.addEventListener) return;
-                win.addEventListener(resizeEvt, recalc, false);
-                doc.addEventListener('DOMContentLoaded', recalc, false);
-            })(document, window);
-        $(function(){
-//            clientWidth=document.body.clientWidth;
-            clientWidth=document.documentElement.clientWidth;
-            alert("jquery宽度是"+$(document).width());
-            alert("第二个宽度是"+clientWidth);
-            alert("第三个宽度是"+$(document.body).width());
-        })
+//            (function (doc, win) {
+//                var docEl = doc.documentElement,
+//                        resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+//                        recalc = function () {
+//                            var clientWidth = docEl.clientWidth;
+//                            alert("第一个宽度是"+clientWidth);
+//                            if (!clientWidth) return;
+//                            docEl.style.fontSize = 10 * (clientWidth / 320) + 'px';
+//                            alert(docEl.style.fontSize);
+//                        };
+//                if (!doc.addEventListener) return;
+//                win.addEventListener(resizeEvt, recalc, false);
+//                doc.addEventListener('DOMContentLoaded', recalc, false);
+//            })(document, window);
+
     </script>
 </head>
 <body>
