@@ -65,7 +65,7 @@ html{}
 .readlist li img{width:17%;display:block;float:left;margin-right:3.5%}
 .readcont,.readtool{float:left;padding-top:12px;display:table-cell;vertical-align: middle;}
 .readtool{float:right;}
-.readcont h3{font-size:45px;margin-bottom:25px;line-height:1;width:8em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:normal;color:#353535;}
+.readcont h3{font-size:45px;margin-bottom:25px;line-height:1;width:13em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:normal;color:#353535;}
 .readcont p{font-size:28px;color:#959595;line-height:1.1;width:14em;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;}
 .readtool p{font-size:27px;color:#bdbdbd;overflow:hidden;line-height:1.1;}
 .readtool .thistime,.readtool .clickcount{text-align:right;}
@@ -80,16 +80,25 @@ html{}
     .readtool p{font-size:22px;}
     .readtool .thistime{margin-bottom:35px;}
 }
-@media screen and (min-width:450px) and (max-width:640px){
+@media screen and (min-width:640px) and (max-width: 719px){
     #readtitle{height:80px;line-height:80px;font-size:35px;}
-    .readcont h3{font-size:1.7em;margin-bottom:15px;line-height:1.2;width:7em;}
+    .readcont h3{font-size:1.7em;margin-bottom:15px;line-height:1.2;width:13em;}
     .readcont,.readtool{padding-top:10px;}
     .readcont p{font-size:1.3em;width:12em;}
     .readtool p{font-size:1.3em;}
     .readtool .thistime{margin-bottom:25px;}
 }
+@media screen and (min-width:401px) and (max-width:639px){
+    #readtitle{height:80px;line-height:80px;font-size:35px;}
+.readlist li{padding:2% 3%;}
+    .readcont h3{font-size:1.3em;margin-bottom:15px;line-height:1.2;width:12em;}
+    .readcont,.readtool{padding-top:5px;}
+    .readcont p{font-size:1.1em;width:12em;}
+    .readtool p{font-size:1.1em;}
+    .readtool .thistime{margin-bottom:15px;}
+}
 
-@media screen and (max-width:450px){
+@media screen and (max-width:400px){
     .focuslist li h3{font-size:18px;width:5em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
     .focuslist li p{font-size:12px;width:9em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
     .focuslist li p span{font-size:10px;}
@@ -102,7 +111,7 @@ html{}
     .invite #invitecode{height:80px;line-height:80px;}
 
     #readtitle{height:68px;line-height:68px;font-size:30px;}
-    .readcont h3{font-size:1em;margin-bottom:5px;line-height:1.2;width:8em;}
+    .readcont h3{font-size:1.1em;margin-bottom:5px;line-height:1.2;width:11em;}
     .readcont,.readtool{padding-top:3px;}
     .readcont p{font-size:0.9em;width:12em;}
     .readtool p{font-size:0.8em;}

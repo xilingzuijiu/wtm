@@ -25,31 +25,34 @@
 
 
 
-header{margin:auto;height:70px;padding-top:20px;}
-header h1{text-align:center;line-height:70px;}
-.content{overflow:hidden;width:90%;margin:auto;}
-aside{float:left;border:#999 1px solid;margin-top:35px;width:11%;}
-aside a{display:block;text-align:center;line-height:70px;font-size:20px;border-bottom:#999 1px solid;}
-aside a:last-child{border:none;}
-.atagactive{color:#f94b16 !important;}
-article{overflow:hidden; width:83%;float:right;}
-article .active{display:block;}
-article #btn{display:block !important;float:right;width:80px;height:25px;background:#eee;border-radius:5px;cursor:pointer;border:none !important;}
-table{border-collapse:collapse;margin-top:33px;display:none;}
-table tr{height:45px;line-height:45px;color:#666;font-size:15px;}
-table tr:first-child{height:55px;line-height:55px;color:#333;font-size:18px;}
-table tr td{width:18%;text-align:center;border:#999 1px solid;vertical-align:middle;}
-/*table tr td input,label{cursor:pointer;}*/
-/*table tr td label{width:56px;display:block;}*/
-table tr .audit{cursor:pointer;}
-table tr .audit select{outline:none;border:none;padding:12px 0;font-size:15px;color:#666;text-align:center;}
-table tr td:last-child{width:30%;color:#f00;}
-@media screen and (max-width: 1366px){
-    aside{width:8%;}
-    aside a{font-size:18px;line-height:50px;}
-    table tr td{width:10%;}
-    table tr td:first-child{width:45px;}
+header{margin:auto;height:10rem;background:#FFFBE6;margin-bottom:3em;}
+header h1{text-align:center;line-height:10rem;}
+.content{overflow:hidden;width:95%;margin:auto;}
+.paddingbox{padding-left:7rem;}
+@media screen and (max-width: 768px){
+    .paddingbox{padding-left:3rem;}
 }
+aside{float:left;margin-top:4rem;padding:0 !important;border:#999 1px solid;}
+aside a{display:block;text-align:center;line-height:3;font-size:2rem;border-bottom:#999 1px solid;}
+.atagactive{color:#f94b16 !important;background:#f8efc0;}
+article{overflow:hidden;float:right !important;padding:0 !important;}
+article .commandlist{height:3rem;line-height:2.5;text-align:center;font-size:1.5rem;}
+article .commandlist li{float:left;padding:0 0.5rem;background:#eee;margin-right:1rem;border-radius:0.5rem;cursor:pointer;border:none !important;}
+.commandlist li label{margin:0;font-weight:normal;}
+.listcontent{overflow:hidden;margin-top:1rem;border:#999 1px solid;}
+.listcontent .list{height:4.5rem;line-height:4.5rem;color:#666;font-size:1.5rem;overflow:hidden;border-top:#999 1px solid;}
+.listcontent .list label{font-weight:normal;}
+.radiocleck{cursor:pointer;margin-left:10% !important;}
+#total{height:5.5rem;line-height:5.5rem;color:#333;font-size:1.7rem;background:#f8efc0;font-weight:normal;overflow:hidden;}
+.listcontent .list div,#total div{float:left;text-align:center;border-right:#999 1px solid;padding:0 !important;}
+.listcontent .list div{height:4.5rem;}
+.listcontent .list div label,#total div label{cursor:pointer;padding:0 !important;margin:0 !important;font-weight:normal;}
+.audit{border-left:#999 1px solid;}
+.listcontent .list .audit select{outline:none !important;border:none !important;padding:1.2rem;font-size:1.5rem;-webkit-tap-highlight-color: rgba(0,0,0,0);-webkit-tap-highlight-color:transparent;
+    color:#666;text-align:center;cursor:pointer;}
+.audit select option{text-align:center;}
+
+/*页码css*/
 .tcdPageCode{text-align:center;color: #545454;margin-top:40px;_margin-top:40px;margin-bottom:40px;}
 .tcdPageCode a{display: inline-block;color: #545454;height: 25px;	line-height: 25px;	padding: 0 10px;border: 1px solid #ddd;	margin: 0 2px;border-radius: 4px;vertical-align: middle;}
 .tcdPageCode a:hover{text-decoration: none;border: 1px solid #f4832d;}

@@ -18,6 +18,7 @@
     <script src="../../code/js/wap/saveOrGetChange.js"></script>
     <script>
         $(function () {
+//            cleckhowcash();
             initilizePage();
             $(".payconfirm").click(function () {
                 enchashment.getChange();
@@ -39,7 +40,7 @@
     <li>
         <h6>提现金额(元)：</h6>
         <!--<p id="getmoneyway"><input type="text" value="" placeholder="请选择提现金额" autofocus/>元</p>-->
-            <p><select>
+            <p><select id="cleckhowcash">
                 <option>请输入提现金额</option>
                 <option name="amount" value="10">10</option>
                 <option name="amount" value="20">20</option>
@@ -57,7 +58,7 @@
             </select>元</p>
         <img class="wxcashnext" src="../../code/img/next.png"/>
     </li>
-    <textarea class="wxcashremark" rol="5">备注：</textarea>
+    <!--<textarea class="wxcashremark" rol="5">备注：</textarea>-->
     <input class="payconfirm" type="button" value="提交"/>
 </ul>
 </body>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>微淘米后台管理系统</title>
+    <link rel="shortcut icon" href="../../code/img/wtm.ico"/>
+    <link href="../../code/css/backcommon.css" rel="stylesheet" type="text/css"/>
+    <script src="../../code/js/backmanage/backcommon.js"></script>
+    <script src="../../code/js/backmanage/withdraw.js"></script>
+    <script src="../../code/js/page.js"></script>
+    <script>
+        var checkTotal=0;
+        var pageSize=5;
+        $(function (){
+            var pageIndex=1;
+            getApproveList(pageIndex,pageSize);
+            var pagecount=Math.ceil(checkTotal/pageSize);
+            $(".tcdPageCode").createPage({
+                pageCount:pagecount,
+                current:pageIndex,
+                backFn:function(p){
+                    console.log("当前页是第"+p+"页");
+                    getApproveList(p,pageSize);
+                    allChecked();
+                }
+            });
+            console.log("页码总数是"+checkTotal);
+            allChecked();
+
+            $("#btn").click(function () {
+
+                batchReview();
+
+            });
+            //批量审核
+//            $("#btn").click(function () {
+//                var btnlength = $(".radiocleck:checked").length;
+//                if (btnlength > 0) {
+//                    if (confirm("是否允许用户提现")) {
+//                        //与后台数据交互
+//                        alert("审核成功");
+//                        $(".radiocleck:checked").closest(".list").find(".audit").html("已审核")
+//                    } else {
+//                        alert("审核未通过，请重新审核")
+//                    }
+//                } else {
+//                    alert("请选择要处理的数据")
+//                }
+//            });
+            //单条审批
+//            $(".audit").click(function () {
+//                if ($(this).html() == "待审核") {
+//                    if (confirm("是否允许用户提现")) {
+//                        //与后台数据交互
+//                        alert("审核成功");
+//                        $(this).html("已审核")
+//                    } else {
+//                        alert("审核未通过，请重新审核")
+//                    }
+//                }
+//            })
+            //选项卡设置
+            $("aside a").click(function () {
+//                var index = $(this).index();
+//                console.log(index);
+//                $("article table").eq(index).css("display", "block").siblings().css("display", "none");
+                $(this).siblings().removeClass("atagactive");
+                $(this).addClass("atagactive");
+            });
+            $("#withdrawApproveList").click(function () {
+                getApproveList(1,pageSize);
+                allChecked();
+            })
+        })
+
+    </script>
+</head>
+<body>
+<header>
+    <h1>微淘米后台管理系统</h1>
+</header>
+<div class="content">
+    <aside class="col-xs-1">
+            <a href="#" class="atagactive" id="withdrawApproveList">提现申请</a>
+            <a href="#">后台管理</a>
+            <a href="#" class="nobd">批量审批</a>
+    </aside>
+    <article class="col-xs-11">
+        <div class="paddingbox">
+            <ul class="commandlist">
+                <li><label><input type="checkbox" class="totalcleck" value="全选">全选</label></li>
+                <li><label><input type="checkbox" id="wechatbtn" value="微信全选">微信全选</label></li>
+                <li><label><input type="checkbox" id="zfbbtn" value="支付宝全选">支付宝全选</label></li>
+                <li id="btn">批量审核</li>
+            </ul>
+            <ul class="listcontent">
+
+            </ul>
+        </div>
+        <div class="tcdPageCode">
+
+        </div>
+    </article>
+</div>
+</body>
+</html>

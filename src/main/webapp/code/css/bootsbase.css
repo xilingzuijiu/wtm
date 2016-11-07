@@ -7,7 +7,7 @@
 html,body{
     margin:0;
     font-size:62.5%;
-    font-family:'微软雅黑', Arial, Helvetica, sans-serif,fangzheng;
+    font-family:'微软雅黑', Arial, Helvetica,fangzheng,sans-serif;
     background:#fff;
 }
 
@@ -34,6 +34,7 @@ a:active {
     text-decoration:none;
 }
 h1,h2,h3,h4,h5,h6,p{
+    font-family:'微软雅黑', Arial, Helvetica,fangzheng,sans-serif;
     line-height:1;
 }
 

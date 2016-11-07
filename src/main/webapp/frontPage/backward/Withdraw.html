@@ -25,11 +25,11 @@
                 }
             });
             console.log("页码总数是"+checkTotal);
-//            var total=$(".atagactive").attr("name");
-//            console.log("总数是"+total);
-//
-//            total=$(".atagactive").attr("name");
-//            console.log("最后是"+total);
+            var total=$(".atagactive").attr("name");
+            console.log("总数是"+total);
+
+            total=$(".atagactive").attr("name");
+            console.log("最后是"+total);
 //            //全选反选
 //            $(".all").click(function () {
 //                if ($(this).prop("checked") == true) {
@@ -65,7 +65,7 @@
 //                }
 //
 //            })
-            //单条审批
+//            //单条审批
 //            $(".audit").click(function () {
 //                if ($(this).html() == "待审核") {
 //                    if (confirm("是否允许用户提现")) {
@@ -77,14 +77,14 @@
 //                    }
 //                }
 //            })
-            //选项卡设置
-            $("aside a").click(function () {
-                var index = $(this).index();
-                console.log(index);
-                $("article table").eq(index).css("display", "block").siblings().css("display", "none");
-                $(this).siblings().removeClass("atagactive");
-                $(this).addClass("atagactive");
-            })
+//            //选项卡设置
+//            $("aside a").click(function () {
+//                var index = $(this).index();
+//                console.log(index);
+//                $("article table").eq(index).css("display", "block").siblings().css("display", "none");
+//                $(this).siblings().removeClass("atagactive");
+//                $(this).addClass("atagactive");
+//            })
             $("#withdrawApproveList").click(function () {
                 getApproveList(1,pageSize);
             })
@@ -142,7 +142,6 @@
                 <td>审批</td>
             </tr>
             <tr class="list">
-
                 <td>支付宝</td>
                 <td></td>
                 <td></td>

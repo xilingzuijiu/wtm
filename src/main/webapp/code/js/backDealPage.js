@@ -63,7 +63,7 @@ function getApproveListTr(account,name,time,amount,isCheck,memberId,listid) {
     }else if(isCheck==0){
         checkState='拒绝'
     }
-    var approvecontent = '<tr class="list">' +
+    var approvecontent = '<tr class="list">'+
     '<td>'+payType+'</td>' +
     '<td>'+name+'</td>' +
     '<td id="one">'+memberId+'</td>' +

@@ -94,51 +94,70 @@
                 console.log(imagefile)
             });
         };
-        function publish() {
+        function publish(){
             var flag=0;
             var randomKey=$(".submit").attr("id");
             console.log("时间戳是"+randomKey);
             $("#form").attr("enctype","multipart/form-data")
             var obj=$("#form").serializeObject();
+            obj["imageFile"]=imagefile;
             obj["randomKey"]=randomKey;
             var request=JSON.stringify(obj);
             $("#button").attr('disabled', true);
             $("#button").css('background', "#bebebe");
             $("#button").css('border', "#bebebe 1px solid");
-            $.ajax({
-                type: 'post',
-                dataType: 'json',
-                contentType: "application/json",
-                url: '/pc/admin/member/publishReadRequest',
-                async:false,
-                data: request,
-                success: function (data) {
-                    console.log(data);
-                    var json = eval(data); //数组
-                    if (json!=null&&json.errorCode==0){
-                        Showbo.Msg.alert(json.data, function () {
-                            location.reload();
+            var needNumber=parseInt(Math.ceil($("#input2").val()));
+            console.log(needNumber);
+            var articleUrl=$("#articleUrl").val();
+            console.log(articleUrl);
+            if(needNumber>0&&articleUrl!=null){
+                setTimeout(function (){
+                $.ajax({
+                    type: 'post',
+                    dataType: 'json',
+                    contentType: "application/json",
+                    url: '/pc/admin/member/publishReadRequest',
+                    async:false,
+                    data: request,
+                    success: function (data) {
+                        console.log(data);
+                        var json = eval(data); //数组
+                        if (json!=null&&json.errorCode==0){
+                            Showbo.Msg.alert(json.data, function () {
+                                location.reload();
+                                flag++;
+                            })
+                        }else if (json!=null&&json.errorCode==4){
+                            Showbo.Msg.alert(json.message);
+                            $("#button").attr('disabled', false);
+                            $("#button").css('background', "");
+                            $("#button").css('border', "");
                             flag++;
-                        })
-                    }else if (json!=null&&json.errorCode==4){
-                        Showbo.Msg.alert(json.message);
+                        }
+                    },
+                    error:function (data){
+                        console.log(data);
+                        Showbo.Msg.alert("页面加载错误，请重试");
                         $("#button").attr('disabled', false);
                         $("#button").css('background', "");
                         $("#button").css('border', "");
                         flag++;
                     }
-                },
-                error:function (data){
-                    console.log(data);
-                    Showbo.Msg.alert("页面加载错误，请重试");
-                    $("#button").attr('disabled', false);
-                    $("#button").css('background', "");
-                    $("#button").css('border', "");
-                    flag++;
-                }
-            });
+                });
+                    if(flag==0){
+                        Showbo.Msg.alert("任务发布成功", function () {
+                            location.reload();
+                            flag++;
+                        })
+                    }
+                },5000);
+            }else{
+                Showbo.Msg.alert("发布内容不完善，请重新输入");
+                $("#button").attr('disabled', false);
+                $("#button").css('background', "");
+                $("#button").css('border', "");
+            }
         }
-
     </script>
 </head>
 <body style="margin: 50px;">
@@ -163,11 +182,11 @@
         </div><br/>
         <div class="col-sm-8" id="articleLink">
             <label class="col-sm-4 control-label"><span class="important">*</span>要发布文章的链接</label>
-            <input type="text" class="form-control" name="articleUrl" />
+            <input type="text" class="form-control" name="articleUrl" id="articleUrl" />
         </div><br/>
         <div class="col-sm-8">
             <label class="col-sm-4 control-label"><span class="important">*</span>要发布文章的标题/简介</label>
-            <input type="text" class="form-control" onfocus="if (value =='不能超过200字...'){value =''}" name="title" value="不能超过200字..."/>
+            <input type="text" class="form-control" name="title" placeholder="不能超过200字..."/>
         </div><br/>
         <div class="col-sm-8">
             <label class="col-sm-4 control-label" ><span class="important">*</span>上传文章展示图片</label>
@@ -189,7 +208,7 @@
         <div class="col-sm-8" >
             <label class="col-sm-4 control-label"><span class="important">*</span>需要的阅读数：</label>
             <div class="input-group">
-                <input type="text" class="form-control" name="needNumber" id="input2" onchange="checkAmount(this.value)"/>
+                <input type="number" class="form-control" name="needNumber" id="input2" onchange="checkAmount(this.value)"/>
                 <div class="input-group-addon">次</div>
             </div>
             <span class="info">奖励米币数和关注数量必须均大于零</span>
@@ -199,7 +218,7 @@
 
     <div class="form-group">
         <div class="col-sm-8" id="div2">
-            <label class="col-sm-4 control-label"><span class="important">*</span>求阅读时间限制（天）：</label>
+            <label class="col-sm-4 control-label">求阅读时间限制（天）：</label>
             <select name="limitDay" class="form-control" id="select2">
                 <option value="0">0</option>
             </select>

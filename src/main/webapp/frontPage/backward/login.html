@@ -2,6 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0" name="viewport" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="HandheldFriendly" content="true">
     <link rel="shortcut icon" href="../../code/img/wtm.ico"/>
     <title>微淘米后台登录页面</title>
     <link href="../../code/css/backcommon.css" rel="stylesheet" type="text/css"/>
@@ -29,14 +33,16 @@
             var loginheight=$(".loginbg").height();
             console.log(loginheight);
             $(".bnbody").css("padding-top",(wheight-loginheight)/2);
-            var wwidth=$(document).width();
-            $(".bnbody").css("padding-left",(wheight-loginheight)/2);
+            var wwidth=$(window).width();
+            console.log("宽度是"+wwidth);
+            var loginwidth=$(".loginbg").width();
+            $(".loginbg").css("margin-left",(wwidth-loginwidth)/2);
         })
     </script>
 </head>
 <body>
 <div class="bnbody">
-        <div class="loginbg col-lg-2 col-md-3 col-sm-5 col-xs-8">
+        <div class="loginbg col-lg-3 col-md-4 col-sm-5 col-xs-9">
             <div class="loginboxhead">
             <img class="loginlogo col-xs-3" src="../../code/img/320.png"/>
             <h5 class="col-xs-9">微淘米后台管理系统</h5>
