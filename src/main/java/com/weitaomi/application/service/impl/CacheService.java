@@ -56,7 +56,18 @@ public class CacheService implements ICacheService {
             redisTemplate.expire(key,outTime, TimeUnit.SECONDS);
         }
     }
-
+    @Override
+    public Integer increCacheBykey(String key, Long count){
+        ValueOperations valueOper = redisTemplate.opsForValue();
+        valueOper.increment(key,count);
+        return Integer.valueOf(valueOper.get(key).toString());
+    }
+    @Override
+    public Double increCacheBykey(String key, Double count){
+        ValueOperations valueOper = redisTemplate.opsForValue();
+        valueOper.increment(key,count);
+        return Double.valueOf(valueOper.get(key).toString());
+    }
     @Override
     public Map<String,String> getDictMapByKey(String dictKey){
         HashOperations<String, String, String> opsForHash = redisTemplate.opsForHash();
@@ -96,37 +107,49 @@ public class CacheService implements ICacheService {
 
 
     @Override
-    public <T> void setToHashTable(String tableName, String key, T value) {
+    public <T> void setToHashTable(String tableName, String key, T value,Long outTime) {
         HashOperations<String, String, T> hashOperations = redisTemplate.opsForHash();
         hashOperations.put(tableName, key, value);
+        if (outTime!=null&&outTime>0) {
+            redisTemplate.expire(key, outTime, TimeUnit.SECONDS);
+        }
     }
 
+    @Override
+    public <T> void reSetToHashTable(String tableName, String key, T value) {
+        HashOperations<String, String, T> hashOperations = redisTemplate.opsForHash();
+        if (this.keyExistInHashTable(tableName,key)){
+            this.removeFromHashTable(tableName,key);
+        }
+        hashOperations.put(tableName, key, value);
+    }
     @Override
     public  <T> T  getFromHashTable(String tableName, String key) throws SystemException {
         HashOperations<String, String, T> hashOperations = redisTemplate.opsForHash();
-
         return hashOperations.get(tableName,key);
     }
 
+
     @Override
     public <T> Set<String>  getAllKeysFromHashTable(String tableName){
-
         HashOperations<String, String, T> hashOperations = redisTemplate.opsForHash();
-
         return hashOperations.keys(tableName);
     }
 
-    @Override
-    public <T> void setToHashTableUseJson(String tableName, String key, T value) {
-        HashOperations<String, String, String> hashOperations = redisTemplate.opsForHash();
 
+    @Override
+    public <T> void setToHashTableUseJson(String tableName, String key, T value,Long outTime) {
+        HashOperations<String, String, String> hashOperations = redisTemplate.opsForHash();
         hashOperations.put(tableName, key, JSON.toJSONString(value));
+        if (outTime!=null&&outTime>0) {
+            redisTemplate.expire(key, outTime, TimeUnit.SECONDS);
+        }
     }
+
 
     @Override
     public  <T> T  getObjectFromHashTableUseJson(String tableName, String key, Class<T> clazz) throws SystemException {
         HashOperations<String, String, String> hashOperations = redisTemplate.opsForHash();
-
         String obj = hashOperations.get(tableName,key);
         if (obj != null){
             return JSON.parseObject(obj, clazz);
@@ -157,9 +180,7 @@ public class CacheService implements ICacheService {
             for (String s : objList){
                 result.add(JSON.parseObject(s, clazz));
             }
-
         }
-
         return result;
     }
 

@@ -2,19 +2,19 @@ package configuration;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.sun.deploy.net.URLEncoder;
 import com.thoughtworks.xstream.XStream;
 import com.weitaomi.application.model.bean.Member;
 import com.weitaomi.application.model.bean.MemberScoreFlow;
 import com.weitaomi.application.model.bean.PaymentApprove;
+import com.weitaomi.application.model.bean.ThirdLogin;
 import com.weitaomi.application.model.dto.MemberInfoDto;
 import com.weitaomi.application.model.dto.MemberTaskDto;
 import com.weitaomi.application.model.mapper.*;
 import com.weitaomi.application.service.interf.IMemberTaskHistoryService;
 import com.weitaomi.application.service.interf.IPaymentService;
-import com.weitaomi.systemconfig.util.DateUtils;
-import com.weitaomi.systemconfig.util.HttpRequestUtils;
-import com.weitaomi.systemconfig.util.StringUtil;
-import com.weitaomi.systemconfig.util.UUIDGenerator;
+import com.weitaomi.systemconfig.alipay.sign.Base64;
+import com.weitaomi.systemconfig.util.*;
 import com.weitaomi.systemconfig.wechat.WechatConfig;
 import com.weitaomi.systemconfig.wechat.WechatPayParams;
 import common.BaseContextCase;
@@ -25,10 +25,12 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Base64Utils;
 
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -143,7 +145,7 @@ public class MyBatisTest extends BaseContextCase {
 //        approve.setMemberId(3L);
 //        List<PaymentApprove> approves=new ArrayList<>();
 //        approves.add(approve);
-        paymentService.patchWechatCustomers(1L,1,"","192.168.0.77");
+//        paymentService.patchWechatCustomers(1L,1,"","192.168.0.77");
 
 
     }
@@ -176,7 +178,7 @@ public class MyBatisTest extends BaseContextCase {
     }
     @Test
     public void testQuartz(){
-        memberTaskHistoryService.updateAaliableScore();
+        memberTaskHistoryService.threeOclockScheduledJob();
     }
     private XStream getXStream(){
         XStream xStream = new XStream();
@@ -211,6 +213,19 @@ public class MyBatisTest extends BaseContextCase {
     @Test
     public void testPassword(){
         System.out.println(new Sha256Hash("123456", "eMHM26").toString());
+    }
+    @Test
+    public void testGetNickName(){
+        ThirdLogin login = thirdLoginMapper.selectByPrimaryKey(2382L);
+        String nickname = Base64Utils.encodeToString(login.getNickname().getBytes());
+        String urlencode="8J+QgPCfmr7kuozotKc=";
+        if (nickname.equals(urlencode)){
+            System.out.println("chengle");
+        }else {
+            System.out.println("bucheng");
+        }
+        System.out.println(Base64Utils.encodeToUrlSafeString(urlencode.getBytes()));
+        System.out.println(EmojiUtil.resolveToByteFromEmoji(login.getNickname()));
     }
 }
 

@@ -27,13 +27,7 @@
         <collection property="memberScoreFlowDtoList" ofType="list" resultMap="MemberScoreFlowMap"/>
     </resultMap>
     <update id="updateOneAvaliableMemberScore">
-        update wtm_member_score score set score.avaliableScore = score.memberScore +
-                    (select CASE m.totalScore is NULL WHEN TRUE THEN 0 ELSE m.totalScore END AS totalScore from (
-                    select SUM(f.flowScore) totalScore from wtm_member_score s LEFT JOIN
-                    wtm_member_score_flow f ON f.memberScoreId=s.id
-                    WHERE s.memberId=#{memberId} AND f.createTime &lt; unix_timestamp(now()) AND f.createTime > #{time} AND f.typeId=7 AND f.flowScore &lt; 0) m
-                    ) WHERE score.memberId=#{memberId}
-
+        update wtm_member_score score set score.avaliableScore =#{avaliableScore} where score.memberId=#{memberId}
     </update>
     <select id="getMemberScoreByMemberId" resultMap="BaseResultMap">
     select * from wtm_member_score s WHERE s.memberId=#{memberId};
@@ -66,5 +60,11 @@
     </select>
     <select id="getAvaliableScoreAndWxInfo" resultType="java.util.Map">
         select s.avaliableScore,l.nickname from wtm_member_score s LEFT JOIN wtm_third_login l ON s.memberId=l.memberId WHERE s.memberId=#{memberId} AND l.sourceType=1;
+    </select>
+    <select id="getOneAvaliableMemberScore" resultType="java.lang.Double">
+        select CASE m.totalScore is NULL WHEN TRUE THEN 0 ELSE m.totalScore END AS totalScore from (
+                    select SUM(f.flowScore) totalScore from wtm_member_score s LEFT JOIN
+                    wtm_member_score_flow f ON f.memberScoreId=s.id
+                    WHERE s.memberId=#{memberId} AND f.createTime &lt; unix_timestamp(now()) AND f.createTime > #{time} AND f.typeId=7 AND f.flowScore &lt; 0) m
     </select>
 </mapper>

@@ -190,9 +190,13 @@ public class MemberTaskHistoryService  implements IMemberTaskHistoryService {
         logger.info("删除未完成任务详情"+number3+"条");
     }
     @Override
-    public void updateAaliableScore() {
+    public void threeOclockScheduledJob() {
+        //任务一 更新用户可用米币
         Integer number = memberScoreService.updateAvaliableScore();
         logger.info("更新积分"+number+"条");
+
+        //统一处理平台的加成奖励
+
     }
 
     @Override

@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Base64Utils;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -98,7 +99,7 @@ public class OfficeAccountService implements IOfficeAccountService {
         List<Long> idList=new ArrayList<>();
         for (OfficialAccountMsg officialAccountMsg:list){
             ThirdLoginDto thirdLoginDto=thirdLoginMapper.getThirdlogInDtoMemberId(memberId,0);
-            String key=thirdLoginDto.getNickname()+":"+thirdLoginDto.getSex()+":"+officialAccountMsg.getOriginId();
+            String key= Base64Utils.encodeToString(thirdLoginDto.getNickname().getBytes())+":"+thirdLoginDto.getSex()+":"+officialAccountMsg.getOriginId();
             logger.info("key is {}",key);
             OfficialAccountWithScore officialAccountWithScore=officalAccountMapper.getOfficialAccountWithScoreById(officialAccountMsg.getOriginId());
             MemberCheck memberCheck=new MemberCheck(memberId,officialAccountWithScore.getId());
@@ -157,7 +158,7 @@ public class OfficeAccountService implements IOfficeAccountService {
         List<OfficeMember> officeMemberList=new ArrayList<>();
         List<Long> idList=new ArrayList<>();
         ThirdLoginDto thirdLoginDto=thirdLoginMapper.getThirdlogInDtoMemberId(memberId,1);
-        String key=thirdLoginDto.getNickname()+":"+thirdLoginDto.getSex()+":"+officialAccountMsg.getOriginId();
+        String key=Base64Utils.encodeToString(thirdLoginDto.getNickname().getBytes())+":"+thirdLoginDto.getSex()+":"+officialAccountMsg.getOriginId();
         logger.info("key is {}",key);
         OfficialAccountWithScore officialAccountWithScore=officalAccountMapper.getOfficialAccountWithScoreById(officialAccountMsg.getOriginId());
         MemberCheck memberCheck=new MemberCheck(memberId,officialAccountWithScore.getId());
@@ -249,7 +250,6 @@ public class OfficeAccountService implements IOfficeAccountService {
                             } else {
                                 taskPool.setTotalScore(0D);
                                 taskPool.setLimitDay(0L);
-                                taskPool.setSingleScore(0D);
                                 taskPool.setIsPublishNow(0);
                                 taskPoolMapper.updateByPrimaryKeySelective(taskPool);
                                 memberScoreService.addMemberScore(officialAccountWithScore.getMemberId(), 6L, 1, score.doubleValue(), UUIDGenerator.generate());

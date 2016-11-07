@@ -14,6 +14,7 @@ public interface MemberScoreMapper extends IBaseMapper<MemberScore> {
     MemberScore getMemberScoreByMemberId(@Param("memberId")Long memberId);
     Integer getAvaliableMemberScore(@Param("memberIdList")List<Long> memberIdList, @Param("time") Long time);
     Map getAvaliableScoreAndWxInfo(@Param("memberId")Long memberId);
-    Integer updateOneAvaliableMemberScore(@Param("memberId")Long memberId, @Param("time") Long time);
+    Integer updateOneAvaliableMemberScore(@Param("avaliableScore") Double avaliableScore, @Param("memberId") Long memberId);
+    Double getOneAvaliableMemberScore(@Param("memberId")Long memberId, @Param("time") Long time);
     List<MemberScoreFlowDto> getMyWalletDtoByMemberId(@Param("memberId") Long memberId, @Param("rowBounds") RowBounds rowBounds);
 }

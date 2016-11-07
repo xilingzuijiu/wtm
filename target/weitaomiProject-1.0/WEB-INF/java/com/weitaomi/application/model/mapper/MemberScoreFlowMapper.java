@@ -11,4 +11,5 @@ public interface MemberScoreFlowMapper extends IBaseMapper<MemberScoreFlow> {
     MemberScoreFlow getMemberScoreFlow(@Param("memberId") Long memberId, @Param("score") Double score,
                                        @Param("createTime") Long createTime, @Param("typeId") Long typeId,
                                        @Param("isFinished") Integer isFinished);
+    Double getToalFlowScore(@Param("memberScoreId") Long memberScoreId);
 }

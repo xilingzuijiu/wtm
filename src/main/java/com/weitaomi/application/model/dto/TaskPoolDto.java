@@ -25,6 +25,10 @@ public class TaskPoolDto {
      */
     private Integer needNumber;
     /**
+     * 剩余次数
+     */
+    private Integer remainNumber;
+    /**
      * 剩余天数
      */
     private Integer remainDays;
@@ -195,5 +199,21 @@ public class TaskPoolDto {
      */
     public void setRemainDays(Integer remainDays) {
         this.remainDays = remainDays;
+    }
+
+    /**
+     * 获取剩余次数
+     * @return remainNumber 剩余次数
+     */
+    public Integer getRemainNumber() {
+        return this.remainNumber;
+    }
+
+    /**
+     * 设置剩余次数
+     * @param remainNumber 剩余次数
+     */
+    public void setRemainNumber(Integer remainNumber) {
+        this.remainNumber = remainNumber;
     }
 }

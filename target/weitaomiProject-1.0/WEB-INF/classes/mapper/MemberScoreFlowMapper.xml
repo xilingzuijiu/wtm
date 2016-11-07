@@ -25,4 +25,7 @@
     select * from wtm_member_score_flow flow  WHERE flow.memberId=#{memberId} AND flow.createTime >=#{createTime} AND flow.createTime &lt;= #{createTime}+3
       AND flow.isFinished=#{isFinished} AND flow.flowScore=#{score}
   </select>
+  <select id="getToalFlowScore" resultType="java.lang.Double">
+    select sum(flow.flowScore) from wtm_member_score_flow flow where flow.memberScoreId=#{memberScoreId}
+  </select>
 </mapper>

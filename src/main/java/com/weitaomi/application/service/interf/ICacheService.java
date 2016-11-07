@@ -38,6 +38,22 @@ public interface ICacheService {
     public <T> void setCacheByKey(String key, T obj,Integer outTime);
 
     /**
+     * 增加数量
+     * @param key
+     * @param count
+     * @return
+     */
+    Integer increCacheBykey(String key, Long count);
+
+    /**
+     * 增加数量
+     * @param key
+     * @param count
+     * @return
+     */
+    Double increCacheBykey(String key, Double count);
+
+    /**
      * 获取 dict map by key.
      *
      * @param dictKey the dict key
@@ -61,7 +77,16 @@ public interface ICacheService {
      * @param key the key
      * @param value the value
      */
-    public <T> void setToHashTable(String tableName, String key, T value);
+    public <T> void setToHashTable(String tableName, String key, T value,Long outTime);
+
+    /**
+     * 将HashTable中的缓存数据进行更新
+     * @param tableName
+     * @param key
+     * @param value
+     * @param <T>
+     */
+    <T> void reSetToHashTable(String tableName, String key, T value);
 
     /**
      * 从缓存的HashTable中获取字符串
@@ -70,13 +95,13 @@ public interface ICacheService {
      * @param key the key
      * @return the from hash table
      */
-    public  <T> T  getFromHashTable(String tableName, String key) throws SystemException;
+    public  <T> T  getFromHashTable(String tableName,String key) throws SystemException;
 
     <T> Set<String> getAllKeysFromHashTable(String tableName);
 
     public  <T> List<T>  getFromHashTable(String tableName, List<String> keys) throws SystemException;
 
-    public <T> void setToHashTableUseJson(String tableName, String key, T value);
+    public <T> void setToHashTableUseJson(String tableName, String key, T value,Long outTime);
 
     public  <T> T  getObjectFromHashTableUseJson(String tableName, String key, Class<T> clazz) throws SystemException;
 

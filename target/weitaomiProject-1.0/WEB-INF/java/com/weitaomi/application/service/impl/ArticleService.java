@@ -165,6 +165,14 @@ public class ArticleService implements IArticleService {
         ArticleReadRecord articleReadRecord=new ArticleReadRecord();
         articleReadRecord.setArticleId(articleId);
         articleReadRecord.setMemberId(memberId);
+        ArticleReadRecord readRecord=new ArticleReadRecord();
+        readRecord.setArticleId(articleId);
+        readRecord.setMemberId(memberId);
+        readRecord.setType(1);
+        List<ArticleReadRecord> articleReadRecords=articleReadRecordMapper.select(readRecord);
+        if (!articleReadRecords.isEmpty()){
+            throw new InfoException("该文章您已阅读");
+        }
         if (time!=null&&time>0) {
             articleReadRecord.setCreateTime(time);
         }

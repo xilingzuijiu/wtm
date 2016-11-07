@@ -82,7 +82,7 @@ public class LoggingFilter extends OncePerRequestFilter {
 
 
 
-        logger.info(msg.toString());
+//        logger.info(msg.toString());
     }
 
     /*private boolean isMultipart(final HttpServletRequest request) {

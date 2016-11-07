@@ -80,8 +80,8 @@ public class PaymemberCallBackController {
     }
     @ResponseBody
     @RequestMapping(value = "/patchWechatCustomers", method = RequestMethod.POST)
-    public AjaxResult  patchWechatCustomers(Long approveId,Integer isApprove,String remark,HttpServletRequest request){
-        return AjaxResult.getOK(paymentService.patchWechatCustomers(approveId,isApprove,remark, IpUtils.getIpAddr(request)));
+    public AjaxResult  patchWechatCustomers(@RequestBody List<Map<String, Object>> parameters,HttpServletRequest request){
+        return AjaxResult.getOK(paymentService.patchWechatCustomers(parameters, IpUtils.getIpAddr(request)));
     }
     @ResponseBody
     @RequestMapping(value = "getApproveList",method = RequestMethod.GET)
