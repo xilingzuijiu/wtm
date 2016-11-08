@@ -12,7 +12,7 @@ var approveHead = ' <li class="nobd" id="total">' +
     '<div class="col-xs-2 nobd">审批</div>' +
     '</li>'
 
-function getApproveList(pageIndex,pageSize,checkNum) {
+function getApproveList(pageIndex,pageSize) {
     if (typeof pageIndex =='undefined' || pageIndex ==null){
         pageIndex=0
     }
@@ -152,7 +152,7 @@ console.log(obj.parentNode);
                     if (json != null && json.errorCode == 0){
                         var data = json.data;
                         obj.parentNode.innerHTML ="已审核";
-                        obj.parentElement.style.color="green";
+                        obj.parent.style.color="green";
                     } else {
                         //$("this").parent().prev().empty();
                         var a=obj.parentNode.previousElementSibling;

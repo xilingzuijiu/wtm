@@ -44,11 +44,6 @@
                     error:function (data){
                         Showbo.Msg.alert("页面加载错误，请重试");
                     }
-//                headers:{
-//                    "Access-Control-Allow-Origin":"",
-//                    "Access-Control-Allow-Headers":"X-Requested-With",
-//                    "memberId":memberId
-//                }
                     });
             var randomKey=new Date().getTime();
             console.log("当前时间戳是"+randomKey);
@@ -79,7 +74,7 @@
             console.log("时间戳是"+randomKey);
             $("#form").attr("enctype","multipart/form-data");
             var obj=$("#form").serializeObject();
-            obj["imageFile"]=imagefile;
+           obj["imageFile"]=imagefile;
             obj["randomKey"]=randomKey;
             var request=JSON.stringify(obj);
             $("#button").attr('disabled', true);
@@ -162,10 +157,10 @@
         <div class="col-sm-8" id="articleLink">
             <input type="text" class="form-control" name="articleUrl" id="articleUrl" />
         </div>
-        <label class="col-sm-4 control-label"><span class="important">*</span>要发布文章的标题/简介</label>
-        <div class="col-sm-8">
-            <input type="text" class="form-control" name="title" placeholder="不能超过两百字.."/>
-        </div>
+        <!--<label class="col-sm-4 control-label">要发布文章的标题/简介</label>-->
+        <!--<div class="col-sm-8">-->
+            <!--<input type="text" class="form-control" name="title" placeholder="不能超过两百字.."/>-->
+        <!--</div>-->
         <label class="col-sm-4 control-label" ><span class="important">*</span>上传文章展示图片</label>
         <div class="col-sm-8">
             <img id="image"src=""/>
@@ -192,7 +187,6 @@
             </div>
             <span class="info">奖励米币数和关注数量必须均大于零</span>
         </div>
-
     </div>
 
     <div class="form-group">
@@ -208,13 +202,13 @@
         <label class="col-sm-4 control-label">执行状态：</label>
         <div class="col-sm-8">
             <select name="isPublishNow" class="form-control">
-                <option value="0">提交审核</option>
+                <option value="1">提交任务</option>
             </select>
         </div>
     </div>
 </form>
 <div class="submit" style="text-align: center">
-    <button class="btn btn-primary" id="button" onclick="publish()">提交审核</button>
+    <button class="btn btn-primary" id="button" onclick="publish()">提交任务</button>
 </div>
 </body>
 </html>

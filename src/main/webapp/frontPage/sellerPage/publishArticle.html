@@ -64,11 +64,6 @@
                     error:function (data){
                         Showbo.Msg.alert("页面加载错误，请重试");
                     }
-//                headers:{
-//                    "Access-Control-Allow-Origin":"",
-//                    "Access-Control-Allow-Headers":"X-Requested-With",
-//                    "memberId":memberId
-//                }
                     });
             var randomKey=new Date().getTime();
             console.log("当前时间戳是"+randomKey);
@@ -87,6 +82,8 @@
 //            }
 //            reader.readAsDataURL(file.files[0]);
 //        }
+
+
         function selectImage(file){
             //console.log(this.files[0]);
             lrz(file.files[0],{width:150,height:150},function(rst){
@@ -184,10 +181,10 @@
             <label class="col-sm-4 control-label"><span class="important">*</span>要发布文章的链接</label>
             <input type="text" class="form-control" name="articleUrl" id="articleUrl" />
         </div><br/>
-        <div class="col-sm-8">
-            <label class="col-sm-4 control-label"><span class="important">*</span>要发布文章的标题/简介</label>
-            <input type="text" class="form-control" name="title" placeholder="不能超过200字..."/>
-        </div><br/>
+        <!--<div class="col-sm-8">-->
+            <!--<label class="col-sm-4 control-label">要发布文章的标题/简介</label>-->
+            <!--<input type="text" class="form-control" name="title" placeholder="不能超过200字..."/>-->
+        <!--</div><br/>-->
         <div class="col-sm-8">
             <label class="col-sm-4 control-label" ><span class="important">*</span>上传文章展示图片</label>
             <input type="file" class="form-control" id="imagefile" id="" onchange="selectImage(this);"/>
@@ -229,13 +226,13 @@
         <div class="col-sm-8">
             <label class="col-sm-4 control-label">执行状态：</label>
             <select name="isPublishNow" class="form-control">
-                <option value="0">提交审核</option>
+                <option value="1">提交任务</option>
             </select>
         </div>
         </div>
 </form>
 <div class="submit" style="text-align: center">
-    <button class="btn btn-primary" id="button" onclick="publish()">提交审核</button>
+    <button class="btn btn-primary" id="button" onclick="publish()">提交任务</button>
 </div>
 </div>
 </body>

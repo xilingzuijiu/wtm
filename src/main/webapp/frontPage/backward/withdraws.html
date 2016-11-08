@@ -10,7 +10,7 @@
     <script src="../../code/js/page.js"></script>
     <script>
         var checkTotal=0;
-        var pageSize=50;
+        var pageSize=10;
         $(function (){
             var pageIndex=1;
             getApproveList(pageIndex,pageSize);
@@ -29,10 +29,10 @@
             $("#btn").click(function () {
                 batchReview();
             });
-            $("aside a").click(function () {
-                $(this).siblings().removeClass("atagactive");
-                $(this).addClass("atagactive");
-            });
+//            $("aside a").click(function () {
+//                $(this).siblings().removeClass("atagactive");
+//                $(this).addClass("atagactive");
+//            });
             $("#withdrawApproveList").click(function () {
                 getApproveList(1,pageSize);
                 allChecked();
@@ -46,12 +46,12 @@
     <h1>微淘米后台管理系统</h1>
 </header>
 <div class="content">
-    <aside class="col-xs-2">
-            <a href="#" class="atagactive" id="withdrawApproveList">提现申请</a>
-            <a href="#">后台管理</a>
+    <aside class="col-lg-1 col-xs-2">
+            <a href="/frontPage/backward/withdraws.html" class="atagactive" id="withdrawApproveList">提现申请</a>
+            <a href="/frontPage/backward/articlereview.html">文章审核</a>
             <a href="#" class="nobd">批量审批</a>
     </aside>
-    <article class="col-xs-10">
+    <article class="col-lg-11 col-xs-10">
         <div class="paddingbox">
             <ul class="commandlist">
                 <li><label><input type="checkbox" class="totalcleck" value="全选">全选</label></li>
