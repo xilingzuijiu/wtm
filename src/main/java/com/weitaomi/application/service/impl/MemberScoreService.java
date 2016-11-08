@@ -129,8 +129,8 @@ public class MemberScoreService implements IMemberScoreService {
                     //处理上级奖励问题
                     MemberInvitedRecord memberInvitedRecord = memberInvitedRecordMapper.getMemberInvitedRecordByMemberId(memberId);
                     if (memberInvitedRecord != null) {
-                        Double rewardScore=increaseScore.multiply(BigDecimal.valueOf(0.1)).doubleValue();
-                        Long expiresTime=DateUtils.getTodayEndSeconds()-DateUtils.getUnixTimestamp()+3*60*60;
+                        Double rewardScore=increaseScore.multiply(BigDecimal.valueOf(0.1)).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
+//                        Long expiresTime=DateUtils.getTodayEndSeconds()-DateUtils.getUnixTimestamp()+3*60*60;
                         String tableName="member:extra:reward";
                         String idKey = memberInvitedRecord.getMemberId()+":"+memberInvitedRecord.getParentId();
                         Member member = memberMapper.selectByPrimaryKey(memberInvitedRecord.getMemberId());
@@ -146,7 +146,7 @@ public class MemberScoreService implements IMemberScoreService {
                                 rewardCountDto.setParentId(memberInvitedRecord.getParentId());
                                 rewardCountDto.setMemberName(member.getMemberName());
                                 rewardCountDto.setTotalFlowScore(rewardScore);
-                                cacheService.setToHashTable(tableName,idKey,rewardCountDto,expiresTime);
+                                cacheService.setToHashTable(tableName,idKey,rewardCountDto,null);
                             }
                         }else {
                             RewardCountDto rewardCountDto = new RewardCountDto();
@@ -154,7 +154,7 @@ public class MemberScoreService implements IMemberScoreService {
                             rewardCountDto.setParentId(memberInvitedRecord.getParentId());
                             rewardCountDto.setMemberName(member.getMemberName());
                             rewardCountDto.setTotalFlowScore(rewardScore);
-                            cacheService.setToHashTable(tableName,idKey,rewardCountDto,expiresTime);
+                            cacheService.setToHashTable(tableName,idKey,rewardCountDto,0L);
                         }
                     }
                 }
@@ -222,9 +222,10 @@ public class MemberScoreService implements IMemberScoreService {
             memberScoreFlow1.setCreateTime(DateUtils.getUnixTimestamp());
             memberScoreFlowMapper.insertSelective(memberScoreFlow1);
             //处理任务记录问题
-            String detail = "您邀请的好友"+rewardCountDto.getMemberName()+"今日完成了任务，平台额外奖励您好友收入的%，累计"+rewardCountDto.getTotalFlowScore()+"米币";
+            String detail = "您邀请的好友"+rewardCountDto.getMemberName()+"今日完成了任务，平台额外奖励您好友收入的10%，累计"+rewardCountDto.getTotalFlowScore()+"米币";
             memberTaskHistoryService.addMemberTaskToHistory(rewardCountDto.getParentId(), 7L, rewardScore, 1, detail, null,null);
         }
+        cacheService.delKeyFromRedis(tableName);
         return rewardCountDtoList.size();
     }
 

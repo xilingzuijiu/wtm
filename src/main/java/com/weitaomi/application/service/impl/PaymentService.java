@@ -251,9 +251,10 @@ public class PaymentService implements IPaymentService {
     @Transactional
     public String patchWechatCustomers(List<Map<String, Object>> parameters,String ip) {
         if (!parameters.isEmpty()) {
+            Integer count=0;
             for (Map<String, Object> param : parameters) {
-                Long approveId = (long) param.get("approveId");
-                Integer isApprove = (int) param.get("isApprove");
+                Long approveId = Long.valueOf(param.get("approveId").toString());
+                Integer isApprove = Integer.valueOf(param.get("isApprove").toString());
                 String remark = (String) param.get("remark");
                 List<PaymentHistory> paymentHistoryList = new ArrayList<PaymentHistory>();
                 Integer number = 0;
@@ -349,6 +350,7 @@ public class PaymentService implements IPaymentService {
                                     paymentHistory.setMemberId(approve.getMemberId());
                                     paymentHistoryList.add(paymentHistory);
                                     number++;
+                                    count++;
                                 }
                             }
                         } catch (Exception e) {
@@ -358,7 +360,6 @@ public class PaymentService implements IPaymentService {
                             int num = paymentHistoryMapper.batchInsertPayHistory(paymentHistoryList);
                             if (num == number) {
                                 JpushUtils.buildRequest("提现申请审核通过，请到微信查看零钱明细", approve.getMemberId());
-                                return "提现审核成功";
                             } else throw new InfoException("提现审核失败");
                         } else {
                             throw new InfoException("用户提现失败，请重新审批");
@@ -378,6 +379,9 @@ public class PaymentService implements IPaymentService {
                         throw new InfoException("审批状态错误");
                     }
                 }
+            }
+            if (count==parameters.size()){
+                return "提现审核成功";
             }
         }
         return null;

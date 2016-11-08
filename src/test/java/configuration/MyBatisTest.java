@@ -11,6 +11,7 @@ import com.weitaomi.application.model.bean.ThirdLogin;
 import com.weitaomi.application.model.dto.MemberInfoDto;
 import com.weitaomi.application.model.dto.MemberTaskDto;
 import com.weitaomi.application.model.mapper.*;
+import com.weitaomi.application.service.interf.IMemberScoreService;
 import com.weitaomi.application.service.interf.IMemberTaskHistoryService;
 import com.weitaomi.application.service.interf.IPaymentService;
 import com.weitaomi.systemconfig.alipay.sign.Base64;
@@ -54,7 +55,8 @@ public class MyBatisTest extends BaseContextCase {
     private IMemberTaskHistoryService memberTaskHistoryService;
     @Autowired
     private MemberScoreFlowMapper memberScoreFlowMapper;
-
+    @Autowired
+    private IMemberScoreService memberScoreService;
     //    @Autowired
 //    IMemberTaskHistoryService memberTaskHistoryService;
     @Test
@@ -178,7 +180,7 @@ public class MyBatisTest extends BaseContextCase {
     }
     @Test
     public void testQuartz(){
-        memberTaskHistoryService.threeOclockScheduledJob();
+        memberScoreService.updateExtraRewardTimer();
     }
     private XStream getXStream(){
         XStream xStream = new XStream();

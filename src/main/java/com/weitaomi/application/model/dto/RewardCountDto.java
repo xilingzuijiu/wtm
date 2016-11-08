@@ -1,9 +1,11 @@
 package com.weitaomi.application.model.dto;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2016/11/7.
  */
-public class RewardCountDto {
+public class RewardCountDto implements Serializable{
     /**
      * 任务标题
      */

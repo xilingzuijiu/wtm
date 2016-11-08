@@ -191,12 +191,13 @@ public class MemberTaskHistoryService  implements IMemberTaskHistoryService {
     }
     @Override
     public void threeOclockScheduledJob() {
-        //任务一 更新用户可用米币
+        //任务一  更新用户可用米币
         Integer number = memberScoreService.updateAvaliableScore();
         logger.info("更新积分"+number+"条");
 
         //统一处理平台的加成奖励
-
+        number=memberScoreService.updateExtraRewardTimer();
+        logger.info("处理上下级米币问题"+number+"条");
     }
 
     @Override

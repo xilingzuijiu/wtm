@@ -363,11 +363,6 @@ public class MemberService extends BaseService implements IMemberService {
 
     @Override
     public Member getMemberDetailById(Long memberId) {
-        String key = "member:login:" + memberId;
-        Member member = cacheService.getCacheByKey(key, Member.class);
-        if (member == null) {
-            throw new InfoException("请先完成登陆");
-        }
         return memberMapper.selectByPrimaryKey(memberId);
     }
 
