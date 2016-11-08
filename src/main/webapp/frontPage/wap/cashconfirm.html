@@ -18,7 +18,12 @@
     <script src="../../code/js/wap/saveOrGetChange.js"></script>
     <script>
         $(function () {
-//            cleckhowcash();
+           cleckhowcash();
+            var thirdLogin= $.cookie("thirdLogin");
+            console.log(thirdLogin);
+            if(thirdLogin==null){
+                location.href="/frontPage/wap/login.html";
+            }
             initilizePage();
             $(".payconfirm").click(function () {
                 enchashment.getChange();
@@ -42,19 +47,19 @@
         <!--<p id="getmoneyway"><input type="text" value="" placeholder="请选择提现金额" autofocus/>元</p>-->
             <p><select id="cleckhowcash">
                 <option>请输入提现金额</option>
-                <option name="amount" value="10">10</option>
-                <option name="amount" value="20">20</option>
-                <option name="amount" value="50">50</option>
-                <option name="amount" value="100">100</option>
-                <option name="amount" value="200">200</option>
-                <option name="amount" value="300">300</option>
-                <option name="amount" value="400">400</option>
-                <option name="amount" value="500">500</option>
-                <option name="amount" value="600">600</option>
-                <option name="amount" value="700">700</option>
-                <option name="amount" value="800">800</option>
-                <option name="amount" value="900">900</option>
-                <option name="amount" value="1000">1000</option>
+                <!--<option name="amount" value="10">10</option>-->
+                <!--<option name="amount" value="20">20</option>-->
+                <!--<option name="amount" value="50">50</option>-->
+                <!--<option name="amount" value="100">100</option>-->
+                <!--<option name="amount" value="200">200</option>-->
+                <!--<option name="amount" value="300">300</option>-->
+                <!--<option name="amount" value="400">400</option>-->
+                <!--<option name="amount" value="500">500</option>-->
+                <!--<option name="amount" value="600">600</option>-->
+                <!--<option name="amount" value="700">700</option>-->
+                <!--<option name="amount" value="800">800</option>-->
+                <!--<option name="amount" value="900">900</option>-->
+                <!--<option name="amount" value="1000">1000</option>-->
             </select>元</p>
         <img class="wxcashnext" src="../../code/img/next.png"/>
     </li>

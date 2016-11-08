@@ -1,6 +1,30 @@
 /**
  * Created by yuguodong on 2016/10/11.
  */
+function cleckhowcash(){
+    $.ajax({
+        url:"/common/admin/keyValue/getKeyValueDtoList",
+        type:"get",
+        //contentType:"application/json",
+        data:{mapKey:'deposit:amount',id:null},
+        beforeSend: function (XMLHttpRequest) {
+            enchashment.getMemberRequestHeaderMsg(XMLHttpRequest)
+        } ,
+        success: function (params) {
+            var data=eval(params);
+            var errorCode=data.errorCode;
+            if (data!=null&&errorCode==0){
+                var i=0;
+                data.data.forEach(function(){
+                    $("#cleckhowcash").append("<option value='Value'>"+data.data[i++].value+"</option>");
+                })
+            } else{
+                alert(data.message);
+            }
+        }
+    })
+}
+
 
 var enchashment={
     getChange: function () {
@@ -17,7 +41,7 @@ var enchashment={
                 var data=eval(params)
                 var errorCode=data.errorCode
                 if (errorCode==0){
-                    alert("提现申请成功")
+                    alert("提现申请成功");
                         location.reload()
                 } else if (errorCode==4){
                     alert(data.message);
@@ -39,7 +63,10 @@ var enchashment={
         XMLHttpRequest.setRequestHeader("from",2);
     },
     getRequestData:function() {
-        var amount=$("select").find("option:selected").val()
+        var index=$("select").get(0).selectedIndex;
+        if(index!=0){
+            var amount=$("select").find("option:selected").text();
+        console.log(amount);
         var payAccounts= decodeURI($.cookie("payList"));
         var thirdLogin= decodeURI($.cookie("thirdLogin"));
         if (thirdLogin==null||thirdLogin==undefined){
@@ -66,6 +93,9 @@ var enchashment={
         var payType=2
         var approve=new Approve(payAccount,nickname,amount,payType,memberId,remark)
         return approve
+        }else {
+            alert("金额输入错误")
+        }
     }
 
 }

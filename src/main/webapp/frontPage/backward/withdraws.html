@@ -10,7 +10,7 @@
     <script src="../../code/js/page.js"></script>
     <script>
         var checkTotal=0;
-        var pageSize=5;
+        var pageSize=15;
         $(function (){
             var pageIndex=1;
             getApproveList(pageIndex,pageSize);
@@ -26,44 +26,10 @@
             });
             console.log("页码总数是"+checkTotal);
             allChecked();
-
             $("#btn").click(function () {
-
                 batchReview();
-
             });
-            //批量审核
-//            $("#btn").click(function () {
-//                var btnlength = $(".radiocleck:checked").length;
-//                if (btnlength > 0) {
-//                    if (confirm("是否允许用户提现")) {
-//                        //与后台数据交互
-//                        alert("审核成功");
-//                        $(".radiocleck:checked").closest(".list").find(".audit").html("已审核")
-//                    } else {
-//                        alert("审核未通过，请重新审核")
-//                    }
-//                } else {
-//                    alert("请选择要处理的数据")
-//                }
-//            });
-            //单条审批
-//            $(".audit").click(function () {
-//                if ($(this).html() == "待审核") {
-//                    if (confirm("是否允许用户提现")) {
-//                        //与后台数据交互
-//                        alert("审核成功");
-//                        $(this).html("已审核")
-//                    } else {
-//                        alert("审核未通过，请重新审核")
-//                    }
-//                }
-//            })
-            //选项卡设置
             $("aside a").click(function () {
-//                var index = $(this).index();
-//                console.log(index);
-//                $("article table").eq(index).css("display", "block").siblings().css("display", "none");
                 $(this).siblings().removeClass("atagactive");
                 $(this).addClass("atagactive");
             });
@@ -80,12 +46,12 @@
     <h1>微淘米后台管理系统</h1>
 </header>
 <div class="content">
-    <aside class="col-xs-1">
+    <aside class="col-xs-2">
             <a href="#" class="atagactive" id="withdrawApproveList">提现申请</a>
             <a href="#">后台管理</a>
             <a href="#" class="nobd">批量审批</a>
     </aside>
-    <article class="col-xs-11">
+    <article class="col-xs-10">
         <div class="paddingbox">
             <ul class="commandlist">
                 <li><label><input type="checkbox" class="totalcleck" value="全选">全选</label></li>

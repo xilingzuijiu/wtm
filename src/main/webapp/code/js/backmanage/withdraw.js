@@ -48,6 +48,18 @@ function dealGetApproveData(data){
     total=data.total;
     var i=0;
     var elements=approveHead;
+    if (!Array.prototype.forEach) {
+        Array.prototype.forEach = function(fun /*, thisp*/){
+            var len = this.length;
+            if (typeof fun != "function")
+                throw new TypeError();
+            var thisp = arguments[1];
+            for (var i = 0; i < len; i++){
+                if (i in this)
+                    fun.call(thisp, this[i], i, this);
+            }
+        };
+    }//使ie6、7、8支持forEach
     data.list.forEach(function (child) {
         var id=child.id;
         elements  = elements + getApproveListTr(child.payType,child.accountName,child.createTime,child.amount,child.isPaid,child.memberId,child.id,i++);
@@ -93,6 +105,8 @@ var selectSubmit=function(obj){
     //var index=$("select").get(0).selectedIndex;
     var index=obj.selectedIndex;
     index=parseInt(index);
+    obj.parentNode.html="已审核";
+console.log(obj.parentNode);
     console.log("index是"+index);
     console.log("selecount是"+selecount);
     if(index!=0){
@@ -106,44 +120,56 @@ var selectSubmit=function(obj){
         a.innerHTML =view;
         if(view){
             var isCheck=0;
+            var data="[]";
+            var jsonarray= eval('('+data+')');
+            var jsonstring='';
             switch (index){
                 case 1:
                     isCheck=1;
+
                     break;
                 case 2:
                     isCheck=0;
             }
-            console.log("索引号是"+index);
-            //$.ajax({
-            //    type: 'post',
-            //    dataType: 'json',
-            //    url: '/pc/admin/paymemberCallBack/patchWechatCustomers',
-            //    data: {approveId:id,isApprove:isCheck,remark:view},
-            //    success: function (params){
-            //        var json = eval(params); //数组
-            //        console.log("json数据为：" + params)
-            //        if (json != null && json.errorCode == 0){
-            //            var data = json.data;
-            //            //obj.parentElement().html ="已审核";
-            //
-            //            obj.style.color="green";
-            //        } else {
-            //            //$("this").parent().prev().empty();
-            //            var a=obj.parentNode.previousElementSibling;
-            //            a.innerHTML ="";
-            //            alert("获取数据失败");
-            //            //$(".audit select option:first").prop("selected", 'selected');
-            //            obj.options[0].selected = true;
-            //        }
-            //    },error:function(){
-            //        //$("this").parent().prev().empty();
-            //        var a=obj.parentNode.previousElementSibling;
-            //        a.innerHTML ="";
-            //        alert("审核失败，请重新审核");
-            //        //$(".audit select option:first").prop("selected", 'selected');
-            //        obj.options[0].selected = true;
-            //    }
-            //})
+            var arr  =
+            {
+                "approveId" : id,
+                "isApprove" : isCheck,
+                "remark":view,
+            };
+            jsonarray.push(arr);
+            console.log(jsonarray);
+            jsonstring=JSON.stringify(jsonarray);
+            $.ajax({
+                type: 'post',
+                dataType: 'json',
+                contentType:'application/json',
+                url: '/pc/admin/paymemberCallBack/patchWechatCustomers',
+                data: jsonstring,
+                success: function (params){
+                    var json = eval(params); //数组
+                    console.log("json数据为：" + params)
+                    if (json != null && json.errorCode == 0){
+                        var data = json.data;
+                        obj.parentNode.innerHTML ="已审核";
+                        obj.parentElement.style.color="green";
+                    } else {
+                        //$("this").parent().prev().empty();
+                        var a=obj.parentNode.previousElementSibling;
+                        a.innerHTML ="";
+                        alert("获取数据失败");
+                        //$(".audit select option:first").prop("selected", 'selected');
+                        obj.options[0].selected = true;
+                    }
+                },error:function(){
+                    //$("this").parent().prev().empty();
+                    var a=obj.parentNode.previousElementSibling;
+                    a.innerHTML ="";
+                    alert("审核失败，请重新审核");
+                    //$(".audit select option:first").prop("selected", 'selected');
+                    obj.options[0].selected = true;
+                }
+            })
         }else{
             //$(".audit select option:first").prop("selected", 'selected');
             obj.options[0].selected = true;
@@ -155,51 +181,60 @@ function batchReview(){
     var btnlength = $(".radiocleck:checked").length;
     if (btnlength > 0){
         var view=prompt("请输入审核意见","通过");
-
         if (view){
+            var data="[]";
+            var jsonarray= eval('('+data+')');
+            var jsonstring='';
             $(".radiocleck:checked").each(function(){
-                $(this).closest(".list").find(".audit").prev().html("");
-                $(this).closest(".list").find(".audit").prev().html(view);
-                $(this).closest(".list").find(".audit option:eq(1)").attr('selected','selected');
-            });
-
+                var obj=$(this).closest(".list").find(".audit");
+                console.log(obj.prev());
+                obj.prev().html("");
+                obj.prev().html(view);
+                obj.find("select option:eq(1)").attr('selected','selected');
+                //$(this).closest(".list").find(".audit option:eq(1)").attr('selected','selected');
+                var id=obj.find("select").attr("id");
+                console.log("主体id是"+id);
                 var isCheck=1;
-                //json值hashmap
-                //$.ajax({
-                //    type: 'post',
-                //    dataType: 'json',
-                //    url: '/pc/admin/paymemberCallBack/patchWechatCustomers',
-                //    data: {approveId:id,isApprove:isCheck,remark:view},
-                //    success: function (params){
-                //        var json = eval(params); //数组
-                //        console.log("json数据为：" + params)
-                //        if (json != null && json.errorCode == 0){
-                //            var data = json.data;
-                //            //obj.parentElement().html ="已审核";
-                //
-                //            obj.style.color="green";
-                //        } else {
-                //            //$("this").parent().prev().empty();
-                //            var a=obj.parentNode.previousElementSibling;
-                //            a.innerHTML ="";
-                //            alert("获取数据失败");
-                //            //$(".audit select option:first").prop("selected", 'selected');
-                //            obj.options[0].selected = true;
-                //        }
-                //    },error:function(){
-                //        //$("this").parent().prev().empty();
-                //        var a=obj.parentNode.previousElementSibling;
-                //        a.innerHTML ="";
-                //        alert("审核失败，请重新审核");
-                //        //$(".audit select option:first").prop("selected", 'selected');
-                //        obj.options[0].selected = true;
-                //    }
-                //})
+                var arr  =
+                {
+                    "approveId" : id,
+                    "isApprove" : isCheck,
+                    "remark":view,
+                };
+                jsonarray.push(arr);
+                console.log(jsonarray);
+                jsonstring=JSON.stringify(jsonarray);
+                //alert(jsonstring);
+            });
+            var obj=$(".radiocleck:checked").closest(".list").find(".audit");
+                $.ajax({
+                    type: 'post',
+                    dataType: 'json',
+                    contentType:'application/json',
+                    url: '/pc/admin/paymemberCallBack/patchWechatCustomers',
+                    data:jsonstring,
+                    success: function (params){
+                        var json = eval(params); //数组
+                        console.log("json数据为：" + params);
+                        if (json != null && json.errorCode == 0){
+                            obj.html("已审核");
+                            obj.css("color","green");
+                        } else {
+                            obj.prev().html("");
+                            alert("获取数据失败");
+                            //$(".audit select option:first").prop("selected", 'selected');
+                            obj.find("select option:first").attr('selected','selected');
+                        }
+                    },error:function(){
+                        //$("this").parent().prev().empty();
+                        obj.prev().html("");
+                        alert("获取数据失败");
+                        alert("审核失败，请重新审核");
+                        //$(".audit select option:first").prop("selected", 'selected');
+                        obj.find("select option:first").attr('selected','selected');
+                    }
+                });
 
-            //$(".radiocleck:checked").closest(".list").find(".audit").html("已审核")
-
-        } else {
-            alert("审核未通过，请重新审核");
         }
     } else {
         alert("请选择要处理的数据");
