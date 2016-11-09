@@ -10,7 +10,7 @@ header .logo{float:left;}
 nav{float:right;overflow:hidden;padding-top:35px;padding-right:13px;}
 nav .nava{display:block;font-size:16px;color:#353535;padding:0 13px;float:left;text-align:center;padding-top:5px;}
 nav .nava h5{padding-bottom:22px;font-size:16px;color:#353535;font-weight:normal;}
-.blank{height:92px;background:#f00;}
+.blank{height:92px;}
 nav .nava div{background:#fff;position:fixed; top:92px;left:50%;padding:15px 10px 10px 10px;display:none;box-shadow:2px 3px 8px #bbb;}
 nav .nava #navgzh{margin-left:155px;}
 nav .nava #navapp{margin-left:255px;}
@@ -54,9 +54,9 @@ nav .busienter h5{background:#68c1f4;color:#fff;padding:4px 7px;border-radius:5p
 
 .loginenter{float:right;padding-top:15px;overflow:hidden;}
 .leftenter{float:left;margin-right:20px;overflow:hidden;}
-.rightquit{float:right;font-size:15px;margin-top:5px;line-height:1.7;padding:0 20px;cursor:pointer;}
-.loginenter h5{font-size:20px;text-align:right;line-height:1.8;float:left;margin-right:5px;}
-.loginenter p{float:right;line-height:2;}
+.rightquit{float:right;font-size:15px;margin-top:5px;line-height:2.1;padding:0 20px;cursor:pointer;}
+.loginenter h5{font-size:20px;text-align:right;float:left;margin-right:5px;}
+.loginenter p{float:right;line-height:2.4;}
 .loginenter p span{font-size:17px;text-align:right;color:#fa4a18;}
 
 .bnbody{background:#68c1f4 url("../img/bg.jpg") no-repeat center top;height:600px;}
@@ -83,9 +83,12 @@ nav .busienter h5{background:#68c1f4;color:#fff;padding:4px 7px;border-radius:5p
     padding:10px 0;text-align:center;}
 #downtime{display:none;background:#ccc;border:#ccc 1px solid;width:30% !important;float:right;border-radius:0 5px 5px 0 !important;
     position:absolute;left:70%;top:0;text-align:center;font-size:15px;float:right;padding:11px 0;}
-#memberName,#rmemberName{background:#fff url("../img/account.png") no-repeat 3px center;background-size:8%;}
-#password,#rpassword{background:#fff url("../img/password.png") no-repeat 6px center;background-size:6%;}
-.code{background:#fff url("../img/yangzhengma.png") no-repeat 4px center;background-size:8.5%;padding-left:28px !important;width:242px !important;}
+#memberName,#rmemberName{background:#fff url("../img/account.png") no-repeat 3px center;background-size:8%;-ms-behavior: url(backgroundsize.min.htc);
+    behavior: url(backgroundsize.min.htc);}
+#password,#rpassword{background:#fff url("../img/password.png") no-repeat 6px center;background-size:6%;-ms-behavior: url(backgroundsize.min.htc);
+    behavior: url(backgroundsize.min.htc);}
+.code{background:#fff url("../img/yangzhengma.png") no-repeat 4px center;background-size:8.5%;-ms-behavior: url(backgroundsize.min.htc);
+    behavior: url(backgroundsize.min.htc);padding-left:28px !important;width:242px !important;}
 .loginbutton,#register{width:100% !important;box-shadow:0px 1px 2px #aaa;text-align:center;cursor:pointer;
     background:#fa4a18;color:#fff;padding-left:0 !important;font-size:15px;}
 .wordpage{font-size:15px;text-align:center;cursor:pointer;}
@@ -105,13 +108,12 @@ nav .busienter h5{background:#68c1f4;color:#fff;padding:4px 7px;border-radius:5p
 .twonav{background:#ff663a url("../img/pc/business.png") no-repeat 13px center;background-size:18px;-ms-behavior: url(backgroundsize.min.htc);
     behavior: url(backgroundsize.min.htc);padding-left:58px;}
 .twonavtel{display:block;color:#353535;border:#dbdada 1px solid;border-top:none;background:url("../img/pc/tel.png") no-repeat 13px center;
-    background-size:18px;padding-left:54px;-ms-behavior: url(backgroundsize.min.htc);
-    behavior: url(backgroundsize.min.htc);}
-.twonavtel:hover{color:#ff0000;background:url("../img/pc/rtel1.png") no-repeat 13px center;background-size:18px;}
+    background-size:18px;padding-left:54px;-ms-behavior: url(backgroundsize.min.htc);behavior: url(backgroundsize.min.htc);text-decoration:none;}
+.twonavtel:hover{color:#ff0000;background:url("../img/pc/rtel1.png") no-repeat 13px center;background-size:18px;text-decoration:none;}
 .slide{float:left;min-height:820px;background:#fff;}
-.slide .slideul{width:220px;position:relative;z-index:1;}
+.slide .slideul{width:220px;position:relative;z-index:1;margin-bottom:0;}
 .slide .slideul li{border-bottom:#dbdada 1px solid;border-right:#dbdada 1px solid;cursor:pointer;}
-.slide .slideul li a,.threeul li{display:block;height:50px;padding:15px 20px 15px 10px;color:#353535;box-sizing:border-box;-moz-box-sizing:border-box;
+.slide .slideul li a,.threeul li{display:block;text-decoration:none;height:50px;padding:15px 20px 15px 10px;color:#353535;box-sizing:border-box;-moz-box-sizing:border-box;
     -ms-box-sizing:border-box;-o-box-sizing:border-box;-webkit-box-sizing:border-box;padding-left:55px;border-right:none !important;}
 .threeul li:last-child{border-bottom:none;}
 .slide .slideul li a span{display:block;font-size:15px;line-height:23px;background:url("../img/pc/right.png") no-repeat right center;
@@ -129,7 +131,8 @@ nav .busienter h5{background:#68c1f4;color:#fff;padding:4px 7px;border-radius:5p
     behavior: url(backgroundsize.min.htc);
 }
 
-.threeul{width:220px;border:#bb0202 2px solid;background:#fff;position:absolute;left:220px;top:151px;_top:151px;-ms-top:151px;text-align:right;display:none;}
+.threeul{width:220px;border:#bb0202 2px solid;background:#fff;position:absolute;left:220px;top:151px;_top:0px;top:0px\0;    /*ie8*/
++top:0px;        /*ie7*/ text-align:right;display:none;}
 .threeul li{color:#353535;font-size:15px;}
 .threeul li:hover{color:#ff0000;}
 .slideactive{border-left:#fa4a18 4px solid;border-right:#fff !important;}
