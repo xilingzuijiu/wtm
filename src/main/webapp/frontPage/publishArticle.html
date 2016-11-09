@@ -69,7 +69,7 @@
             });
         };
         function publish() {
-            var flag=0;
+//            var flag=0;
             var randomKey=$(".submit").attr("id");
             console.log("时间戳是"+randomKey);
             $("#form").attr("enctype","multipart/form-data");
@@ -85,13 +85,12 @@
             var articleUrl=$("#articleUrl").val();
             console.log(articleUrl);
             if(needNumber>0&&articleUrl!=null){
-                setTimeout(function (){
             $.ajax({
                 type: 'post',
                 dataType: 'json',
                 contentType: "application/json",
                 url: '/pc/admin/member/publishReadRequest',
-                async:false,
+//                async:false,
                 data: request,
                 success: function (data) {
                     console.log(data)
@@ -99,14 +98,14 @@
                     if (json!=null&&json.errorCode==0){
                         Showbo.Msg.alert(json.data, function () {
                             location.reload();
-                            flag++;
+//                            flag++;
                         })
                     }else if (json!=null&&json.errorCode==4){
                         Showbo.Msg.alert(json.message);
                         $("#button").attr('disabled', false);
                         $("#button").css('background', "");
                         $("#button").css('border', "");
-                        flag++;
+//                        flag++;
                     }
                 },
                 error:function (data){
@@ -115,16 +114,15 @@
                     $("#button").attr('disabled', false);
                     $("#button").css('background', "");
                     $("#button").css('border', "");
-                    flag++;
+//                    flag++;
                 }
             });
-                    if(flag==0){
+          /*          if(flag==0){
                         Showbo.Msg.alert("任务发布成功", function () {
                             location.reload();
                             flag++;
                         })
-                    }
-                },5000);
+            }*/
             }else{
                 Showbo.Msg.alert("发布内容不完善，请重新输入");
                 $("#button").attr('disabled', false);

@@ -86,7 +86,7 @@
 
             })
             $("#register").click( function (){
-                var flag=0;
+//                var flag=0;
                 $("#form").attr("enctype","multipart/form-data");
                 var requestObj = eval($("#registerForm").serializeObject())
                 var request =getRegeisterParams(requestObj);
@@ -96,7 +96,7 @@
                         type: 'post',
                         url: '/pc/admin/member/register',
                         dataType:"json",
-                        async:false,
+//                        async:false,
                         data: request,
                         contentType: "application/json",
                         beforeSend: function (XMLHttpRequest) {
@@ -107,26 +107,26 @@
                             var errorCode=data.errorCode
                             if (errorCode==0){
                                 if (data.data){
-                                    download()
+                                    download();
+//                                    flag++;
                                 }
                             } else if (errorCode==4){
                                 alert(data.message);
                                 $("#register").attr('disabled', false);
                                 $("#register").css('background', "#f94b16");
-                                flag++;
+//                                flag++;
                             }
                         },error:function(data){
+                            alert(data.message);
                             $("#register").attr('disabled', false);
                             $("#register").css('background', "#f94b16");
-                            flag++;
+//                            flag++;
                         }
                     });
-                console.log(flag);
-                if(flag==0){
-                    setTimeout(function () {
-                        download()
-                    },5000);
-                }
+//                console.log(flag);
+//                if(flag==0){
+//                        download();
+//                }
             })
 
     })

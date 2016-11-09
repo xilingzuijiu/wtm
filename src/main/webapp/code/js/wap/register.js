@@ -57,7 +57,7 @@ $(function(){
                 },
                 success: function (params) {
                     var data=eval(params)
-                    var errorCode=data.errorCode
+                    var errorCode=data.errorCode;
                     if (errorCode==0){
                         if (data.data){
                             $("#prompt").fadeIn(500);
@@ -69,8 +69,12 @@ $(function(){
                         alert(data.message);
                         $("#register").attr('disabled', false);
                     }
+                }, error:function(){
+                    alert(data.message);
+                    $("#register").attr('disabled', false);
                 }
-            })
+            });
+
         }
     })
 })

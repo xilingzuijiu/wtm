@@ -111,7 +111,7 @@
             $(".submit").attr("id",randomKey);
                 })
         function publish() {
-            var flags=0;
+//            var flags=0;
             var randomKey=$(".submit").attr("id");
             console.log("时间戳是"+randomKey);
             var obj=$("#form").serializeObject();
@@ -124,13 +124,13 @@
             var needNumber=parseInt(Math.ceil($("#input2").val()));
             console.log(needNumber);
             if(needNumber>0){
-                setTimeout(function (){
+//                setTimeout(function (){
                     $.ajax({
                         type: 'post',
                         dataType: 'json',
                         contentType: "application/json",
                         url: '/pc/admin/member/publishAddRequest',
-                        async:false,
+//                        async:false,
                         data: request,
                         beforeSend: function (XMLHttpRequest) {
                             XMLHttpRequest.setRequestHeader("flag",flag)
@@ -140,7 +140,7 @@
                             if (json != null && json.errorCode == 0) {
                                 Showbo.Msg.alert(json.data, function () {
                                     location.reload();
-                                    flags++;
+//                                    flags++;
                                 })
                             }
                             else{
@@ -148,7 +148,7 @@
                                 $("#button").attr('disabled', false);
                                 $("#button").css('background', "");
                                 $("#button").css('border', "");
-                                flags++;
+//                                flags++;
                             }
                         },
                         error: function (data) {
@@ -156,16 +156,16 @@
                             $("#button").attr('disabled', false);
                             $("#button").css('background', "");
                             $("#button").css('border', "");
-                            flags++;
+//                            flags++;
                         }
                     });
-                    if(flags==0){
-                        Showbo.Msg.alert("任务发布成功", function () {
-                            location.reload();
-                            flags++;
-                        })
-                    }
-                },5000);
+//                    if(flags==0){
+//                        Showbo.Msg.alert("任务发布成功", function () {
+//                            location.reload();
+//                            flags++;
+//                        })
+//                    }
+//                },5000);
             }else {
                 Showbo.Msg.alert("请输入需求关注数量");
                 $("#button").attr('disabled', false);
