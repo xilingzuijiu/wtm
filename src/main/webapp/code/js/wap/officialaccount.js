@@ -212,17 +212,17 @@ var officialSubmit = function(obj){
         }
     })
 }
-function getMemberRequestHeaderMsg(XMLHttpRequest){
-    var memberId= $.cookie("memberId");
-    if (memberId==null||memberId == undefined){
-        alert("登录已过期请重新登录");
-        location.href="login.html"
-
-    }
-    var password= $.cookie("password");
-    XMLHttpRequest.setRequestHeader("memberId",memberId);
-    XMLHttpRequest.setRequestHeader("from",2);
-}
+//function getMemberRequestHeaderMsg(XMLHttpRequest){
+//    var memberId= $.cookie("memberId");
+//    if (memberId==null||memberId == undefined){
+//        alert("登录已过期请重新登录");
+//        location.href="login.html"
+//
+//    }
+//    var password= $.cookie("password");
+//    XMLHttpRequest.setRequestHeader("memberId",memberId);
+//    XMLHttpRequest.setRequestHeader("from",2);
+//}
 function ArticleSerach(searchWay,pageIndex,pageSize){
     this.searchWay=searchWay
     this.pageIndex=pageIndex

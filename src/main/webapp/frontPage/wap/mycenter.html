@@ -16,6 +16,11 @@
     <script src="../../code/js/wap/common.js"></script>
     <script src="../../code/js/lCalendar.js"></script>
     <script src="../../code/js/wap/mycenter.js"></script>
+    <script>
+        var u = navigator.userAgent;
+        var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;//android终端
+        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);// ios终端
+    </script>
 </head>
 <body class="myinformation padding0">
 <div class="nogo">

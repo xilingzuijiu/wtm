@@ -36,9 +36,14 @@
             float:left;
         }
         .col-sm-8{
-            margin-top: 15px
+            margin-top: 15px;
         }
-        .important{color:#f00;font-size:18px;}
+        .important{color:#f00;font-size:22px;}
+        .margin0{margin-top:10px !important;}
+        .vicefont{font-size:12px;color:#f00;}
+        #blank{visibility:hidden;}
+        #autoimagefile{background:#4f9fcf;color:#fff;width:325px;display:inline;}
+        .imgsize{width:25px;visibility:hidden;}
     </style>
     <script src="../../code/js/sellerPage/publishAccounts.js"></script>
     <script>
@@ -68,8 +73,21 @@
             var randomKey=new Date().getTime();
             console.log("当前时间戳是"+randomKey);
             $(".submit").attr("id",randomKey);
+            var count=0;
+            $("#autoimagefile").click(function(){
+                if(count==0){
+                    $(".imgsize").css("visibility","visible");
+                    $("#autoimagefile").css("background","#2d6a9f");
+                    $("#cleckblank").css("display","none");
+                    count++;
+                }else{
+                    $(".imgsize").css("visibility","hidden");
+                    $("#autoimagefile").css("background","#4f9fcf");
+                    $("#cleckblank").css("display","block");
+                    count--;
                 }
-        );
+            })
+                });
         var imagefile='';
 //        function selectImage(file){
 //            if(!file.files || !file.files[0]){
@@ -184,7 +202,12 @@
             <!--<input type="text" class="form-control" name="title" placeholder="不能超过200字..."/>-->
         <!--</div><br/>-->
         <div class="col-sm-8">
-            <label class="col-sm-4 control-label" ><span class="important">*</span>上传文章展示图片</label>
+            <label class="col-sm-4 control-label" >上传文章展示图片</label>
+            <input type="button" class="form-control" id="autoimagefile" value="自动获取图片"/>
+            <img class="imgsize" src="../../code/img/pc/clecked.png"/>
+        </div><br/>
+        <div class="col-sm-8 margin0" id="cleckblank" >
+            <label class="col-sm-4 control-label" id="blank">上传文章展示图片<span class="vicefont">(非必填)</span></label>
             <input type="file" class="form-control" id="imagefile" id="" onchange="selectImage(this);"/>
         </div><br/>
     </div>

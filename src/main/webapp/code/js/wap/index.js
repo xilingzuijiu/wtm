@@ -103,6 +103,12 @@ function getMemberRequestHeaderMsg(XMLHttpRequest){
     }
     var password= $.cookie("password");
     XMLHttpRequest.setRequestHeader("memberId",memberId);
-    XMLHttpRequest.setRequestHeader("from",2);
+    if(isAndroid){
+        XMLHttpRequest.setRequestHeader("from",6);
+    }else if(isiOS){
+        XMLHttpRequest.setRequestHeader("from",7);
+    }else {
+        XMLHttpRequest.setRequestHeader("from",2);
+    }
 }
 

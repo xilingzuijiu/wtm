@@ -36,16 +36,21 @@
             var wwidth=$(window).width();
             console.log("宽度是"+wwidth);
             var loginwidth=$(".loginbg").width();
-            $(".loginbg").css("margin-left",(wwidth-loginwidth)/2);
+            console.log("宽度是"+loginwidth);
+            if(wwidth<1080){
+                $(".loginbg").css("margin-left",(wwidth-loginwidth)/2.6);
+            }else {
+                $(".loginbg").css("margin-left",(wwidth-loginwidth)/2);
+            }
         })
     </script>
 </head>
 <body>
 <div class="bnbody">
-        <div class="loginbg col-lg-3 col-md-4 col-sm-5 col-xs-9">
+        <div class="loginbg col-lg-3 col-md-6 col-sm-6 col-xs-9">
             <div class="loginboxhead">
-            <img class="loginlogo col-xs-3" src="../../code/img/320.png"/>
-            <h5 class="col-xs-9">微淘米后台管理系统</h5>
+            <img class="loginlogo col-lg-2 col-md-2 col-xs-2" src="../../code/img/320.png"/>
+            <h5 class="col-lg-10 col-md-9 col-xs-10">微淘米后台管理系统</h5>
             </div>
             <div class="login">
                 <form Autocomplete="Off">

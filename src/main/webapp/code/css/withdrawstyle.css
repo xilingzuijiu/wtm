@@ -4,16 +4,24 @@
 .bnbody{background:#68c1f4;width:100%;margin:auto;}
 .loginbg{background:#e9e8e7;display:block;margin:auto;padding:0;padding:2rem 0;}
 .loginboxhead{overflow:hidden;margin:auto;width:80%;padding-bottom:3rem;}
-.loginlogo{}
-.loginbg h5{font-size:2.5rem;font-weight:normal;padding:0 !important;line-height:2;margin:0;}
+.loginlogo{padding:0 !important;}
+.loginbg h5{font-size:2.8rem;font-weight:normal;text-align:right;padding:0 !important;line-height:2;}
+@media screen and (max-width: 1650px){
+    .loginbg h5{font-size:2.5rem;line-height:2;}
+}
+@media screen and (max-width: 1470px){
+    .loginbg h5{font-size:2rem;line-height:2;}
+}
 
 @media screen and (max-width: 450px){
     .loginbg h5{font-size:1.8rem;line-height:2;}
     .loginlogo{padding-left:10px;padding-right:10px;}
 }
-@media screen and (max-width: 320px){
-    .loginbg h5{font-size:1.6rem;line-height:2.5;}
+@media screen and (max-width: 360px){
+    .loginbg h5{font-size:1.5rem;line-height:2;}
+    .loginboxhead{padding-bottom:2rem;}
     .loginlogo{padding-left:7px;padding-right:7px;}
+
 }
 .login input{border:#c8cbd0 1px solid;width:80%;border-radius:5px;font-size:1.5rem;
     -webkit-border-radius:0.5rem;-moz-border-radius:0.5rem;-o-border-radius:0.5rem;-ms-border-radius:0.5rem;
