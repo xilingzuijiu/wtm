@@ -46,7 +46,7 @@ function initializePage() {
         },
         success: function (params) {
             if (params.errorCode == 0) {
-                $(".threeul").empty()
+                $(".threeul").empty();
                 var li = '';
 
                 if (!Array.prototype.forEach) {

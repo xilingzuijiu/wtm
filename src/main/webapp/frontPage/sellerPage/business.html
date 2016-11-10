@@ -8,8 +8,9 @@
     <link rel="shortcut icon" href="../../code/img/wtm.ico"/>
     <title>商家管理平台</title>
     <link href="../../code/css/base.css" rel="stylesheet" type="text/css"/>
-    <link href="../../code/css/stylepc.css" rel="stylesheet" type="text/css"/>
     <link href="../../code/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../../code/css/bootstrapswitch.css" rel="stylesheet" type="text/css"/>
+    <link href="../../code/css/stylepc.css" rel="stylesheet" type="text/css"/>
     <!--[if lt IE 9]>
     <script type="text/javascript" src="../../code/js/html5shiv.js"></script>
     <style>
@@ -32,11 +33,25 @@
     <script src="../../code/js/jquery-1.12.0.min.js"></script>
     <script src="../../code/js/jquery.min.js"></script>
     <script src="../../code/js/bootstrap.min.js"></script>
+    <script src="../../code/js/bootstrapswitch.js"></script>
     <script src="../../code/js/jquery.cookie.js"></script>
     <script src="../../code/js/sellerPage/sellerPage.js"></script>
-
     <script>
+        function GetQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null)return unescape(r[2]);
+            return null;
+        }
         $(function(){
+            flag = GetQueryString('flag');
+            if(flag!=null&&flag!=""&&flag!=undefined){
+                if(flag==0){
+                    alert("输入文章链接与授权公众号不匹配");
+                }else if(flag==1){
+                    alert("公众号授权接入成功");
+                }
+            }
             $(".slideul li").click(function() {
                 $(".slideul li:not(this)").removeClass("slideactive");
                 $(this).addClass("slideactive");
@@ -62,7 +77,6 @@
             </div>
             <div class="rightquit">退出</div>
         </div>
-
     </div>
 </header>
 <div class="blank busblank"></div>
