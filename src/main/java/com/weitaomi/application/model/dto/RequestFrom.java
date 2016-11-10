@@ -3,7 +3,7 @@ package com.weitaomi.application.model.dto;
 import com.weitaomi.systemconfig.exception.BusinessException;
 
 public enum RequestFrom {
-    PC(1, "PC"),WAP(2, "WAP"),WEIXIN(3, "微信"),ANDROID(4, "安卓"),IOS(5, "苹果");
+    PC(1, "PC"),WAP(2, "WAP"),WEIXIN(3, "WEIXIN"),ANDROID(4, "ANDROID"),IOS(5, "IOS"),WAPANDROID(6, "WAPANDROID"),WAPIOS(7, "WAPIOS");
 
     private int _id;
 

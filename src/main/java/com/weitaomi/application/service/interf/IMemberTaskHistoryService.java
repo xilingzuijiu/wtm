@@ -7,6 +7,7 @@ import com.weitaomi.application.model.dto.MemberTaskWithDetail;
 import com.weitaomi.systemconfig.util.Page;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2016/8/16.
@@ -66,5 +67,5 @@ public interface IMemberTaskHistoryService {
 
     void threeOclockScheduledJob();
 
-    String signAccounts(String openId);
+    String signAccounts(Map map);
 }

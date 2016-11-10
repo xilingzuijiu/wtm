@@ -71,6 +71,7 @@ public class OfficeAccountService implements IOfficeAccountService {
         Integer num=officeMemberMapper.updateOfficialMemberList(memberId);
         for (MemberAccountLabel memberAccountLabel: officialAccountNameList) {
             String key = memberAccountLabel.getNickName() + ":" + memberAccountLabel.getSex() + ":" + memberAccountLabel.getOriginId();
+            logger.info("用户执行标注公众号操作，key：{}",key);
             int number = memberTaskHistoryMapper.deleteMemberTaskUnfinished(memberId, 0, memberAccountLabel.getOriginId());
             cacheService.delKeyFromRedis(key);
         }
@@ -79,6 +80,7 @@ public class OfficeAccountService implements IOfficeAccountService {
     @Override
     @Transactional
     public boolean pushAddRequest(Long memberId,AddOfficalAccountDto addOfficalAccountDto) {
+        logger.info("app用户ID：{}开始拉取公众号列表，参数为：{}",memberId,JSON.toJSONString(addOfficalAccountDto));
         List<OfficeMember> officeMembers=officeMemberMapper.getOfficeMemberList(memberId);
         if (!officeMembers.isEmpty()){
             String info="您还有未关注公众号，请到公众号内完成\n未完成任务将会在1小时后删除\n若领任务之前已关注，请标注这些公众号";
@@ -143,6 +145,7 @@ public class OfficeAccountService implements IOfficeAccountService {
     @Override
     @Transactional
     public boolean markAddRecord(Long memberId, OfficialAccountMsg officialAccountMsg) {
+        logger.info("wap用户ID：{}开始拉取公众号列表，参数为：{}",memberId,JSON.toJSONString(officialAccountMsg));
         List<OfficeMember> officeMembers=officeMemberMapper.getOfficeMemberList(memberId);
         if (!officeMembers.isEmpty()){
             String info="您还有未关注公众号，请到公众号内完成\n未完成任务将会在1小时后删除\n若领任务之前已关注，请标注这些公众号";
@@ -189,8 +192,7 @@ public class OfficeAccountService implements IOfficeAccountService {
         String sexString=params.get("sex");
         String originId=params.get("originId");
         Integer flag=Integer.valueOf(params.get("flag"));
-//        JpushUtils.buildRequest("受到消息了"+unionId+"      "+originId);
-        logger.info("openId:{},flag{}",openid,nickname);
+        logger.info("openId:{},nickname:{},sex:{}",openid,nickname,sexString);
         OfficialAccountWithScore officialAccountWithScore = officalAccountMapper.getOfficialAccountWithScoreById(originId);
         if (officialAccountWithScore!=null) {
             if (flag == 0) {
@@ -258,7 +260,7 @@ public class OfficeAccountService implements IOfficeAccountService {
                             logger.info("增加任务记录");
                             int number = memberTaskHistoryMapper.updateMemberTaskUnfinished(memberId, 0, officialAccountWithScore.getOriginId());
                             //增加积分以及积分记录
-                            logger.info("增加积分以及积分记录");
+                            logger.info("ID为：{}用户,增加积分以及积分记录：{}",memberId,(taskPool.getRate().multiply(BigDecimal.valueOf(officialAccountWithScore.getScore()))).doubleValue());
                             memberScoreService.addMemberScore(memberId, 3L, 1, (taskPool.getRate().multiply(BigDecimal.valueOf(officialAccountWithScore.getScore()))).doubleValue(), UUIDGenerator.generate());
                             cacheService.delKeyFromRedis(key);
                         }
@@ -271,7 +273,7 @@ public class OfficeAccountService implements IOfficeAccountService {
         } else {
             String key = nickname + ":" + sexString + ":" + originId;
             cacheService.delKeyFromRedis(key);
-            throw new InfoException("抱歉哦亲~，商家发布的关注任务已经完成啦，标记该公众号，去完成其他任务吧~");
+            throw new InfoException("抱歉哦亲~，商家发布的关注任务已经完成啦~");
         }
         return false;
     }

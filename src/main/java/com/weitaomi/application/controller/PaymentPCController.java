@@ -39,20 +39,6 @@ public class PaymentPCController extends BaseController{
         }
         return AjaxResult.getOK(paymentService.getMemberWalletInfo(memberId,pageSize,pageIndex));
     }
-    /**
-     * 更新积分记录
-     * @param request
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "/updateMemberScore",method = RequestMethod.POST)
-    AjaxResult updateMemberScore(HttpServletRequest request){
-        Long memberId=this.getUserId(request);
-        if (memberId==null){
-            throw new BusinessException("用户ID为空");
-        }
-        return AjaxResult.getOK(memberScoreService.getMemberScoreById(memberId));
-    }
     @ResponseBody
     @RequestMapping(value = "/generatorPayParams", method = RequestMethod.POST)
     public AjaxResult generatorPayParams(HttpServletRequest request,@RequestBody PaymentApprove approve){

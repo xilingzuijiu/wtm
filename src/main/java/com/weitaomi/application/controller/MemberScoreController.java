@@ -1,6 +1,7 @@
 package com.weitaomi.application.controller;
 
 import com.weitaomi.application.controller.baseController.BaseController;
+import com.weitaomi.application.model.dto.RequestFrom;
 import com.weitaomi.application.service.interf.IMemberScoreService;
 import com.weitaomi.systemconfig.dataFormat.AjaxResult;
 import com.weitaomi.systemconfig.exception.BusinessException;
@@ -65,6 +66,7 @@ public class MemberScoreController extends BaseController {
         if (memberId==null){
             throw new BusinessException("用户ID为空");
         }
-        return AjaxResult.getOK(memberScoreService.getMemberScoreById(memberId));
+        RequestFrom from=this.getRequestFrom(request);
+        return AjaxResult.getOK(memberScoreService.getMemberScoreById(memberId,from.getName()));
     }
 }

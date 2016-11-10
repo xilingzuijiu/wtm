@@ -1,5 +1,6 @@
 package com.weitaomi.application.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.weitaomi.application.model.bean.*;
 import com.weitaomi.application.model.dto.MemberTaskWithDetail;
 import com.weitaomi.application.model.dto.RewardCountDto;
@@ -222,7 +223,7 @@ public class MemberScoreService implements IMemberScoreService {
             memberScoreFlow1.setCreateTime(DateUtils.getUnixTimestamp());
             memberScoreFlowMapper.insertSelective(memberScoreFlow1);
             //处理任务记录问题
-            String detail = "您邀请的好友"+rewardCountDto.getMemberName()+"今日完成了任务，平台额外奖励您好友收入的10%，累计"+rewardCountDto.getTotalFlowScore()+"米币";
+            String detail = "您邀请的好友"+rewardCountDto.getMemberName()+"今日完成了任务，平台额外奖励您好友收入的10%，累计"+BigDecimal.valueOf(rewardCountDto.getTotalFlowScore()).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue()+"米币";
             memberTaskHistoryService.addMemberTaskToHistory(rewardCountDto.getParentId(), 7L, rewardScore, 1, detail, null,null);
         }
         cacheService.delKeyFromRedis(tableName);
@@ -235,14 +236,19 @@ public class MemberScoreService implements IMemberScoreService {
     }
 
     @Override
-    public MemberScore getMemberScoreById(Long memberId) {
+    @Transactional
+    public MemberScore getMemberScoreById(Long memberId,String phoneType) {
         MemberScore memberScore = memberScoreMapper.getMemberScoreByMemberId(memberId);
-        Double value=memberScoreMapper.getOneAvaliableMemberScore(memberId,DateUtils.getUnixTimestamp(DateUtils.date2Str(new Date(),DateUtils.yyyyMMdd),DateUtils.yyyyMMdd)-7*24*60*60);
-        Double avaliableScore=memberScore.getMemberScore().add(BigDecimal.valueOf(value)).doubleValue();
-        if (avaliableScore<=0){
-            avaliableScore=0D;
+        logger.info("刷新钱包，信息：{}", JSON.toJSONString(memberScore));
+        if (memberScore!=null) {
+            Double value = memberScoreMapper.getOneAvaliableMemberScore(memberId, DateUtils.getUnixTimestamp(DateUtils.date2Str(new Date(), DateUtils.yyyyMMdd), DateUtils.yyyyMMdd) - 7 * 24 * 60 * 60);
+            Double avaliableScore = memberScore.getMemberScore().add(BigDecimal.valueOf(value)).doubleValue();
+            if (avaliableScore <= 0) {
+                avaliableScore = 0D;
+            }
+            memberScoreMapper.updateOneAvaliableMemberScore(avaliableScore, memberId);
         }
-        memberScoreMapper.updateOneAvaliableMemberScore(avaliableScore,memberId);
+        memberMapper.updateMemberPhoneType(memberId,phoneType);
         return memberScore;
     }
 

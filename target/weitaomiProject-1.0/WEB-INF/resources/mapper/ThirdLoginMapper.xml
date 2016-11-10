@@ -39,4 +39,7 @@
   <select id="getThirdLoginByOpenId" resultType="com.weitaomi.application.model.bean.ThirdLogin">
     select * from wtm_third_login login where login.openId=#{openId}
   </select>
+  <select id="getThirdLoginByMemberId" resultType="com.weitaomi.application.model.bean.ThirdLogin">
+    select * from wtm_third_login login where login.memberId=#{memberId}
+  </select>
 </mapper>

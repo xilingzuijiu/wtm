@@ -65,6 +65,11 @@ public class Article extends BaseModel {
      */
     @Column(name = "validNumber")
     private Integer validNumber;
+    /**
+     * 文章类型
+     */
+    @Column(name = "articleType")
+    private Integer articleType;
 
     /**
      * 是否置顶 0：不置顶，1：置顶
@@ -290,5 +295,21 @@ public class Article extends BaseModel {
      */
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    /**
+     * 获取文章类型
+     * @return articleType 文章类型
+     */
+    public Integer getArticleType() {
+        return this.articleType;
+    }
+
+    /**
+     * 设置文章类型
+     * @param articleType 文章类型
+     */
+    public void setArticleType(Integer articleType) {
+        this.articleType = articleType;
     }
 }

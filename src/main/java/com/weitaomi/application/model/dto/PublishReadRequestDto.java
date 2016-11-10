@@ -23,10 +23,6 @@ public class PublishReadRequestDto {
      */
     private String imageFile;
     /**
-     * 文章标题
-     */
-    private String  title;
-    /**
      * 文章摘要
      */
     private String  articleAbstract;
@@ -79,22 +75,6 @@ public class PublishReadRequestDto {
      */
     public void setArticleUrl(String articleUrl) {
         this.articleUrl = articleUrl;
-    }
-
-    /**
-     * 获取文章标题
-     * @return title 文章标题
-     */
-    public String getTitle() {
-        return this.title;
-    }
-
-    /**
-     * 设置文章标题
-     * @param title 文章标题
-     */
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     /**

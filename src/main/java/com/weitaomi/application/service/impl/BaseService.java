@@ -33,4 +33,18 @@ public class BaseService {
         flag= upYun.writeFile(imageUrl,imageFile);
         return flag;
     }
+
+    public boolean uploadImage(byte[] imageFile,String imageUrl){
+        BASE64Decoder base64Decoder=new BASE64Decoder();
+        UpYun upYun=new UpYun("weitaomi","weitaomi","Weitaomi@Woyun");
+        boolean flag=false;
+            for (int i = 0; i < imageFile.length; ++i) {
+                //调整异常数据
+                if (imageFile[i] < 0) {
+                    imageFile[i] += 256;
+                }
+            }
+        flag= upYun.writeFile(imageUrl,imageFile);
+        return flag;
+    }
 }

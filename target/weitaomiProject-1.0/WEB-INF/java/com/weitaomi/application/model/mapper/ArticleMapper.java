@@ -9,7 +9,7 @@ import org.apache.ibatis.session.RowBounds;
 import java.util.List;
 
 public interface ArticleMapper extends IBaseMapper<Article> {
-    List<ArticleShowDto> getAtricleList(@Param("memberId") Long memberId, @Param("articleSearch")ArticleSearch articleSearch, @Param("rowBounds")RowBounds rowBounds);
+    List<ArticleShowDto> getAtricleList(@Param("memberId") Long memberId, @Param("articleSearch")ArticleSearch articleSearch, @Param("rowBounds")RowBounds rowBounds, @Param("articleType") Integer articleType);
     Integer putArticleToTop(@Param("articleId") Long articleId,@Param("isTop") Integer isTop);
     Integer updateArticleByRead(@Param("articleId") Long articleId,@Param("typeId")Integer typeId);
     Article getArticleByUrl(@Param("url") String url);

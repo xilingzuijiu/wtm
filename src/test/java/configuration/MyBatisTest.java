@@ -214,12 +214,13 @@ public class MyBatisTest extends BaseContextCase {
     }
     @Test
     public void testPassword(){
-        System.out.println(new Sha256Hash("123456", "eMHM26").toString());
+        System.out.println(Base64Utils.encodeToString("在路上".getBytes()));
     }
     @Test
     public void testGetNickName(){
-        ThirdLogin login = thirdLoginMapper.selectByPrimaryKey(2382L);
+        ThirdLogin login = thirdLoginMapper.selectByPrimaryKey(2993L);
         String nickname = Base64Utils.encodeToString(login.getNickname().getBytes());
+        System.out.println(nickname);
         String urlencode="8J+QgPCfmr7kuozotKc=";
         if (nickname.equals(urlencode)){
             System.out.println("chengle");

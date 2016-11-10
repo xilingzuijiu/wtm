@@ -18,12 +18,12 @@ public class ImageUpLoadTest extends BaseContextCase {
     public void testUpYun() throws IOException {
 
         for (int i=2;i<7;i++) {
-            File file = new File("D:\\Documents\\Pictures\\"+i+".jpg");
+            File file = new File("D:\\Documents\\Tencent Files\\123803374\\FileRecv\\picture.png");
             try {
                 UpYun upYun = new UpYun("weitaomi", "weitaomi", "Weitaomi@Woyun");
                 InputStream fileInputStream = new FileInputStream(file);
                 byte[] bytes = StreamUtils.InputStreamTOByte(fileInputStream);
-                String imageUrl = "/article/showImage/1478332135"+i+".png";
+                String imageUrl = "/article/showImage/common.png";
                 boolean flag = upYun.writeFile(imageUrl, bytes);
                 System.out.println("=============> Is success? " + imageUrl);
             } catch (FileNotFoundException e) {

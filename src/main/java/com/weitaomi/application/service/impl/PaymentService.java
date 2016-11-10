@@ -248,7 +248,6 @@ public class PaymentService implements IPaymentService {
     }
 
     @Override
-    @Transactional
     public String patchWechatCustomers(List<Map<String, Object>> parameters,String ip) {
         if (!parameters.isEmpty()) {
             Integer count=0;

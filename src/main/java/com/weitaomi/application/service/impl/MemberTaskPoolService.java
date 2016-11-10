@@ -2,6 +2,7 @@ package com.weitaomi.application.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
+import com.thoughtworks.xstream.core.util.Base64Encoder;
 import com.weitaomi.application.model.bean.Article;
 import com.weitaomi.application.model.bean.MemberScore;
 import com.weitaomi.application.model.bean.OfficialAccount;
@@ -15,18 +16,22 @@ import com.weitaomi.application.service.interf.IMemberTaskPoolService;
 import com.weitaomi.systemconfig.constant.SystemConfig;
 import com.weitaomi.systemconfig.exception.BusinessException;
 import com.weitaomi.systemconfig.exception.InfoException;
-import com.weitaomi.systemconfig.util.DateUtils;
-import com.weitaomi.systemconfig.util.Page;
-import com.weitaomi.systemconfig.util.StringUtil;
-import com.weitaomi.systemconfig.util.UUIDGenerator;
+import com.weitaomi.systemconfig.util.*;
 import org.apache.ibatis.session.RowBounds;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -107,17 +112,28 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
         if (StringUtil.isEmpty(publishReadRequestDto.getArticleUrl())){
             throw new InfoException("文章地址不能为空");
         }
-        if (StringUtil.isEmpty(publishReadRequestDto.getTitle())){
-            throw new InfoException("文章标题不能为空");
+        Article articleTemp=articleMapper.getArticleByUrl(publishReadRequestDto.getArticleUrl());
+        if (articleTemp!=null){
+            throw new InfoException("该文章已经发布过，请在个人相应公众号中查看");
         }
-//        Article articleTemp=articleMapper.getArticleByUrl(publishReadRequestDto.getArticleUrl());
-//        if (articleTemp!=null){
-//            throw new InfoException("该文章已经发布过，请在个人相应公众号中查看");
-//        }
+        Document doc = null;
+        try {
+            doc = Jsoup.connect(publishReadRequestDto.getArticleUrl()).get();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String title = doc.title();
         article.setOfficialAccountId(publishReadRequestDto.getOfficialAccountsId());
         article.setUrl(publishReadRequestDto.getArticleUrl());
-        if (!StringUtil.isEmpty(publishReadRequestDto.getTitle())){
-            article.setTitle(publishReadRequestDto.getTitle());
+        if (article.getUrl().endsWith("wechat_redirect")){
+            article.setArticleType(0);
+        }else if (article.getUrl().endsWith("#rd")){
+            article.setArticleType(1);
+        }else {
+            article.setArticleType(0);
+        }
+        if (!StringUtil.isEmpty(title)){
+            article.setTitle(title);
         }
         if (!StringUtil.isEmpty(publishReadRequestDto.getArticleAbstract())){
             article.setArticleAbstract(publishReadRequestDto.getArticleAbstract());
@@ -127,6 +143,43 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
             String imageUrl = "/article/showImage/" + DateUtils.getUnixTimestamp() + "."+image.substring(image.indexOf("image/")+6,image.indexOf("base64")-1);
             this.uploadImage(imageUrl,image.substring(image.indexOf("base64")+7));
             if (!StringUtil.isEmpty(imageUrl)){
+                article.setImageUrl(SystemConfig.UPYUN_PREFIX+imageUrl);
+            }
+        }else {
+            Elements elements = doc.body().getElementsByTag("img");
+            String certainUrl="";
+            List<String> imgList=new ArrayList<>();
+            if (!elements.isEmpty()) {
+                for (Element element : elements) {
+                    String url = element.attr("data-src");
+                    String rateTemp = element.attr("data-ratio");
+                    Double rate = 0.00;
+                    if (!StringUtil.isEmpty(rateTemp)) {
+                        rate=Double.valueOf(rateTemp);
+                    }
+
+                    if (!StringUtil.isEmpty(url)) {
+                        if (rate >= 0.5 && rate <= 1.5) {
+                            imgList.add(url);
+                        }
+                    }
+//                    if (rate == 1.0) {
+//                        certainUrl = url;
+//                        break;
+//                    }
+                }
+            }
+            if (StringUtil.isEmpty(certainUrl)){
+                if (imgList.isEmpty()){
+                    certainUrl="http://weitaomi.b0.upaiyun.com/article/showImage/common.png";
+                } else {
+                    certainUrl=imgList.get(0);
+                }
+            }
+
+            byte[] bytes = StreamUtils.getImageFromNetByUrl(certainUrl);
+            String imageUrl = "/article/showImage/" + System.currentTimeMillis() + ".jpg";
+            if (this.uploadImage(bytes,imageUrl)){
                 article.setImageUrl(SystemConfig.UPYUN_PREFIX+imageUrl);
             }
         }
@@ -168,7 +221,7 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
         taskPool.setTotalScore(taskPool.getNeedNumber()*taskPool.getSingleScore());
         int num = taskPoolMapper.insertSelective(taskPool);
         memberScoreService.addMemberScore(publishReadRequestDto.getMemberId(),5L,1,-taskPool.getNeedNumber()*taskPool.getSingleScore().doubleValue(),UUIDGenerator.generate());
-        memberTaskHistoryService.addMemberTaskToHistory(publishReadRequestDto.getMemberId(),9L,-taskPool.getNeedNumber()*taskPool.getSingleScore().doubleValue(),1,"发布文章\""+publishReadRequestDto.getTitle()+"\"求阅读任务",null,null);
+        memberTaskHistoryService.addMemberTaskToHistory(publishReadRequestDto.getMemberId(),9L,-taskPool.getNeedNumber()*taskPool.getSingleScore().doubleValue(),1,"发布文章\""+title+"\"求阅读任务",null,null);
         if (num>0) return "提交审核成功";
         return "发布失败";
     }

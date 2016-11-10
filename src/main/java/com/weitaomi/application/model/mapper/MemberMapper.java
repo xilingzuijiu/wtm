@@ -19,4 +19,5 @@ public interface MemberMapper extends IBaseMapper<Member> {
     int upLoadMemberShowImage(@Param("memberId") Long memberId, @Param("imageUrl") String imageUrl);
     List<Long> getAllMemberId();
     List<Map<String,Long>> getIsFollowWtmAccount(@Param("memberId") Long memberId, @Param("sourceType") Integer sourceType);
+    int updateMemberPhoneType(@Param("memberId") Long memberId, @Param("phoneType") String phoneType);
 }

@@ -4,6 +4,7 @@ import com.weitaomi.application.controller.baseController.BaseController;
 import com.weitaomi.application.model.bean.Article;
 import com.weitaomi.application.model.dto.ArticleDto;
 import com.weitaomi.application.model.dto.ArticleSearch;
+import com.weitaomi.application.model.dto.RequestFrom;
 import com.weitaomi.application.service.interf.IArticleService;
 import com.weitaomi.systemconfig.dataFormat.AjaxResult;
 import com.weitaomi.systemconfig.exception.BusinessException;
@@ -33,7 +34,14 @@ public class ArticleController extends BaseController {
     @RequestMapping(value = "/getAllArticle",method = RequestMethod.POST)
     public AjaxResult getAllArticle(HttpServletRequest request,@RequestBody(required = false) ArticleSearch articleSearch){
         Long memberId=this.getUserId(request);
-        return AjaxResult.getOK(articleService.getAllArticle(memberId,articleSearch,0));
+        RequestFrom from=this.getRequestFrom(request);
+        Integer flag=0;
+        if (from.getId()==4||from.getId()==6){
+            flag=0;
+        }else if (from.getId()==5||from.getId()==7){
+            flag=1;
+        }
+        return AjaxResult.getOK(articleService.getAllArticle(memberId,articleSearch,flag));
     }
 
     /**

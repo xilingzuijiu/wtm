@@ -94,6 +94,9 @@
   <update id="upLoadMemberShowImage">
     update wtm_member m  set m.imageUrl  = #{imageUrl}  where m.id=#{memberId}
   </update>
+  <update id="updateMemberPhoneType">
+    update wtm_member set source = #{phoneType} where id=#{memberId} ;
+  </update>
 
   <select id="getMemberByTelephone" resultMap="MemberResultMap">
       SELECT m.*,score.memberScore score_memberScore,<include refid="officialAccount"/>,<include refid="payAccounts"/>,<include

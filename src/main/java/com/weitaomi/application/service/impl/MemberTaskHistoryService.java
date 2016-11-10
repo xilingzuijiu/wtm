@@ -46,6 +46,8 @@ public class MemberTaskHistoryService  implements IMemberTaskHistoryService {
     private OfficeMemberMapper officeMemberMapper;
     @Autowired
     private WtmOfficialMemberMapper wtmOfficialMemberMapper;
+    @Autowired
+    private ThirdLoginMapper thirdLoginMapper;
     @Override
     public Page<MemberTaskWithDetail> getMemberTaskInfo(Long memberId,Integer type,Integer pageSize,Integer pageIndex) {
         List<MemberTaskWithDetail> memberTaskHistoryDtoList=memberTaskHistoryMapper.getMemberTaskHistoryList(memberId,type,new RowBounds(pageIndex,pageSize));
@@ -167,9 +169,9 @@ public class MemberTaskHistoryService  implements IMemberTaskHistoryService {
     @Transactional
     public MemberScore addDailyTask(Long memberId, Long typeId) {
         List<MemberTaskHistory> memberTaskHistoryList=memberTaskMapper.getIsMemberTaskFinished(memberId,typeId,DateUtils.getTodayZeroSeconds(),DateUtils.getTodayEndSeconds());
-        if (!memberTaskHistoryList.isEmpty()){
-            throw new InfoException("该任务今天已完成");
-        }
+//        if (!memberTaskHistoryList.isEmpty()){
+//            throw new InfoException("该任务今天已完成");
+//        }
         MemberTask memberTask=memberTaskMapper.selectByPrimaryKey(typeId);
         this.addMemberTaskToHistory(memberId,typeId,null,1,null,null,null);
         MemberScore memberScore=memberScoreService.addMemberScore(memberId,3L,1,memberTask.getPointCount().doubleValue(), UUIDGenerator.generate());
@@ -201,7 +203,14 @@ public class MemberTaskHistoryService  implements IMemberTaskHistoryService {
     }
 
     @Override
-    public String signAccounts(String openId){
+    public String signAccounts(Map map){
+        String openId = (String) map.get("openid");
+        String nickName=(String) map.get("nickname");
+        String sexTemp=map.get("sex").toString();
+        Integer sex=-1;
+        if (!StringUtil.isEmpty(sexTemp)) {
+            sex= Integer.valueOf(sexTemp);
+        }
         Long start=System.currentTimeMillis();
         if (StringUtil.isEmpty(openId)){
             throw new BusinessException("获取用户信息失败");
@@ -214,6 +223,18 @@ public class MemberTaskHistoryService  implements IMemberTaskHistoryService {
         MemberScore memberScore = this.addDailyTask(memberId.get(0),10L);
         logger.info("请求时间为:"+(System.currentTimeMillis()-start));
         if (memberScore!=null){
+            List<ThirdLogin> thirdLoginList = thirdLoginMapper.getThirdLoginByMemberId(memberId.get(0));
+            Member member=memberMapper.selectByPrimaryKey(memberId.get(0));
+            for (ThirdLogin thirdLogin:thirdLoginList){
+                if (thirdLogin.getNickname()!=nickName){
+                    thirdLogin.setNickname(nickName);
+                    thirdLoginMapper.updateByPrimaryKeySelective(thirdLogin);
+                }
+                if (sex!=-1&&member.getSex()!=sex){
+                    member.setSex(sex);
+                    memberMapper.updateByPrimaryKeySelective(member);
+                }
+            }
             return "签到成功，现在您可以返回APP领取任务";
         }
         return "签到失败，请稍后再试...";

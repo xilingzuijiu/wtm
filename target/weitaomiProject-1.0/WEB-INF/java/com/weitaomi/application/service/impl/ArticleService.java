@@ -58,9 +58,11 @@ public class ArticleService implements IArticleService {
     @Override
     public Page<ArticleShowDto> getAllArticle(Long memberId,ArticleSearch articleSearch,Integer sourceType) {
         if (articleSearch.getSearchWay()==0){
-            List<ArticleShowDto> articleShowDtoList=articleMapper.getAtricleList(memberId,articleSearch,new RowBounds(articleSearch.getPageIndex(),articleSearch.getPageSize()));
+            List<ArticleShowDto> articleShowDtoList=articleMapper.getAtricleList(memberId,articleSearch,new RowBounds(1,20),sourceType);
             PageInfo<ArticleShowDto> showDtoPage=new PageInfo<ArticleShowDto>(articleShowDtoList);
-            return Page.trans(showDtoPage);
+            Page page = Page.trans(showDtoPage);
+            page.setTotal(Long.valueOf(articleShowDtoList.size()));
+            return page;
         }else{
             //TODO
         }
@@ -121,6 +123,13 @@ public class ArticleService implements IArticleService {
     @Override
     @Transactional
     public Boolean readArticle(Long memberId,String unionId,List<Long> articleId) {
+        String tableName="app:artile:read:limit:"+memberId.toString();
+        Integer flagTemp = cacheService.getCacheByKey(tableName,Integer.class);
+        if (flagTemp!=null&&flagTemp>0){
+            throw new InfoException("抱歉哦~亲~，微信规定一段时间内阅读文章太多属于‘频繁操作’，为了您更好的阅读，请每小时领取一次阅读任务~");
+        } else {
+            cacheService.setCacheByKey(tableName,1,62*60);
+        }
         long ts=System.currentTimeMillis();
         if(memberId==null){
             throw new BusinessException("用户ID为空");
@@ -161,7 +170,21 @@ public class ArticleService implements IArticleService {
 
     @Override
     @Transactional
-    public Boolean readArticleRequest(Long memberId, Long time, Long articleId) {
+    public synchronized Boolean readArticleRequest(Long memberId, Long time, Long articleId) {
+        Integer flagTemp = cacheService.getCacheByKey("wap:artile:read:limit:"+memberId,Integer.class);
+        if (flagTemp!=null) {
+            if (flagTemp==20){
+                cacheService.delKeyFromRedis("wap:artile:read:limit:"+memberId);
+                cacheService.setCacheByKey("wap:artile:read:limit:"+memberId,20,62*60);
+            } else if (flagTemp > 20) {
+                throw new InfoException("抱歉哦~亲~，微信规定一段时间内阅读文章太多属于‘频繁操作’，为了您更好的阅读，请每小时领取一次阅读任务~");
+            } else if (flagTemp > 0) {
+                cacheService.increCacheBykey("wap:artile:read:limit:" + memberId, 1L);
+            }
+        }else {
+            cacheService.setCacheByKey("wap:artile:read:limit:"+memberId,1,62*60);
+        }
+
         ArticleReadRecord articleReadRecord=new ArticleReadRecord();
         articleReadRecord.setArticleId(articleId);
         articleReadRecord.setMemberId(memberId);
@@ -209,7 +232,20 @@ public class ArticleService implements IArticleService {
     }
 
     @Override
-    public Boolean pcreadArticleRequest(Long memberId, Long articleId) {
+    public synchronized Boolean pcreadArticleRequest(Long memberId, Long articleId) {
+        Integer flagTemp = cacheService.getCacheByKey("wap:artile:read:limit:"+memberId,Integer.class);
+        if (flagTemp!=null) {
+            if (flagTemp==20){
+                cacheService.delKeyFromRedis("wap:artile:read:limit:"+memberId);
+                cacheService.setCacheByKey("wap:artile:read:limit:"+memberId,20,62*60);
+            } else if (flagTemp > 20) {
+                throw new InfoException("抱歉哦~亲~，微信规定一段时间内阅读文章太多属于‘频繁操作’，为了您更好的阅读，请每小时领取一次阅读任务~");
+            } else if (flagTemp > 0) {
+                cacheService.increCacheBykey("wap:artile:read:limit:" + memberId, 1L);
+            }
+        }else {
+            cacheService.setCacheByKey("wap:artile:read:limit:"+memberId,1,62*60);
+        }
         int num=articleReadRecordMapper.getArticleReadRecord(memberId, articleId);
         if (num>0){
             throw new InfoException("您已经在其他平台领取过该任务，请完成阅读~");

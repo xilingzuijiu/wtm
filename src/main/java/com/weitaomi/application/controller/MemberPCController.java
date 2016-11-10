@@ -8,6 +8,7 @@ import com.weitaomi.application.model.bean.TaskPool;
 import com.weitaomi.application.model.bean.ThirdLogin;
 import com.weitaomi.application.model.dto.PublishReadRequestDto;
 import com.weitaomi.application.model.dto.RegisterMsg;
+import com.weitaomi.application.model.dto.RequestFrom;
 import com.weitaomi.application.service.interf.*;
 import com.weitaomi.systemconfig.alipay.StringUtils;
 import com.weitaomi.systemconfig.dataFormat.AjaxResult;
@@ -200,7 +201,6 @@ public class MemberPCController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/pushAddFinished",method = RequestMethod.POST)
     public AjaxResult pushAddFinished(@RequestBody Map<String,String> params){
-        System.out.println(params.get("nickname")+"======="+params.get("sex")+ JSON.toJSONString(params));
         return AjaxResult.getOK(officeAccountService.pushAddFinished(params));
     }
     /**
@@ -281,7 +281,8 @@ public class MemberPCController extends BaseController {
         if (memberId==null){
             throw new BusinessException("用户ID为空");
         }
-        return AjaxResult.getOK(memberScoreService.getMemberScoreById(memberId));
+        RequestFrom from=this.getRequestFrom(request);
+        return AjaxResult.getOK(memberScoreService.getMemberScoreById(memberId,from.getName()));
     }
 
     /**
@@ -307,7 +308,7 @@ public class MemberPCController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/signAccount", method = RequestMethod.POST)
     public AjaxResult signAccount(@RequestBody Map map) {
-        return AjaxResult.getOK(memberTaskHistoryService.signAccounts((String)map.get("openid")));
+        return AjaxResult.getOK(memberTaskHistoryService.signAccounts(map));
     }
     /**
      * 会员登陆

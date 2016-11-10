@@ -54,7 +54,7 @@ public class WechatPayService implements IPayStrategyService {
         params.put("body","微淘米会员充值");
         params.put("out_trade_no",param.get("out_trade_no").toString());
         params.put("notify_url",WechatConfig.NOTIFY_URL);
-        String amountTemp=(String)param.get("amount");
+        String amountTemp=(String)param.get("amount").toString();
         double amount=Double.valueOf(amountTemp) * 100;
         int balance=(int)amount;
         params.put("total_fee",String.valueOf(balance));

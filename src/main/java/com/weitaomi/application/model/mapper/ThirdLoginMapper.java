@@ -11,4 +11,5 @@ public interface ThirdLoginMapper extends IBaseMapper<ThirdLogin> {
     public ThirdLoginDto getThirdlogInDtoMemberId(@Param("memberId") Long memberId, @Param("sourceType") Integer sourceType);
     List<Long> getMemberIdByUnionId(@Param("unionId") String unionId, @Param("sourceType") Integer sourceType);
     ThirdLogin getUnionIdByMemberId(@Param("memberId") Long memberId, @Param("sourceType") Integer sourceType);
+    List<ThirdLogin> getThirdLoginByMemberId(@Param("memberId") Long memberId);
 }

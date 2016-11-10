@@ -39,7 +39,7 @@ public interface IMemberScoreService {
      * @param memberId
      * @return
      */
-    public MemberScore getMemberScoreById(Long memberId);
+    public MemberScore getMemberScoreById(Long memberId,String phoneType);
 
     /**
      * 获取用户可用余额和公众号信息
