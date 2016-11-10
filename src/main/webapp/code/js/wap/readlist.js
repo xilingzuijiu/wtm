@@ -17,7 +17,7 @@ var hashMap = {
 }
 var total = 0;
 var count = 1;
-var pageSize = 16;
+var pageSize = 20;
 $(function () {
     if (is_weixin()) {
         var thirdLogin = $.cookie("thirdLogin");
@@ -50,8 +50,9 @@ $(window).scroll(function () {
     var scrollHeight = $(document).height();                   //当前页面的总高度
     var windowHeight = $(this).height();                   //当前可视的页面高度
     if (scrollTop + windowHeight >= scrollHeight) {        //距离顶部+当前高度 >=文档总高度 即代表滑动到底部
-        console.log(Math.ceil(total / pageSize) + 1 + "shi");
-        if (count <= Math.ceil(total / pageSize)) {
+        console.log(Math.ceil(total / pageSize)+ "shi");
+        console.log(total+"是")
+        if (count <Math.ceil(total / pageSize)) {
             $(".loadmore").css("visibility", "visible");
             $(".loadmore").click(function () {
                 count++;
