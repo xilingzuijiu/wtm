@@ -124,52 +124,62 @@
             var needNumber=parseInt(Math.ceil($("#input2").val()));
             console.log(needNumber);
             var articleUrl=$("#articleUrl").val();
-            console.log(articleUrl);
-            if(needNumber>0&&articleUrl!=null){
-                $.ajax({
-                    type: 'post',
-                    dataType: 'json',
-                    contentType: "application/json",
-                    url: '/pc/admin/member/publishReadRequest',
+            if(articleUrl.indexOf("#rd") > 0 ){
+                alert("您发布的链接不规范，请在‘公众号会话’打开文章复制链接");
+                    $("#button").attr('disabled', false);
+                    $("#button").css('background', "");
+                    $("#button").css('border', "");
+                    $("#articleUrl").val("");
+            }else {
+                console.log(articleUrl);
+                if(needNumber>0&&articleUrl!=null){
+                    $.ajax({
+                        type: 'post',
+                        dataType: 'json',
+                        contentType: "application/json",
+                        url: '/pc/admin/member/publishReadRequest',
 //                    async:false,
-                    data: request,
-                    success: function (data) {
-                        console.log(data);
-                        var json = eval(data); //数组
-                        if (json!=null&&json.errorCode==0){
-                            Showbo.Msg.alert(json.data, function () {
-                                location.reload();
+                        data: request,
+                        success: function (data) {
+                            console.log(data);
+                            var json = eval(data); //数组
+                            if (json!=null&&json.errorCode==0){
+                                Showbo.Msg.alert(json.data, function () {
+                                    location.reload();
 //                                flag++;
-                            })
-                        }else if (json!=null&&json.errorCode==4){
-                            Showbo.Msg.alert(json.message);
+                                })
+                            }else if (json!=null&&json.errorCode==4){
+                                Showbo.Msg.alert(json.message);
+                                $("#button").attr('disabled', false);
+                                $("#button").css('background', "");
+                                $("#button").css('border', "");
+//                            flag++;
+                            }
+                        },
+                        error:function (data){
+                            console.log(data);
+                            Showbo.Msg.alert("页面加载错误，请重试");
                             $("#button").attr('disabled', false);
                             $("#button").css('background', "");
                             $("#button").css('border', "");
-//                            flag++;
-                        }
-                    },
-                    error:function (data){
-                        console.log(data);
-                        Showbo.Msg.alert("页面加载错误，请重试");
-                        $("#button").attr('disabled', false);
-                        $("#button").css('background', "");
-                        $("#button").css('border', "");
 //                        flag++;
-                    }
-                });
+                        }
+                    });
 //                    if(flag==0){
 //                        Showbo.Msg.alert("任务发布成功", function () {
 //                            location.reload();
 //                            flag++;
 //                        })
 //                    }
-            }else{
-                Showbo.Msg.alert("发布内容不完善，请重新输入");
-                $("#button").attr('disabled', false);
-                $("#button").css('background', "");
-                $("#button").css('border', "");
+                }
+                else{
+                    Showbo.Msg.alert("发布内容不完善，请重新输入");
+                    $("#button").attr('disabled', false);
+                    $("#button").css('background', "");
+                    $("#button").css('border', "");
+                }
             }
+
         }
     </script>
 </head>

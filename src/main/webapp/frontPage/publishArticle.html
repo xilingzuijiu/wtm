@@ -92,54 +92,61 @@
         };
         function publish() {
 //            var flag=0;
-            var randomKey=$(".submit").attr("id");
-            console.log("时间戳是"+randomKey);
-            $("#form").attr("enctype","multipart/form-data");
-            var obj=$("#form").serializeObject();
-           obj["imageFile"]=imagefile;
-            obj["randomKey"]=randomKey;
-            var request=JSON.stringify(obj);
+            var randomKey = $(".submit").attr("id");
+            console.log("时间戳是" + randomKey);
+            $("#form").attr("enctype", "multipart/form-data");
+            var obj = $("#form").serializeObject();
+            obj["imageFile"] = imagefile;
+            obj["randomKey"] = randomKey;
+            var request = JSON.stringify(obj);
             $("#button").attr('disabled', true);
             $("#button").css('background', "#bebebe");
             $("#button").css('border', "#bebebe 1px solid");
-            var needNumber=parseInt(Math.ceil($("#input2").val()));
+            var needNumber = parseInt(Math.ceil($("#input2").val()));
             console.log(needNumber);
-            var articleUrl=$("#articleUrl").val();
-            console.log(articleUrl);
-            if(needNumber>0&&articleUrl!=null){
-            $.ajax({
-                type: 'post',
-                dataType: 'json',
-                contentType: "application/json",
-                url: '/pc/admin/member/publishReadRequest',
+            var articleUrl = $("#articleUrl").val();
+            if (articleUrl.indexOf("#rd") > 0) {
+                alert("您发布的链接不规范，请在‘公众号会话’打开文章复制链接");
+                $("#button").attr('disabled', false);
+                $("#button").css('background', "");
+                $("#button").css('border', "");
+                $("#articleUrl").val("");
+            } else {
+                console.log(articleUrl);
+                if (needNumber > 0 && articleUrl != null) {
+                    $.ajax({
+                        type: 'post',
+                        dataType: 'json',
+                        contentType: "application/json",
+                        url: '/pc/admin/member/publishReadRequest',
 //                async:false,
-                data: request,
-                success: function (data) {
-                    console.log(data)
-                    var json = eval(data); //数组
-                    if (json!=null&&json.errorCode==0){
-                        Showbo.Msg.alert(json.data, function () {
-                            location.reload();
+                        data: request,
+                        success: function (data) {
+                            console.log(data)
+                            var json = eval(data); //数组
+                            if (json != null && json.errorCode == 0) {
+                                Showbo.Msg.alert(json.data, function () {
+                                    location.reload();
 //                            flag++;
-                        })
-                    }else if (json!=null&&json.errorCode==4){
-                        Showbo.Msg.alert(json.message);
-                        $("#button").attr('disabled', false);
-                        $("#button").css('background', "");
-                        $("#button").css('border', "");
+                                })
+                            } else if (json != null && json.errorCode == 4) {
+                                Showbo.Msg.alert(json.message);
+                                $("#button").attr('disabled', false);
+                                $("#button").css('background', "");
+                                $("#button").css('border', "");
 //                        flag++;
-                    }
-                },
-                error:function (data){
-                    console.log(data)
-                    Showbo.Msg.alert("页面加载错误，请重试");
-                    $("#button").attr('disabled', false);
-                    $("#button").css('background', "");
-                    $("#button").css('border', "");
+                            }
+                        },
+                        error: function (data) {
+                            console.log(data)
+                            Showbo.Msg.alert("页面加载错误，请重试");
+                            $("#button").attr('disabled', false);
+                            $("#button").css('background', "");
+                            $("#button").css('border', "");
 //                    flag++;
-                }
-            });
-          /*          if(flag==0){
+                        }
+                    });
+                    /*          if(flag==0){
                         Showbo.Msg.alert("任务发布成功", function () {
                             location.reload();
                             flag++;
@@ -152,6 +159,7 @@
                 $("#button").css('border', "");
             }
         }
+            }
     </script>
 </head>
 <body style="margin: 50px">
