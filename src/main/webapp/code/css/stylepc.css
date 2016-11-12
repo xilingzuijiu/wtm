@@ -163,8 +163,8 @@ nav .busienter h5{background:#68c1f4;color:#fff;padding:4px 7px;border-radius:5p
 .smallibox p{float:right;}
 .readtaskul{border-right:#ededed 1px dashed;width:260px;float:left;margin:0 !important;;}
 .tasksmalltitle{float:right;padding-left:12px;}
-.tasksmalltitle h5{font-size:15px;color:#fa4a18;font-weight:normal;padding-top:15px;width:6em;height:20px;overflow:hidden;text-overflow:ellipsis;line-height:20px;}
-.tasksmalltitle h6{font-size:25px;padding-top:25px;padding-bottom:2px;text-align:center;}
+.tasksmalltitle h5{font-size:15px;color:#fa4a18;font-weight:normal;text-align:left;padding-top:15px;width:6em;height:55px;overflow:hidden;text-overflow:ellipsis;line-height:20px;}
+.tasksmalltitle h6{font-size:25px;padding-top:15px;padding-bottom:2px;text-align:center;}
 .tasksmalltitle p{text-align:center;}
 iframe{padding:}
 .content{background: #FFFBE6;}
