@@ -171,18 +171,21 @@ public class ArticleService implements IArticleService {
     @Override
     @Transactional
     public synchronized Boolean readArticleRequest(Long memberId, Long time, Long articleId) {
-        Integer flagTemp = cacheService.getCacheByKey("wap:artile:read:limit:"+memberId,Integer.class);
+        Long flagTemp = cacheService.getCacheByKey("wap:artile:read:limit:"+memberId,Long.class);
         if (flagTemp!=null) {
             if (flagTemp==20){
                 cacheService.delKeyFromRedis("wap:artile:read:limit:"+memberId);
-                cacheService.setCacheByKey("wap:artile:read:limit:"+memberId,20,62*60);
+                cacheService.setCacheByKey("wap:artile:read:limit:"+memberId,DateUtils.getUnixTimestamp(),60*60);
             } else if (flagTemp > 20) {
-                throw new InfoException("抱歉哦~亲~，微信规定一段时间内阅读文章太多属于‘频繁操作’，为了您更好的阅读，请每小时领取一次阅读任务~");
+                Long timeLimit=flagTemp+60*60-DateUtils.getUnixTimestamp();
+                Long seconds=timeLimit%60;
+                Double minutes = Math.floor(timeLimit/60);
+                throw new InfoException("抱歉哦~亲~，微信规定一段时间内阅读文章太多属于‘频繁操作’，为了您更好的阅读，请"+minutes.intValue()+"分钟"+seconds+"秒后再来完成阅读任务~");
             } else if (flagTemp > 0) {
                 cacheService.increCacheBykey("wap:artile:read:limit:" + memberId, 1L);
             }
         }else {
-            cacheService.setCacheByKey("wap:artile:read:limit:"+memberId,1,62*60);
+            cacheService.setCacheByKey("wap:artile:read:limit:"+memberId,1,60*60);
         }
 
         ArticleReadRecord articleReadRecord=new ArticleReadRecord();
@@ -233,18 +236,21 @@ public class ArticleService implements IArticleService {
 
     @Override
     public synchronized Boolean pcreadArticleRequest(Long memberId, Long articleId) {
-        Integer flagTemp = cacheService.getCacheByKey("wap:artile:read:limit:"+memberId,Integer.class);
+        Long flagTemp = cacheService.getCacheByKey("wap:artile:read:limit:"+memberId,Long.class);
         if (flagTemp!=null) {
             if (flagTemp==20){
                 cacheService.delKeyFromRedis("wap:artile:read:limit:"+memberId);
-                cacheService.setCacheByKey("wap:artile:read:limit:"+memberId,20,62*60);
+                cacheService.setCacheByKey("wap:artile:read:limit:"+memberId,DateUtils.getUnixTimestamp(),60*60);
             } else if (flagTemp > 20) {
-                throw new InfoException("抱歉哦~亲~，微信规定一段时间内阅读文章太多属于‘频繁操作’，为了您更好的阅读，请每小时领取一次阅读任务~");
+                Long timeLimit=flagTemp+60*60-DateUtils.getUnixTimestamp();
+                Long seconds=timeLimit%60;
+                Double minutes = Math.floor(timeLimit/60);
+                throw new InfoException("抱歉哦~亲~，微信规定一段时间内阅读文章太多属于‘频繁操作’，为了您更好的阅读，请"+minutes.intValue()+"分钟"+seconds+"秒后再来完成阅读任务~");
             } else if (flagTemp > 0) {
                 cacheService.increCacheBykey("wap:artile:read:limit:" + memberId, 1L);
             }
         }else {
-            cacheService.setCacheByKey("wap:artile:read:limit:"+memberId,1,62*60);
+            cacheService.setCacheByKey("wap:artile:read:limit:"+memberId,1,60*60);
         }
         int num=articleReadRecordMapper.getArticleReadRecord(memberId, articleId);
         if (num>0){

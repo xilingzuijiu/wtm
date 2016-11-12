@@ -20,6 +20,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +29,7 @@ import org.springframework.util.StringUtils;
 import javax.annotation.PostConstruct;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.text.MessageFormat;
 import java.util.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -58,6 +60,10 @@ public class PaymentService implements IPaymentService {
     private ThirdLoginMapper thirdLoginMapper;
     @Autowired
     private MemberPayAccountsMapper memberPayAccountsMapper;
+    @Autowired
+    private MemberMapper memberMapper;
+    @Autowired
+    private AmqpTemplate amqpTemplate;
     private Lock lock = new ReentrantLock();
     private String certFilePath0;
     private String certFilePath1;
@@ -246,12 +252,24 @@ public class PaymentService implements IPaymentService {
         }
         cacheService.setCacheByKey(batch_no, batch_no, 24 * 60 * 60);
     }
-
     @Override
-    public String patchWechatCustomers(List<Map<String, Object>> parameters,String ip) {
+    public Boolean patchWechatCustomers(List<Map<String, Object>> parameters, String ip,Long memberId){
+        Integer count=0;
         if (!parameters.isEmpty()) {
-            Integer count=0;
             for (Map<String, Object> param : parameters) {
+                param.put("ip",ip);
+                param.put("memberId",memberId);
+                amqpTemplate.convertAndSend("dealWithdrawsChange."+param.get("approveId"),JSON.toJSONString(param));
+                count++;
+            }
+        }
+        return parameters.size()==count;
+    }
+    @Override
+    @Transactional
+    public boolean dealWithdrawsChange(Map<String, Object> param) {
+        if (!param.isEmpty()) {
+            String ip=param.get("ip").toString();
                 Long approveId = Long.valueOf(param.get("approveId").toString());
                 Integer isApprove = Integer.valueOf(param.get("isApprove").toString());
                 String remark = (String) param.get("remark");
@@ -349,7 +367,15 @@ public class PaymentService implements IPaymentService {
                                     paymentHistory.setMemberId(approve.getMemberId());
                                     paymentHistoryList.add(paymentHistory);
                                     number++;
-                                    count++;
+                                }else {
+                                    String reason = WechatResutCode.getValue(wechat.getResult_code()).getValue();
+                                    Long memberId =(Long)param.get("memberId");
+                                    String mobile="13153212303";
+                                    if (memberId!=null){
+                                        Member member=memberMapper.selectByPrimaryKey(memberId);
+                                        mobile=member.getTelephone();
+                                    }
+                                    SendMCUtils.sendMessage(mobile,MessageFormat.format(new String(PropertiesUtil.getValue("withdraws.fail.msg")),approveId,reason));
                                 }
                             }
                         } catch (Exception e) {
@@ -359,6 +385,7 @@ public class PaymentService implements IPaymentService {
                             int num = paymentHistoryMapper.batchInsertPayHistory(paymentHistoryList);
                             if (num == number) {
                                 JpushUtils.buildRequest("提现申请审核通过，请到微信查看零钱明细", approve.getMemberId());
+                                return true;
                             } else throw new InfoException("提现审核失败");
                         } else {
                             throw new InfoException("用户提现失败，请重新审批");
@@ -373,17 +400,13 @@ public class PaymentService implements IPaymentService {
                         approve.setIsPaid(1);
                         approveMapper.updateByPrimaryKeySelective(approve);
                         JpushUtils.buildRequest(remark, approve.getMemberId());
-                        return "审核已拒绝";
+                        return true;
                     } else {
                         throw new InfoException("审批状态错误");
                     }
                 }
-            }
-            if (count==parameters.size()){
-                return "提现审核成功";
-            }
         }
-        return null;
+        return false;
     }
 
     @Override

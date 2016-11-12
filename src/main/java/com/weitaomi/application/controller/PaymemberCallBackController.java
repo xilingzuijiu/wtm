@@ -5,6 +5,7 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.Dom4JDriver;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
+import com.weitaomi.application.controller.baseController.BaseController;
 import com.weitaomi.application.model.bean.PaymentApprove;
 import com.weitaomi.application.service.interf.IPaymentService;
 import com.weitaomi.systemconfig.alipay.HttpRequest;
@@ -41,7 +42,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/pc/admin/paymemberCallBack")
-public class PaymemberCallBackController {
+public class PaymemberCallBackController extends BaseController{
     private Logger logger= LoggerFactory.getLogger(PaymemberCallBackController.class);
     @Autowired
     private IPaymentService paymentService;
@@ -81,7 +82,8 @@ public class PaymemberCallBackController {
     @ResponseBody
     @RequestMapping(value = "/patchWechatCustomers", method = RequestMethod.POST)
     public AjaxResult  patchWechatCustomers(@RequestBody List<Map<String, Object>> parameters,HttpServletRequest request){
-        return AjaxResult.getOK(paymentService.patchWechatCustomers(parameters, IpUtils.getIpAddr(request)));
+        Long memberId= this.getUserId(request);
+        return AjaxResult.getOK(paymentService.patchWechatCustomers(parameters,IpUtils.getIpAddr(request),memberId));
     }
     @ResponseBody
     @RequestMapping(value = "getApproveList",method = RequestMethod.GET)

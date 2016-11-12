@@ -82,6 +82,7 @@ public class OfficeAccountService implements IOfficeAccountService {
     public boolean pushAddRequest(Long memberId,AddOfficalAccountDto addOfficalAccountDto) {
         logger.info("app用户ID：{}开始拉取公众号列表，参数为：{}",memberId,JSON.toJSONString(addOfficalAccountDto));
         List<OfficeMember> officeMembers=officeMemberMapper.getOfficeMemberList(memberId);
+        Long timeStart=System.currentTimeMillis();
         if (!officeMembers.isEmpty()){
             String info="您还有未关注公众号，请到公众号内完成\n未完成任务将会在1小时后删除\n若领任务之前已关注，请标注这些公众号";
             throw new InfoException(info);
@@ -135,6 +136,7 @@ public class OfficeAccountService implements IOfficeAccountService {
             }
             try {
                 HttpRequestUtils.postStringEntity(url, JSON.toJSONString(map));
+                logger.info("领取关注任务列表时间："+(System.currentTimeMillis()-timeStart));
                 return true;
             } catch (IOException e) {
                 e.printStackTrace();

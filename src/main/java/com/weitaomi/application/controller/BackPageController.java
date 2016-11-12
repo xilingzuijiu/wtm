@@ -46,7 +46,7 @@ public class BackPageController extends BaseController {
             String version = (String) appVersionService.getCurrentVersion(4, 0);
             String fileName = "weitaomi" + version + ".apk";
             String prefix = "C:\\Users\\Administrator\\Desktop\\";
-//            prefix= PropertiesUtil.getValue("server.latest.version");
+            prefix= PropertiesUtil.getValue("server.latest.version");
             File file = new File(prefix + fileName);
             InputStream inputStream = new FileInputStream(file);
             byte[] buffer = new byte[1024];

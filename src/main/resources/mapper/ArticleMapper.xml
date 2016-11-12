@@ -41,7 +41,7 @@
       a.readNumber,a.agreeNumber,a.createTime,a.validNumber,a.isTop,
       Floor((pool.totalScore-pool.singleScore)/pool.singleScore)+1 readIncreaseNumber,u.username username
     from wtm_article a LEFT JOIN wtm_official_accounts u ON a.officialAccountId=u.id LEFT JOIN wtm_task_pool pool ON pool.articleId = a.id
-    WHERE pool.isPublishNow=0 AND pool.totalScore>=pool.singleScore AND pool.id>0 AND pool.articleId NOT IN
+    WHERE pool.isPublishNow=1 AND pool.totalScore>=pool.singleScore AND pool.id>0 AND pool.articleId NOT IN
     (select r.articleId from wtm_article_read_record r WHERE r.memberId=#{memberId})
     <if test="articleType==0">
         AND a.articleType=#{articleType}
@@ -61,7 +61,7 @@
     <if test="articleSearch.titleKeyWord!=null">
       AND a.title like concat('%',#{articleSearch.titleKeyWord},'%')
     </if>
-    ORDER BY a.isTop DESC,a.createTime DESC
+    ORDER BY a.isTop DESC,a.createTime ASC
   </select>
   <select id="getArticleByUrl" resultType="com.weitaomi.application.model.bean.Article">
       select a.* from wtm_article a LEFT JOIN wtm_task_pool p on a.id=p.articleId WHERE a.url=#{url} AND p.id>0 AND p.totalScore>0

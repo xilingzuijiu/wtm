@@ -214,11 +214,11 @@ public class MyBatisTest extends BaseContextCase {
     }
     @Test
     public void testPassword(){
-        System.out.println(Base64Utils.encodeToString("在路上".getBytes()));
+        System.out.println(Base64Utils.encodeToString("天道酬勤".getBytes()));
     }
     @Test
     public void testGetNickName(){
-        ThirdLogin login = thirdLoginMapper.selectByPrimaryKey(2993L);
+        ThirdLogin login = thirdLoginMapper.selectByPrimaryKey(8L);
         String nickname = Base64Utils.encodeToString(login.getNickname().getBytes());
         System.out.println(nickname);
         String urlencode="8J+QgPCfmr7kuozotKc=";
@@ -229,6 +229,11 @@ public class MyBatisTest extends BaseContextCase {
         }
         System.out.println(Base64Utils.encodeToUrlSafeString(urlencode.getBytes()));
         System.out.println(EmojiUtil.resolveToByteFromEmoji(login.getNickname()));
+    }
+    @Test
+    public void testMemberScoreMapper(){
+        Double value=memberScoreFlowMapper.getToalFlowScore(7L);
+        System.out.println(value);
     }
 }
 

@@ -1,10 +1,12 @@
 package com.weitaomi.application.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import com.weitaomi.application.model.bean.*;
 import com.weitaomi.application.model.dto.MemberTaskDto;
 import com.weitaomi.application.model.dto.MemberTaskWithDetail;
 import com.weitaomi.application.model.mapper.*;
+import com.weitaomi.application.service.interf.ICacheService;
 import com.weitaomi.application.service.interf.IMemberScoreService;
 import com.weitaomi.application.service.interf.IMemberTaskHistoryService;
 import com.weitaomi.systemconfig.constant.SystemConfig;
@@ -16,11 +18,13 @@ import com.weitaomi.systemconfig.util.StringUtil;
 import com.weitaomi.systemconfig.util.UUIDGenerator;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.type.IntegerTypeHandler;
+import org.apache.shiro.codec.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Base64Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +52,8 @@ public class MemberTaskHistoryService  implements IMemberTaskHistoryService {
     private WtmOfficialMemberMapper wtmOfficialMemberMapper;
     @Autowired
     private ThirdLoginMapper thirdLoginMapper;
+    @Autowired
+    private ICacheService cacheService;
     @Override
     public Page<MemberTaskWithDetail> getMemberTaskInfo(Long memberId,Integer type,Integer pageSize,Integer pageIndex) {
         List<MemberTaskWithDetail> memberTaskHistoryDtoList=memberTaskHistoryMapper.getMemberTaskHistoryList(memberId,type,new RowBounds(pageIndex,pageSize));
@@ -104,6 +110,10 @@ public class MemberTaskHistoryService  implements IMemberTaskHistoryService {
 
     @Override
     public Boolean isSignAccount(Long memberId){
+        Integer number=cacheService.getCacheByKey("member:account:sign:"+memberId,Integer.class);
+        if (number!=null&&number==1){
+            return true;
+        }
         List<Map<String,Long>> idMap= memberMapper.getIsFollowWtmAccount(memberId,0);
         if (!idMap.isEmpty()){
             if (idMap.get(0).get("officialMemberId")==null){
@@ -169,9 +179,9 @@ public class MemberTaskHistoryService  implements IMemberTaskHistoryService {
     @Transactional
     public MemberScore addDailyTask(Long memberId, Long typeId) {
         List<MemberTaskHistory> memberTaskHistoryList=memberTaskMapper.getIsMemberTaskFinished(memberId,typeId,DateUtils.getTodayZeroSeconds(),DateUtils.getTodayEndSeconds());
-//        if (!memberTaskHistoryList.isEmpty()){
-//            throw new InfoException("该任务今天已完成");
-//        }
+        if (!memberTaskHistoryList.isEmpty()){
+            throw new InfoException("该任务今天已完成");
+        }
         MemberTask memberTask=memberTaskMapper.selectByPrimaryKey(typeId);
         this.addMemberTaskToHistory(memberId,typeId,null,1,null,null,null);
         MemberScore memberScore=memberScoreService.addMemberScore(memberId,3L,1,memberTask.getPointCount().doubleValue(), UUIDGenerator.generate());
@@ -204,8 +214,14 @@ public class MemberTaskHistoryService  implements IMemberTaskHistoryService {
 
     @Override
     public String signAccounts(Map map){
+        logger.info("用户签到信息为:{}", JSON.toJSONString(map));
         String openId = (String) map.get("openid");
-        String nickName=(String) map.get("nickname");
+        String nickName= Base64.decodeToString((String) map.get("nickname"));
+        Long time=DateUtils.getTodayEndSeconds()-DateUtils.getUnixTimestamp();
+        Integer number=cacheService.getCacheByKey(openId+":"+nickName,Integer.class);
+        if (number!=null&&number==1){
+            throw new InfoException("该任务今天已完成");
+        }
         String sexTemp=map.get("sex").toString();
         Integer sex=-1;
         if (!StringUtil.isEmpty(sexTemp)) {
@@ -235,8 +251,12 @@ public class MemberTaskHistoryService  implements IMemberTaskHistoryService {
                     memberMapper.updateByPrimaryKeySelective(member);
                 }
             }
+            logger.info("签到成功，用户ID为{}",memberId.get(0));
+            cacheService.setCacheByKey(openId + ":" + nickName, 1, time.intValue());
+            cacheService.setCacheByKey("member:account:sign:"+memberId.get(0), 1, time.intValue());
             return "签到成功，现在您可以返回APP领取任务";
         }
+        logger.info("签到失败，用户ID为{}",memberId.get(0));
         return "签到失败，请稍后再试...";
     }
 }

@@ -74,8 +74,10 @@ public class MemberScoreService implements IMemberScoreService {
                         scoreBefore = memberScore.getMemberScore();
                         rate = memberScore.getRate();
                     }
-                    if (typeId!=3){
-                        rate= BigDecimal.ONE;
+                    if (typeId!=7) {
+                        if (typeId != 3) {
+                            rate = BigDecimal.ONE;
+                        }
                     }
                     increaseScore = BigDecimal.valueOf(score).multiply(rate);
                 }
