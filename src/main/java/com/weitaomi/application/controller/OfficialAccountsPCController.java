@@ -108,4 +108,18 @@ public class OfficialAccountsPCController extends BaseController{
     public AjaxResult getTaskPoolDto(Long officialAccountId, Integer type, @RequestParam(defaultValue = "10") int pageSize, @RequestParam(defaultValue = "0")int pageIndex){
         return AjaxResult.getOK(memberTaskPoolService.getTaskPoolDto(officialAccountId,type,pageSize,pageIndex));
     }
+    /**
+     * 修改任务
+     * @param taskPoolId
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/updateTaskPoolDto", method = RequestMethod.POST)
+    public AjaxResult updateTaskPoolDto(HttpServletRequest request,Long taskPoolId, Integer isPublishNow,
+                                        @RequestParam(required = false) Integer needNumber,
+                                        @RequestParam(required = false) Double singScore,
+                                        @RequestParam(required = false) Integer limitDay){
+        Long memberId=this.getUserId(request);
+        return AjaxResult.getOK(memberTaskPoolService.updateTaskPoolDto(memberId,taskPoolId, isPublishNow, needNumber, singScore,limitDay));
+    }
 }

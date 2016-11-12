@@ -159,7 +159,7 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
                     }
 
                     if (!StringUtil.isEmpty(url)) {
-                        if (rate >= 0.5 && rate <= 1.5) {
+                        if (rate >= 0.6 && rate <= 1.2) {
                             imgList.add(url);
                         }
                     }
@@ -317,9 +317,6 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
         } else if (isPublishNow==0){
             Double score=taskPool.getTotalScore();
             taskPool.setTotalScore(0D);
-            taskPool.setLimitDay(0L);
-            taskPool.setNeedNumber(0);
-            taskPool.setSingleScore(0D);
             memberScoreService.addMemberScore(memberId, 6L,1,score.doubleValue(), UUIDGenerator.generate());
         }
         int num = taskPoolMapper.updateByPrimaryKeySelective(taskPool);
