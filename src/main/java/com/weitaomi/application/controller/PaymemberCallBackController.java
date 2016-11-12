@@ -80,12 +80,6 @@ public class PaymemberCallBackController extends BaseController{
         return code;
     }
     @ResponseBody
-    @RequestMapping(value = "/patchWechatCustomers", method = RequestMethod.POST)
-    public AjaxResult  patchWechatCustomers(@RequestBody List<Map<String, Object>> parameters,HttpServletRequest request){
-        Long memberId= this.getUserId(request);
-        return AjaxResult.getOK(paymentService.patchWechatCustomers(parameters,IpUtils.getIpAddr(request),memberId));
-    }
-    @ResponseBody
     @RequestMapping(value = "getApproveList",method = RequestMethod.GET)
     public AjaxResult getApproveList(Integer pageIndex,Integer pageSize){
         return AjaxResult.getOK(paymentService.getPaymentApproveList(pageIndex, pageSize));
