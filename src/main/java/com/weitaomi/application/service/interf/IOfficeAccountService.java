@@ -47,11 +47,6 @@ public interface IOfficeAccountService {
     boolean markAddRecord(Long memberId, OfficialAccountMsg officialAccountMsg);
 
     /**
-     * {"originId":""," nickname ":"昵称，如果unionId一致则换成unionId","time":"关注时间"}
-     */
-    public Boolean pushAddFinished(Map<String,String> params);
-
-    /**
      * 获取用户待关注公众号列表
      * @param memberId
      * @return

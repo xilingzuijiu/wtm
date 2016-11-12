@@ -41,16 +41,6 @@ public class OfficialAccountsPCController extends BaseController{
     }
 
     /**
-     * 完成关注
-     * @param
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "/pushAddFinished",method = RequestMethod.POST)
-    public AjaxResult pushAddFinished(@RequestBody Map<String,String> params){
-        return AjaxResult.getOK(officeAccountService.pushAddFinished(params));
-    }
-    /**
      * 标记即将关注该公众号
      * @param
      * @return

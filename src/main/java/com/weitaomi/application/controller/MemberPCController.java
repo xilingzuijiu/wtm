@@ -194,16 +194,6 @@ public class MemberPCController extends BaseController {
         return AjaxResult.getOK();
     }
     /**
-     * 完成关注
-     * @param
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "/pushAddFinished",method = RequestMethod.POST)
-    public AjaxResult pushAddFinished(@RequestBody Map<String,String> params){
-        return AjaxResult.getOK(officeAccountService.pushAddFinished(params));
-    }
-    /**
      * 获取邀请码
      * @param
      * @return
