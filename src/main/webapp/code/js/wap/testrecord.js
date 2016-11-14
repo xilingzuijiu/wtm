@@ -27,7 +27,7 @@ $(window).scroll(function(){
             $(".loadmore").css("display","none");
         }
     }else if(scrollTop<=0){         //滚动条距离顶部的高度小于等于0
-                    //location.reload();
+
     }
 });
 function loadrecord(){

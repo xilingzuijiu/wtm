@@ -1,7 +1,6 @@
 /**
  * Created by yuguodong on 2016/10/11.
  */
-
 var puser={
     purseDataDeal: function (data) {
         $(".pursebag>h6>span").text((data.memberScore/100).toFixed(2))

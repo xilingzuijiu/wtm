@@ -5,7 +5,6 @@ $(function(){
     var a=$("#Notwo .personimg").offsetWidth;
     $("#Notwo .personimg").css("height",a);
     console.log("图像宽度是"+a);
-
     var inviteheight=$(window).height();
     var eventheight=$(".eventintroduce").height();
     var payconfirmheight=Math.ceil($(".payconfirm").height());
@@ -31,10 +30,10 @@ $(function(){
             $(".nullbox").css("display","none");
             $('.payconfirm').removeAttr("disabled");
         })
-    },false)
+    },false);
     $(".payconfirm").click(function(){
         location.href="../invite.html?memberId="+ $.cookie('memberId');
-    })
+    });
     $.cookie("memberId");
     $.ajax({
         type:'post',
@@ -70,19 +69,19 @@ $(function(){
             if(json.data!=null&&json.errorCode==0){
                 var length=json.data.length;
                 if(length==1){
-                    $("#Notwo").css("display","table-cell");
+                    $("#Notwo").css("display","inline-block");
                     $("#Notwo .personimg").attr("src",json.data[0].imageUrl);
                     $("#Notwo p strong").text(json.data[0].shareCounts+"米");
                     $("#Notwo h6").text(json.data[0].memberName);
                 }else if(length==2){
-                    $(".inviterank li:not('#Nothree')").css("display","table-cell");
+                    $(".inviterank li:not('#Nothree')").css("display","inline-block");
                     for(var i=0;i<2;i++){
                         $(".inviterank li").eq(i).find('.personimg').attr("src",json.data[1-i].imageUrl);
                         $(".inviterank li").eq(i).find('strong').text(json.data[1-i].shareCounts+"米");
                         $(".inviterank li").eq(i).find('h6').text(json.data[1-i].memberName);
                     }
                 }else{
-                    $(".inviterank li").css("display","table-cell");
+                    $(".inviterank li").css("display","inline-block");
                     for(var i=0;i<3;i++){
                         $("#Noone .personimg").attr("src",json.data[1].imageUrl);
                         $("#Noone p strong").text(json.data[1].shareCounts+"米");

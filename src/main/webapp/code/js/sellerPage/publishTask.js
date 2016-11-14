@@ -96,7 +96,7 @@ function checkAmount(value){
     var i=1
     var eles='';
     if(self.location.pathname=='/frontPage/sellerPage/publishAccounts.html') {
-        i=parseInt(value/1000)+1
+        i=parseInt(value/1000)+1;
         eles= '<option value="'+i+'">'+i+'</option>';
     }
     if(self.location.pathname=='/frontPage/sellerPage/publishArticle.html') {

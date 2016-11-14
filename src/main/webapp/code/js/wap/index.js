@@ -9,7 +9,7 @@ var getLocation = function () {
         date: new Date().getTime()//获取当前时间方法
     };
     //默认城市
-    if (navigator.geolocation) {
+    if (navigator.geolocation){
         navigator.geolocation.getCurrentPosition(function (position) {
                 var lat = position.coords.latitude;
                 var lon = position.coords.longitude;
@@ -60,8 +60,6 @@ var getLocation = function () {
     } else {
     }
 };
-
-
 function  modifyMemberAddress(address){
     $.ajax({
         url:"/pc/admin/member/modifyMemberAddress",
@@ -71,7 +69,6 @@ function  modifyMemberAddress(address){
             getMemberRequestHeaderMsg(XMLHttpRequest)
         } ,
         success: function (data) {
-
         }
     })
 }

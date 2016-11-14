@@ -6,7 +6,6 @@ $(function(){
     console.log(taskHistoryId);
     $.ajax({
         type: 'post',
-//                dataType: 'json',
         url: '/pc/admin/memberTask/getMemberTaskInfoDetail',
         data: {taskHistoryId:taskHistoryId},
         beforeSend: function (XMLHttpRequest) {
@@ -32,22 +31,5 @@ $(function(){
     })
 })
 function format(timestamp) {
-    console.log(timestamp);
-    function add0(y) {
-        return y < 10 ? '0' + y : y
-    }
-    var time = new Date(timestamp * 1000);
-    var y = time.getFullYear();
-    var m = time.getMonth() + 1;
-    var d = time.getDate();
-    var h = time.getHours();
-    var mm = time.getMinutes();
-    if(String(mm).length==1){
-        mm="0"+time.getMinutes();
-    }
-    var s = time.getSeconds();
-    if(String(s).length==1){
-        s="0"+time.getSeconds();
-    }
-    return add0(y) + '/' +add0(m) + '/' + add0(d) + ' ' + add0(h) + ':' + add0(mm)+ ':' + add0(s);
+    return new Date(+new Date(parseInt(timestamp) * 1000)+8*3600*1000).toISOString().replace(/T/g,' ').replace(/\.[\d]{3}Z/,'')
 }//时间戳变换格式

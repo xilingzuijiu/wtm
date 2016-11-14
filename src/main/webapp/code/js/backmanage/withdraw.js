@@ -11,7 +11,6 @@ var approveHead = ' <li class="nobd" id="total">' +
     '<div class="col-xs-1">处理意见</div>' +
     '<div class="col-xs-2 nobd">审批</div>' +
     '</li>'
-
 function getApproveList(pageIndex,pageSize) {
     if (typeof pageIndex =='undefined' || pageIndex ==null){
         pageIndex=0
@@ -19,7 +18,6 @@ function getApproveList(pageIndex,pageSize) {
     if (typeof pageSize =='undefined' || pageSize ==null){
         pageSize=0
     }
-    //patchWechatCustomers
     $.ajax({
         type: 'get',
         dataType: 'json',
@@ -42,8 +40,6 @@ function getApproveList(pageIndex,pageSize) {
         }
     })
 }
-
-
 function dealGetApproveData(data){
     total=data.total;
     var i=0;
@@ -66,7 +62,6 @@ function dealGetApproveData(data){
     });
     return elements
 }
-
 function getApproveListTr(account,name,time,amount,isCheck,memberId,listid,i) {
     var i=i%pageSize+1;
     var checkState='';
@@ -152,7 +147,8 @@ console.log(obj.parentNode);
                     if (json != null && json.errorCode == 0){
                         var data = json.data;
                         obj.parentNode.innerHTML ="已审核";
-                        obj.parent.style.color="green";
+                        //obj.parentNode.style.color="green";
+                        obj.parentNode.style.color="green";
                     } else {
                         //$("this").parent().prev().empty();
                         var a=obj.parentNode.previousElementSibling;
@@ -234,16 +230,11 @@ function batchReview(){
                         obj.find("select option:first").attr('selected','selected');
                     }
                 });
-
         }
     } else {
         alert("请选择要处理的数据");
     }
 };
-
-
-
-
 function getLocalTime(nS) {
-    return new Date(parseInt(nS) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
+   return new Date(+new Date(parseInt(nS) * 1000)+8*3600*1000).toISOString().replace(/T/g,' ').replace(/\.[\d]{3}Z/,'')
 }

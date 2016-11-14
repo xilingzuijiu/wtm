@@ -6,15 +6,14 @@ var pageSize=16;
 var count=1;
 $(function() {
     loadinviterecord();
-
 })
 $(window).scroll(function(){
-    var scrollTop = $(this).scrollTop();               //滚动条距离顶部的高度
-    var scrollHeight = $(document).height();                   //当前页面的总高度
-    var windowHeight = $(this).height();                   //当前可视的页面高度
-    if(scrollTop + windowHeight >= scrollHeight){        //距离顶部+当前高度 >=文档总高度 即代表滑动到底部
-        console.log(Math.ceil(total/pageSize)+1+"shi");
-        if(count<=Math.ceil(total/pageSize)+1){
+    var scrollTop = $(this).scrollTop();
+    var scrollHeight = $(document).height();
+    var windowHeight = $(this).height();
+    if(scrollTop + windowHeight >= scrollHeight){
+        console.log(Math.ceil(total/pageSize)+"shi");
+        if(count<Math.ceil(total/pageSize)){
             $(".loadmore").css("visibility","visible");
             $(".loadmore").click(function(){
                 count++;
@@ -22,14 +21,15 @@ $(window).scroll(function(){
                 loadinviterecord();
             })
         }
-        if(count>Math.ceil(total/pageSize)){
+        if(count>=Math.ceil(total/pageSize)){
             $(".loadmore").css("display","none");
         }
-    }else if(scrollTop<=0){         //滚动条距离顶部的高度小于等于0
-//                    location.reload();
+    }else if(scrollTop<=0){
     }
 });
 function loadinviterecord(){
+    console.log("count是"+count);
+    console.log("pageSize是"+pageSize);
     $.ajax({
         type:'post',
         dataType:'json',
@@ -40,17 +40,18 @@ function loadinviterecord(){
         },
         success:function(params) {
             var json = eval(params);
-            if (json.data != null && json.errorCode == 0) {
-                total=json.data.total;
-                json.data.list.forEach(function (invitelist) {
+            if (json.data!= null && json.errorCode == 0) {
+                total=json.data.length;
+                console.log("总数就是"+total);
+                json.data.forEach(function(invitelist) {
                     var li = document.createElement("li");
                     var img = document.createElement('img');
-                    img.setAttribute("src",  invitelist.imageUrl);
+                    img.setAttribute("src",invitelist.imageUrl);
                     var h5 = document.createElement('h5');
                     h5.innerHTML = invitelist.memberName;
                     var p = document.createElement('p');
                     var timestamp = invitelist.invitedTime;
-                    p.innerHTML = format(timestamp);
+                    p.innerHTML = getLocalTime(timestamp);
                     li.appendChild(img);
                     li.appendChild(h5);
                     li.appendChild(p);
@@ -60,8 +61,6 @@ function loadinviterecord(){
                 })
             } else {
                 $(".nullp").css("display","block");
-
-                //alert("获取数据失败")
             }
         },
         error:function (data) {
@@ -69,16 +68,6 @@ function loadinviterecord(){
         }
     })
 }
-function format(timestamp) {
-    function add0(y) {
-        return y < 10 ? '0' + y : y
-    }
-    var time = new Date(timestamp * 1000);
-    var y = time.getFullYear();
-    var m = time.getMonth() + 1;
-    var d = time.getDate();
-    var h = time.getHours();
-    var mm = time.getMinutes();
-    var s = time.getSeconds();
-    return add0(y) + '/' +add0(m) + '/' + add0(d) + ' ' + add0(h) + ':' + add0(mm)+ ':' + add0(s);
-}//时间戳变换格式
+function getLocalTime(nS) {
+    return new Date(+new Date(parseInt(nS) * 1000)+8*3600*1000).toISOString().replace(/T/g,' ').replace(/\.[\d]{3}Z/,'')
+}

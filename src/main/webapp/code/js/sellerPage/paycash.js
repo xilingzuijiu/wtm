@@ -9,7 +9,7 @@ var count = 0;
             console.log("输入框是" + howmoney);
             if(howmoney>=50){
                 if (howmoney!=null&&howmoney>0) {
-                    var review = confirm("确定充值" + howmoney + "元？");
+                    var review = Showbo.Msg.confirm("确定充值" + howmoney + "元？");
                     if (review){
                         $("#cleckmoney").css("border", "#ddd 1px solid");
                         $(".moneylist li").css("cursor", "default");
@@ -17,38 +17,6 @@ var count = 0;
                         $(".moneylist li").css("border", "#ddd 1px solid");
                         $("#cleckmoney").attr("disabled", "disabled");
                         count = 1;
-                        //var obj = new Pay(5, howmoney);
-                        //var requestParams = JSON.stringify(obj)
-                        //$.ajax({
-                        //    type: 'post',
-                        //    contentType: "application/json",
-                        //    dataType: 'json',
-                        //    url: '/pc/admin/payment/getPCPaymentParams',
-                        //    data: requestParams,
-                        //    beforeSend: function (XMLHttpRequest) {
-                        //        getMemberRequestHeaderMsg(XMLHttpRequest)
-                        //    },
-                        //    success: function (params) {
-                        //        var json = eval(params);
-                        //        if (json.data != null && json.errorCode == 0) {
-                        //            $(".confirmOrder").css("display", "block");
-                        //            var str = json.data.code_url;
-                        //            $("#qrcode").qrcode({
-                        //                render: "canvas",
-                        //                text: str,
-                        //                width: 180,
-                        //                height: 180,
-                        //            })
-                        //            $(".paycode").css("display", "block");
-                        //            $(".saocode img").css("margin", "0");
-                        //            $(".saocode img").css("float", "left");
-                        //        } else {
-                        //            alert("获取数据失败");
-                        //        }
-                        //    }, error: function (data) {
-                        //        alert("页面加载错误，请重试");
-                        //    }
-                        //})
                         request(howmoney);
                     }
                 }else {
@@ -77,38 +45,6 @@ function cleckpaycash(){
                 $("#cleckmoney").css("border", "#ddd 1px solid");
                 $("#cleckmoney").attr("disabled", "disabled");
                 $(".moneylist li").css("cursor","default");
-                //var obj=new Pay(5,howmoney);
-                //var requestParams=JSON.stringify(obj);
-                //$.ajax({
-                //    type: 'post',
-                //    contentType: "application/json",
-                //    dataType:'json',
-                //    url: '/pc/admin/payment/getPCPaymentParams',
-                //    data: requestParams,
-                //    beforeSend: function (XMLHttpRequest) {
-                //        getMemberRequestHeaderMsg(XMLHttpRequest)
-                //    },
-                //    success: function (params) {
-                //        var json = eval(params);
-                //        if (json.data != null && json.errorCode == 0) {
-                //            $(".confirmOrder").css("display","block");
-                //            var str = json.data.code_url;
-                //            $("#qrcode").qrcode({
-                //                render: "canvas",
-                //                text: str,
-                //                width: 180,
-                //                height: 180,
-                //            });
-                //            $(".paycode").css("display","block");
-                //            $(".saocode img").css("margin","0");
-                //            $(".saocode img").css("float","left");
-                //        } else {
-                //            alert("获取数据失败");
-                //        }
-                //    }, error: function (data) {
-                //        alert("页面加载错误，请重试");
-                //    }
-                //})
                 request(howmoney);
             }
         }
@@ -177,13 +113,6 @@ function toUtf8(str) {
 var number=0
 function getMemberRequestHeaderMsg(XMLHttpRequest) {
     var memberId = $.cookie("memberId");
-    //if (memberId == null || memberId == undefined) {
-    //    if (number < 1) {
-    //        alert("登录已过期请重新登录");
-    //        number++;
-    //        location.href = "/frontPage/wtmpc/login.html"
-    //    }
-    //}
     var password = $.cookie("password");
     XMLHttpRequest.setRequestHeader("memberId", memberId);
     XMLHttpRequest.setRequestHeader("from", 1);

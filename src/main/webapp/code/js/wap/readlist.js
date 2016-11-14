@@ -35,7 +35,6 @@ $(function () {
         document.body.innerHTML = "请在微信打开此页面"
     }
 })
-
 function is_weixin() {
     var ua = navigator.userAgent.toLowerCase();
     if (ua.match(/MicroMessenger/i) == "micromessenger") {
@@ -44,30 +43,6 @@ function is_weixin() {
         return false;
     }
 }
-
-$(window).scroll(function () {
-    var scrollTop = $(this).scrollTop();               //滚动条距离顶部的高度
-    var scrollHeight = $(document).height();                   //当前页面的总高度
-    var windowHeight = $(this).height();                   //当前可视的页面高度
-    if (scrollTop + windowHeight >= scrollHeight) {        //距离顶部+当前高度 >=文档总高度 即代表滑动到底部
-        console.log(Math.ceil(total / pageSize)+ "shi");
-        console.log(total+"是")
-        if (count <Math.ceil(total / pageSize)) {
-            $(".loadmore").css("visibility", "visible");
-            $(".loadmore").click(function () {
-                count++;
-                $(this).css("visibility", "hidden");
-                loadReadlist();
-            })
-        } else {
-            $(".loadmore").css("display", "none");
-        }
-    } else if (scrollTop <= 0) {         //滚动条距离顶部的高度小于等于0
-//                    location.reload();
-    }
-});
-
-
 function loadReadlist() {
     var request = JSON.stringify(new ArticleSerach(0, count, pageSize));
     var cookietime=$.cookie($.cookie("memberId") + "time");
@@ -116,26 +91,15 @@ function loadReadlist() {
                         var h5 = document.createElement('h5');
                         h5.className = "articltitle";
                         h5.innerHTML = article.title;
-                        //var h6 = document.createElement('h6');
-                        //h6.innerHTML = article.articleAbstract;
                         var p = document.createElement('p');
                         p.innerHTML = "剩余阅读数："
                         var span = document.createElement('span');
                         span.innerHTML = article.readIncreaseNumber;//阅读数名称修改
                         p.appendChild(span);
                         div2.appendChild(h5);
-                        //div2.appendChild(h6);
                         div2.appendChild(p);
-                        //var div3 = document.createElement('div');
-                        //div3.className = "checkanniu col-xs-2";
-                        //显示时间点
-                        //var a = document.createElement('a');
-                        //var timestamp = article.createTime;
-                        //a.innerHTML = format(timestamp);
-                        //div3.appendChild(a);//
                         li.appendChild(div1);
                         li.appendChild(div2);
-                        //li.appendChild(div3);
                         document.body.appendChild(li);
                         document.getElementsByTagName('ul')[0].appendChild(li);//动态添加文章（li标签）
                     })
@@ -156,7 +120,6 @@ function loadReadlist() {
         })
     }
 }
-
 var articleSubmit = function (obj) {
     var articleId = obj.getAttribute("id");
     var articleUrl = hashMap.Get(articleId);
@@ -194,21 +157,3 @@ function ArticleSerach(searchWay, pageIndex, pageSize) {
     this.pageIndex = pageIndex
     this.pageSize = pageSize
 }
-function format(timestamp) {
-    console.log(timestamp);
-    function add0(y) {
-        return h < 10 ? '0' + y : y
-    }
-
-    var time = new Date(timestamp * 1000);
-    var y = time.getFullYear();
-    var m = time.getMonth() + 1;
-    var d = time.getDate();
-    var h = time.getHours();
-    var mm = time.getMinutes();
-    if (String(mm).length == 1) {
-        mm = "0" + time.getMinutes();
-    }
-    var s = time.getSeconds();
-    return add0(h) + ':' + add0(mm);
-}//时间戳变换格式

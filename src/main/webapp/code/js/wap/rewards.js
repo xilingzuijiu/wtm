@@ -96,10 +96,5 @@ var taskSubmit=function(obj){
                     }
                 })
             })
-        case 10:
-
-        case 2:
-
-        case 4:
     }
 }

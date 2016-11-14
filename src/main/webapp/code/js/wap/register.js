@@ -20,7 +20,6 @@ $(function(){
                         alert(data.message)
                     }
                 }
-
             })
             $("#sendVerifyCode").css("display","none");
             $("#downtime").css("display","block");
@@ -30,7 +29,6 @@ $(function(){
                 $("#downtime").css("display","none");
             }, SS*1000);
         }
-
     })
     $("#register").click( function (){
         $("#form").attr("enctype","multipart/form-data");
@@ -74,7 +72,6 @@ $(function(){
                     $("#register").attr('disabled', false);
                 }
             });
-
         }
     })
 })

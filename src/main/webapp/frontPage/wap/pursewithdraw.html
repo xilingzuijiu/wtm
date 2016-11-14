@@ -42,19 +42,20 @@
                             location.href="/frontPage/wap/mycenter.html";
                         }else {location.href="/frontPage/wap/index.html";}
                     }else {
-                        location.href = "cash.html";
+                        location.href = "/frontPage/wap/cash.html";
                     }
                 })
         })
     </script>
 </head>
 <body>
-<div class="pursetop"><a href="cashdetails.html">提现明细</a></div>
+<div class="pursetop"><a href="/frontPage/wap/cashdetails.html">提现明细</a></div>
 <div class="pursebag">
     <img src="../../code/img/pay/money1.png"/>
     <h5>我的零钱</h5>
     <h6>￥<span>0.00</span>元</h6>
-    <p>可提现金额：￥<span>0.00</span>元</p>
+    <p>可用金额：￥<span>0.00</span>元</p>
+    <p id="deputy">（米币与RMB（元）兑换比例为100:1）</p>
 </div>
 <input class="pay" type="button" value="充值"/>
 <input class="cash" type="button" value="提现"/>

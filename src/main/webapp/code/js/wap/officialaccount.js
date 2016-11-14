@@ -26,27 +26,8 @@ $(function(){
     }else{
         loadofficiallist();
     }
-})
-//$(window).scroll(function(){
-//    var scrollTop = $(this).scrollTop();               //滚动条距离顶部的高度
-//    var scrollHeight = $(document).height();                   //当前页面的总高度
-//    var windowHeight = $(this).height();                   //当前可视的页面高度
-//    if(scrollTop + windowHeight >= scrollHeight){        //距离顶部+当前高度 >=文档总高度 即代表滑动到底部
-//        console.log(Math.ceil(total/pageSize)+"shi");
-//        count++;
-//        if(count<=Math.ceil(total/pageSize)){
-//            loadofficiallist();
-//        }
-//        if(count==Math.ceil(total/pageSize)){
-//            var p = document.createElement('p');
-//            p.className="loadmore"
-//            p.innerHTML = "没有更多";
-//            $("body").append(p);
-//        }
-//    }else if(scrollTop<=0){         //滚动条距离顶部的高度小于等于0
-////                    location.reload();
-//    }
-//});
+});
+//滚动条加载更多（点击加载）
 $(window).scroll(function(){
     var scrollTop = $(this).scrollTop();               //滚动条距离顶部的高度
     var scrollHeight = $(document).height();                   //当前页面的总高度
@@ -64,7 +45,6 @@ $(window).scroll(function(){
             $(".loadmore").css("display","none");
         }
     }else if(scrollTop<=0){         //滚动条距离顶部的高度小于等于0
-        //location.reload();
     }
 });
 function loadofficiallist(){
@@ -90,11 +70,10 @@ function loadofficiallist(){
                     li.setAttribute("onClick","officialSubmit(this)");
                     var img = document.createElement('img');
                     img.setAttribute("src", official.imageUrl);
-
                     var h5 = document.createElement('h5');
                     h5.innerHTML = official.username;
                     var p = document.createElement('p');
-                    p.innerHTML = "关注奖励："
+                    p.innerHTML = "关注奖励：";
                     var span = document.createElement('span');
                     span.innerHTML = official.rewardCount+"米币";
                     p.appendChild(span);
@@ -115,9 +94,7 @@ function loadofficiallist(){
         }
     })
 }
-
 var officialSubmit = function(obj){
-//            var unionId=JSON.parse($.cookie("thirdLogin")).unionId;
     var originId=obj.getAttribute("id");
     var officialUrl=hashMap.Get(originId);
     var requestData=JSON.stringify(new OfficialAccountMsg(originId))
@@ -134,17 +111,13 @@ var officialSubmit = function(obj){
             "contentType":"application/json"
         },
         success: function (params) {
-            var json=eval(params); //数组
-            console.log("json数据为："+params)
+            var json=eval(params);
             if (json!=null&&json.errorCode==0) {
-                //obj.style.display='none';
                 location.href=officialUrl;
             }else if(json!=null&&json.errorCode==4){
-                //$(".lookover").text(json.message);
                 var result=confirm(json.message);
                 if(result){
                     var memberId=$.cookie("memberId");
-                    console.log("获取的memberId为"+memberId)
                     $.ajax({
                         type:"post",
                         url:'/pc/admin/official/getOfficialAccountMsgList',
@@ -155,7 +128,6 @@ var officialSubmit = function(obj){
                             var json = eval(params); //数组
                             console.log("标记数据是"+json.data);
                             if (json!=null&&json.errorCode==0){
-                                var ulength=$(".marklist li").length;
                                 console.log("ul长度为"+$(".marklist").length);
                                     $('.marklist').empty();
                                     json.data.forEach(function(official){
@@ -167,12 +139,13 @@ var officialSubmit = function(obj){
                                         li.appendChild(img);
                                         li.appendChild(h5);
                                         document.getElementsByTagName('ul')[1].appendChild(li);
+                                    })
                                         $("#cover").css("display","block");
                                         $(".markbox").css("display","block");
                                         $(".leftbutn").click(function(){
                                             $("#cover").css("display","none");
                                             $(".markbox").css("display","none");
-                                        })
+                                        });
                                         $(".rightbutn").click(function(){
                                             $.ajax({
                                                 type:"post",
@@ -182,7 +155,7 @@ var officialSubmit = function(obj){
                                                 },
                                                 success: function (params) {
                                                     var json = eval(params); //数组
-                                                    if (json != null && json.errorCode == 0) {
+                                                    if (json != null && json.errorCode == 0){
                                                         $("#cover").css("display", "none");
                                                         $(".markbox").css("display", "none");
                                                         $("#prompt").fadeIn(500);
@@ -192,15 +165,12 @@ var officialSubmit = function(obj){
                                                 }
                                             })
                                         })
-                                    })
-
-
                         }else{
-                                alert("获取数据失败2");
+                                alert("获取数据失败");
                             }
                         },error:function (data){
                             console.log(data)
-                            alert("页面加载错误2，请重试");
+                            alert("页面加载错误，请重试");
                         }
                     })
                 }
@@ -212,17 +182,6 @@ var officialSubmit = function(obj){
         }
     })
 }
-//function getMemberRequestHeaderMsg(XMLHttpRequest){
-//    var memberId= $.cookie("memberId");
-//    if (memberId==null||memberId == undefined){
-//        alert("登录已过期请重新登录");
-//        location.href="login.html"
-//
-//    }
-//    var password= $.cookie("password");
-//    XMLHttpRequest.setRequestHeader("memberId",memberId);
-//    XMLHttpRequest.setRequestHeader("from",2);
-//}
 function ArticleSerach(searchWay,pageIndex,pageSize){
     this.searchWay=searchWay
     this.pageIndex=pageIndex
