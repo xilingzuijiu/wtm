@@ -184,32 +184,12 @@ public class MemberTaskHistoryService  implements IMemberTaskHistoryService {
         }
         MemberTask memberTask=memberTaskMapper.selectByPrimaryKey(typeId);
         this.addMemberTaskToHistory(memberId,typeId,null,1,null,null,null);
-        MemberScore memberScore=memberScoreService.addMemberScore(memberId,3L,1,memberTask.getPointCount().doubleValue(), UUIDGenerator.generate());
+        Long taskId=typeId+10;
+        MemberScore memberScore=memberScoreService.addMemberScore(memberId,taskId,1,memberTask.getPointCount().doubleValue(), UUIDGenerator.generate());
         if (memberScore!=null){
             return memberScore;
         }
         return null;
-    }
-
-    @Override
-    public void deleteUnFinishedTask() {
-        logger.info("定时任务启动");
-        int number1=officeMemberMapper.deleteOverTimeUnfollowedAccounts(SystemConfig.TASK_CACHE_TIME);
-        logger.info("删除未关注公众号"+number1+"条");
-        int number2=memberTaskHistoryMapper.deleteUnfinishedTask(SystemConfig.TASK_CACHE_TIME);
-        logger.info("删除未完成任务"+number2+"条");
-        int number3=memberTaskHistoryMapper.deleteUnfinishedTaskDetail(SystemConfig.TASK_CACHE_TIME);
-        logger.info("删除未完成任务详情"+number3+"条");
-    }
-    @Override
-    public void threeOclockScheduledJob() {
-        //任务一  更新用户可用米币
-        Integer number = memberScoreService.updateAvaliableScore();
-        logger.info("更新积分"+number+"条");
-
-        //统一处理平台的加成奖励
-        number=memberScoreService.updateExtraRewardTimer();
-        logger.info("处理上下级米币问题"+number+"条");
     }
 
     @Override
@@ -241,6 +221,11 @@ public class MemberTaskHistoryService  implements IMemberTaskHistoryService {
         if (memberScore!=null){
             List<ThirdLogin> thirdLoginList = thirdLoginMapper.getThirdLoginByMemberId(memberId.get(0));
             Member member=memberMapper.selectByPrimaryKey(memberId.get(0));
+            if (member==null){
+                throw new InfoException("用户不存在");
+            }else if (member.getSex()==3){
+                throw new InfoException("用户已经被禁用，请联系客服人员");
+            }
             for (ThirdLogin thirdLogin:thirdLoginList){
                 if (thirdLogin.getNickname()!=nickName){
                     thirdLogin.setNickname(nickName);

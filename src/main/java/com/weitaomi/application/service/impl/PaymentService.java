@@ -276,12 +276,8 @@ public class PaymentService implements IPaymentService {
             if (memberScore == null) {
                 throw new InfoException("没有可用提现金额");
             }
-            double avalialeScore = memberScoreFlowMapper.getToalFlowScore(memberScore.getId());
-            if (avalialeScore < approve.getAmount().multiply(BigDecimal.valueOf(100)).longValue()) {
-                throw new InfoException("任务流水金额异常，请联系客服人员~");
-            }
-            if (memberScore.getAvaliableScore().longValue() < approve.getAmount().multiply(BigDecimal.valueOf(100)).longValue()) {
-                throw new InfoException("提现金额大于可用金额");
+            if (memberScore.getAvaliableScore().subtract(memberScore.getRechargeCurrentScore()).doubleValue() < approve.getAmount().multiply(BigDecimal.valueOf(100)).longValue()) {
+                throw new InfoException("提现金额大于可提现金额");
             }
             if (StringUtil.isEmpty(approve.getAccountNumber()) || StringUtil.isEmpty(approve.getAccountName())) {
                 ThirdLogin thirdLogin = thirdLoginMapper.getThirdlogInDtoMemberId(memberId, sourceType);

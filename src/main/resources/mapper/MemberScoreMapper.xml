@@ -10,6 +10,8 @@
         <result column="memberScore" jdbcType="DECIMAL" property="memberScore"/>
         <result column="inValidScore" jdbcType="DECIMAL" property="inValidScore"/>
         <result column="avaliableScore" jdbcType="DECIMAL" property="avaliableScore"/>
+        <result column="rechargeCurrentScore" jdbcType="DECIMAL" property="rechargeCurrentScore"/>
+        <result column="rechargeTotalScore" jdbcType="DECIMAL" property="rechargeTotalScore"/>
         <result column="rate" jdbcType="DECIMAL" property="rate"/>
         <result column="updateTime" jdbcType="BIGINT" property="updateTime"/>
         <result column="createTime" jdbcType="BIGINT" property="createTime"/>
@@ -26,9 +28,6 @@
         <result column="avaliableBalance" property="avaliableBalance" jdbcType="BIGINT"/>
         <collection property="memberScoreFlowDtoList" ofType="list" resultMap="MemberScoreFlowMap"/>
     </resultMap>
-    <update id="updateOneAvaliableMemberScore">
-        update wtm_member_score score set score.avaliableScore =#{avaliableScore} where score.memberId=#{memberId}
-    </update>
     <select id="getMemberScoreByMemberId" resultMap="BaseResultMap">
     select * from wtm_member_score s WHERE s.memberId=#{memberId};
   </select>
@@ -43,28 +42,7 @@
         LEFT JOIN wtm_member_score_flow_type flowType ON flowType.id = flow.typeId
         WHERE flow.typeId IN (1,2) AND score.memberId=#{memberId} order by flow.createTime Desc
     </select>
-    <select id="getAvaliableMemberScore" resultType="java.lang.Integer">
-        update wtm_member_score score
-        <trim prefix="set" suffixOverrides=",">
-            <trim prefix="score.avaliableScore =case" suffix="end,">
-                <foreach collection="memberIdList" item="i" index="index">
-                    when score.memberId=#{i} then score.memberScore +
-                    (select CASE m.totalScore is NULL WHEN TRUE THEN 0 ELSE m.totalScore END AS totalScore from (
-                        select SUM(f.flowScore) totalScore from wtm_member_score s LEFT JOIN
-                        wtm_member_score_flow f ON f.memberScoreId=s.id
-                        WHERE s.memberId=#{i} AND f.createTime &lt; unix_timestamp(now()) AND f.createTime > #{time} AND f.typeId=7 AND f.flowScore &lt; 0) m
-                    )
-                </foreach>
-            </trim>
-        </trim>
-    </select>
     <select id="getAvaliableScoreAndWxInfo" resultType="java.util.Map">
         select s.avaliableScore,l.nickname from wtm_member_score s LEFT JOIN wtm_third_login l ON s.memberId=l.memberId WHERE s.memberId=#{memberId} AND l.sourceType=1;
-    </select>
-    <select id="getOneAvaliableMemberScore" resultType="java.lang.Double">
-        select CASE m.totalScore is NULL WHEN TRUE THEN 0 ELSE m.totalScore END AS totalScore from (
-                    select SUM(f.flowScore) totalScore from wtm_member_score s LEFT JOIN
-                    wtm_member_score_flow f ON f.memberScoreId=s.id
-                    WHERE s.memberId=#{memberId} AND f.createTime &lt; unix_timestamp(now()) AND f.createTime > #{time} AND f.typeId=7 AND f.flowScore &lt; 0) m
     </select>
 </mapper>

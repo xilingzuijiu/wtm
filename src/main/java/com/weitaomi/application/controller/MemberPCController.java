@@ -15,14 +15,12 @@ import com.weitaomi.systemconfig.dataFormat.AjaxResult;
 import com.weitaomi.systemconfig.exception.BusinessException;
 import com.weitaomi.systemconfig.exception.DBException;
 import com.weitaomi.systemconfig.exception.InfoException;
-import com.weitaomi.systemconfig.util.DateUtils;
-import com.weitaomi.systemconfig.util.HmacSHA256Utils;
-import com.weitaomi.systemconfig.util.HttpRequestUtils;
-import com.weitaomi.systemconfig.util.StringUtil;
+import com.weitaomi.systemconfig.util.*;
 import com.weitaomi.systemconfig.wechat.WechatConfig;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.bouncycastle.jcajce.provider.asymmetric.rsa.DigestSignatureSpi;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -42,6 +40,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/pc/admin/member")
 public class MemberPCController extends BaseController {
+    private Logger logger= org.slf4j.LoggerFactory.getLogger(MemberPCController.class);
     @Autowired
     private IMemberService memberService;
     @Autowired
@@ -194,15 +193,40 @@ public class MemberPCController extends BaseController {
         return AjaxResult.getOK();
     }
     /**
+     * 完成关注
+     * @param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/pushAddFinished",method = RequestMethod.POST)
+    public AjaxResult pushAddFinished(@RequestBody Map<String,String> params){
+        return AjaxResult.getOK(officeAccountService.pushAddFinished(params));
+    }
+    /**
      * 获取邀请码
      * @param
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/sendIndentifyCode",method = RequestMethod.GET)
-    public AjaxResult sendIndentifyCode(String telephone,@RequestParam(required = false,defaultValue ="0") Integer type){
+    public AjaxResult sendIndentifyCode(String telephone,@RequestParam(required = false,defaultValue ="0") Integer type,HttpServletRequest request){
+        Long timestart=System.currentTimeMillis();
+        String ip=IpUtils.getIpAddr(request);
+        logger.info("用户获取验证码请求IP：{},获取mac时间：{}", IpUtils.getIpAddr(request),System.currentTimeMillis()-timestart);
+        Integer value=cacheService.getCacheByKey(ip,Integer.class);
+        if (value!=null&&value>0){
+            if (value>10){
+                throw new InfoException("同一设备操作过于频繁");
+            }else {
+                cacheService.increCacheBykey(ip,1L);
+            }
+        }else {
+            Long time=DateUtils.getTodayEndSeconds()-DateUtils.getUnixTimestamp();
+            cacheService.setCacheByKey(ip,1,time.intValue());
+        }
         return AjaxResult.getOK(memberService.sendIndentifyCode(telephone,type));
     }
+
 
     /**
      * 用户注册（手机注册）
@@ -272,7 +296,11 @@ public class MemberPCController extends BaseController {
             throw new BusinessException("用户ID为空");
         }
         RequestFrom from=this.getRequestFrom(request);
-        return AjaxResult.getOK(memberScoreService.getMemberScoreById(memberId,from.getName()));
+        String phoneType=RequestFrom.getById(2).getName();
+        if (from.getId()==4||from.getId()==6){
+            phoneType=RequestFrom.getById(4).getName();
+        }
+        return AjaxResult.getOK(memberScoreService.getMemberScoreById(memberId,phoneType));
     }
 
     /**

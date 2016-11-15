@@ -100,7 +100,7 @@ public class MemberService extends BaseService implements IMemberService {
         if (member.getEmail() != null && member.getEmail().matches("[_a-z\\d\\-\\./]+@[_a-z\\d\\-]+(\\.[_a-z\\d\\-]+)*(\\.(info|biz|com|edu|gov|net|am|bz|cn|cx|hk|jp|tw|vc|vn))$")) {
             memberTemp.setEmail(member.getEmail());
         }
-       if (!this.validateIndetifyCode(memberTemp.getTelephone(),registerMsg.getIdentifyCode())){
+        if (!this.validateIndetifyCode(memberTemp.getTelephone(),registerMsg.getIdentifyCode())){
 //        if (false) {
             throw new InfoException("验证码错误，请重试");
         }
@@ -145,6 +145,17 @@ public class MemberService extends BaseService implements IMemberService {
             thirdLoginMapper.insertSelective(thirdLogin);
         }
         if (registerMsg.getInvitedCode() != null && !registerMsg.getInvitedCode().isEmpty()) {
+//            Integer value=cacheService.getCacheByKey(registerMsg.getInvitedCode(),Integer.class);
+//            if (value!=null&&value>0){
+//                if (value>20){
+//                    return memberMapper.getMemberByTelephone(registerMsg.getMember().getTelephone(), sourceType);
+//                }else {
+//                    cacheService.increCacheBykey(registerMsg.getInvitedCode(),1L);
+//                }
+//            }else {
+//                Long time=DateUtils.getTodayEndSeconds()-DateUtils.getUnixTimestamp();
+//                cacheService.setCacheByKey(registerMsg.getInvitedCode(),1,time.intValue());
+//            }
             Member memberInvited = memberMapper.getMemberByInviteCode(registerMsg.getInvitedCode());
             if (memberInvited==null){
                 throw new InfoException("邀请码不正确");
@@ -164,7 +175,7 @@ public class MemberService extends BaseService implements IMemberService {
                     if (num > 0) {
                         MemberTask memberTask = memberTaskMapper.selectByPrimaryKey(3L);
                         memberTaskHistoryService.addMemberTaskToHistory(memberInvitedRecord.getParentId(), 3L, null, 1, null, null,null);
-                        memberScoreService.addMemberScore(memberInvited.getId(), 3L,1, memberTask.getPointCount().doubleValue(), UUIDGenerator.generate());
+                        memberScoreService.addMemberScore(memberInvited.getId(), 16L,1, memberTask.getPointCount().doubleValue(), UUIDGenerator.generate());
                     }
                 }
             }
@@ -194,17 +205,17 @@ public class MemberService extends BaseService implements IMemberService {
         if (thirdLogin.getType() == null) {
             throw new BusinessException("登陆平台类型为空");
         }
-        List<ThirdLogin> thirdLoginTemp = thirdLoginMapper.getThirdLoginInfo(thirdLogin.getUnionId(),null);
-        if(!thirdLoginTemp.isEmpty() && memberId.longValue() != ((ThirdLogin)thirdLoginTemp.get(0)).getMemberId().longValue()) {
-            throw new InfoException("微淘米账号和和要绑定的微信不匹配，您已在其他终端绑定过一个账号，请绑定该账号");
-        }
         List<ThirdLogin> thirdLoginFlag = thirdLoginMapper.getThirdLoginInfo(thirdLogin.getUnionId(),sourceType);
         if (!thirdLoginFlag.isEmpty()) {
             throw new InfoException("您已经绑定此账号");
         }
-        ThirdLogin thirdLogins = thirdLoginMapper.getUnionIdByMemberId(memberId,sourceType);
-        if (thirdLogins!=null){
-            throw new InfoException("该账号已经绑定一个微信号，微信昵称为："+thirdLogins.getNickname());
+        List<ThirdLogin> thirdLoginTemp = thirdLoginMapper.getThirdLoginInfo(thirdLogin.getUnionId(),null);
+        if(!thirdLoginTemp.isEmpty() && memberId.longValue() != ((ThirdLogin)thirdLoginTemp.get(0)).getMemberId().longValue()) {
+            throw new InfoException("微淘米账号和和要绑定的微信不匹配，您已在其他终端绑定过一个账号，请绑定该账号");
+        }
+        List<ThirdLogin> thirdLogins = thirdLoginMapper.getThirdLoginByMemberId(memberId);
+        if (!thirdLogins.isEmpty()&&!thirdLogins.get(0).getUnionId().equals(thirdLogin.getUnionId())){
+            throw new InfoException("该账号已经绑定一个微信号，微信昵称为："+thirdLogins.get(0).getNickname());
         }
         thirdLogin.setCreateTime(DateUtils.getUnixTimestamp());
         Member member = memberMapper.selectByPrimaryKey(memberId);
@@ -363,6 +374,11 @@ public class MemberService extends BaseService implements IMemberService {
 
     @Override
     public Member getMemberDetailById(Long memberId) {
+//        String key = "member:login:" + memberId;
+//        Member member = cacheService.getCacheByKey(key, Member.class);
+//        if (member == null) {
+//            throw new InfoException("请先完成登陆");
+//        }
         return memberMapper.selectByPrimaryKey(memberId);
     }
 

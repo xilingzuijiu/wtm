@@ -54,6 +54,7 @@ public class MemberScoreService implements IMemberScoreService {
             throw new BusinessException("幂等性操作，请生成随机数");
         }
         String key = "member:score:" + sessionId;
+        String avaliableScoreKey="member:score:type:isAvaliableScore";
         MemberScore memberScoreCache = cacheService.getCacheByKey(key, MemberScore.class);
         if (memberScoreCache != null) {
             throw new BusinessException("重复操作");
@@ -70,15 +71,6 @@ public class MemberScoreService implements IMemberScoreService {
                 MemberScore memberScore = memberScoreMapper.getMemberScoreByMemberId(memberId);
                 if (score != null) {
                     BigDecimal rate = BigDecimal.ONE;
-                    if (memberScore != null) {
-                        scoreBefore = memberScore.getMemberScore();
-                        rate = memberScore.getRate();
-                    }
-                    if (typeId!=7) {
-                        if (typeId != 3) {
-                            rate = BigDecimal.ONE;
-                        }
-                    }
                     increaseScore = BigDecimal.valueOf(score).multiply(rate);
                 }
 
@@ -89,27 +81,55 @@ public class MemberScoreService implements IMemberScoreService {
                     memberScore = new MemberScore();
                     memberScore.setMemberId(memberId);
                     memberScore.setMemberScore(increaseScore);
+                    //todo
+                    if (cacheService.keyExistInHashTable(avaliableScoreKey,typeId.toString())) {
+                        memberScore.setAvaliableScore(increaseScore);
+                        if (typeId==1){
+                            BigDecimal charge=memberScore.getInValidScore().subtract(increaseScore);
+                            if (charge.doubleValue()>=0){
+                                charge=BigDecimal.ZERO;
+                            }
+                            memberScore.setInValidScore(charge);
+                            memberScore.setRechargeCurrentScore(increaseScore);
+                            memberScore.setRechargeTotalScore(increaseScore);
+                        }
+                    }
                     memberScore.setCreateTime(DateUtils.getUnixTimestamp());
                     memberScore.setUpdateTime(DateUtils.getUnixTimestamp());
                     memberScoreMapper.insertSelective(memberScore);
                 } else {
-                    BigDecimal afterScore = memberScore.getMemberScore().add(increaseScore);
-                    BigDecimal avaliableScore = memberScore.getAvaliableScore().add(increaseScore);
+                    scoreBefore=memberScore.getMemberScore();
+                    //总米币
+                    BigDecimal afterScore = scoreBefore.add(increaseScore);
+                    //可用米币
+                    BigDecimal avaliableScore=memberScore.getAvaliableScore();
+                    //充值米币（current）
+                    BigDecimal rechargeCurrentScore=memberScore.getRechargeCurrentScore();
+                    //充值米币（total）
+                    BigDecimal rechargeTotalScore=memberScore.getRechargeTotalScore();
+                    if (cacheService.keyExistInHashTable(avaliableScoreKey,typeId.toString())) {
+                        avaliableScore = avaliableScore.add(increaseScore);
+                        if (typeId==1) {
+                            rechargeTotalScore = rechargeTotalScore.add(increaseScore);
+                            rechargeCurrentScore = rechargeCurrentScore.add(increaseScore);
+                        }else if (typeId==4||typeId==5){
+                            if (increaseScore.doubleValue()<0&&increaseScore.abs().doubleValue()<=rechargeCurrentScore.doubleValue()){
+                                rechargeTotalScore=rechargeCurrentScore.add(increaseScore);
+                            }else if (increaseScore.doubleValue()<0&&increaseScore.abs().doubleValue()>rechargeCurrentScore.doubleValue()){
+                                rechargeTotalScore=BigDecimal.ZERO;
+                            }
+                        }
+                    }
                     if (afterScore.doubleValue() < 0) {
                         throw new BusinessException("可用积分不足");
                     }
-                    memberScore.setMemberScore(afterScore);
-                    memberScore.setAvaliableScore(avaliableScore);
-                    if (afterScore.doubleValue() >= Double.valueOf(PropertiesUtil.getValue("score.level.one"))) {
-                        memberScore.setRate(BigDecimal.valueOf(2.00));
-                    } else if (afterScore.doubleValue() <= Double.valueOf(PropertiesUtil.getValue("score.level.one.one"))) {
-                        memberScore.setRate(BigDecimal.valueOf(1.00));
-                    } else {
-                        Double levelOne = Double.valueOf(PropertiesUtil.getValue("score.level.one"));
-                        Double rateBase = Double.valueOf(PropertiesUtil.getValue("score.level.one.base"));
-                        BigDecimal rateIncrease = afterScore.subtract(BigDecimal.valueOf(rateBase)).divide(BigDecimal.valueOf(levelOne), 1, BigDecimal.ROUND_UP);
-                        memberScore.setRate(rateIncrease.add(BigDecimal.ONE));
+                    if (typeId!=17) {
+                        memberScore.setMemberScore(afterScore);
                     }
+                    memberScore.setAvaliableScore(avaliableScore);
+                    memberScore.setRechargeCurrentScore(rechargeCurrentScore);
+                    memberScore.setRechargeTotalScore(rechargeTotalScore);
+                    memberScore.setRate(BigDecimal.ONE);
                     memberScore.setUpdateTime(DateUtils.getUnixTimestamp());
                     memberScoreMapper.updateByPrimaryKeySelective(memberScore);
                 }
@@ -128,7 +148,8 @@ public class MemberScoreService implements IMemberScoreService {
                     throw new BusinessException("积分记录失败");
                 }
                 cacheService.setCacheByKey(key, memberScore, SystemConfig.TASK_CACHE_TIME);
-                if (typeId==3&&increaseScore.doubleValue()>0) {
+                String table="member:score:type:isAvaliableToSuper";
+                if (cacheService.keyExistInHashTable(table,typeId.toString())&&increaseScore.doubleValue()>0) {
                     //处理上级奖励问题
                     MemberInvitedRecord memberInvitedRecord = memberInvitedRecordMapper.getMemberInvitedRecordByMemberId(memberId);
                     if (memberInvitedRecord != null) {
@@ -166,94 +187,20 @@ public class MemberScoreService implements IMemberScoreService {
         }
     }
     @Override
-    public Integer updateExtraRewardTimer(){
-        String tableName="member:extra:reward";
-        Set<String> keys=cacheService.getAllKeysFromHashTable(tableName);
-        List<RewardCountDto> rewardCountDtoList=cacheService.getFromHashTable(tableName,new ArrayList<String>(keys));
-        for (RewardCountDto rewardCountDto:rewardCountDtoList){
-            MemberScore memberScore1 = memberScoreMapper.getMemberScoreByMemberId(rewardCountDto.getParentId());
-            BigDecimal beforeAmount = BigDecimal.ZERO;
-            Double rewardScore=rewardCountDto.getTotalFlowScore();
-            if (memberScore1 != null) {
-                beforeAmount = memberScore1.getMemberScore();
-                BigDecimal afterScore = beforeAmount.add(BigDecimal.valueOf(rewardScore));
-                if (afterScore.doubleValue() < 0) {
-                    throw new BusinessException("可用积分不足");
-                }
-                memberScore1.setMemberScore(afterScore);
-                if (afterScore.doubleValue() >= Double.valueOf(PropertiesUtil.getValue("score.level.one"))) {
-                    memberScore1.setRate(BigDecimal.valueOf(2.00));
-                } else if (afterScore.doubleValue() <= Double.valueOf(PropertiesUtil.getValue("score.level.one.one"))) {
-                    memberScore1.setRate(BigDecimal.valueOf(1.00));
-                } else {
-                    Double levelOne = Double.valueOf(PropertiesUtil.getValue("score.level.one"));
-                    Double rateBase = Double.valueOf(PropertiesUtil.getValue("score.level.one.base"));
-                    BigDecimal rateIncrease = afterScore.subtract(BigDecimal.valueOf(rateBase)).divide(BigDecimal.valueOf(levelOne), 1, BigDecimal.ROUND_FLOOR);
-                    memberScore1.setRate(rateIncrease.add(BigDecimal.ONE));
-                }
-                memberScore1.setUpdateTime(DateUtils.getUnixTimestamp());
-                memberScoreMapper.updateByPrimaryKeySelective(memberScore1);
-            }else {
-                memberScore1=new MemberScore();
-                BigDecimal afterScore = beforeAmount.add(BigDecimal.valueOf(rewardScore));
-                if (afterScore.doubleValue() >= Double.valueOf(PropertiesUtil.getValue("score.level.one"))) {
-                    memberScore1.setRate(BigDecimal.valueOf(2.00));
-                } else if (afterScore.doubleValue() <= Double.valueOf(PropertiesUtil.getValue("score.level.one.one"))) {
-                    memberScore1.setRate(BigDecimal.valueOf(1.00));
-                } else {
-                    Double levelOne = Double.valueOf(PropertiesUtil.getValue("score.level.one"));
-                    Double rateBase = Double.valueOf(PropertiesUtil.getValue("score.level.one.base"));
-                    BigDecimal rateIncrease = afterScore.subtract(BigDecimal.valueOf(rateBase)).divide(BigDecimal.valueOf(levelOne), 1, BigDecimal.ROUND_FLOOR);
-                    memberScore1.setRate(rateIncrease.add(BigDecimal.ONE));
-                }
-                memberScore1.setMemberId(rewardCountDto.getParentId());
-                memberScore1.setMemberScore(afterScore);
-                memberScore1.setUpdateTime(DateUtils.getUnixTimestamp());
-                memberScore1.setCreateTime(DateUtils.getUnixTimestamp());
-                memberScoreMapper.insertSelective(memberScore1);
-            }
-            MemberScoreFlowType memberScoreFlowType1 = memberScoreFlowTypeMapper.selectByPrimaryKey(3L);
-            MemberScoreFlow memberScoreFlow1 = new MemberScoreFlow();
-            memberScoreFlow1.setMemberId(rewardCountDto.getParentId());
-            memberScoreFlow1.setTypeId(10L);
-            memberScoreFlow1.setIsFinished(1);
-            memberScoreFlow1.setDetail(memberScoreFlowType1.getTypeDesc());
-            memberScoreFlow1.setFlowScore(BigDecimal.valueOf(rewardScore));
-            memberScoreFlow1.setMemberScoreAfter(memberScore1.getMemberScore());
-            memberScoreFlow1.setMemberScoreBefore(beforeAmount);
-            memberScoreFlow1.setMemberScoreId(memberScore1.getId());
-            memberScoreFlow1.setCreateTime(DateUtils.getUnixTimestamp());
-            memberScoreFlowMapper.insertSelective(memberScoreFlow1);
-            //处理任务记录问题
-            String detail = "您邀请的好友"+rewardCountDto.getMemberName()+"今日完成了任务，平台额外奖励您好友收入的10%，累计"+BigDecimal.valueOf(rewardCountDto.getTotalFlowScore()).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue()+"米币";
-            memberTaskHistoryService.addMemberTaskToHistory(rewardCountDto.getParentId(), 7L, rewardScore, 1, detail, null,null);
-        }
-        cacheService.delKeyFromRedis(tableName);
-        return rewardCountDtoList.size();
-    }
-
-    @Override
     public List<MemberScoreFlow> getMemberScoreFlowList(Long memberId) {
         return memberScoreFlowMapper.getMemberScoreFlowListByMemberId(memberId);
     }
-
     @Override
     @Transactional
     public MemberScore getMemberScoreById(Long memberId,String phoneType) {
         MemberScore memberScore = memberScoreMapper.getMemberScoreByMemberId(memberId);
         logger.info("刷新钱包，信息：{}", JSON.toJSONString(memberScore));
         if (memberScore!=null) {
-            Double value = memberScoreMapper.getOneAvaliableMemberScore(memberId, DateUtils.getUnixTimestamp(DateUtils.date2Str(new Date(), DateUtils.yyyyMMdd), DateUtils.yyyyMMdd) - 7 * 24 * 60 * 60);
-            Double avaliableScore = memberScore.getMemberScore().add(BigDecimal.valueOf(value)).doubleValue();
-            if (avaliableScore <= 0) {
-                avaliableScore = 0D;
-            }
-            memberScoreMapper.updateOneAvaliableMemberScore(avaliableScore, memberId);
+            memberMapper.updateMemberPhoneType(memberId,phoneType);
+            return memberScore;
         }
-        memberMapper.updateMemberPhoneType(memberId,phoneType);
-        return memberScore;
+        return null;
     }
-
     @Override
     public Map getAvaliableScoreAndWxInfo(long memberId) {
         Map map=memberScoreMapper.getAvaliableScoreAndWxInfo(memberId);
@@ -261,12 +208,5 @@ public class MemberScoreService implements IMemberScoreService {
             throw new InfoException("未获取到微信信息，请绑定微信或者联系客服人员");
         }
         return map;
-    }
-
-    @Override
-    public Integer updateAvaliableScore(){
-        List<Long> memberIdList=memberMapper.getAllMemberId();
-        Integer number=memberScoreMapper.getAvaliableMemberScore(memberIdList,DateUtils.getUnixTimestamp(DateUtils.date2Str(new Date(),DateUtils.yyyyMMdd),DateUtils.yyyyMMdd)-7*24*60*60);
-        return number;
     }
 }

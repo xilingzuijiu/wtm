@@ -6,6 +6,7 @@ import com.weitaomi.application.model.dto.PublishReadRequestDto;
 import com.weitaomi.application.model.dto.RequireFollowerParamsDto;
 import com.weitaomi.application.model.dto.TaskPoolDto;
 import com.weitaomi.systemconfig.util.Page;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by Administrator on 2016/8/24.
@@ -50,4 +51,7 @@ public interface IMemberTaskPoolService {
      * @return
      */
     public Boolean updateTaskPoolDto(Long memberId,Long taskPoolId, Integer isPublishNow,Integer needNumber,Double singScore,Integer limitDay);
+
+    @Transactional
+    Boolean accountUnderCarrige(Long officialAccountId);
 }

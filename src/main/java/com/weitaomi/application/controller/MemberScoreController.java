@@ -23,23 +23,6 @@ public class MemberScoreController extends BaseController {
     private IMemberScoreService memberScoreService;
 
     /**
-     * 增加的积分类型
-     * @param typeId
-     * @param score
-     * @param sessionId
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "/addMemberScore",method = RequestMethod.POST)
-    AjaxResult addMemberScore(HttpServletRequest request,Long typeId,Integer isFinished, Double score, String sessionId){
-        Long memberId=this.getUserId(request);
-        if (memberId==null){
-            throw new BusinessException("用户ID为空");
-        }
-        return AjaxResult.getOK(memberScoreService.addMemberScore(memberId, typeId,isFinished, score, sessionId));
-    }
-
-    /**
      * 获取积分记录
      * @param request
      * @return

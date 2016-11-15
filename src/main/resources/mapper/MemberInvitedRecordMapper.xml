@@ -9,6 +9,7 @@
     <result column="memberId" jdbcType="BIGINT" property="memberId" />
     <result column="parentId" jdbcType="BIGINT" property="parentId" />
     <result column="isAccessible" jdbcType="INTEGER" property="isAccessible" />
+    <result column="isAccessForInvitor" jdbcType="INTEGER" property="isAccessForInvitor" />
     <result column="createTime" jdbcType="BIGINT" property="createTime" />
   </resultMap>
   <select id="getMemberInvitedRecordByMemberId" resultType="com.weitaomi.application.model.bean.MemberInvitedRecord">

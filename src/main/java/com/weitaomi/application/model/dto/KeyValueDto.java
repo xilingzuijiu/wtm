@@ -5,7 +5,7 @@ package com.weitaomi.application.model.dto;
  */
 public class KeyValueDto {
     private String id;
-    private String value;
+    private Object value;
 
     public String getId() {
         return this.id;
@@ -15,11 +15,11 @@ public class KeyValueDto {
         this.id = id;
     }
 
-    public String getValue() {
+    public Object getValue() {
         return this.value;
     }
 
-    public void setValue(String value) {
+    public void setValue(Object value) {
         this.value = value;
     }
 }

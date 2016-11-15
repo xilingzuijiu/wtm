@@ -15,12 +15,6 @@ import java.util.Map;
  */
 public interface IOfficeAccountService {
     /**
-     * 获取待关注公众号列表
-     * @param memberId
-     * @return
-     */
-    public List<OfficialAccountsDto> getAccountsByMemberId(Long memberId);
-    /**
      * 查看已关注公众号
      */
     List<MemberAccountLabel> getOfficialAccountMsgList(Long memberId,Integer sourceType);
@@ -37,7 +31,10 @@ public interface IOfficeAccountService {
      * @param addOfficalAccountDto
      */
     public boolean pushAddRequest(Long memberId,AddOfficalAccountDto addOfficalAccountDto);
-
+    /**
+     * {"originId":""," nickname ":"昵称，如果unionId一致则换成unionId","time":"关注时间"}
+     */
+    public Boolean pushAddFinished(Map<String,String> params);
     /**
      * 标记要关注该公众号
      * @param memberId

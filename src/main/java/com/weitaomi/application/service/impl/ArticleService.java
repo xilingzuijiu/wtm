@@ -2,10 +2,7 @@ package com.weitaomi.application.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
-import com.weitaomi.application.model.bean.Article;
-import com.weitaomi.application.model.bean.ArticleReadRecord;
-import com.weitaomi.application.model.bean.OfficialAccount;
-import com.weitaomi.application.model.bean.TaskPool;
+import com.weitaomi.application.model.bean.*;
 import com.weitaomi.application.model.dto.ArticleDto;
 import com.weitaomi.application.model.dto.ArticleReadRecordDto;
 import com.weitaomi.application.model.dto.ArticleSearch;
@@ -54,7 +51,13 @@ public class ArticleService implements IArticleService {
     @Autowired
     private AccountAdsMapper accountAdsMapper;
     @Autowired
+    private MemberInvitedRecordMapper memberInvitedRecordMapper;
+    @Autowired
+    private MemberTaskMapper memberTaskMapper;
+    @Autowired
     private MemberMapper memberMapper;
+    @Autowired
+    private TaskFailPushToWechatMapper taskFailPushToWechatMapper;
     @Override
     public Page<ArticleShowDto> getAllArticle(Long memberId,ArticleSearch articleSearch,Integer sourceType) {
         if (articleSearch.getSearchWay()==0){
@@ -153,7 +156,19 @@ public class ArticleService implements IArticleService {
             }
             try {
                 logger.info("时间为：{}",System.currentTimeMillis()-ts);
-                HttpRequestUtils.postStringEntity(url,JSON.toJSONString(map));
+                String result = HttpRequestUtils.postStringEntity(url,JSON.toJSONString(map));
+                if (!StringUtil.isEmpty(result)){
+                    boolean flagTem=Boolean.valueOf(result);
+                    if (!flagTem){
+                        TaskFailPushToWechat taskFailPushToWechat=new TaskFailPushToWechat();
+                        taskFailPushToWechat.setParams(JSON.toJSONString(map));
+                        taskFailPushToWechat.setPostUrl(url);
+                        taskFailPushToWechat.setType(1);
+                        taskFailPushToWechat.setIsPushToWechat(0);
+                        taskFailPushToWechat.setCreateTime(DateUtils.getUnixTimestamp());
+                        taskFailPushToWechatMapper.insertSelective(taskFailPushToWechat);
+                    }
+                }
                 logger.info("交互时间为：{}",System.currentTimeMillis()-ts);
                 return true;
             } catch (IOException e) {
@@ -186,6 +201,27 @@ public class ArticleService implements IArticleService {
             }
         }else {
             cacheService.setCacheByKey("wap:artile:read:limit:"+memberId,1,60*60);
+        }
+
+        Integer value=cacheService.getCacheByKey(memberId+":readNumberRecordForInvitedReward:"+13,Integer.class);
+        if (value!=null&&value>0){
+            if (value>=25){
+                MemberInvitedRecord memberInvitedRecord=memberInvitedRecordMapper.getMemberInvitedRecordByMemberId(memberId);
+                if (memberInvitedRecord!=null&&memberInvitedRecord.getIsAccessForInvitor()==0){
+                    MemberTask memberTask = memberTaskMapper.selectByPrimaryKey(3L);
+                    memberScoreService.addMemberScore(memberInvitedRecord.getParentId(),16L,1,memberTask.getPointCount().doubleValue(),UUIDGenerator.generate());
+                    memberInvitedRecord.setIsAccessForInvitor(1);
+                    memberInvitedRecordMapper.updateByPrimaryKeySelective(memberInvitedRecord);
+                    cacheService.delKeyFromRedis(memberId+":readNumberRecordForInvitedReward:"+13);
+                }
+            }else {
+                cacheService.increCacheBykey(memberId+":readNumberRecordForInvitedReward:"+13,1L);
+            }
+        }else {
+            MemberInvitedRecord memberInvitedRecord=memberInvitedRecordMapper.getMemberInvitedRecordByMemberId(memberId);
+            if (memberInvitedRecord!=null&&memberInvitedRecord.getIsAccessForInvitor()==0) {
+                cacheService.setCacheByKey(memberId + ":readNumberRecordForInvitedReward:" + 13, 1, null);
+            }
         }
 
         ArticleReadRecord articleReadRecord=new ArticleReadRecord();
@@ -230,7 +266,7 @@ public class ArticleService implements IArticleService {
         }
         taskPoolMapper.updateByPrimaryKeySelective(taskPool);
         memberTaskHistoryService.addMemberTaskToHistory(memberId,6L, BigDecimal.valueOf(taskPool.getSingleScore()).multiply(taskPool.getRate()).doubleValue(),1,"阅读文章-"+article.getTitle(),null,null);
-        memberScoreService.addMemberScore(memberId,3L,1,BigDecimal.valueOf(singleScore).multiply(taskPool.getRate()).doubleValue(),UUIDGenerator.generate());
+        memberScoreService.addMemberScore(memberId,13L,1,BigDecimal.valueOf(singleScore).multiply(taskPool.getRate()).doubleValue(),UUIDGenerator.generate());
         return true;
     }
 
@@ -251,6 +287,26 @@ public class ArticleService implements IArticleService {
             }
         }else {
             cacheService.setCacheByKey("wap:artile:read:limit:"+memberId,1,60*60);
+        }
+        Integer value=cacheService.getCacheByKey(memberId+":readNumberRecordForInvitedReward:"+13,Integer.class);
+        if (value!=null&&value>0){
+            if (value>=25){
+                MemberInvitedRecord memberInvitedRecord=memberInvitedRecordMapper.getMemberInvitedRecordByMemberId(memberId);
+                if (memberInvitedRecord!=null&&memberInvitedRecord.getIsAccessForInvitor()==0){
+                    MemberTask memberTask = memberTaskMapper.selectByPrimaryKey(3L);
+                    memberScoreService.addMemberScore(memberInvitedRecord.getParentId(),16L,1,memberTask.getPointCount().doubleValue(),UUIDGenerator.generate());
+                    cacheService.delKeyFromRedis(memberId+":readNumberRecordForInvitedReward:"+13);
+                    memberInvitedRecord.setIsAccessForInvitor(1);
+                    memberInvitedRecordMapper.updateByPrimaryKeySelective(memberInvitedRecord);
+                }
+            }else {
+                cacheService.increCacheBykey(memberId+":readNumberRecordForInvitedReward:"+13,1L);
+            }
+        }else {
+            MemberInvitedRecord memberInvitedRecord=memberInvitedRecordMapper.getMemberInvitedRecordByMemberId(memberId);
+            if (memberInvitedRecord!=null&&memberInvitedRecord.getIsAccessForInvitor()==0) {
+                cacheService.setCacheByKey(memberId + ":readNumberRecordForInvitedReward:" + 13, 1, null);
+            }
         }
         int num=articleReadRecordMapper.getArticleReadRecord(memberId, articleId);
         if (num>0){
@@ -282,7 +338,7 @@ public class ArticleService implements IArticleService {
         }
         taskPoolMapper.updateByPrimaryKeySelective(taskPool);
         memberTaskHistoryService.addMemberTaskToHistory(memberId,6L, BigDecimal.valueOf(taskPool.getSingleScore()).multiply(taskPool.getRate()).doubleValue(),1,"阅读文章-"+article.getTitle(),null,null);
-        memberScoreService.addMemberScore(memberId,3L,1,BigDecimal.valueOf(taskPool.getSingleScore()).multiply(taskPool.getRate()).doubleValue(),UUIDGenerator.generate());
+        memberScoreService.addMemberScore(memberId,13L,1,BigDecimal.valueOf(taskPool.getSingleScore()).multiply(taskPool.getRate()).doubleValue(),UUIDGenerator.generate());
         return true;
     }
 }

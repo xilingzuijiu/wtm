@@ -30,6 +30,7 @@ import org.springframework.util.Base64Utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -57,8 +58,6 @@ public class MyBatisTest extends BaseContextCase {
     private MemberScoreFlowMapper memberScoreFlowMapper;
     @Autowired
     private IMemberScoreService memberScoreService;
-    //    @Autowired
-//    IMemberTaskHistoryService memberTaskHistoryService;
     @Test
     public void testAddMember() {
         Member member = new Member();
@@ -180,7 +179,7 @@ public class MyBatisTest extends BaseContextCase {
     }
     @Test
     public void testQuartz(){
-        memberScoreService.updateExtraRewardTimer();
+//        memberScoreService.updateExtraRewardTimer();
     }
     private XStream getXStream(){
         XStream xStream = new XStream();
@@ -215,13 +214,18 @@ public class MyBatisTest extends BaseContextCase {
     @Test
     public void testPassword(){
         System.out.println(Base64Utils.encodeToString("天道酬勤".getBytes()));
+        try {
+            System.out.println(new String(Base64.decode("5p6X5a2Q"),"uTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
     @Test
     public void testGetNickName(){
         ThirdLogin login = thirdLoginMapper.selectByPrimaryKey(8L);
         String nickname = Base64Utils.encodeToString(login.getNickname().getBytes());
         System.out.println(nickname);
-        String urlencode="8J+QgPCfmr7kuozotKc=";
+        String urlencode="5p6X5a2Q";
         if (nickname.equals(urlencode)){
             System.out.println("chengle");
         }else {
@@ -234,6 +238,11 @@ public class MyBatisTest extends BaseContextCase {
     public void testMemberScoreMapper(){
         Double value=memberScoreFlowMapper.getToalFlowScore(7L);
         System.out.println(value);
+    }
+    @Test
+    public void testGetPayNumber(){
+//        String number = paymentService.getTradeNo();
+//        System.out.println(number);
     }
 }
 
