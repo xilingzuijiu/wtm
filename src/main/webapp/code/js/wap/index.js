@@ -72,7 +72,7 @@ function  modifyMemberAddress(address){
         }
     })
 }
-function updateMyscore(){
+function updateMyscore(updateType){
     $.ajax({
         url:"/pc/admin/member/updateMemberScore",
         type:"post",
@@ -80,10 +80,15 @@ function updateMyscore(){
             getMemberRequestHeaderMsg(XMLHttpRequest)
         } ,
         success: function (data) {
-            var json=eval(data)
+            var json=eval(data);
             if(json.errorCode==0){
-                var obj=json.data
-                $(".money>p>span").text(obj.memberScore.toFixed(2))
+                var obj=json.data;
+                $(".money>p>span").text(obj.memberScore.toFixed(2));
+                if(updateType==1){
+                    $("#prompt").fadeIn(500);
+                    $("#prompt").text("刷新成功");
+                    $('#prompt').delay(600).fadeOut(350);
+                }
             }
         }
     })

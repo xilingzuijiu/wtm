@@ -20,7 +20,7 @@ $(function(){
                         alert(data.message)
                     }
                 }
-            })
+            });
             $("#sendVerifyCode").css("display","none");
             $("#downtime").css("display","block");
             countDown();
@@ -29,18 +29,22 @@ $(function(){
                 $("#downtime").css("display","none");
             }, SS*1000);
         }
-    })
+    });
     $("#register").click( function (){
         $("#form").attr("enctype","multipart/form-data");
         var requestObj = eval($("#registerForm").serializeObject())
         var request =getRegeisterParams(requestObj);
+        var telephone = $("#telephone").val().trim();
         if(!$("#memberName").val()){
             alert("用户名不能为空");
         }else if($("#memberName").val().length>10){
             alert("您输入的用户名过长");
-        }
-        else if($("#password").val().length<6||$("#password").val().length>16){
+        }else if($("#password").val().length<6||$("#password").val().length>16){
             alert("密码长度必须为6到16位");
+        }else if($("#password").val()!=$("#repassword").val()){
+            alert("密码不一致，请重新输入");
+        }else if(telephone==null || !telephone.match(/^1\d{10}$/)){
+            alert("手机号码不正确");
         }else{
             $("#register").attr('disabled', true);
             $("#register").css('background', "#bebebe");
@@ -66,10 +70,12 @@ $(function(){
                     } else if (errorCode==4){
                         alert(data.message);
                         $("#register").attr('disabled', false);
+                        $("#register").css('background', "#fa4a18");
                     }
                 }, error:function(){
                     alert(data.message);
                     $("#register").attr('disabled', false);
+                    $("#register").css('background', "#fa4a18");
                 }
             });
         }

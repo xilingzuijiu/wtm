@@ -2,6 +2,9 @@
  * Created by Administrator on 2016/10/20 0020.
  */
 $(function(){
+    $(".logo").click(function(){
+window.location.href="/frontPage/wtmpc/index.html"
+    })
     $(".loginbutton").click(function(){
         $("#form").attr("enctype","multipart/form-data");
         var memberName=$("#memberName").val();
@@ -78,14 +81,20 @@ $(function(){
         $("#form").attr("enctype","multipart/form-data");
         var requestObj = eval($("#registerForm").serializeObject())
         var request =getRegeisterParams(requestObj);
+        var telephone = $("#telephone").val().trim();
         if(!$("#rmemberName").val()){
             alert("用户名不能为空");
         }else if($("#rmemberName").val().length>10){
             alert("您输入的用户名过长");
-        }
-        else if($("#rpassword").val().length<6||$("#password").val().length>16){
+        }else if($("#rpassword").val().length<6||$("#password").val().length>16){
             alert("密码长度必须为6到16位");
+        }else if($("#rpassword").val()!=$("#repassword").val()){
+            alert("密码不一致，请重新输入");
+        }else if(telephone==null || !telephone.match(/^1\d{10}$/)){
+            alert("手机号码不正确");
         }else{
+            $("#register").attr('disabled', true);
+            $("#register").css('background', "#bebebe");
             $.ajax({
                 type: 'post',
                 url: '/pc/admin/member/register',
@@ -100,12 +109,19 @@ $(function(){
                     var errorCode=data.errorCode
                     if (errorCode==0){
                         if (data.data){
+                            alert("注册成功，请登录");
                             $(".loginbg").css("display","block");
                             $(".registerbg").css("display","none");
                         }
                     } else if (errorCode==4){
-                        alert(data.message)
+                        alert(data.message);
+                        $("#register").attr('disabled', false);
+                        $("#register").css('background', "#fa4a18");
                     }
+                }, error:function(){
+                    alert(data.message);
+                    $("#register").attr('disabled', false);
+                    $("#register").css('background', "#fa4a18");
                 }
             })
         }

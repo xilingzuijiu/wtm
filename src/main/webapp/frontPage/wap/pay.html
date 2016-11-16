@@ -29,7 +29,13 @@
                 $('input[type="radio"]').removeAttr('checked') && $('#' + radioId).attr('checked', 'checked');
             });
             $("#pay").click(function () {
-                location.href="/pay?"+"memberId="+ $.cookie("memberId")+"&amount="+$("#amount").val()+"&payType=4"
+                var Paycash=$("#amount").val();
+                if(Paycash<50){
+                    alert("请输入不小于50元的金额");
+                    $("#amount").val("");
+                }else {
+                    location.href="/pay?"+"memberId="+ $.cookie("memberId")+"&amount="+$("#amount").val()+"&payType=4"
+                }
             })
         })
     </script>
@@ -38,13 +44,14 @@
 <div class="payway">
     <h3>请选择充值方式</h3>
     <div class="bdnone">
-        <label><input type="radio"  id="wxpay" name="sport" value="微信充值"><img src="../../code/img/pay/wxlogot.png"/>微信充值<span>我</span></label>
+        <label><input type="radio"  id="wxpay" name="sport" value="微信充值"><img src="../../code/img/wap/wxlogot.png"/>微信充值<span>我</span></label>
     </div>
 </div>
 <div class="paymuch">
     <h3>请选择充值金额</h3>
 <div>充值金额<span>￥</span><input id="amount" type="number" value="" placeholder="请输入金额" autofocus/>元 </div>
     <ol class="paydetails">
+        <li><span>*</span>充值金额<strong>不小于50元</strong></li>
         <li><span>*</span><strong>充值</strong>为系统<strong>自动充值</strong>，米币<strong>及时到账</strong></li>
         <li><span>*</span>如果米币到账不及时，请联系客服。</li>
     </ol>

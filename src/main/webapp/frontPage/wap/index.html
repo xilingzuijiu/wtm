@@ -19,10 +19,11 @@
         var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;//android终端
         var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);// ios终端
         $(document).ready(function () {
+            var updateType=0;
             $(".owner img").click(function(){
                 location.href="/frontPage/wap/mycenter.html";
             });
-            updateMyscore();
+            updateMyscore(updateType);
             $(".ownername>span").text(decodeURI($.cookie("memberName")))
             var imageUrl=$.cookie("imageUrl");
             $(".owner img").attr("src",imageUrl);
@@ -51,11 +52,11 @@
                 getLocation();
             }
             $(".money").click(function (){
-                updateMyscore();
-                    $("#prompt").fadeIn(500);
-                    $("#prompt").text("刷新成功");
-                    $('#prompt').delay(600).fadeOut(350);
-            })
+                updateType=1;
+                updateMyscore(updateType);
+            });
+
+
             $("#bannerinvite").click(function(){
                 location.href="../invite.html?memberId="+ $.cookie('memberId');
             })
@@ -69,7 +70,7 @@
         <p id="addressname">中国</p>
     </div>
     <div class="owner">
-        <img class="photo" src=""/>
+        <img class="photo" src="../../code/img/wap/header.png"/>
         <div class="ownerdetail">
             <h3 class="ownername"><span>微淘米</span>一款玩就可以赚钱的APP</h3>
         </div>
@@ -82,20 +83,20 @@
 <div class="homebanner swiper-container">
     <ul class="swiper-wrapper">
         <li class="swiper-slide">
-            <img class="signday" src="../../code/img/fahongbao.png"/>
+            <img class="signday" src="../../code/img/wap/fahongbao.png"/>
         </li>
         <li class="swiper-slide">
-            <img id="bannerinvite" src="../../code/img/yaohaoyou.png"/>
+            <img id="bannerinvite" src="../../code/img/wap/yaohaoyou.png"/>
         </li>
         <li class="swiper-slide">
-            <img  class="signday" src="../../code/img/fahongbao.png"/>
+            <img  class="signday" src="../../code/img/wap/fahongbao.png"/>
         </li>
     </ul>
 </div>
 <ul class="row indexlist">
     <li class="col-xs-4">
         <a class="thumbnail" href="/frontPage/wap/readlist.html">
-            <img src="../../code/img/MainViewImgae/read.png" >
+            <img src="../../code/img/wap/read.png" >
             <div class="caption">
                 <h3>阅读赚钱</h3>
             </div>
@@ -103,7 +104,7 @@
     </li>
     <li class="col-xs-4">
         <a class="thumbnail" href="/frontPage/wap/gongzhonghao.html">
-            <img src="../../code/img/MainViewImgae/attention.png" >
+            <img src="../../code/img/wap/attention.png" >
             <div class="caption">
                 <h3>关注赚钱</h3>
             </div>
@@ -111,7 +112,7 @@
     </li>
     <li class="col-xs-4">
         <a class="thumbnail" href="/frontPage/wap/pursewithdraw.html">
-            <img src="../../code/img/MainViewImgae/mymoney.png" >
+            <img src="../../code/img/wap/mymoney.png" >
             <div class="caption">
                 <h3>我的钱包</h3>
             </div>
@@ -119,7 +120,7 @@
     </li>
     <li class="col-xs-4">
         <a class="thumbnail" href="/frontPage/wap/mycenter.html">
-            <img src="../../code/img/MainViewImgae/person.png" >
+            <img src="../../code/img/wap/person.png" >
             <div class="caption">
                 <h3>个人中心</h3>
             </div>
@@ -127,7 +128,7 @@
     </li>
     <li class="col-xs-4">
         <a class="thumbnail" href="/frontPage/wap/testrecord.html">
-            <img src="../../code/img/MainViewImgae/tasknotes.png" >
+            <img src="../../code/img/wap/tasknotes.png" >
             <div class="caption">
                 <h3>任务记录</h3>
             </div>
@@ -136,7 +137,7 @@
 
     <li class="col-xs-4">
         <a class="thumbnail" href="/frontPage/wap/invitefriend.html">
-            <img src="../../code/img/MainViewImgae/friend.png" >
+            <img src="../../code/img/wap/friend.png" >
             <div class="caption">
                 <h3>邀请好友</h3>
             </div>
@@ -144,7 +145,7 @@
     </li>
     <li class="col-xs-4 signday">
         <a class="thumbnail">
-            <img src="../../code/img/MainViewImgae/new.png" >
+            <img src="../../code/img/wap/new.png" >
             <div class="caption">
                 <h3>每日签到</h3>
             </div>
@@ -152,7 +153,7 @@
     </li>
     <li class="col-xs-4">
         <a class="thumbnail" href="/frontPage/wap/rewardrules.html">
-            <img src="../../code/img/MainViewImgae/help.png" >
+            <img src="../../code/img/wap/help.png" >
             <div class="caption">
                 <h3>奖励规则</h3>
             </div>
@@ -160,7 +161,7 @@
     </li>
     <li class="col-xs-4">
         <a class="thumbnail" href="/frontPage/wap/question.html">
-            <img src="../../code/img/MainViewImgae/about.png" >
+            <img src="../../code/img/wap/about.png" >
             <div class="caption">
                 <h3>常见问题</h3>
             </div>
@@ -168,7 +169,7 @@
     </li>
 </ul>
 <div class="daysignbox">
-    <img class="daysign" src="../../code/img/MainViewImgae/abputsign2.png"/>
+    <img class="daysign" src="../../code/img/wap/abputsign2.png"/>
     <img class="signbutton" src=""/>
 </div>
 <div id="prompt"></div>

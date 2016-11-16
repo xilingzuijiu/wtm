@@ -23,9 +23,8 @@
         /* change it to what suits you! */
     </script>
     <![endif]-->
-    <script src="../../code/js/jquery-1.12.0.min.js"></script>
+    <!--<script src="../../code/js/jquery-1.12.0.min.js"></script>-->
     <script src="../../code/js/jquery.min.js"></script>
-
     <script>
         $(function(){
             $("nav h5").click(function(){
@@ -35,16 +34,14 @@
                 $(".busienter h5").click(function(){
                     $(this).removeClass("wpcactive");
                     $(this).css("color","#fff");
-
                 });
                 $(".busienter ").click(function(){
                     location.href="/frontPage/wtmpc/login.html";
                 });
-
                 //滑动到锚链接
                  var href=$(this).parent().attr("href");
                     var top=$(href).offset().top; $(this).parent().blur();
-                    $("body,html").animate({scrollTop:top-93},500); return false;})
+                    $("body,html").animate({scrollTop:top-93},500); return false;});
             $("#loadapp").click(function(){
                 window.location.href="http://a.app.qq.com/o/simple.jsp?pkgname=com.woyun.weitaomi";
             })
@@ -55,7 +52,7 @@
 <header>
     <div class="headerbox">
     <div class="logo">
-        <img src="../../code/img/headerlogo.png"/>
+        <img src="../../code/img/pc/headerlogo.png"/>
     </div>
     <nav>
         <a href="#home" class="nava"><h5 class="wpcactive">首页</h5></a>
@@ -64,30 +61,26 @@
         <a href="#home" class="nava">
             <h5>关注公众号</h5>
             <div id="navgzh">
-            <img src="../../code/img/navgzh_08.png"/>
+            <img src="../../code/img/pc/gzh.png"/>
             <h4>关注公众号</h4>
             </div>
         </a>
         <a href="#home" class="nava">
             <h5>下载APP</h5>
             <div id="navapp">
-                <img src="../../code/img/navapp_10.png"/>
+                <img src="../../code/img/pc/appc.png"/>
                 <input id="loadapp" type="button" value="免费下载>>">
             </div>
         </a>
         <a href="#contact" class="nava"><h5>联系我们</h5></a>
-        <a href="#" class="nava busienter"><h5>商家入口→</h5></a>
+        <a class="nava busienter"><h5>商家入口→</h5></a>
     </nav>
-        <!--<div class="loadapp">-->
-            <!--<a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.woyun.weitaomi"></a>-->
-        <!--</div>-->
     </div>
 </header>
 <a id="home"></a>
 <div class="blank"></div>
 <div class="weibanner"></div>
 <a id="user"></a>
-<!--<div class="blankchild"></div>-->
 <div class="UserPlatform">
     <div class="userbox">
     <div class="userprofile">
@@ -97,15 +90,14 @@
         <p>微淘米——真正让您从娱乐中赚钱，在快乐中赚钱，你还在担心你的时间不够用，钱不够花吗？快来微淘米，让你变成时间的主人，金钱的主宰！！！</p>
     </div>
     <div class="userimg">
-        <img src="../../code/img/userimg_03.png"/>
+        <img src="../../code/img/pc/userimg_03.png"/>
     </div>
     </div>
 </div>
 <a id="business"></a>
-<!--<div class="blankchild"></div>-->
 <div class="BusinessPlatform">
     <div class="businessimg">
-        <img src="../../code/img/businessimg_09.png"/>
+        <img src="../../code/img/pc/businessimg_09.png"/>
     </div>
     <div class="businessprofile">
         <h3>商家平台</h3>
@@ -119,28 +111,27 @@
     <h3>跨终端，多场景，全时段运行</h3>
     <p>Android,ios,web多端消息精确同步,全平台支持。<br/>全时段推广，没有时间约束，没有地域限制，随时玩随时见效。<br/>最新动态，随时掌控，碎片时间了解推广效果，趋势可视化展示，给你更流畅的体验。</p>
     <div class="mulimg">
-        <img src="../../code/img/mulimg_13.png"/>
+        <img src="../../code/img/pc/mulimg_13.png"/>
     </div>
     </div>
 </div>
 <a id="contact"></a>
-<!--<div class="blankchild"></div>-->
 <div class="weicontact">
     <h3>联系我们</h3>
     <p>有任何需求请告诉我<br/>我们将竭尽所能满足您的一切要求</p>
     <ul>
         <li>
-            <img src="../../code/img/adress_17.png"/>
+            <img src="../../code/img/pc/adress_17.png"/>
             <h5>公司地址</h5>
             <p>青岛市城阳区瑞阳路<br/>78号58号楼1单元301</p>
         </li>
         <li>
-            <img src="../../code/img/telephone_20.png"/>
+            <img src="../../code/img/pc/telephone_20.png"/>
             <h5>联系方式</h5>
             <p>0532-80801188<br/>QQ:1480801188</p>
         </li>
         <li class="margin0">
-            <img src="../../code/img/email_23.png"/>
+            <img src="../../code/img/pc/email_23.png"/>
             <h5>电子邮箱</h5>
             <p class="emailone">wtm@weitaomi.cn</p>
         </li>
@@ -150,15 +141,15 @@
 <div class="copyright">
     <div class="copybox">
     <div class="copyleft">
-        <img src="../../code/img/copylogo_35.png"/>
+        <img src="../../code/img/pc/copylogo_35.png"/>
         <h5>一款玩着就能赚钱的APP</h5>
     </div>
     <div class="gongzhonghao">
-        <img src="../../code/img/gongzhonghao_30.png"/>
+        <img src="../../code/img/pc/gzh.png"/>
         <h6>扫码关注公众号</h6>
     </div>
     <div class="app">
-        <img src="../../code/img/app_32.png"/>
+        <img src="../../code/img/pc/appc.png"/>
         <h6>扫码下载APP</h6>
     </div>
     <p>扫描左方二维码<br/>关注公众号，<br/>下载APP，<br/>更多惊喜等待你哦！</p>

@@ -29,7 +29,7 @@ $(function(){
             alert("页面加载错误，请重试");
         }
     })
-})
+});
 function format(timestamp) {
-    return new Date(+new Date(parseInt(timestamp) * 1000)+8*3600*1000).toISOString().replace(/T/g,' ').replace(/\.[\d]{3}Z/,'')
+    return new Date(+new Date(Math.floor(timestamp) * 1000)+8*3600*1000).toISOString().replace(/T/g,' ').replace(/\.[\d]{3}Z/,'');
 }//时间戳变换格式

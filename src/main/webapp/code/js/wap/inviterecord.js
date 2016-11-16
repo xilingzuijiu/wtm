@@ -7,26 +7,30 @@ var count=1;
 $(function() {
     loadinviterecord();
 })
-$(window).scroll(function(){
-    var scrollTop = $(this).scrollTop();
-    var scrollHeight = $(document).height();
-    var windowHeight = $(this).height();
-    if(scrollTop + windowHeight >= scrollHeight){
-        console.log(Math.ceil(total/pageSize)+"shi");
-        if(count<Math.ceil(total/pageSize)){
-            $(".loadmore").css("visibility","visible");
-            $(".loadmore").click(function(){
-                count++;
-                $(this).css("visibility","hidden");
-                loadinviterecord();
-            })
-        }
-        if(count>=Math.ceil(total/pageSize)){
-            $(".loadmore").css("display","none");
-        }
-    }else if(scrollTop<=0){
-    }
-});
+//$(window).scroll(function(){
+//    var scrollTop = $(this).scrollTop();
+//    var scrollHeight = $(document).height();
+//    var windowHeight = $(this).height();
+//    if(scrollTop + windowHeight >= scrollHeight){
+//        console.log(Math.ceil(total/pageSize)+"shi");
+//        if(count<Math.ceil(total/pageSize)){
+//            $(".loadmore").css("visibility","visible");
+//            $(".loadmore").click(function(){
+//                count++;
+//                $(this).css("visibility","hidden");
+//                loadinviterecord();
+//            })
+//        }
+//        if(count>=Math.ceil(total/pageSize)){
+//            $(".loadmore").css("display","none");
+//        }
+//    }else if(scrollTop<=0){
+//    }
+//});
+
+
+///pc/admin/memberInvited/getTotalSharedMsg
+
 function loadinviterecord(){
     console.log("count是"+count);
     console.log("pageSize是"+pageSize);
@@ -42,6 +46,7 @@ function loadinviterecord(){
             var json = eval(params);
             if (json.data!= null && json.errorCode == 0) {
                 total=json.data.length;
+                $("#invitetotal span").text(total);
                 console.log("总数就是"+total);
                 json.data.forEach(function(invitelist) {
                     var li = document.createElement("li");
@@ -69,5 +74,5 @@ function loadinviterecord(){
     })
 }
 function getLocalTime(nS) {
-    return new Date(+new Date(parseInt(nS) * 1000)+8*3600*1000).toISOString().replace(/T/g,' ').replace(/\.[\d]{3}Z/,'')
+    return new Date(+new Date(Math.floor(nS) * 1000)+8*3600*1000).toISOString().replace(/T/g,' ').replace(/\.[\d]{3}Z/,'')
 }
