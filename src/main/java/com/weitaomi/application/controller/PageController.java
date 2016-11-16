@@ -162,8 +162,10 @@ public class PageController extends BaseController {
                 thirdLogin.setOpenId((String)userInfoParams.get("openid"));
                 thirdLogin.setUnionId((String)userInfoParams.get("unionid"));
                 thirdLogin.setSourceType(1);
-//                System.out.println(userInfoParams.get("sex").toString());
-                thirdLogin.setSex(Integer.valueOf(userInfoParams.get("sex").toString()));
+                String sexString=userInfoParams.get("sex").toString();
+                if (!StringUtil.isEmpty(sexString)){
+                    thirdLogin.setSex(Integer.valueOf(sexString));
+                }
                 thirdLogin.setType(0);
                 thirdLogin.setNickname((String)userInfoParams.get("nickname"));
                 thirdLogin.setImageFiles((String)userInfoParams.get("headimgurl"));

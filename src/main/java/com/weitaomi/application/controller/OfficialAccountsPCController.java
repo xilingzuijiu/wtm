@@ -112,4 +112,14 @@ public class OfficialAccountsPCController extends BaseController{
         Long memberId=this.getUserId(request);
         return AjaxResult.getOK(memberTaskPoolService.updateTaskPoolDto(memberId,taskPoolId, isPublishNow, needNumber, singScore,limitDay));
     }
+    /**
+     * 公众号取消授权
+     * @param officialAccountId
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/accountUnderCarrige", method = RequestMethod.POST)
+    public AjaxResult accountUnderCarrige(Long officialAccountId){
+        return AjaxResult.getOK(memberTaskPoolService.accountUnderCarrige(officialAccountId));
+    }
 }

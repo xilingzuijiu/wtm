@@ -37,6 +37,11 @@ public interface IMemberTaskHistoryService {
      */
     public List<MemberTaskDto> getMemberDailyTask(Long memberId);
 
+    /**
+     * 是否公众号签到
+     * @param memberId
+     * @return
+     */
     Boolean isSignAccount(Long memberId);
 
     /**
@@ -59,13 +64,6 @@ public interface IMemberTaskHistoryService {
      * @return
      */
     MemberScore addDailyTask(Long memberId, Long typeId);
-
-    /**
-     * 定时清除未完成的任务
-     */
-    public void deleteUnFinishedTask();
-
-    void threeOclockScheduledJob();
 
     String signAccounts(Map map);
 }

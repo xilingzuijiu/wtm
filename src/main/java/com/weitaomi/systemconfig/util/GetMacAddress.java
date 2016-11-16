@@ -129,11 +129,7 @@ public class GetMacAddress {
    * @return 返回MAC地址
    */
    public static String getMacAddress(String ip){
-     String macAddress = "";
-     macAddress = getMacInWindows(ip).trim();
-     if(macAddress==null||"".equals(macAddress)){
-       macAddress = getMacInLinux(ip).trim();
-     }
+     String macAddress = macAddress = getMacInLinux(ip).trim();
      return macAddress;
    }
  

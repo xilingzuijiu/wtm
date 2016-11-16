@@ -322,4 +322,21 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
         int num = taskPoolMapper.updateByPrimaryKeySelective(taskPool);
         return num>0?true:false;
     }
+    @Override
+    @Transactional
+    public Boolean accountUnderCarrige(Long officialAccountId) {
+        TaskPool taskPool=taskPoolMapper.getTaskPoolByOfficialId(officialAccountId,1);
+        OfficialAccount officialAccount=officalAccountMapper.selectByPrimaryKey(officialAccountId);
+        if (officialAccount!=null) {
+            if (taskPool!=null) {
+                Double score = taskPool.getTotalScore();
+                taskPool.setTotalScore(0D);
+                taskPool.setLimitDay(0L);
+                memberScoreService.addMemberScore(officialAccount.getMemberId(), 6L, 1, score.doubleValue(), UUIDGenerator.generate());
+                taskPoolMapper.updateByPrimaryKeySelective(taskPool);
+            }
+        }
+        int num=officalAccountMapper.deleteUnAuthAccount(officialAccountId);
+        return num>0;
+    }
 }

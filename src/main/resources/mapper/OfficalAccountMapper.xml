@@ -27,6 +27,9 @@
         <result column="imageUrl" jdbcType="VARCHAR" property="imageUrl"/>
         <result column="createTime" jdbcType="BIGINT" property="createTime"/>
     </resultMap>
+    <delete id="deleteUnAuthAccount">
+        DELETE FROM wtm_official_accounts WHERE id=#{officialAccountId}
+    </delete>
     <select id="getAccountsByMemberId"
             resultType="com.weitaomi.application.model.dto.OfficialAccountsDto">
     select fa.id,fa.userName ofiicialAccountName,score.memberScore memberScore,t.singleScore from wtm_official_accounts fa LEFT JOIN wtm_member_score score ON score.memberId=fa.memberId

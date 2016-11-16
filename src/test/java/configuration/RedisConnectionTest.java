@@ -1,5 +1,6 @@
 package configuration;
 
+import com.weitaomi.application.service.interf.ICacheService;
 import common.BaseContextCase;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import org.springframework.data.redis.core.ValueOperations;
 public class RedisConnectionTest extends BaseContextCase {
     @Autowired
     private RedisTemplate redisTemplate;
+    @Autowired
+    private ICacheService cacheService;
     @Test
     public void testKeyValue(){
         String key="test.key.value";
@@ -20,5 +23,18 @@ public class RedisConnectionTest extends BaseContextCase {
         valueOperations.set(key,value);
         String values= (String)valueOperations.get("test.key.value");
         System.out.println(values);
+    }
+    @Test
+    public void testCacheData(){
+        String avaliableScoreKey="member:score:type:isAvaliableScore";
+        String table="member:score:type:isAvaliableToSuper";
+        int[] value1={17};
+        int[] value2={11,12,13,14,15,16,20};
+        for (int i :value1){
+            cacheService.setToHashTable(avaliableScoreKey,""+i,1,null);
+        }
+//        for (int i :value2){
+//            cacheService.setToHashTable(table,""+i,1,null);
+//        }
     }
 }

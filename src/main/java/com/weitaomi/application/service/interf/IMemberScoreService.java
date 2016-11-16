@@ -22,12 +22,6 @@ public interface IMemberScoreService {
     MemberScore addMemberScore(Long memberId,Long typeId,Integer isFinished,Double score,String sessionId);
 
     /**
-     * 定时持久化前日平台奖励
-     * @return
-     */
-    Integer updateExtraRewardTimer();
-
-    /**
      * 获取积分历史
      * @param memberId
      * @return
@@ -48,9 +42,4 @@ public interface IMemberScoreService {
      */
     Map getAvaliableScoreAndWxInfo(long memberId);
 
-    /**
-     * 定时任务，更新用户可用米币数
-     * @return
-     */
-    Integer updateAvaliableScore();
 }

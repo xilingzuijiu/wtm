@@ -9,6 +9,8 @@
     <result column="officeAccountId" property="officeAccountId" jdbcType="BIGINT" />
     <result column="memberId" property="memberId" jdbcType="BIGINT" />
     <result column="isAccessNow" property="isAccessNow" jdbcType="INTEGER" />
+    <result column="isScoreAccess" property="isScoreAccess" jdbcType="INTEGER" />
+    <result column="addRewarScore" property="addRewarScore" jdbcType="DECIMAL" />
     <result column="openId" property="openId" jdbcType="VARCHAR" />
     <result column="finishedTime" property="finishedTime" jdbcType="BIGINT" />
     <result column="createTime" property="createTime" jdbcType="BIGINT" />
