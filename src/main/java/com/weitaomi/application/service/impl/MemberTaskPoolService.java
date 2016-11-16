@@ -212,6 +212,8 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
         Double rate=0.5;
         if (!StringUtil.isEmpty(rateTemp)){
             rate = Double.valueOf(rateTemp);
+        }else {
+            cacheService.setCacheByKey("task:rate:percent",0.5,null);
         }
         taskPool.setRate(BigDecimal.valueOf(rate));
         MemberScore memberScore=memberScoreMapper.getMemberScoreByMemberId(publishReadRequestDto.getMemberId());

@@ -51,7 +51,18 @@ public class OfficialAccountsPCController extends BaseController{
         Long memberId=this.getUserId(request);
         return AjaxResult.getOK(officeAccountService.markAddRecord(memberId,officialAccountMsg));
     }
-
+    /**
+     * 加入公众号任务关注列表
+     * @param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/pushAddRequest",method = RequestMethod.POST)
+    public AjaxResult pushAddRequest(HttpServletRequest request,@RequestBody AddOfficalAccountDto addOfficalAccountDto){
+        Long memberId=super.getUserId(request);
+        officeAccountService.pushAddRequest(memberId,addOfficalAccountDto);
+        return AjaxResult.getOK();
+    }
     /**
      * 查看已关注公众号
      * @param

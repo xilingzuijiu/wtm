@@ -90,8 +90,10 @@ public class MemberPCController extends BaseController {
         taskPool.setCreateTime(DateUtils.getUnixTimestamp());
         String rateTemp= cacheService.getCacheByKey("task:rate:percent",String.class);
         Double rate=0.5;
-        if (StringUtil.isEmpty(rateTemp)){
+        if (!StringUtil.isEmpty(rateTemp)){
             rate = Double.valueOf(rateTemp);
+        }else {
+            cacheService.setCacheByKey("task:rate:percent",0.5,null);
         }
         taskPool.setRate(BigDecimal.valueOf(rate));
         taskPool.setTotalScore(taskPool.getNeedNumber()*taskPool.getSingleScore());
@@ -300,7 +302,7 @@ public class MemberPCController extends BaseController {
         if (from.getId()==4||from.getId()==6){
             phoneType=RequestFrom.getById(4).getName();
         }
-        return AjaxResult.getOK(memberScoreService.getMemberScoreById(memberId,phoneType));
+        return AjaxResult.getOK(memberScoreService.getMemberScoreById(memberId,phoneType,IpUtils.getIpAddr(request)));
     }
 
     /**

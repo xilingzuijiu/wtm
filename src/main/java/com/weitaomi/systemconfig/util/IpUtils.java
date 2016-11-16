@@ -1,6 +1,12 @@
 package com.weitaomi.systemconfig.util;
 
+import com.alibaba.fastjson.JSONObject;
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.Map;
 
 public class IpUtils {
      public static String getIpAddr(HttpServletRequest request) {
@@ -21,5 +27,18 @@ public class IpUtils {
                 ip = request.getRemoteAddr();  
             }  
             return ip;  
-        }  
+        }
+    public static Map<String,String> getAddressByIp(String ip){
+        String ipSearchUrl="http://int.dpool.sina.com.cn/iplookup/iplookup.php";
+        NameValuePair[] nameValuePairs=new NameValuePair[2];
+        nameValuePairs[0]=new BasicNameValuePair("format","json");
+        nameValuePairs[1]=new BasicNameValuePair("ip",ip);
+        String result="";
+        try {
+             result=HttpRequestUtils.get(ipSearchUrl,nameValuePairs);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return (Map) JSONObject.parse(result);
+    }
 }

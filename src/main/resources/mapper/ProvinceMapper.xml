@@ -23,4 +23,8 @@
   <select id="getAllAddress" resultMap="AddressMap">
     select p.*,<include refid="citySql"/> from wtm_province p LEFT JOIN wtm_city city on  city.father=p.provinceID
   </select>
+  <select id="getAddressByVague" resultType="java.util.Map">
+    select p.province,city.city from wtm_province p LEFT JOIN wtm_city city ON city.father=p.provinceID
+      WHERE p.province LIKE concat('%',#{province},'%') AND city.city LIKE concat('%',#{city},'%')
+  </select>
 </mapper>

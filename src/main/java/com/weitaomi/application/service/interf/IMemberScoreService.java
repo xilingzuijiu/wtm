@@ -33,7 +33,7 @@ public interface IMemberScoreService {
      * @param memberId
      * @return
      */
-    public MemberScore getMemberScoreById(Long memberId,String phoneType);
+    public MemberScore getMemberScoreById(Long memberId,String phoneType,String ip);
 
     /**
      * 获取用户可用余额和公众号信息

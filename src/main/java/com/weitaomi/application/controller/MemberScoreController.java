@@ -5,6 +5,7 @@ import com.weitaomi.application.model.dto.RequestFrom;
 import com.weitaomi.application.service.interf.IMemberScoreService;
 import com.weitaomi.systemconfig.dataFormat.AjaxResult;
 import com.weitaomi.systemconfig.exception.BusinessException;
+import com.weitaomi.systemconfig.util.IpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,6 +51,6 @@ public class MemberScoreController extends BaseController {
             throw new BusinessException("用户ID为空");
         }
         RequestFrom from=this.getRequestFrom(request);
-        return AjaxResult.getOK(memberScoreService.getMemberScoreById(memberId,from.getName()));
+        return AjaxResult.getOK(memberScoreService.getMemberScoreById(memberId,from.getName(),IpUtils.getIpAddr(request)));
     }
 }

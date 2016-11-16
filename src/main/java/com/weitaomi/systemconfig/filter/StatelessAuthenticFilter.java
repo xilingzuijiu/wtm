@@ -69,9 +69,9 @@ public class StatelessAuthenticFilter extends AccessControlFilter {
         String randomkey=map.get("randomkey");
         String digest=map.get("digest");
         map.remove("digest");
-        if (!this.isAccessRandomkey(randomkey)){
-            throw new BusinessException("该缓存随机数不可用");
-        }
+//        if (!this.isAccessRandomkey(randomkey)){
+//            throw new BusinessException("该缓存随机数不可用");
+//        }
         //生成无状态的token
         StatelessToken statelessToken=new StatelessToken(username,map,digest);
         //交给设置的realm进行验证处理

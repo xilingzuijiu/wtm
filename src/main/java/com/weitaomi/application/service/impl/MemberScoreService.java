@@ -12,6 +12,7 @@ import com.weitaomi.systemconfig.constant.SystemConfig;
 import com.weitaomi.systemconfig.exception.BusinessException;
 import com.weitaomi.systemconfig.exception.InfoException;
 import com.weitaomi.systemconfig.util.DateUtils;
+import com.weitaomi.systemconfig.util.IpUtils;
 import com.weitaomi.systemconfig.util.PropertiesUtil;
 import com.weitaomi.systemconfig.util.StringUtil;
 import org.slf4j.Logger;
@@ -29,7 +30,6 @@ import java.util.*;
 @Service
 public class MemberScoreService implements IMemberScoreService {
     private final Logger logger = LoggerFactory.getLogger(MemberScoreService.class);
-    //    private RuntimeSchema<Member> schema=RuntimeSchema.createFrom(Member.class);
     @Autowired
     private ICacheService cacheService;
     @Autowired
@@ -41,11 +41,9 @@ public class MemberScoreService implements IMemberScoreService {
     @Autowired
     private MemberInvitedRecordMapper memberInvitedRecordMapper;
     @Autowired
-    private MemberTaskMapper memberTaskMapper;
-    @Autowired
-    private IMemberTaskHistoryService memberTaskHistoryService;
-    @Autowired
     private MemberMapper memberMapper;
+    @Autowired
+    private ProvinceMapper provinceMapper;
 
     @Override
     @Transactional
@@ -192,11 +190,24 @@ public class MemberScoreService implements IMemberScoreService {
     }
     @Override
     @Transactional
-    public MemberScore getMemberScoreById(Long memberId,String phoneType) {
+    public MemberScore getMemberScoreById(Long memberId,String phoneType,String ip) {
         MemberScore memberScore = memberScoreMapper.getMemberScoreByMemberId(memberId);
         logger.info("刷新钱包，信息：{}", JSON.toJSONString(memberScore));
         if (memberScore!=null) {
             memberMapper.updateMemberPhoneType(memberId,phoneType);
+            Map<String,String> address= IpUtils.getAddressByIp(ip);
+            Map<String,String> addr=null;
+            if (address!=null){
+                addr=provinceMapper.getAddressByVague(address.get("province"),address.get("district"));
+            }
+            if (addr!=null) {
+                Member member = memberMapper.selectByPrimaryKey(memberId);
+                if (StringUtil.isEmpty(member.getProvince()) || StringUtil.isEmpty(member.getProvince())) {
+                    member.setProvince(addr.get("province"));
+                    member.setProvince(addr.get("city"));
+                    memberMapper.updateByPrimaryKeySelective(member);
+                }
+            }
             return memberScore;
         }
         return null;

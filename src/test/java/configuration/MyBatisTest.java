@@ -78,8 +78,7 @@ public class MyBatisTest extends BaseContextCase {
 
     @Test
     public void testSelectMember() {
-        Member member = memberMapper.selectByPrimaryKey(1L);
-        System.out.println(JSON.toJSONString(member));
+        System.out.println(new Sha256Hash("123456", "OTe9KQ").toString());
     }
 
     @Test
@@ -136,19 +135,8 @@ public class MyBatisTest extends BaseContextCase {
     }
     @Test
     public void testApprove(){
-
-//        PaymentApprove approve=new PaymentApprove();
-//        approve.setAccountNumber("oKfbJvp1_Bb-Xy1aqw6o4L5H55Y0");
-//        approve.setAccountName("宁凡荣");
-//        approve.setAmount(BigDecimal.valueOf(8.00));
-//        approve.setCreateTime(1473393865L);
-//        approve.setIsPaid(1);
-//        approve.setMemberId(3L);
-//        List<PaymentApprove> approves=new ArrayList<>();
-//        approves.add(approve);
-//        paymentService.patchWechatCustomers(1L,1,"","192.168.0.77");
-
-
+        Map map=IpUtils.getAddressByIp("121.42.196.236");
+        System.out.println(map);
     }
 
     @Test
@@ -213,7 +201,7 @@ public class MyBatisTest extends BaseContextCase {
     }
     @Test
     public void testPassword(){
-        System.out.println(Base64Utils.encodeToString("天道酬勤".getBytes()));
+        System.out.println(Base64Utils.encodeToString("西泠醉酒".getBytes()));
         try {
             System.out.println(new String(Base64.decode("5p6X5a2Q"),"uTF-8"));
         } catch (UnsupportedEncodingException e) {
@@ -222,7 +210,7 @@ public class MyBatisTest extends BaseContextCase {
     }
     @Test
     public void testGetNickName(){
-        ThirdLogin login = thirdLoginMapper.selectByPrimaryKey(8L);
+        ThirdLogin login = thirdLoginMapper.selectByPrimaryKey(8677L);
         String nickname = Base64Utils.encodeToString(login.getNickname().getBytes());
         System.out.println(nickname);
         String urlencode="5p6X5a2Q";
@@ -241,8 +229,11 @@ public class MyBatisTest extends BaseContextCase {
     }
     @Test
     public void testGetPayNumber(){
-//        String number = paymentService.getTradeNo();
-//        System.out.println(number);
+        try {
+            System.out.println(new String(Base64.decode("5Zug5Li6"),"UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 }
 

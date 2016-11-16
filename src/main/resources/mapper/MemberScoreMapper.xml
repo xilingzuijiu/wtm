@@ -43,6 +43,6 @@
         WHERE flow.typeId IN (1,2) AND score.memberId=#{memberId} order by flow.createTime Desc
     </select>
     <select id="getAvaliableScoreAndWxInfo" resultType="java.util.Map">
-        select s.avaliableScore,l.nickname from wtm_member_score s LEFT JOIN wtm_third_login l ON s.memberId=l.memberId WHERE s.memberId=#{memberId} AND l.sourceType=1;
+        select s.avaliableScore-s.rechargeCurrentScore avaliableScore,l.nickname from wtm_member_score s LEFT JOIN wtm_third_login l ON s.memberId=l.memberId WHERE s.memberId=#{memberId} AND l.sourceType=1;
     </select>
 </mapper>
