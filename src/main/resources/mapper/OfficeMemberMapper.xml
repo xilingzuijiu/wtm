@@ -43,6 +43,6 @@
     select a.userName accountName,login.nickname nickName,member.sex,a.originId,a.imageUrl from wtm_office_member m
     LEFT JOIN wtm_official_accounts a ON a.id=m.officeAccountId LEFT JOIN wtm_member member ON member.id=m.memberId
     LEFT JOIN wtm_third_login login ON member.id=login.memberId
-     WHERE m.memberId=#{memberId} AND m.isAccessNow=0 AND login.sourceType=#{sourceType}
+     WHERE m.memberId=#{memberId} AND m.isAccessNow=0 AND login.sourceType=#{sourceType} limit 7;
   </select>
 </mapper>

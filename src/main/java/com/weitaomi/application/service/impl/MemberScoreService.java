@@ -121,7 +121,7 @@ public class MemberScoreService implements IMemberScoreService {
                     if (afterScore.doubleValue() < 0) {
                         throw new BusinessException("可用积分不足");
                     }
-                    if (typeId!=17) {
+                    if (typeId!=17&&typeId!=16) {
                         memberScore.setMemberScore(afterScore);
                     }
                     memberScore.setAvaliableScore(avaliableScore);
@@ -145,7 +145,7 @@ public class MemberScoreService implements IMemberScoreService {
                 if (!flag) {
                     throw new BusinessException("积分记录失败");
                 }
-                cacheService.setCacheByKey(key, memberScore, SystemConfig.TASK_CACHE_TIME);
+                cacheService.setCacheByKey(key, memberScore, 60);
                 String table="member:score:type:isAvaliableToSuper";
                 if (cacheService.keyExistInHashTable(table,typeId.toString())&&increaseScore.doubleValue()>0) {
                     //处理上级奖励问题
@@ -196,9 +196,10 @@ public class MemberScoreService implements IMemberScoreService {
         if (memberScore!=null) {
             memberMapper.updateMemberPhoneType(memberId,phoneType);
             Map<String,String> address= IpUtils.getAddressByIp(ip);
+            logger.info("address:{},Ip:{}",JSON.toJSONString(address),ip);
             Map<String,String> addr=null;
             if (address!=null){
-                addr=provinceMapper.getAddressByVague(address.get("province"),address.get("district"));
+                addr=provinceMapper.getAddressByVague(address.get("province"),address.get("city"));
             }
             if (addr!=null) {
                 Member member = memberMapper.selectByPrimaryKey(memberId);

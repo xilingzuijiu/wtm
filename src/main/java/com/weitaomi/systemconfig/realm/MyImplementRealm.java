@@ -44,7 +44,6 @@ public class MyImplementRealm extends AuthorizingRealm {
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        logger.info("开始验证realm");
         StatelessToken statelessToken = (StatelessToken) authenticationToken;
         Map<String,String> params = (Map<String, String>) statelessToken.getParams();
         String username=statelessToken.getUsername();

@@ -235,5 +235,9 @@ public class MyBatisTest extends BaseContextCase {
             e.printStackTrace();
         }
     }
+    @Test
+    public void testGetPayNu(){
+        memberScoreService.addMemberScore(9L,7L,1,-20D,"1234567890");
+    }
 }
 

@@ -127,6 +127,7 @@ function getRegeisterParams(requestObj){
     var identifyCode = requestObj.identifyCode
     delete requestObj.invitedCode
     delete requestObj.identifyCode
+    delete  requestObj.repassword
     var obj=new ReuqestObj(requestObj,invitedCode,identifyCode)
     return JSON.stringify(obj)
 }

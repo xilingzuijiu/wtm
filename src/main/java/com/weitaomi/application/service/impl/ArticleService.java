@@ -1,6 +1,7 @@
 package com.weitaomi.application.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.weitaomi.application.model.bean.*;
 import com.weitaomi.application.model.dto.ArticleDto;
@@ -157,8 +158,9 @@ public class ArticleService implements IArticleService {
             try {
                 logger.info("时间为：{}",System.currentTimeMillis()-ts);
                 String result = HttpRequestUtils.postStringEntity(url,JSON.toJSONString(map));
-                if (!StringUtil.isEmpty(result)){
-                    boolean flagTem=Boolean.valueOf(result);
+                if (!StringUtil.isEmpty(result)) {
+                    Map<String,String> params= (Map<String, String>) JSONObject.parse(result);
+                    boolean flagTem = Boolean.valueOf(params.get("temp"));
                     if (!flagTem){
                         TaskFailPushToWechat taskFailPushToWechat=new TaskFailPushToWechat();
                         taskFailPushToWechat.setParams(JSON.toJSONString(map));

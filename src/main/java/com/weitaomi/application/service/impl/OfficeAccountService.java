@@ -1,6 +1,7 @@
 package com.weitaomi.application.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.weitaomi.application.model.bean.*;
 import com.weitaomi.application.model.dto.*;
 import com.weitaomi.application.model.mapper.*;
@@ -146,8 +147,9 @@ public class OfficeAccountService implements IOfficeAccountService {
             }
             try {
                 String result = HttpRequestUtils.postStringEntity(url, JSON.toJSONString(map));
-                if (!StringUtil.isEmpty(result)){
-                    boolean flag=Boolean.valueOf(result);
+                if (!StringUtil.isEmpty(result)) {
+                    Map<String,String> params= (Map<String, String>) JSONObject.parse(result);
+                    boolean flag = Boolean.valueOf(params.get("temp"));
                     if (!flag){
                         TaskFailPushToWechat taskFailPushToWechat=new TaskFailPushToWechat();
                         taskFailPushToWechat.setParams(JSON.toJSONString(map));
@@ -193,7 +195,8 @@ public class OfficeAccountService implements IOfficeAccountService {
             if (officialAccountWithScore != null) {
                 OfficeMember officeMember = officeMemberMapper.getOfficeMemberByOpenId(openid);
                 if (officeMember == null) {
-                    throw new BusinessException("没有此用户记录");
+                    logger.info("没有此用户记录");
+                    return true;
                 }
                 //增加积分以及积分记录
                 Long memberId = officeMember.getMemberId();

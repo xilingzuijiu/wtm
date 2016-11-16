@@ -83,6 +83,7 @@
   <if test="flag!=0">
       AND pool.isPublishNow=#{flag}
   </if>
+    order by pool.createTime desc
     limit 1;
 </select>
 <select id="getOfficialAccountList" resultType="com.weitaomi.application.model.bean.OfficialAccount">
