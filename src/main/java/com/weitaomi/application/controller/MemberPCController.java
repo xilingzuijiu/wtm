@@ -201,7 +201,7 @@ public class MemberPCController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/pushAddFinished",method = RequestMethod.POST)
-    public AjaxResult pushAddFinished(@RequestBody Map<String,String> params){
+    public AjaxResult pushAddFinished(@RequestBody Map<String,Object> params){
         return AjaxResult.getOK(officeAccountService.pushAddFinished(params));
     }
     /**
