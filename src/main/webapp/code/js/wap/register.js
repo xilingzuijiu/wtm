@@ -11,6 +11,9 @@ $(function(){
                 type: 'get',
                 url: '/pc/admin/member/sendIndentifyCode',
                 data: {telephone:telephone},
+                beforeSend: function (XMLHttpRequest) {
+                    getMemberRequestHeaderMsg(XMLHttpRequest)
+                } ,
                 success: function (params) {
                     var data=eval(params)
                     var errorCode=data.errorCode
@@ -55,8 +58,8 @@ $(function(){
                 data: request,
                 contentType: "application/json",
                 beforeSend: function (XMLHttpRequest) {
-                    XMLHttpRequest.setRequestHeader("from","2")
-                },
+                    getMemberRequestHeaderMsg(XMLHttpRequest)
+                } ,
                 success: function (params) {
                     var data=eval(params)
                     var errorCode=data.errorCode;
@@ -81,3 +84,23 @@ $(function(){
         }
     })
 })
+var count=0;
+function getMemberRequestHeaderMsg(XMLHttpRequest){
+    //var memberId= $.cookie("memberId");
+    //if (memberId==null||memberId == undefined){
+    //    if (count<1){
+    //        alert("登录已过期请重新登录");
+    //        count++;
+    //        location.href="/frontPage/wap/login.html"
+    //    }
+    //}
+    //var password= $.cookie("password");
+    XMLHttpRequest.setRequestHeader("memberId",memberId);
+    if(isAndroid){
+        XMLHttpRequest.setRequestHeader("from",6);
+    }else if(isiOS){
+        XMLHttpRequest.setRequestHeader("from",7);
+    }else {
+        XMLHttpRequest.setRequestHeader("from",2);
+    }
+}

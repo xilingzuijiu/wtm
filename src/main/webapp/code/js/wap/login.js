@@ -12,8 +12,8 @@ $(function(){
             url: '/pc/admin/member/login',
             data: {mobileOrName:memberName,password:password},
             beforeSend: function (XMLHttpRequest) {
-                XMLHttpRequest.setRequestHeader("from","2")
-            },
+                getMemberRequestHeaderMsg(XMLHttpRequest)
+            } ,
             success: function (params) {
                 var param = eval(params);
                 if (param != null && param.errorCode == 0) {
@@ -59,5 +59,15 @@ function fastalert(stext){
 function initilizePage(){
     if($.cookie("memberId")!=null&&$.cookie("memberId")!=undefined){
         location.href="frontPage/wap/index.html"
+    }
+}
+var count=0;
+function getMemberRequestHeaderMsg(XMLHttpRequest){
+    if(isAndroid){
+        XMLHttpRequest.setRequestHeader("from",6);
+    }else if(isiOS){
+        XMLHttpRequest.setRequestHeader("from",7);
+    }else {
+        XMLHttpRequest.setRequestHeader("from",2);
     }
 }

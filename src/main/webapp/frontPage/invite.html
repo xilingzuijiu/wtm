@@ -10,6 +10,7 @@
     <script src="../code/js/jquery.min.js"></script>
     <script type="text/javascript" src="../code/js/invite.js"></script>
     <script type="text/javascript" src="../code/js/time_js.js"></script>
+    <script type="text/javascript" src="../code/js/wap/register.js"></script>
     <script>
         var u = navigator.userAgent;
         var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;//android终端
@@ -22,119 +23,18 @@
             if(r!=null)return  unescape(r[2]);return null;
         }
         $(function(){
-            memberId=GetQueryString("memberId");
-            console.log("获取的的数据为："+memberId)
-            $.ajax({
-                type: 'get',
-                dataType: 'json',
-                url: '/pc/admin/member/getInvitedCode',
-                data: {memberId:memberId},
-                header:{
-                    "Access-Control-Allow-Origin":"true"
-                },
-                success: function (params) {
-                    var json = eval(params); //数组
-                    console.log("json数据为："+params)
-                    if (json!=null&&json.errorCode==0){
-                        $("#target").empty()
-                        $("#target").append(json.data)
-                    }else{ alert("获取邀请码失败")}
-                },
-                error:function (data){
-                    console.log(data)
-                    alert("页面加载错误，请重试");
-                }
-            });
+            getinvitecode();
             $("#ivload").click(function() {
                 EV_modeAlert('envon');
                 var invitedCode=$("#target").text().trim();
                 $("#invitedcode").val(invitedCode)
-            })
-           $("#sendVerifyCode").click( function (){
-                var telephone = $("#telephone").val().trim();
-                if (telephone==null || !telephone.match(/^1\d{10}$/)){
-                    alert("手机号码不正确")
-                }else {
-                    $.ajax({
-                        type: 'get',
-                        url: '/pc/admin/member/sendIndentifyCode',
-                        data: {telephone:telephone},
-                        success: function (params) {
-                            var data=eval(params)
-                            var errorCode=data.errorCode
-                            if (errorCode==0){
-
-                            } else if (errorCode==4){
-                                alert(data.message)
-                            }
-                        }
-                    });
-                    $("#sendVerifyCode").css("display","none");
-                    $("#downtime").css("display","block");
-                    countDown();
-                    setTimeout(function () {
-                        $("#sendVerifyCode").css("display","block");
-                        $("#downtime").css("display","none");
-                    }, SS*1000);
-                }
-            });
-            $("#register").click( function (){
-                $("#form").attr("enctype","multipart/form-data");
-                var requestObj = eval($("#registerForm").serializeObject())
-                var request =getRegeisterParams(requestObj);
-                var telephone = $("#telephone").val().trim();
-                if(!$("#memberName").val()){
-                    alert("用户名不能为空");
-                }else if($("#memberName").val().length>10){
-                    alert("您输入的用户名过长");
-                }else if($("#password").val().length<6||$("#password").val().length>16){
-                    alert("密码长度必须为6到16位");
-                }else if($("#password").val()!=$("#repassword").val()){
-                    alert("密码不一致，请重新输入");
-                }else if(telephone==null || !telephone.match(/^1\d{10}$/)){
-                    alert("手机号码不正确");
-                }else {
-                    $("#register").attr('disabled', true);
-                    $("#register").css('background', "#bebebe");
-                    $.ajax({
-                        type: 'post',
-                        url: '/pc/admin/member/register',
-                        dataType: "json",
-//                        async:false,
-                        data: request,
-                        contentType: "application/json",
-                        beforeSend: function (XMLHttpRequest) {
-                            XMLHttpRequest.setRequestHeader("from", "2")
-                        },
-                        success: function (params) {
-                            var data = eval(params);
-                            var errorCode = data.errorCode
-                            if (errorCode == 0) {
-                                if (data.data) {
-                                    download();
-//                                    flag++;
-                                }
-                            } else if (errorCode == 4) {
-                                alert(data.message);
-                                $("#register").attr('disabled', false);
-                                $("#register").css('background', "#f94b16");
-//                                flag++;
-                            }
-                        }, error: function (data) {
-                            alert(data.message);
-                            $("#register").attr('disabled', false);
-                            $("#register").css('background', "#f94b16");
-//                            flag++;
-                        }
-                    });
-                }
             })
     })
     </script>
 </head>
 <body id="inviteby">
 <div id="wrapbg" style="position:absolute; height:100%;z-index:-1;">
-    <img src="../code/img/bgone.jpg" height="100%" width="100%" />
+    <img src="../code/img/wap/bgone.jpg" height="100%" width="100%" />
 </div>
 <div class="ivwrap">
         <img class="ivbanner"src="../code/img/wap/banner.png"/>

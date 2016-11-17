@@ -1,3 +1,32 @@
+function getinvitecode(){
+    memberId=GetQueryString("memberId");
+    console.log("获取的的数据为："+memberId)
+    $.ajax({
+        type: 'get',
+        dataType: 'json',
+        url: '/pc/admin/member/getInvitedCode',
+        data: {memberId:memberId},
+        header:{
+            "Access-Control-Allow-Origin":"true"
+        },
+        beforeSend: function (XMLHttpRequest) {
+            getMemberRequestHeaderMsg(XMLHttpRequest)
+        } ,
+        success: function (params) {
+            var json = eval(params); //数组
+            console.log("json数据为："+params)
+            if (json!=null&&json.errorCode==0){
+                $("#target").empty()
+                $("#target").append(json.data)
+            }else{ alert("获取邀请码失败")}
+        },
+        error:function (data){
+            console.log(data)
+            alert("页面加载错误，请重试");
+        }
+    });
+}
+
 $.fn.serializeObject = function() {
     var o = {};
     var a = this.serializeArray();
@@ -167,4 +196,24 @@ function getWxRegeisterParams(requestObj){
 }
 function download() {
     location.href="http://a.app.qq.com/o/simple.jsp?pkgname=com.woyun.weitaomi"
+}
+var count=0;
+function getMemberRequestHeaderMsg(XMLHttpRequest){
+    //var memberId= $.cookie("memberId");
+    //if (memberId==null||memberId == undefined){
+    //    if (count<1){
+    //        alert("登录已过期请重新登录");
+    //        count++;
+    //        location.href="/frontPage/wap/login.html"
+    //    }
+    //}
+    var password= $.cookie("password");
+    XMLHttpRequest.setRequestHeader("memberId",memberId);
+    if(isAndroid){
+        XMLHttpRequest.setRequestHeader("from",6);
+    }else if(isiOS){
+        XMLHttpRequest.setRequestHeader("from",7);
+    }else {
+        XMLHttpRequest.setRequestHeader("from",2);
+    }
 }
