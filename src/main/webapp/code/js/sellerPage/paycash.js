@@ -9,7 +9,7 @@ var count = 0;
             console.log("输入框是" + howmoney);
             if(howmoney>=50){
                 if (howmoney!=null&&howmoney>0) {
-                    var review = Showbo.Msg.confirm("确定充值" + howmoney + "元？");
+                    var review = confirm("确定充值" + howmoney + "元？");
                     if (review){
                         $("#cleckmoney").css("border", "#ddd 1px solid");
                         $(".moneylist li").css("cursor", "default");
@@ -25,8 +25,8 @@ var count = 0;
                 }
             }else{
                 alert("最小充值金额为50元");
+                $("#cleckmoney").val("");
             }
-
         });
         cleckpaycash();
     }

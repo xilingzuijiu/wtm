@@ -115,5 +115,6 @@ function initilizePage(){
     }
 }
 function getLocalTime(timestamp) {
-    return new Date(Math.floor(timestamp) * 1000).toLocaleDateString()
+    var date = new Date(Math.floor(timestamp) * 1000);
+    return [date.getFullYear(), date.getMonth()+1, date.getDate()].join('/');
 }
