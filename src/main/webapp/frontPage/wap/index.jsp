@@ -149,7 +149,7 @@
         </a>
     </li>
     <li class="col-xs-4">
-        <a class="thumbnail" href="/frontPage/wap/rewardrules.html">
+        <a class="thumbnail" href="/frontPage/wap/rewardrule.html">
             <img src="../../code/img/MainViewImgae/help.png" >
             <div class="caption">
                 <h3>奖励规则</h3>
