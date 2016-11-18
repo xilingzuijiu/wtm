@@ -276,7 +276,9 @@ public class PaymentService implements IPaymentService {
             if (memberScore == null) {
                 throw new InfoException("没有可用提现金额");
             }
-            if (memberScore.getAvaliableScore().subtract(memberScore.getRechargeCurrentScore()).doubleValue() < approve.getAmount().multiply(BigDecimal.valueOf(100)).longValue()) {
+            if (memberScore.getAvaliableScore().subtract(memberScore.getRechargeCurrentScore()).doubleValue() < approve.getAmount().multiply(BigDecimal.valueOf(100)).longValue()||
+                    memberScore.getMemberScore().subtract(memberScore.getRechargeCurrentScore()).doubleValue() < approve.getAmount().multiply(BigDecimal.valueOf(100)).longValue()
+                    ) {
                 throw new InfoException("提现金额大于可提现金额");
             }
             if (StringUtil.isEmpty(approve.getAccountNumber()) || StringUtil.isEmpty(approve.getAccountName())) {

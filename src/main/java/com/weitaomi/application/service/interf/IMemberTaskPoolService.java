@@ -1,11 +1,14 @@
 package com.weitaomi.application.service.interf;
 
 import java.util.List;
+import java.util.Map;
+
 import com.weitaomi.application.model.bean.TaskPool;
 import com.weitaomi.application.model.dto.PublishReadRequestDto;
 import com.weitaomi.application.model.dto.RequireFollowerParamsDto;
 import com.weitaomi.application.model.dto.TaskPoolDto;
 import com.weitaomi.systemconfig.util.Page;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -53,5 +56,5 @@ public interface IMemberTaskPoolService {
     public Boolean updateTaskPoolDto(Long memberId,Long taskPoolId, Integer isPublishNow,Integer needNumber,Double singScore,Integer limitDay);
 
     @Transactional
-    Boolean accountUnderCarrige(Long officialAccountId);
+    Boolean accountUnderCarrige(Map<String,String> params);
 }

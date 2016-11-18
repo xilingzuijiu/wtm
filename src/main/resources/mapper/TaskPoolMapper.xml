@@ -32,7 +32,11 @@
     </foreach>
   </update>
   <select id="getTaskPoolByOfficialId" resultType="com.weitaomi.application.model.bean.TaskPool">
-    select * from wtm_task_pool pool WHERE pool.officialAccountsId=#{officialAccountId} AND pool.isPublishNow=#{isPublishNow}
+    select * from wtm_task_pool pool WHERE pool.officialAccountsId=#{officialAccountId}
+    <if test="isPublishNow!=null">
+      AND pool.isPublishNow=#{isPublishNow}
+    </if>
+      AND pool.singleScore>0 limit 1
   </select>
   <select id="getTaskPoolArticleDto" resultType="com.weitaomi.application.model.dto.TaskPoolDto">
     select

@@ -28,12 +28,12 @@ public class OfficialAccount extends BaseModel {
      * 公众号等级
      */
     @Column(name = "level")
-    private String level;
+    private Integer level;
     /**
      * 认证类型
      */
     @Column(name = "level2")
-    private String level2;
+    private Integer level2;
     /**
      * 用户ID
      */
@@ -347,23 +347,6 @@ public class OfficialAccount extends BaseModel {
         this.accessToken = accessToken;
     }
 
-
-    /**
-     * 获取公众号等级
-     * @return level 公众号等级
-     */
-    public String getLevel() {
-        return this.level;
-    }
-
-    /**
-     * 设置公众号等级
-     * @param level 公众号等级
-     */
-    public void setLevel(String level) {
-        this.level = level;
-    }
-
     /**
      * 获取创建日期
      * @return authorizationInfo 创建日期
@@ -429,10 +412,26 @@ public class OfficialAccount extends BaseModel {
     }
 
     /**
+     * 获取公众号等级
+     * @return level 公众号等级
+     */
+    public Integer getLevel() {
+        return this.level;
+    }
+
+    /**
+     * 设置公众号等级
+     * @param level 公众号等级
+     */
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    /**
      * 获取认证类型
      * @return level2 认证类型
      */
-    public String getLevel2() {
+    public Integer getLevel2() {
         return this.level2;
     }
 
@@ -440,7 +439,7 @@ public class OfficialAccount extends BaseModel {
      * 设置认证类型
      * @param level2 认证类型
      */
-    public void setLevel2(String level2) {
+    public void setLevel2(Integer level2) {
         this.level2 = level2;
     }
 }

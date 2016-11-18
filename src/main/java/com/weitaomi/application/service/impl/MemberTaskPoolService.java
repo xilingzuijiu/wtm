@@ -33,6 +33,7 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2016/8/24.
@@ -326,19 +327,30 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
     }
     @Override
     @Transactional
-    public Boolean accountUnderCarrige(Long officialAccountId) {
-        TaskPool taskPool=taskPoolMapper.getTaskPoolByOfficialId(officialAccountId,1);
-        OfficialAccount officialAccount=officalAccountMapper.selectByPrimaryKey(officialAccountId);
+    public Boolean accountUnderCarrige(Map<String,String> params) {
+        String appId="";
+        if (params!=null){
+            appId=params.get("appid");
+            logger.info("公众号取消授权，appId:{}",appId);
+
+        }
+        OfficialAccount officialAccount=officalAccountMapper.getOfficalAccountByAppId(appId);
         if (officialAccount!=null) {
+            TaskPool taskPool=taskPoolMapper.getTaskPoolByOfficialId(officialAccount.getId(),1);
             if (taskPool!=null) {
                 Double score = taskPool.getTotalScore();
                 taskPool.setTotalScore(0D);
+                taskPool.setIsPublishNow(0);
                 taskPool.setLimitDay(0L);
                 memberScoreService.addMemberScore(officialAccount.getMemberId(), 6L, 1, score.doubleValue(), UUIDGenerator.generate());
+                memberTaskHistoryService.addMemberTaskToHistory(officialAccount.getMemberId(), 14L,score.doubleValue(), 1,"公众号"+officialAccount.getUserName()+"取消授权,关注任务结束，米币返还，米币数为"+score.doubleValue(),null,null);
                 taskPoolMapper.updateByPrimaryKeySelective(taskPool);
             }
+            officialAccount.setLevel2(-1);
+        int num=officalAccountMapper.updateByPrimaryKeySelective(officialAccount);
+            logger.info("公众号取消授权结束");
+            return num>0;
         }
-        int num=officalAccountMapper.deleteUnAuthAccount(officialAccountId);
-        return num>0;
+        return false;
     }
 }

@@ -125,12 +125,12 @@ public class OfficialAccountsPCController extends BaseController{
     }
     /**
      * 公众号取消授权
-     * @param officialAccountId
+     * @param params
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/accountUnderCarrige", method = RequestMethod.POST)
-    public AjaxResult accountUnderCarrige(Long officialAccountId){
-        return AjaxResult.getOK(memberTaskPoolService.accountUnderCarrige(officialAccountId));
+    public AjaxResult accountUnderCarrige(@RequestBody Map<String,String> params){
+        return AjaxResult.getOK(memberTaskPoolService.accountUnderCarrige(params));
     }
 }

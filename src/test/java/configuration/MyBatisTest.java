@@ -78,7 +78,7 @@ public class MyBatisTest extends BaseContextCase {
 
     @Test
     public void testSelectMember() {
-        System.out.println(new Sha256Hash("123456", "OTe9KQ").toString());
+        System.out.println(new Sha256Hash("123456", "1FrZ5v").toString());
     }
 
     @Test
@@ -230,7 +230,7 @@ public class MyBatisTest extends BaseContextCase {
     @Test
     public void testGetPayNumber(){
         try {
-            System.out.println(new String(Base64.decode("5Zug5Li6"),"UTF-8"));
+            System.out.println(new String(Base64.decode("5oKg5ZOJ5oKg5ZOJfg=="),"UTF-8"));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

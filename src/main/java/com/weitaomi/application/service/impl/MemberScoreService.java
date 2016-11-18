@@ -6,6 +6,7 @@ import com.weitaomi.application.model.dto.MemberTaskWithDetail;
 import com.weitaomi.application.model.dto.RewardCountDto;
 import com.weitaomi.application.model.mapper.*;
 import com.weitaomi.application.service.interf.ICacheService;
+import com.weitaomi.application.service.interf.IKeyValueService;
 import com.weitaomi.application.service.interf.IMemberScoreService;
 import com.weitaomi.application.service.interf.IMemberTaskHistoryService;
 import com.weitaomi.systemconfig.constant.SystemConfig;
@@ -44,7 +45,8 @@ public class MemberScoreService implements IMemberScoreService {
     private MemberMapper memberMapper;
     @Autowired
     private ProvinceMapper provinceMapper;
-
+    @Autowired
+    private IKeyValueService keyValueService;
     @Override
     @Transactional
     public MemberScore addMemberScore(Long memberId, Long typeId,Integer isFinished, Double score, String sessionId) {
@@ -80,7 +82,11 @@ public class MemberScoreService implements IMemberScoreService {
                     memberScore.setMemberId(memberId);
                     memberScore.setMemberScore(increaseScore);
                     //todo
-                    if (cacheService.keyExistInHashTable(avaliableScoreKey,typeId.toString())) {
+                    boolean flag= cacheService.keyExistInHashTable(avaliableScoreKey,typeId.toString());
+                    if (!flag){
+                        flag=keyValueService.keyIsExist(avaliableScoreKey,typeId.toString());
+                    }
+                    if (flag) {
                         memberScore.setAvaliableScore(increaseScore);
                         if (typeId==1){
                             BigDecimal charge=memberScore.getInValidScore().subtract(increaseScore);
@@ -105,16 +111,20 @@ public class MemberScoreService implements IMemberScoreService {
                     BigDecimal rechargeCurrentScore=memberScore.getRechargeCurrentScore();
                     //充值米币（total）
                     BigDecimal rechargeTotalScore=memberScore.getRechargeTotalScore();
-                    if (cacheService.keyExistInHashTable(avaliableScoreKey,typeId.toString())) {
+                    boolean flag= cacheService.keyExistInHashTable(avaliableScoreKey,typeId.toString());
+                    if (!flag){
+                        flag=keyValueService.keyIsExist(avaliableScoreKey,typeId.toString());
+                    }
+                    if (flag) {
                         avaliableScore = avaliableScore.add(increaseScore);
                         if (typeId==1) {
                             rechargeTotalScore = rechargeTotalScore.add(increaseScore);
                             rechargeCurrentScore = rechargeCurrentScore.add(increaseScore);
                         }else if (typeId==4||typeId==5){
                             if (increaseScore.doubleValue()<0&&increaseScore.abs().doubleValue()<=rechargeCurrentScore.doubleValue()){
-                                rechargeTotalScore=rechargeCurrentScore.add(increaseScore);
+                                rechargeCurrentScore=rechargeCurrentScore.add(increaseScore);
                             }else if (increaseScore.doubleValue()<0&&increaseScore.abs().doubleValue()>rechargeCurrentScore.doubleValue()){
-                                rechargeTotalScore=BigDecimal.ZERO;
+                                rechargeCurrentScore=BigDecimal.ZERO;
                             }
                         }
                     }
@@ -135,7 +145,6 @@ public class MemberScoreService implements IMemberScoreService {
                 memberScoreFlow.setMemberId(memberId);
                 memberScoreFlow.setTypeId(typeId);
                 memberScoreFlow.setIsFinished(isFinished);
-                memberScoreFlow.setDetail(memberScoreFlowType.getTypeDesc());
                 memberScoreFlow.setFlowScore(increaseScore);
                 memberScoreFlow.setMemberScoreAfter(memberScore.getMemberScore());
                 memberScoreFlow.setMemberScoreBefore(scoreBefore);
@@ -147,7 +156,11 @@ public class MemberScoreService implements IMemberScoreService {
                 }
                 cacheService.setCacheByKey(key, memberScore, 60);
                 String table="member:score:type:isAvaliableToSuper";
-                if (cacheService.keyExistInHashTable(table,typeId.toString())&&increaseScore.doubleValue()>0) {
+                boolean flagTemp= cacheService.keyExistInHashTable(table,typeId.toString());
+                if (!flagTemp){
+                    flagTemp=keyValueService.keyIsExist(table,typeId.toString());
+                }
+                if (flagTemp&&increaseScore.doubleValue()>0) {
                     //处理上级奖励问题
                     MemberInvitedRecord memberInvitedRecord = memberInvitedRecordMapper.getMemberInvitedRecordByMemberId(memberId);
                     if (memberInvitedRecord != null) {
@@ -199,13 +212,15 @@ public class MemberScoreService implements IMemberScoreService {
             logger.info("address:{},Ip:{}",JSON.toJSONString(address),ip);
             Map<String,String> addr=null;
             if (address!=null){
-                addr=provinceMapper.getAddressByVague(address.get("province"),address.get("city"));
+                if (!StringUtil.isEmpty(address.get("province"))&&!StringUtil.isEmpty(address.get("city"))) {
+                    addr = provinceMapper.getAddressByVague(address.get("province"), address.get("city"));
+                }
             }
             if (addr!=null) {
                 Member member = memberMapper.selectByPrimaryKey(memberId);
                 if (StringUtil.isEmpty(member.getProvince()) || StringUtil.isEmpty(member.getProvince())) {
                     member.setProvince(addr.get("province"));
-                    member.setProvince(addr.get("city"));
+                    member.setCity(addr.get("city"));
                     memberMapper.updateByPrimaryKeySelective(member);
                 }
             }

@@ -1,6 +1,7 @@
 package configuration;
 
 import com.weitaomi.application.service.interf.ICacheService;
+import com.weitaomi.application.service.interf.IKeyValueService;
 import common.BaseContextCase;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ public class RedisConnectionTest extends BaseContextCase {
     private RedisTemplate redisTemplate;
     @Autowired
     private ICacheService cacheService;
+    @Autowired
+    private IKeyValueService keyValueService;
     @Test
     public void testKeyValue(){
         String key="test.key.value";
@@ -28,13 +31,19 @@ public class RedisConnectionTest extends BaseContextCase {
     public void testCacheData(){
         String avaliableScoreKey="member:score:type:isAvaliableScore";
         String table="member:score:type:isAvaliableToSuper";
-        int[] value1={1,2,4,5,6,8,9,10,12,13,14,15,17,20};
-        int[] value2={11,12,13,14,15,16,20};
+        int[] value1={1,2,4,5,6,8,9,10,12,13,14,15,16,17,18,20};
+        int[] value2={11,12,13,14,15,18,20};
         for (int i :value1){
             cacheService.setToHashTable(avaliableScoreKey,""+i,1,null);
         }
         for (int i :value2){
             cacheService.setToHashTable(table,""+i,1,null);
         }
+    }
+    @Test
+    public void testKeyValueIsExist(){
+        String table="member:score:type:isAvaliableToSuper";
+        boolean flag = keyValueService.keyIsExist(table,"16");
+        System.out.println(flag);
     }
 }

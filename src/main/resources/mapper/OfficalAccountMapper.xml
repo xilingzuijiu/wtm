@@ -28,7 +28,7 @@
         <result column="createTime" jdbcType="BIGINT" property="createTime"/>
     </resultMap>
     <delete id="deleteUnAuthAccount">
-        DELETE
+        DELETE FROM wtm_official_accounts where id =#{officialAccountId}
     </delete>
     <select id="getAccountsByMemberId"
             resultType="com.weitaomi.application.model.dto.OfficialAccountsDto">
@@ -70,7 +70,7 @@
         AND pool.cityCode IN (#{cityCode},'')
     </if>
     ORDER BY a.createTime DESC
-    LIMIT 8
+    LIMIT 7
 </select>
 
 
@@ -91,5 +91,8 @@
 </select>
     <select id="getOriginIdByAppId" resultType="java.lang.String">
         select a.originId from wtm_official_accounts a WHERE a.appId=#{appId}
+    </select>
+    <select id="getOfficalAccountByAppId" resultType="com.weitaomi.application.model.bean.OfficialAccount">
+        select * from wtm_official_accounts a WHERE a.appId=#{appid}
     </select>
 </mapper>

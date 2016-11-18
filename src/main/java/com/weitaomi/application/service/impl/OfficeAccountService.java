@@ -129,9 +129,11 @@ public class OfficeAccountService implements IOfficeAccountService {
             officeMemberList.add(officeMember);
             TaskPool taskPool = taskPoolMapper.getTaskPoolByOfficialId(officialAccountWithScore.getId(), 1);
             //添加到待完成任务记录中
-            String detail ="关注公众号"+officialAccountWithScore.getUserName()+"，领取"+taskPool.getRate().multiply(BigDecimal.valueOf(officialAccountWithScore.getScore())).doubleValue()+"米币";
-            memberTaskHistoryService.addMemberTaskToHistory(memberId,1L,taskPool.getRate().multiply(BigDecimal.valueOf(officialAccountWithScore.getScore())).doubleValue(),0,detail,null,officialAccountMsg.getOriginId());
-            idList.add(officialAccountWithScore.getId());
+            if (taskPool!=null) {
+                String detail = "关注公众号" + officialAccountWithScore.getUserName() + "，领取" + taskPool.getRate().multiply(BigDecimal.valueOf(officialAccountWithScore.getScore())).doubleValue() + "米币";
+                memberTaskHistoryService.addMemberTaskToHistory(memberId, 1L, taskPool.getRate().multiply(BigDecimal.valueOf(officialAccountWithScore.getScore())).doubleValue(), 0, detail, null, officialAccountMsg.getOriginId());
+                idList.add(officialAccountWithScore.getId());
+            }
         }
         Long time =DateUtils.getUnixTimestamp();
         int number=officeMemberMapper.batchAddOfficeMember(officeMemberList,time);
@@ -203,7 +205,7 @@ public class OfficeAccountService implements IOfficeAccountService {
                 int num = officeMemberMapper.deleteFollowAccountsMember(officeMember.getId());
                 if (num > 0) {
                     if (DateUtils.getUnixTimestamp() - officeMember.getCreateTime() < 7 * 24 * 60 * 60) {
-                        TaskPool taskPool = taskPoolMapper.getTaskPoolByOfficialId(officialAccountWithScore.getId(), 1);
+                        TaskPool taskPool = taskPoolMapper.getTaskPoolByOfficialId(officialAccountWithScore.getId(),null);
                         memberScoreService.addMemberScore(memberId, 7L, 1, -(taskPool.getRate().multiply(BigDecimal.valueOf(officialAccountWithScore.getScore()))).doubleValue(), UUIDGenerator.generate());
                         memberTaskHistoryService.addMemberTaskToHistory(memberId, 11L, -(taskPool.getRate().multiply(BigDecimal.valueOf(officialAccountWithScore.getScore()))).doubleValue(), 1, "七天之内取消关注公众号" + officialAccountWithScore.getUserName(), null, null);
                         memberScoreService.addMemberScore(officialAccountWithScore.getMemberId(), 9L, 1, officialAccountWithScore.getScore(), UUIDGenerator.generate());
@@ -274,6 +276,8 @@ public class OfficeAccountService implements IOfficeAccountService {
                         JpushUtils.buildRequest(JpushUtils.getJpushMessage(memberId, "任务不存在，或者任务已结束"));
                         throw new InfoException("任务不存在，或者任务已结束");
                     }
+                }else {
+                    return true;
                 }
             } else {
                 logger.info("任务不存在，或者任务已结束");
