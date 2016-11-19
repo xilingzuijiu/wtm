@@ -34,26 +34,7 @@
                 delete this[key]
             }
         }
-        $(function () {
-            if(is_weixin()){
-                var u = navigator.userAgent;
-                var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;//android终端
-                var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);// ios终端
-                loadreadlist();
-                if (isiOS) {
-                    reurl()
-                }
-            }else {
-                $(".readlist").empty()
-                document.body.innerHTML="请在微信打开此页面"
-            }
-        })
-        function reurl() {
-            if ($.cookie(memberId+requestTime)==null||$.cookie(memberId+requestTime)==undefined){
-                $.cookie(memberId+requestTime,0);
-                location.reload()
-            }
-        }
+
         function is_weixin(){
             var ua = navigator.userAgent.toLowerCase();
             if(ua.match(/MicroMessenger/i)=="micromessenger") {
@@ -62,26 +43,16 @@
                 return false;
             }
         }
-        function loadreadlist(){
-            memberId = GetQueryString('memberId');
-            requestTime = GetQueryString('requestTime');
-            console.log(memberId);
-            console.log(requestTime);
-            var cookietime=$.cookie($.cookie("memberId") + "time");
-            if(cookietime==null||cookietime==undefined){
-                cookietime=0;
-                var timeEnd = new Date().getTime() - cookietime;
-            }else {
-                var timeEnd = new Date().getTime() - cookietime;
-            }
-            console.log("timeEnd"+timeEnd);
-            if (timeEnd < 2000) {
-                alert("手速太快")
-                setTimeout(function () {
-                    $.cookie($.cookie("memberId") + "time",{expires:-1})
-                    loadReadlist();
-                },5000)
-            } else {
+
+        $(function () {
+            if(is_weixin()){
+                var u = navigator.userAgent;
+                var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;//android终端
+                var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);// ios终端
+                memberId = GetQueryString('memberId');
+                requestTime = GetQueryString('requestTime');
+                console.log(memberId);
+                console.log(requestTime);
                 $.ajax({
                     type: 'post',
                     url: '/pc/admin/member/getArticleList',
@@ -154,16 +125,21 @@
                         } else {
                             alert("获取数据失败")
                         }
-                        $.cookie(memberId + requestTime, 0);
+                        $.cookie(memberId+requestTime,0);
                     },
                     error: function (data) {
                         console.log(data)
                         alert("页面加载错误，请重试");
                     }
                 });
+                if (isiOS) {
+                    reurl()
+                }
+            }else {
+                $(".readlist").empty()
+                document.body.innerHTML="请在微信打开此页面"
             }
-        }
-
+        })
         var articleSubmit = function (obj) {
             var articleId = obj.getAttribute("id");
             //var index=obj.index();
@@ -184,9 +160,6 @@
                     if (json != null && json.errorCode == 0) {
                         obj.remove()
                         $.cookie(memberId+requestTime,'',{expires:-1})
-
-                        $.cookie($.cookie("memberId") + "readMark", '', {expires: -1})
-                        $.cookie($.cookie("memberId") + "time", new Date().getTime(), {path: '/frontPage/wap'})
 //                        obj.style.display = 'none';
 //                        window.open(articleUrl)
                         location.href = articleUrl;
@@ -202,6 +175,12 @@
                     alert("页面加载错误，请重试");
                 }
             })
+        }
+        function reurl() {
+            if ($.cookie(memberId+requestTime)==null||$.cookie(memberId+requestTime)==undefined){
+                $.cookie(memberId+requestTime,0);
+                location.reload()
+            }
         }
     </script>
 </head>

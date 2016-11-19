@@ -53,13 +53,13 @@ function loadReadlist() {
         var timeEnd = new Date().getTime() - cookietime;
     }
     console.log(timeEnd)
-    if (timeEnd < 1500) {
-        alert("手速太快")
-        setTimeout(function () {
+    if (timeEnd<2000){
+        alert("手速太快");
+        setTimeout(function(){
             $.cookie($.cookie("memberId") + "time",{expires:-1})
             loadReadlist();
         },5000)
-    } else {
+    }else{
         console.log("count" + count);
         $.ajax({
             type: 'post',
@@ -70,7 +70,7 @@ function loadReadlist() {
             beforeSend: function (XMLHttpRequest) {
                 getMemberRequestHeaderMsg(XMLHttpRequest)
             },
-            success: function (params) {
+            success: function (params){
                 var json = eval(params); //数组
                 console.log("json数据为：" + params);
                 console.log($.cookie("memberId"));
@@ -113,16 +113,15 @@ function loadReadlist() {
                 }
             },
             error: function (data) {
-                console.log(data)
+                console.log(data);
                 alert("页面加载错误，请重试");
             }
-
         })
     }
 }
-var articleSubmit = function (obj) {
-    var articleId = obj.getAttribute("id");
-    var articleUrl = hashMap.Get(articleId);
+var articleSubmit=function(obj){
+    var articleId=obj.getAttribute("id");
+    var articleUrl=hashMap.Get(articleId);
     console.log(articleId);
     $.ajax({
         type: 'post',
@@ -131,7 +130,7 @@ var articleSubmit = function (obj) {
         beforeSend: function (XMLHttpRequest) {
             getMemberRequestHeaderMsg(XMLHttpRequest)
         },
-        success: function (params) {
+        success: function(params){
             var json = eval(params); //数组
             console.log("json数据为：" + params)
             if (json != null && json.errorCode == 0) {

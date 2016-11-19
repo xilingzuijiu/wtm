@@ -11,11 +11,6 @@ $(function(){
         ["login", "withdraw"],
         ["pcwap","pcback"]
     ];
-    var imgtype = [
-        [
-            ["png", "jpg"],
-        ]
-    ]
     //设置一个省的公共下标
     var pIndex = -1;
 //先设置一级地址的值

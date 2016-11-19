@@ -78,16 +78,23 @@ article .commandlist li{float:left;width:8em;background:#eee;margin-right:1rem;b
 .preview{display:block;margin:auto;margin-bottom:20px;}
 .clectimg img{display:block;width:150px;height:150px;margin:auto;border:#eee 1px dashed;}
 .filebox{position:relative; overflow:hidden;}
-.filebox .filebackgd{display:block;padding:10px 20px;background:#68c1f4;color:#fff;font-size:15px;outline:none;border:none;
+.filebox .filebackgd,.uploadfile{display:block;padding:10px 20px;background:#68c1f4;color:#fff;font-size:15px;outline:none;border:none;
     border-radius:5px;margin:auto;text-align:center;}
 .filebox #clectfile{position:absolute;right:0; top:0; font-size:30px; opacity:0; filter:alpha(opacity=0);cursor:pointer;}
-.address{text-align:center;margin-top:50px;}
+.imgaddress{text-align:center;margin-top:50px;}
 .CDNaddress{display:inline-block;margin-right:20px;}
-.address p{font-size:18px;display:inline-block;}
+.CDNaddress p,.endaddress p{font-size:18px;display:inline-block;}
 .CDNaddress select{font-size:17px;}
 #title{border:#aaa 1px solid;font-size:17px;}
 .CDNaddress select,.CDNaddress input{width:200px;}
-.boxborder{border:#eee 1px solid;margin-left:7rem;padding:5em 0;}
-.CDNaddress{margin-bottom:2em;}
-.endaddress{}
+.boxborder{border:#eee 1px solid;margin-left:7rem;padding:5em 0;overflow:hidden;}
+.CDNaddress,.endfileads p{margin-bottom:30px;}
 #cdnaddress{border:#999 1px solid;font-size:15px;width:480px;height:38px;}
+.uploadfile{margin-top:40px;}
+.fileaddress{text-align:left;padding-left:10%;float:left;}
+.CDNfileads{display:block;}
+.endfileads{font-size:18px;}
+.endfileads textarea{border:#999 1px solid;width:295px;}
+#fileup{text-align:left;margin-left:30%;}
+.filepreview{border:#999 1px solid;float:left;width:50%;min-height:350px;max-height:550px;margin-left:10%;margin-bottom:30px;overflow:hidden;padding-bottom:20px;}
+#fileupload{font-size:25px;margin:auto;margin-top:150px;}
