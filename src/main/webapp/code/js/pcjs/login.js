@@ -106,7 +106,7 @@ window.location.href="/frontPage/wtmpc/index.html"
                 },
                 success: function (params) {
                     var data=eval(params)
-                    var errorCode=data.errorCode
+                    var errorCode=data.errorCode;
                     if (errorCode==0){
                         if (data.data){
                             alert("注册成功，请登录");
@@ -161,6 +161,7 @@ function getRegeisterParams(requestObj){
     var identifyCode = requestObj.identifyCode
     delete requestObj.invitedCode
     delete requestObj.identifyCode
+    delete requestObj.repassword
     var obj=new ReuqestObj(requestObj,invitedCode,identifyCode)
     return JSON.stringify(obj)
 }

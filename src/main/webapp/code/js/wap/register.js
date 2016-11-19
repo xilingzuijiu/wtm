@@ -95,7 +95,7 @@ function getMemberRequestHeaderMsg(XMLHttpRequest){
     //    }
     //}
     //var password= $.cookie("password");
-    XMLHttpRequest.setRequestHeader("memberId",memberId);
+    //XMLHttpRequest.setRequestHeader("memberId",memberId);
     if(isAndroid){
         XMLHttpRequest.setRequestHeader("from",6);
     }else if(isiOS){
@@ -103,4 +103,13 @@ function getMemberRequestHeaderMsg(XMLHttpRequest){
     }else {
         XMLHttpRequest.setRequestHeader("from",2);
     }
+}
+function getRegeisterParams(requestObj){
+    var invitedCode = requestObj.invitedCode
+    var identifyCode = requestObj.identifyCode
+    delete requestObj.invitedCode
+    delete requestObj.identifyCode
+    delete requestObj.repassword
+    var obj=new ReuqestObj(requestObj,invitedCode,identifyCode)
+    return JSON.stringify(obj)
 }
