@@ -130,6 +130,10 @@ window.location.href="/frontPage/wtmpc/index.html"
         $(".loginbg").css("display","none");
         $(".registerbg").css("display","block");
     })
+    $("#loginback").click(function(){
+        $(".loginbg").css("display","block");
+        $(".registerbg").css("display","none");
+    })
 })
 $.fn.serializeObject = function() {
     var o = {};

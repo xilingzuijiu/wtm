@@ -8,6 +8,7 @@
     <link href="../code/css/style.css" rel="stylesheet" type="text/css"/>
     <title>邀请页</title>
     <script src="../code/js/jquery.min.js"></script>
+    <script src="../code/js/jquery.cookie.js"></script>
     <script type="text/javascript" src="../code/js/invite.js"></script>
     <script type="text/javascript" src="../code/js/time_js.js"></script>
     <script type="text/javascript" src="../code/js/wap/register.js"></script>
@@ -25,9 +26,10 @@
         $(function(){
             getinvitecode();
             $("#ivload").click(function() {
-                EV_modeAlert('envon');
-                var invitedCode=$("#target").text().trim();
-                $("#invitedcode").val(invitedCode)
+//                EV_modeAlert('envon');
+//                var invitedCode=$("#target").text().trim();
+//                $("#invitedcode").val(invitedCode)
+                download();
             })
     })
     </script>
@@ -41,7 +43,7 @@
     <p class="ivintroduce">好友通过您的邀请码注册,即送您<span>50米币</span><br/>平台还将给您好友收入<span>10%</span>的奖励</p>
     <div class="invite">
         <img src="../code/img/wap/invite.png"/>
-        <div id="invitecode"  data-clipboard-action="copy" data-clipboard-target="#target"><span id="target">dvFgba</span></div>
+        <div id="invitecode"  data-clipboard-action="copy" data-clipboard-target="#target"><span id="target">weitaomi</span></div>
     </div>
     <p class="ivusage">邀请码使用方式：<br/>APP注册页面-输入邀请码即可</p>
     <div class="ivlogo">

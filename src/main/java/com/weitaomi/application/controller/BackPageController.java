@@ -69,7 +69,7 @@ public class BackPageController extends BaseController {
                         Account account = accountMapper.getAccount(realName);
                         if (account != null) {
                             //成功进入
-                            modelAndView.setViewName("");
+                            modelAndView.setViewName("/frontPage/backward/withdraws.html");
                         } else {
                             //失败进入
                             modelAndView.setViewName("/backDeal/login");

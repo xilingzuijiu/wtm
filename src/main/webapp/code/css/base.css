@@ -1,12 +1,13 @@
 @charset "utf-8";
 /* CSS Document */
-@font-face{
-	font-family:fangzheng;
-}
+/*@font-face{*/
+	/*font-family:fangzheng;*/
+	/*src:url(../fonts/fangzheng.TTF)*/
+/*}*/
 html,body{
 	margin:0;
 	font-size:14px;
-	font-family:'微软雅黑', Arial, Helvetica, sans-serif,fangzheng;
+	font-family:'微软雅黑', Arial, Helvetica, sans-serif !important;
 	background:#fff;
 	}
 

@@ -1,0 +1,14 @@
+
+header{text-align:center;height:100px;line-height:100px;font-size:25px;}
+.content{width:1200px;margin:auto;}
+.clectimg{border:#999 1px dashed;width:300px;padding:30px 0;margin:auto;}
+.clectimg img{display:block;margin:auto;width:100px;margin-bottom:20px;}
+.filebox{position:relative; overflow:hidden;}
+.filebox .filebackgd{display:block;padding:10px 20px;background:#68c1f4;color:#fff;font-size:15px;outline:none;border:none;
+    border-radius:5px;margin:auto;text-align:center;}
+.filebox #clectfile{position:absolute;right:0; top:0; font-size:30px; opacity:0; filter:alpha(opacity=0);cursor:pointer;}
+.address{text-align:center;margin-top:50px;}
+.CDNaddress{display:inline-block;margin-right:20px;}
+.address p{font-size:18px;display:inline-block;}
+.CDNaddress select{font-size:17px;}
+#title{border:#aaa 1px solid;font-size:17px;}

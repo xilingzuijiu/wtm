@@ -253,7 +253,7 @@ label.checked {background: url(../../code/img/wap/payradio.png) no-repeat left c
 .selfinformation h5{font-weight:normal;font-size:2.6rem;line-height:2.5em;}
 .selfinformation h6{font-weight:normal;font-size:2.1rem;color:#999;}
 .selfinformation .mywtm{width:11%;float:right;padding-top:2em;padding-right:2.2em;}
-.information li p input{text-align:right;color:#777;font-size:2.2rem;line-height:2.6em;background:transparent;}
+.information li p input{display:block;text-align:right;color:#777;font-size:2.2rem;line-height:2.6em;width:100%;background:transparent;}
 .information li p select{border:none;outline:none;font-size:2.2rem;padding-left:30%;color:#777;width:2em;
     appearance:none; -moz-appearance:none;-webkit-appearance:none;background:transparent;}
 .exit{background:none !important;}

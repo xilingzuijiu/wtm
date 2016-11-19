@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>静态图片上传CDN</title>
+    <link href="../../code/css/backcommon.css" rel="stylesheet" type="text/css"/>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="../../code/js/backmanage/CDNjs.js"></script>
+    <script>
+        $(function(){
+            $(".CDNaddress").change(function(){
+                var oneselect=$("#onemenu option:selected");
+                var onemenu=oneselect.text();
+                var twoselect=$("#twomenu option:selected");
+                var twomenu=twoselect.text();
+                $("#title").change(function (){
+                    var timestamp=new Date().getTime();
+                    $("#title").attr("name",timestamp);
+                });
+                var timestamp=$("#title").attr("name");
+                console.log(timestamp);
+                var title=$("#title").val();
+                console.log("第二个title"+title)
+                var imgselect=$("#imgtype option:selected");
+                var imgtype=imgselect.text();
+               console.log("val"+oneselect.val())
+                console.log("val"+twoselect.val())
+                if(oneselect.val()!=-1&&timestamp!=undefined){
+                    $("#cdnaddress").val(onemenu+'/'+twomenu+'/'+title+timestamp+imgtype)
+                }
+            })
+        });
+
+
+
+        //使用IE条件注释来判断是否IE6，通过判断userAgent不一定准确
+        if (document.all) document.write('<!--[if lte IE 6]><script type="text/javascript">window.ie6= true<\/script><![endif]-->');
+        // var ie6 = /msie 6/i.test(navigator.userAgent);//不推荐，有些系统的ie6 userAgent会是IE7或者IE8
+        function change(picId,fileId) {
+            var pic = document.getElementById(picId);
+            var file = document.getElementById(fileId);
+            if(window.FileReader){//chrome,firefox7+,opera,IE10+
+                oFReader = new FileReader();
+                oFReader.readAsDataURL(file.files[0]);
+                oFReader.onload = function (oFREvent) {pic.src = oFREvent.target.result;};
+            }
+            else if (document.all) {//IE9-//IE使用滤镜，实际测试IE6设置src为物理路径发布网站通过http协议访问时还是没有办法加载图片
+                file.select();
+                file.blur();//要添加这句，要不会报拒绝访问错误（IE9或者用ie9+默认ie8-都会报错，实际的IE8-不会报错）
+                var reallocalpath = document.selection.createRange().text//IE下获取实际的本地文件路径
+                //if (window.ie6) pic.src = reallocalpath; //IE6浏览器设置img的src为本地路径可以直接显示图片
+                //else { //非IE6版本的IE由于安全问题直接设置img的src无法显示本地图片，但是可以通过滤镜来实现，IE10浏览器不支持滤镜，需要用FileReader来实现，所以注意判断FileReader先
+                pic.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='image',src=\"" + reallocalpath + "\")";
+                pic.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';//设置img的src为base64编码的透明图片，要不会显示红xx
+                // }
+            }
+            else if (file.files) {//firefox6-
+                if (file.files.item(0)) {
+                    url = file.files.item(0).getAsDataURL();
+                    pic.src = url;
+                }
+            }
+        }
+
+
+    </script>
+</head>
+<body>
+<header>
+    <h1>微淘米静态图片上传</h1>
+</header>
+<div class="content">
+    <aside class="col-lg-1 col-xs-2">
+        <a href="/frontPage/backward/withdraws.html" class="atagactive" id="withdrawApproveList">提现申请</a>
+        <a href="/frontPage/backward/CDNimg.html">图片上传</a>
+        <a href="/frontPage/backward/CDNfile.html" class="nobd">文件上传</a>
+    </aside>
+    <article class="col-lg-11 col-xs-10">
+        <div class="boxborder">
+    <div class="clectimg">
+        <div class="preview"><img id="previewimg" src="../../code/img/wap/header.png"/></div>
+        <div class="filebox">
+            <input class="filebackgd" value="点击选择文件"/>
+            <input id="clectfile" type="file" name="clectfile" value="点击选择文件" onchange="change('previewimg','clectfile')"/>
+        </div>
+    </div>
+    <div class="address">
+        <div class="boxcontainer">
+            <div class="CDNaddress">
+                <p>一级目录：</p>
+                <select id="onemenu">
+                    <option value="-1">请选择</option>
+                </select>
+            </div>
+            <div class="CDNaddress">
+                <p>二级目录：</p>
+                <select id="twomenu">
+                    <option value="-1">请选择</option>
+                </select>
+            </div>
+        </div>
+        <div class="boxcontainer">
+        <div class="CDNaddress">
+            <p>文件名称：</p>
+            <input type="text" id="title" value="请输入文件名" onfocus="if(this.value=='请输入文件名'){this.value=''}"/>
+        </div>
+        <div class="CDNaddress">
+            <p>图片格式：</p>
+            <select id="imgtype">
+                <option value="0">.png</option>
+                <option value="1">.jpg</option>
+            </select>
+        </div>
+            </div>
+        <div class="endaddress">
+            <p>文件CDN地址：</p>
+            <input type="text" id="cdnaddress" value="" placeholder="点击生成CDN地址">
+        </div>
+    </div>
+            <div>
+                <input type="button" value="上传文件">
+            </div>
+    </div>
+    </article>
+</div>
+</body>
+</html>
