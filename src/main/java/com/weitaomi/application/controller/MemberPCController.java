@@ -211,21 +211,7 @@ public class MemberPCController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/sendIndentifyCode",method = RequestMethod.GET)
-    public AjaxResult sendIndentifyCode(String telephone,@RequestParam(required = false,defaultValue ="0") Integer type,HttpServletRequest request){
-        Long timestart=System.currentTimeMillis();
-        String ip=IpUtils.getIpAddr(request);
-        logger.info("用户获取验证码请求IP：{},获取mac时间：{}", IpUtils.getIpAddr(request),System.currentTimeMillis()-timestart);
-        Integer value=cacheService.getCacheByKey(ip,Integer.class);
-        if (value!=null&&value>0){
-            if (value>10){
-                throw new InfoException("同一设备操作过于频繁");
-            }else {
-                cacheService.increCacheBykey(ip,1L);
-            }
-        }else {
-            Long time=DateUtils.getTodayEndSeconds()-DateUtils.getUnixTimestamp();
-            cacheService.setCacheByKey(ip,1,time.intValue());
-        }
+    public AjaxResult sendIndentifyCode(String telephone,@RequestParam(required = false,defaultValue ="0") Integer type,String uuid,HttpServletRequest request){
         return AjaxResult.getOK(memberService.sendIndentifyCode(telephone,type));
     }
 

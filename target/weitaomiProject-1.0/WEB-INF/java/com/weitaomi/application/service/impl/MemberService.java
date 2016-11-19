@@ -175,7 +175,7 @@ public class MemberService extends BaseService implements IMemberService {
                     if (num > 0) {
                         MemberTask memberTask = memberTaskMapper.selectByPrimaryKey(3L);
                         memberTaskHistoryService.addMemberTaskToHistory(memberInvitedRecord.getParentId(), 3L, null, 1, null, null,null);
-                        memberScoreService.addMemberScore(memberInvited.getId(), 16L,1, memberTask.getPointCount().doubleValue(), UUIDGenerator.generate());
+                        memberScoreService.addMemberScore(memberInvited.getId(), 18L,1, memberTask.getPointCount().doubleValue(), UUIDGenerator.generate());
                     }
                 }
             }

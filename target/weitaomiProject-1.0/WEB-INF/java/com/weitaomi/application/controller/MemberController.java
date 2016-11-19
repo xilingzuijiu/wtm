@@ -5,11 +5,13 @@ import com.weitaomi.application.model.bean.Member;
 import com.weitaomi.application.model.bean.ThirdLogin;
 import com.weitaomi.application.model.dto.ModifyPasswordDto;
 import com.weitaomi.application.model.dto.RegisterMsg;
+import com.weitaomi.application.service.interf.ICacheService;
 import com.weitaomi.application.service.interf.IMemberService;
 import com.weitaomi.systemconfig.dataFormat.AjaxResult;
 import com.weitaomi.systemconfig.exception.BusinessException;
 import com.weitaomi.systemconfig.exception.DBException;
 import com.weitaomi.systemconfig.exception.InfoException;
+import com.weitaomi.systemconfig.util.DateUtils;
 import com.weitaomi.systemconfig.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +35,8 @@ public class MemberController  extends BaseController {
     private static Logger logger= LoggerFactory.getLogger(MemberController.class);
     @Autowired
     private IMemberService memberService;
+    @Autowired
+    private ICacheService cacheService;
     /**
      * 用户注册（手机注册）
      *
@@ -70,7 +74,18 @@ public class MemberController  extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/getIdentifyCode", method = RequestMethod.POST)
-    public AjaxResult getIdentifyCodeAction(@RequestParam("mobile") String mobile, @RequestParam(value = "type", defaultValue ="0",required = false) Integer type, HttpServletRequest request) throws BusinessException, IOException {
+    public AjaxResult getIdentifyCodeAction(@RequestParam("mobile") String mobile,String uuid, @RequestParam(value = "type", defaultValue ="0",required = false) Integer type, HttpServletRequest request) throws BusinessException, IOException {
+        Integer num=cacheService.getCacheByKey("member:sendIdentifyCode:"+uuid,Integer.class);
+        if (num!=null&&num>0){
+            if (num>3){
+                throw new InfoException("获取验证码过于频繁~");
+            }else {
+                cacheService.increCacheBykey("member:sendIdentifyCode:"+uuid,1L);
+            }
+        }else {
+            Long time =DateUtils.getTodayEndSeconds()-DateUtils.getUnixTimestamp();
+            cacheService.setCacheByKey("member:sendIdentifyCode:"+uuid,1,time.intValue());
+        }
         String identifyCode=memberService.sendIndentifyCode(mobile,type);
         if (identifyCode!=null&&!identifyCode.isEmpty()){
             return AjaxResult.getOK();
@@ -145,7 +160,7 @@ public class MemberController  extends BaseController {
         return AjaxResult.getOK(memberService.getMemberDetailById(memberId));
     }
     /**
-     * 获取邀请记录
+     * 上传文件
      * @return
      */
     @ResponseBody

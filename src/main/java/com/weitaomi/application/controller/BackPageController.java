@@ -6,6 +6,7 @@ import com.weitaomi.application.model.mapper.AccountMapper;
 import com.weitaomi.application.service.interf.IAppVersionService;
 import com.weitaomi.application.service.interf.IBackPageService;
 import com.weitaomi.systemconfig.dataFormat.AjaxResult;
+import com.weitaomi.systemconfig.exception.BusinessException;
 import com.weitaomi.systemconfig.util.GetMacAddress;
 import com.weitaomi.systemconfig.util.IpUtils;
 import com.weitaomi.systemconfig.util.PropertiesUtil;
@@ -13,10 +14,7 @@ import com.weitaomi.systemconfig.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import sun.misc.BASE64Decoder;
 
@@ -26,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2016/11/3.
@@ -39,51 +38,6 @@ public class BackPageController extends BaseController {
     private AccountMapper accountMapper;
     @Autowired
     private IBackPageService backPageService;
-    @RequestMapping("/pc/download/latestVersion")
-    public void getLatestVersion(HttpServletResponse response) {
-        try {
-            OutputStream out = response.getOutputStream();
-            String version = (String) appVersionService.getCurrentVersion(4, 0);
-            String fileName = "weitaomi" + version + ".apk";
-            String prefix = "C:\\Users\\Administrator\\Desktop\\";
-            prefix= PropertiesUtil.getValue("server.latest.version");
-            File file = new File(prefix + fileName);
-            InputStream inputStream = new FileInputStream(file);
-            byte[] buffer = new byte[1024];
-            int len = 0;
-            response.setHeader("content-disposition", "attachment;filename=" + file.getName());
-            while ((len = inputStream.read(buffer)) > 0) {
-                out.write(buffer, 0, len);
-            }
-            out.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @RequestMapping("/pc/download/uploadLatestVersion")
-    public void uploadLatestVersion(String file, String version) {
-        try {
-            String fileName = "weitaomi" + version + ".apk";
-            String prefix = "C:\\Users\\Administrator\\Desktop\\";
-//             prefix= PropertiesUtil.getValue("server.latest.version");
-            OutputStream outputStream = new FileOutputStream(prefix + fileName);
-            BASE64Decoder base64Decoder = new BASE64Decoder();
-            InputStream inputStream = new ByteArrayInputStream(base64Decoder.decodeBuffer(file));
-            byte[] bytes = new byte[1024];
-            int length = 0;
-            while ((length = inputStream.read(bytes)) > 0) {
-                outputStream.write(bytes, 0, length);
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     @RequestMapping("/backDeal")
     public ModelAndView redirectToBackDeal(HttpServletRequest request, HttpServletResponse response) {
         String ip = IpUtils.getIpAddr(request);
@@ -189,4 +143,23 @@ public class BackPageController extends BaseController {
     public AjaxResult patchCheckArticle(List<Long> poolIdList){
         return AjaxResult.getOK(backPageService.patchCheckArticle(poolIdList));
     }
+
+    /**
+     * 上传文件
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/backward/uploadShowImage", method = RequestMethod.POST)
+    public AjaxResult uploadShowImage(HttpServletRequest request,@RequestBody(required = true) Map<String,String> params){
+        Long memberId=this.getUserId(request);
+        String files=params.get("files");
+        String path=params.get("path");
+        String suffix=params.get("suffix");
+        String yunPath="";
+        if (!StringUtil.isEmpty(files)&&!StringUtil.isEmpty(path)&&!StringUtil.isEmpty(suffix)){
+            yunPath=backPageService.uploadUnyunFiles(path,files,suffix);
+        }
+        return AjaxResult.getOK(yunPath);
+    }
+
 }

@@ -89,7 +89,7 @@ public class MemberScoreService implements IMemberScoreService {
                     if (flag) {
                         memberScore.setAvaliableScore(increaseScore);
                         if (typeId==1){
-                            BigDecimal charge=memberScore.getInValidScore().subtract(increaseScore);
+                            BigDecimal charge=increaseScore;
                             if (charge.doubleValue()>=0){
                                 charge=BigDecimal.ZERO;
                             }

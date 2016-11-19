@@ -49,12 +49,6 @@ public class MemberScoreFlow extends BaseModel {
     private BigDecimal flowScore;
 
     /**
-     * 积分流动描述
-     */
-    @Column(name = "detail")
-    private String detail;
-
-    /**
      * 创建日期
      */
     @Column(name = "createTime")
@@ -184,24 +178,6 @@ public class MemberScoreFlow extends BaseModel {
      */
     public void setFlowScore(BigDecimal flowScore) {
         this.flowScore = flowScore;
-    }
-
-    /**
-     * 获取积分流动描述
-     *
-     * @return detail - 积分流动描述
-     */
-    public String getDetail() {
-        return detail;
-    }
-
-    /**
-     * 设置积分流动描述
-     *
-     * @param detail 积分流动描述
-     */
-    public void setDetail(String detail) {
-        this.detail = detail;
     }
 
     /**

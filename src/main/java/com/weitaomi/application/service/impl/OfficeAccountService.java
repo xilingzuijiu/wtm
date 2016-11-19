@@ -217,6 +217,8 @@ public class OfficeAccountService implements IOfficeAccountService {
                         return true;
                     }
                 }
+            }else {
+                return true;
             }
         }
         if (flag == 1) {
