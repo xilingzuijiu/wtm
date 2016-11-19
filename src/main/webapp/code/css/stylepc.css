@@ -67,6 +67,7 @@ nav .busienter h5{background:#68c1f4;color:#fff;padding:4px 7px;cursor:pointer;b
 .loginbg h5,.registerpage{font-size:18px;padding-bottom:25px;font-weight:normal;float:left;line-height:38px;margin-left:10px;}
 .registerpage{padding-bottom:15px;}
 #loginback{margin-left:4em;cursor:pointer;}
+
 .loginblank{height:95px;}
 .login input,#registerForm input{border:#c8cbd0 1px solid;width:250px;border-radius:5px;font-size:15px;
     -webkit-border-radius:5px;-moz-border-radius:5px;-o-border-radius:5px;-ms-border-radius:5px;
