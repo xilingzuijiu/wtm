@@ -149,7 +149,7 @@ public class BackPageController extends BaseController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/backward/uploadShowImage", method = RequestMethod.POST)
+    @RequestMapping(value = "/backward/uploadUnyunFiles", method = RequestMethod.POST)
     public AjaxResult uploadShowImage(HttpServletRequest request,@RequestBody(required = true) Map<String,String> params){
         Long memberId=this.getUserId(request);
         String files=params.get("files");
