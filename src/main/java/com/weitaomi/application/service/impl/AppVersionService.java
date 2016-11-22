@@ -23,7 +23,7 @@ public class AppVersionService implements IAppVersionService {
     public Object getCurrentVersion(Integer platFlag,Integer flag) {
         WtmHistoryVersion version=wtmHistoryVersionMapper.getCurrentVersion(RequestFrom.getById(platFlag).getName());
         if (flag==0){
-            return "1.4.1";
+            return version.getVersion();
         }
         if (flag==1){
             return version.getLink();

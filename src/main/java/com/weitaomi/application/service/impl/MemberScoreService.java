@@ -24,6 +24,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Created by supumall on 2016/7/8.
@@ -47,9 +49,11 @@ public class MemberScoreService implements IMemberScoreService {
     private ProvinceMapper provinceMapper;
     @Autowired
     private IKeyValueService keyValueService;
+    private Lock lock=new ReentrantLock();
     @Override
     @Transactional
-    public MemberScore addMemberScore(Long memberId, Long typeId,Integer isFinished, Double score, String sessionId) {
+    public MemberScore addMemberScore(Long memberId, Long typeId,Integer isFinished, Double score, String sessionId){
+        try{
         if (sessionId == null) {
             throw new BusinessException("幂等性操作，请生成随机数");
         }
@@ -196,6 +200,10 @@ public class MemberScoreService implements IMemberScoreService {
                 return memberScore;
             }
         }
+        }catch (Exception e){
+            logger.info("米币流动时出现异常");
+        }
+        return null;
     }
     @Override
     public List<MemberScoreFlow> getMemberScoreFlowList(Long memberId) {
@@ -204,27 +212,13 @@ public class MemberScoreService implements IMemberScoreService {
     @Override
     @Transactional
     public MemberScore getMemberScoreById(Long memberId,String phoneType,String ip) {
+        try{
         MemberScore memberScore = memberScoreMapper.getMemberScoreByMemberId(memberId);
-        logger.info("刷新钱包，信息：{}", JSON.toJSONString(memberScore));
         if (memberScore!=null) {
-            memberMapper.updateMemberPhoneType(memberId,phoneType);
-            Map<String,String> address= IpUtils.getAddressByIp(ip);
-            logger.info("address:{},Ip:{}",JSON.toJSONString(address),ip);
-            Map<String,String> addr=null;
-            if (address!=null){
-                if (!StringUtil.isEmpty(address.get("province"))&&!StringUtil.isEmpty(address.get("city"))) {
-                    addr = provinceMapper.getAddressByVague(address.get("province"), address.get("city"));
-                }
-            }
-            if (addr!=null) {
-                Member member = memberMapper.selectByPrimaryKey(memberId);
-                if (StringUtil.isEmpty(member.getProvince()) || StringUtil.isEmpty(member.getProvince())) {
-                    member.setProvince(addr.get("province"));
-                    member.setCity(addr.get("city"));
-                    memberMapper.updateByPrimaryKeySelective(member);
-                }
-            }
             return memberScore;
+        }
+        }catch (Exception e){
+            logger.info("刷新钱包时出现异常");
         }
         return null;
     }

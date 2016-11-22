@@ -270,7 +270,8 @@ public class PaymentService implements IPaymentService {
                     cacheService.increCacheBykey(dayKey, 1L);
                 }
             } else {
-                cacheService.setCacheByKey(dayKey, 1, 10 * 60);
+                Long time=DateUtils.getTodayEndSeconds()-DateUtils.getUnixTimestamp();
+                cacheService.setCacheByKey(dayKey, 1,time.intValue());
             }
             MemberScore memberScore = memberScoreMapper.getMemberScoreByMemberId(memberId);
             if (memberScore == null) {

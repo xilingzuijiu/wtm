@@ -11,22 +11,22 @@ import java.net.URL;
 
 
 /**
- * 
+ *
  * @author Andy.Chen
  * @mail Chenjunjun.ZJ@gmail.com
- * 
+ *
  */
 public class StreamUtils {
 
 	final static int BUFFER_SIZE = 4096;
 	/**
 	 * 将InputStream转换成String
-	 * 
+	 *
 	 * @param in
 	 *            InputStream
 	 * @return String
 	 * @throws Exception
-	 * 
+	 *
 	 */
 	public static String InputStreamTOString(InputStream in) {
 
@@ -52,7 +52,7 @@ public class StreamUtils {
 
 	/**
 	 * 将InputStream转换成某种字符编码的String
-	 * 
+	 *
 	 * @param in
 	 * @param encoding
 	 * @return
@@ -81,7 +81,7 @@ public class StreamUtils {
 
 	/**
 	 * 将String转换成InputStream
-	 * 
+	 *
 	 * @param in
 	 * @return
 	 * @throws Exception
@@ -94,7 +94,7 @@ public class StreamUtils {
 
 	/**
 	 * 将String转换成InputStream
-	 * 
+	 *
 	 * @param in
 	 * @return
 	 * @throws Exception
@@ -112,7 +112,7 @@ public class StreamUtils {
 
 	/**
 	 * 将InputStream转换成byte数组
-	 * 
+	 *
 	 * @param in
 	 *            InputStream
 	 * @return byte[]
@@ -132,7 +132,7 @@ public class StreamUtils {
 
 	/**
 	 * 将byte数组转换成InputStream
-	 * 
+	 *
 	 * @param in
 	 * @return
 	 * @throws Exception
@@ -144,7 +144,7 @@ public class StreamUtils {
 	}
 	/**
 	 * 将byte数组转换成InputStream
-	 * 
+	 *
 	 * @param in
 	 * @return
 	 * @throws Exception
@@ -157,7 +157,7 @@ public class StreamUtils {
 
 	/**
 	 * 将byte数组转换成String
-	 * 
+	 *
 	 * @param in
 	 * @return
 	 * @throws Exception
@@ -174,7 +174,7 @@ public class StreamUtils {
 	}
 	/**
 	 * 将byte数组转换成String
-	 * 
+	 *
 	 * @param in
 	 * @return
 	 * @throws Exception
@@ -239,7 +239,7 @@ public class StreamUtils {
 		return fileInputStream;
 	}
 	/**
-	  * 根据文件对象创建文件输出流处理
+	 * 根据文件对象创建文件输出流处理
 	 * 以字节为单位（非 unicode ）
 	 * @param file
 	 * @param append true:文件以追加方式打开,false:则覆盖原文件的内容

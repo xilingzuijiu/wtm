@@ -160,8 +160,15 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
                     }
 
                     if (!StringUtil.isEmpty(url)) {
-                        if (rate >= 0.6 && rate <= 1.2) {
+                        if (rate >= 0.6 && rate <= 1.5) {
                             imgList.add(url);
+                        }
+                    }else {
+                        url= element.attr("src");
+                        if (!StringUtil.isEmpty(url)) {
+                            if (rate >= 0.6 && rate <= 1.5) {
+                                imgList.add(url);
+                            }
                         }
                     }
 //                    if (rate == 1.0) {
@@ -173,16 +180,17 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
             if (StringUtil.isEmpty(certainUrl)){
                 if (imgList.isEmpty()){
                     certainUrl="http://weitaomi.b0.upaiyun.com/article/showImage/common.png";
+                    article.setImageUrl(certainUrl);
                 } else {
                     certainUrl=imgList.get(0);
+                    byte[] bytes = StreamUtils.getImageFromNetByUrl(certainUrl);
+                    String imageUrl = "/article/showImage/" + System.currentTimeMillis() + ".jpg";
+                    if (this.uploadImage(bytes,imageUrl)){
+                        article.setImageUrl(SystemConfig.UPYUN_PREFIX+imageUrl);
+                    }
                 }
             }
 
-            byte[] bytes = StreamUtils.getImageFromNetByUrl(certainUrl);
-            String imageUrl = "/article/showImage/" + System.currentTimeMillis() + ".jpg";
-            if (this.uploadImage(bytes,imageUrl)){
-                article.setImageUrl(SystemConfig.UPYUN_PREFIX+imageUrl);
-            }
         }
         article.setCreateTime(DateUtils.getUnixTimestamp());
         article.setIsTop(0);

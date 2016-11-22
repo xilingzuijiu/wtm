@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.weitaomi.application.model.bean.*;
 import com.weitaomi.application.model.dto.MemberTaskDto;
 import com.weitaomi.application.model.dto.MemberTaskWithDetail;
+import com.weitaomi.application.model.dto.RequestFrom;
 import com.weitaomi.application.model.mapper.*;
 import com.weitaomi.application.service.interf.ICacheService;
 import com.weitaomi.application.service.interf.IMemberScoreService;
@@ -12,10 +13,7 @@ import com.weitaomi.application.service.interf.IMemberTaskHistoryService;
 import com.weitaomi.systemconfig.constant.SystemConfig;
 import com.weitaomi.systemconfig.exception.BusinessException;
 import com.weitaomi.systemconfig.exception.InfoException;
-import com.weitaomi.systemconfig.util.DateUtils;
-import com.weitaomi.systemconfig.util.Page;
-import com.weitaomi.systemconfig.util.StringUtil;
-import com.weitaomi.systemconfig.util.UUIDGenerator;
+import com.weitaomi.systemconfig.util.*;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.type.IntegerTypeHandler;
 import org.apache.shiro.codec.Base64;
@@ -54,6 +52,9 @@ public class MemberTaskHistoryService  implements IMemberTaskHistoryService {
     private ThirdLoginMapper thirdLoginMapper;
     @Autowired
     private ICacheService cacheService;
+    @Autowired
+    private ProvinceMapper provinceMapper;
+
     @Override
     public Page<MemberTaskWithDetail> getMemberTaskInfo(Long memberId,Integer type,Integer pageSize,Integer pageIndex) {
         List<MemberTaskWithDetail> memberTaskHistoryDtoList=memberTaskHistoryMapper.getMemberTaskHistoryList(memberId,type,new RowBounds(pageIndex,pageSize));
@@ -243,5 +244,25 @@ public class MemberTaskHistoryService  implements IMemberTaskHistoryService {
         }
         logger.info("签到失败，用户ID为{}",memberId.get(0));
         return "签到失败，请稍后再试...";
+    }
+    @Override
+    public void recordMemberAddressAndEtc(Long memberId, String phoneType, String ip){
+        memberMapper.updateMemberPhoneType(memberId,phoneType);
+        Map<String,String> address= IpUtils.getAddressByIp(ip);
+        logger.info("address:{},Ip:{}", JSON.toJSONString(address),ip);
+        Map<String,String> addr=null;
+        if (address!=null){
+            if (!StringUtil.isEmpty(address.get("province"))&&!StringUtil.isEmpty(address.get("city"))) {
+                addr = provinceMapper.getAddressByVague(address.get("province"), address.get("city"));
+            }
+        }
+        if (addr!=null) {
+            Member member = memberMapper.selectByPrimaryKey(memberId);
+            if (StringUtil.isEmpty(member.getProvince()) || StringUtil.isEmpty(member.getProvince())) {
+                member.setProvince(addr.get("province"));
+                member.setCity(addr.get("city"));
+                memberMapper.updateByPrimaryKeySelective(member);
+            }
+        }
     }
 }

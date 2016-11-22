@@ -66,4 +66,6 @@ public interface IMemberTaskHistoryService {
     MemberScore addDailyTask(Long memberId, Long typeId);
 
     String signAccounts(Map map);
+
+    void recordMemberAddressAndEtc(Long memberId, String phone, String ip);
 }

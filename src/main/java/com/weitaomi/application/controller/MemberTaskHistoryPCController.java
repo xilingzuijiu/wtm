@@ -1,9 +1,14 @@
 package com.weitaomi.application.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.weitaomi.application.controller.baseController.BaseController;
+import com.weitaomi.application.model.bean.Member;
+import com.weitaomi.application.model.dto.RequestFrom;
 import com.weitaomi.application.service.interf.IMemberTaskHistoryService;
 import com.weitaomi.systemconfig.dataFormat.AjaxResult;
 import com.weitaomi.systemconfig.exception.BusinessException;
+import com.weitaomi.systemconfig.util.IpUtils;
+import com.weitaomi.systemconfig.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2016/10/13.
@@ -76,6 +82,11 @@ public class MemberTaskHistoryPCController extends BaseController{
         Long memberId=this.getUserId(request);
         if (memberId==null){
             throw new BusinessException("用户ID为空");
+        }
+        if (taskId==5){
+            RequestFrom from=this.getRequestFrom(request);
+            String ip=IpUtils.getIpAddr(request);
+            memberTaskHistoryService.recordMemberAddressAndEtc(memberId,from.getName(),ip);
         }
         return AjaxResult.getOK(memberTaskHistoryService.addDailyTask(memberId,taskId));
     }

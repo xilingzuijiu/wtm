@@ -116,7 +116,10 @@ public class OfficeAccountService implements IOfficeAccountService {
             String key=nickName+":"+thirdLoginDto.getSex()+":"+officialAccountMsg.getOriginId();
             logger.info("key is {}",key);
             OfficialAccountWithScore officialAccountWithScore=officalAccountMapper.getOfficialAccountWithScoreById(officialAccountMsg.getOriginId(),1);
-            MemberCheck memberCheck=new MemberCheck(memberId,officialAccountWithScore.getId());
+            MemberCheck memberCheck=null;
+            if (officialAccountWithScore!=null) {
+                memberCheck = new MemberCheck(memberId, officialAccountWithScore.getId());
+            }
             MemberCheck valueTemp = cacheService.getCacheByKey(key,MemberCheck.class);
             if (valueTemp!=null){
                 throw new InfoException("公众号"+officialAccountWithScore.getUserName()+"的关注未完成，请先完成");
