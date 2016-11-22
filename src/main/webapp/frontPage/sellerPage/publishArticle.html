@@ -124,7 +124,7 @@
             var needNumber=parseInt(Math.ceil($("#input2").val()));
             console.log(needNumber);
             var articleUrl=$("#articleUrl").val();
-            if(articleUrl.indexOf("wechat_redirect") > 0 ){
+//            if(articleUrl.indexOf("wechat_redirect") > 0 ){
                 console.log(articleUrl);
                 if(needNumber>0&&articleUrl!=null){
                     $.ajax({
@@ -172,13 +172,13 @@
                     $("#button").css('background', "");
                     $("#button").css('border', "");
                 }
-            }else {
-                alert("您发布的链接不规范，请在‘公众号会话’打开文章复制链接");
-                $("#button").attr('disabled', false);
-                $("#button").css('background', "");
-                $("#button").css('border', "");
-                $("#articleUrl").val("");
-            }
+//            }else {
+//                alert("您发布的链接不规范，请在‘公众号会话’打开文章复制链接");
+//                $("#button").attr('disabled', false);
+//                $("#button").css('background', "");
+//                $("#button").css('border', "");
+//                $("#articleUrl").val("");
+//            }
         }
     </script>
 </head>
