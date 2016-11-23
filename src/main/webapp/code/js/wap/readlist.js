@@ -29,7 +29,11 @@ $(function () {
                 location.href = "/frontPage/wap/index.html";
             }
         } else {
-            loadReadlist();
+            if(isiOS||isAndroid){
+                loadReadlist();
+            }else {
+                document.body.innerHTML = "请在手机端打开此页面"
+            }
         }
     } else {
         document.body.innerHTML = "请在微信打开此页面"
@@ -135,8 +139,8 @@ var articleSubmit=function(obj){
             console.log("json数据为：" + params)
             if (json != null && json.errorCode == 0) {
                 obj.style.display = 'none';
-                $.cookie($.cookie("memberId") + "readMark", '', {expires: -1})
-                $.cookie($.cookie("memberId") + "time", new Date().getTime(), {path: '/frontPage/wap'})
+                //$.cookie($.cookie("memberId") + "readMark", '', {expires: -1})
+                //$.cookie($.cookie("memberId") + "time", new Date().getTime(), {path: '/frontPage/wap'})
                 location.href = articleUrl;
             } else if (json != null && json.errorCode == 4) {
                 alert(json.message);

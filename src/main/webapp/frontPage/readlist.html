@@ -39,15 +39,19 @@
                 var u = navigator.userAgent;
                 var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;//android终端
                 var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);// ios终端
-                loadreadlist();
+                if(isiOS||isAndroid){
+                    loadreadlist();
+                }else{
+                    document.body.innerHTML = "请在手机端打开此页面";
+                }
                 if (isiOS) {
                     reurl()
                 }
             }else {
-                $(".readlist").empty()
-                document.body.innerHTML="请在微信打开此页面"
+                $(".readlist").empty();
+                document.body.innerHTML="请在微信打开此页面";
             }
-        })
+        });
         function reurl() {
             if ($.cookie(memberId+requestTime)==null||$.cookie(memberId+requestTime)==undefined){
                 $.cookie(memberId+requestTime,0);
@@ -76,7 +80,7 @@
             }
             console.log("timeEnd"+timeEnd);
             if (timeEnd < 2000) {
-                alert("手速太快")
+                alert("手速太快");
                 setTimeout(function () {
                     $.cookie($.cookie("memberId") + "time",{expires:-1})
                     loadReadlist();
@@ -184,15 +188,14 @@
                     if (json != null && json.errorCode == 0) {
                         obj.remove()
                         $.cookie(memberId+requestTime,'',{expires:-1})
+//                        $.cookie($.cookie("memberId") + "readMark", '', {expires: -1})
+//                        $.cookie($.cookie("memberId") + "time", new Date().getTime(), {path: '/frontPage/wap'})
 
-                        $.cookie($.cookie("memberId") + "readMark", '', {expires: -1})
-                        $.cookie($.cookie("memberId") + "time", new Date().getTime(), {path: '/frontPage/wap'})
 //                        obj.style.display = 'none';
 //                        window.open(articleUrl)
                         location.href = articleUrl;
-//
                     } else if (json != null && json.errorCode == 4) {
-                        alert(json.message)
+                        alert(json.message);
                     } else {
                         alert("获取数据失败")
                     }

@@ -18,15 +18,15 @@
         var u = navigator.userAgent;
         var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;//android终端
         var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);// ios终端
-        $(function () {
-            reurl()
-        });
-        function reurl() {
-            if ($.cookie($.cookie("memberId")+"readMark")==null||$.cookie($.cookie("memberId")+"readMark")==undefined){
-                $.cookie($.cookie("memberId")+"readMark",0);
-                location.reload()
-            }
-        }
+//        $(function () {
+//            reurl()
+//        });
+//        function reurl() {
+//            if ($.cookie($.cookie("memberId")+"readMark")==null||$.cookie($.cookie("memberId")+"readMark")==undefined){
+//                $.cookie($.cookie("memberId")+"readMark",0);
+//                location.reload()
+//            }
+//        }
     </script>
 </head>
 <body>
