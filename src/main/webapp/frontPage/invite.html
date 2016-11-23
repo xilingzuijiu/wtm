@@ -11,7 +11,7 @@
     <script src="../code/js/jquery.cookie.js"></script>
     <script type="text/javascript" src="../code/js/invite.js"></script>
     <script type="text/javascript" src="../code/js/time_js.js"></script>
-    <script type="text/javascript" src="../code/js/wap/register.js"></script>
+    <!--<script type="text/javascript" src="../code/js/wap/register.js"></script>-->
     <script>
         var u = navigator.userAgent;
         var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;//android终端
@@ -26,15 +26,16 @@
         $(function(){
             getinvitecode();
             $("#ivload").click(function() {
-//                EV_modeAlert('envon');
-//                var invitedCode=$("#target").text().trim();
-//                $("#invitedcode").val(invitedCode)
-                download();
+                EV_modeAlert('envon');
+                var invitedCode=$("#target").text().trim();
+                $("#invitedcode").val(invitedCode);
+//               download();
             })
     })
     </script>
 </head>
 <body id="inviteby">
+<div class="bodybox">
 <div id="wrapbg" style="position:absolute; height:100%;z-index:-1;">
     <img src="../code/img/wap/bgone.jpg" height="100%" width="100%" />
 </div>
@@ -52,7 +53,7 @@
         <!--<img src="../code/img/wap/76pt-2x.png"/>-->
         <!--<h5>玩着就可以<br/>赚钱的APP</h5>-->
     <!--</div>-->
-    <a id="ivload">下载最新APP></a>
+    <a id="ivload">注册并下载最新APP></a>
 </div>
 <!-- 弹窗样式 -->
 <div id="envon">
@@ -71,6 +72,7 @@
         <input type="text" name="invitedCode" class="code" id="invitedcode" value="" placeholder="请输入邀请码">
     </form>
     <a id="register"> 确认并提交</a>
+</div>
 </div>
 </body>
 </html>
