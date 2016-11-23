@@ -124,8 +124,21 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
             e.printStackTrace();
         }
         String title = doc.title();
-        article.setOfficialAccountId(publishReadRequestDto.getOfficialAccountsId());
-        article.setUrl(publishReadRequestDto.getArticleUrl());
+        if (!publishReadRequestDto.getArticleUrl().endsWith("wechat_redirect")) {
+            String suffix = "&scene=0#wechat_redirect";
+            String urlParent = doc.getElementsByTag("script").get(10).toString();
+            String urlParams = urlParent.substring(urlParent.indexOf("msg_link") + 12, urlParent.indexOf("#rd")).replace("\\x26amp;", "@");
+            String[] arr = urlParams.split("@");
+            String articleUrl = arr[0] + "&" + arr[1] + "&" + arr[2] + "&" + arr[3] + suffix;
+            if (arr[1].length()!=14||arr[2].length()!=5||arr[3].length()!=35){
+                throw new InfoException("文章链接格式不正确");
+            }
+            article.setOfficialAccountId(publishReadRequestDto.getOfficialAccountsId());
+            article.setUrl(articleUrl);
+        }else {
+            article.setOfficialAccountId(publishReadRequestDto.getOfficialAccountsId());
+            article.setUrl(publishReadRequestDto.getArticleUrl());
+        }
         if (article.getUrl().endsWith("wechat_redirect")){
             article.setArticleType(0);
         }else if (article.getUrl().endsWith("#rd")){

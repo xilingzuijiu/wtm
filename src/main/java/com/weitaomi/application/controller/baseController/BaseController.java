@@ -14,6 +14,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 /**
@@ -155,6 +156,27 @@ public abstract class BaseController {
         return null;
     }
 
+
+    protected boolean isAccessSession(HttpServletRequest request,Long memberId){
+        HttpSession session=request.getSession();
+        String id = session.getId();
+        if (StringUtil.isEmpty(id)){
+            logger.info("会话超时，请重新登录~");
+            return false;
+        }else {
+            Long memberId1=(Long)session.getAttribute("memberId");
+            if (memberId1==null||memberId!=memberId1){
+                logger.info("会话不匹配，请重新登录~");
+                return false;
+            }
+        }
+        return true;
+    }
+
+    protected void setAccessSession(HttpServletRequest request,Long memberId){
+        HttpSession session = request.getSession();
+        session.setAttribute("memberId",memberId);
+    }
 //    /**
 //     * pc端从token中获取userId
 //     * @param token

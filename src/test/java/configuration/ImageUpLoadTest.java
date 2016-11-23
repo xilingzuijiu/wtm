@@ -17,25 +17,23 @@ public class ImageUpLoadTest extends BaseContextCase {
     @Test
     public void testUpYun() throws IOException {
 
-        for (int i=2;i<7;i++) {
-            File file = new File("D:\\Documents\\QQEIM Files\\2881969167\\FileRecv\\yaohaoyou.png");
+            File file = new File("D:\\Documents\\Pictures\\176123317102280021.png");
             try {
                 UpYun upYun = new UpYun("weitaomi", "weitaomi", "Weitaomi@Woyun");
                 InputStream fileInputStream = new FileInputStream(file);
                 byte[] bytes = StreamUtils.InputStreamTOByte(fileInputStream);
-                String imageUrl = "/app/index/yaohaoyou.png";
+                String imageUrl = "/app/showImage/weitaomi20161122.png";
                 boolean flag = upYun.writeFile(imageUrl, bytes);
                 System.out.println("=============> Is success? " + imageUrl);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-        }
     }
     @Test
     public void testUpYunFiles() throws IOException {
 
         for (int i=2;i<7;i++) {
-            File file = new File("C:\\Users\\Administrator\\Desktop\\weitaomi1.3.apk");
+            File file = new File("D:\\Documents\\Pictures\\176123317102280021.png");
             try {
                 UpYun upYun = new UpYun("weitaomi", "weitaomi", "Weitaomi@Woyun");
                 InputStream fileInputStream = new FileInputStream(file);

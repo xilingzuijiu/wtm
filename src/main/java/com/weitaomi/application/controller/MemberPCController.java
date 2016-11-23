@@ -20,6 +20,8 @@ import com.weitaomi.systemconfig.wechat.WechatConfig;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.bouncycastle.jcajce.provider.asymmetric.rsa.DigestSignatureSpi;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,6 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.util.Map;
 
@@ -130,6 +133,29 @@ public class MemberPCController extends BaseController {
         }
         return AjaxResult.getOK(memberTaskPoolService.uploadReadTaskPool(publishReadRequestDto));
     }
+
+    /**
+     * 公众号发布阅读任务
+     * @throws ParseException    the parse exception
+     * @see
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getAddUrlByArticleUrl", method = RequestMethod.POST)
+    public AjaxResult getAddUrlByArticleUrl(String articleUrl){
+        Document doc = null;
+        try {
+            doc = Jsoup.connect(articleUrl).get();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String prefix="https://mp.weixin.qq.com/mp/profile_ext?action=home&APPADDURL&scene=110#wechat_redirect";
+        String urlParent=doc.getElementsByTag("script").get(10).toString();
+        String urlParams=urlParent.substring(urlParent.indexOf("msg_link")+12,urlParent.indexOf("#rd")).replace("\\x26amp;","@");
+        String[] arr=urlParams.split("@");
+        String addUrl=prefix.replace("APPADDURL",arr[0].substring(arr[0].indexOf("__biz=")));
+        return AjaxResult.getOK(URLEncoder.encode(addUrl));
+    }
+
     /**
      * 邀请码邀请
      * @throws ParseException    the parse exception

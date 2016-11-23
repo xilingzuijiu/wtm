@@ -5,6 +5,7 @@ import com.weitaomi.application.model.dto.ArticleSearch;
 import com.weitaomi.application.model.dto.RequestFrom;
 import com.weitaomi.application.service.interf.IArticleService;
 import com.weitaomi.systemconfig.dataFormat.AjaxResult;
+import com.weitaomi.systemconfig.exception.InfoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,9 @@ public class ArticlePcController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/getAllArticle",method = RequestMethod.POST)
     public AjaxResult getAllArticle(HttpServletRequest request, @RequestBody(required = false) ArticleSearch articleSearch){
+        if (true){
+            throw new InfoException("阅读板块优化中，请到app执行任务");
+        }
         Long memberId=this.getUserId(request);
         RequestFrom from=this.getRequestFrom(request);
         Integer flag=0;

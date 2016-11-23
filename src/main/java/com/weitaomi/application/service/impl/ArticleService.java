@@ -218,6 +218,18 @@ public class ArticleService implements IArticleService {
         if (taskPool==null){
             throw new InfoException("任务池中没有该文章");
         }
+        Integer number=cacheService.getCacheByKey("article:number:"+articleId,Integer.class);
+        if (number!=null&&number>0) {
+            if (number > taskPool.getNeedNumber()) {
+                cacheService.delKeyFromRedis("article:number:"+articleId);
+                cacheService.setCacheByKey("article:number:"+articleId,number,60);
+                throw new InfoException("任务池中该文章已完成阅读");
+            } else {
+                cacheService.increCacheBykey("article:number:"+articleId,1L);
+            }
+        }else {
+            cacheService.setCacheByKey("article:number:"+articleId,1,null);
+        }
         Double score = taskPool.getTotalScore()-taskPool.getSingleScore();
         if (score<0){
             throw new InfoException("任务池中该文章的剩余米币不足以支付阅读任务");
@@ -255,6 +267,18 @@ public class ArticleService implements IArticleService {
         if (taskPool==null){
             throw new InfoException("任务池中没有该文章");
         }
+        Integer number=cacheService.getCacheByKey("article:number:"+articleId,Integer.class);
+        if (number!=null&&number>0) {
+            if (number > taskPool.getNeedNumber()) {
+                cacheService.delKeyFromRedis("article:number:"+articleId);
+                cacheService.setCacheByKey("article:number:"+articleId,number,60);
+                throw new InfoException("任务池中该文章已完成阅读");
+            } else {
+                cacheService.increCacheBykey("article:number:"+articleId,1L);
+            }
+        }else {
+            cacheService.setCacheByKey("article:number:"+articleId,1,null);
+        }
         Double score = taskPool.getTotalScore()-taskPool.getSingleScore();
         if (score<0){
             throw new InfoException("任务池中该文章的剩余米币不足以支付阅读任务");
@@ -279,15 +303,21 @@ public class ArticleService implements IArticleService {
     private void isArticleAccessToRead(Long memberId){
         Long flagTemp = cacheService.getCacheByKey("wap:artile:read:limit:"+memberId,Long.class);
         Integer number = 20;
+        Integer timeLimitSeconds=60*60;
+        if (cacheService.getCacheByKey("read:article:limit:time",Integer.class)!=null){
+            timeLimitSeconds=cacheService.getCacheByKey("read:article:limit:time",Integer.class);
+        }else {
+            cacheService.setCacheByKey("read:article:limit:time",timeLimitSeconds,null);
+        }
         if (cacheService.getCacheByKey("read:article:limit:number",Integer.class)!=null){
             number=cacheService.getCacheByKey("read:article:limit:number",Integer.class);
         }
         if (flagTemp!=null) {
             if (flagTemp.intValue()==number){
                 cacheService.delKeyFromRedis("wap:artile:read:limit:"+memberId);
-                cacheService.setCacheByKey("wap:artile:read:limit:"+memberId,DateUtils.getUnixTimestamp(),60*60);
+                cacheService.setCacheByKey("wap:artile:read:limit:"+memberId,DateUtils.getUnixTimestamp(),timeLimitSeconds);
             } else if (flagTemp > number) {
-                Long timeLimit=flagTemp+60*60-DateUtils.getUnixTimestamp();
+                Long timeLimit=flagTemp+timeLimitSeconds-DateUtils.getUnixTimestamp();
                 Long seconds=timeLimit%60;
                 Double minutes = Math.floor(timeLimit/60);
                 throw new InfoException("抱歉哦~亲~，微信规定一段时间内阅读文章太多属于‘频繁操作’，为了您更好的阅读，请"+minutes.intValue()+"分钟"+seconds+"秒后再来完成阅读任务~");
@@ -295,7 +325,7 @@ public class ArticleService implements IArticleService {
                 cacheService.increCacheBykey("wap:artile:read:limit:" + memberId, 1L);
             }
         }else {
-            cacheService.setCacheByKey("wap:artile:read:limit:"+memberId,1,60*60);
+            cacheService.setCacheByKey("wap:artile:read:limit:"+memberId,1,timeLimitSeconds);
         }
         Integer value=cacheService.getCacheByKey(memberId+":readNumberRecordForInvitedReward:"+13,Integer.class);
         if (value!=null&&value>0){

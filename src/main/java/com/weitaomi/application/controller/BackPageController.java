@@ -144,22 +144,4 @@ public class BackPageController extends BaseController {
         return AjaxResult.getOK(backPageService.patchCheckArticle(poolIdList));
     }
 
-    /**
-     * 上传文件
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "/backward/uploadUnyunFiles", method = RequestMethod.POST)
-    public AjaxResult uploadShowImage(HttpServletRequest request,@RequestBody(required = true) Map<String,String> params){
-        Long memberId=this.getUserId(request);
-        String files=params.get("files");
-        String path=params.get("path");
-        String suffix=params.get("suffix");
-        String yunPath="";
-        if (!StringUtil.isEmpty(files)&&!StringUtil.isEmpty(path)&&!StringUtil.isEmpty(suffix)){
-            yunPath=backPageService.uploadUnyunFiles(path,files,suffix);
-        }
-        return AjaxResult.getOK(yunPath);
-    }
-
 }

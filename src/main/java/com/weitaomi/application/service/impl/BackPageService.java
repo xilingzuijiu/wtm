@@ -41,13 +41,4 @@ public class BackPageService extends BaseService implements IBackPageService {
         }
         return 0;
     }
-
-    @Override
-    public String uploadUnyunFiles(String path, String files, String suffix) {
-        boolean flag=super.uploadImage(path+"."+suffix, files);
-        if (flag) {
-            return SystemConfig.UPYUN_PREFIX +path+"."+suffix;
-        }
-        return null;
-    }
 }
