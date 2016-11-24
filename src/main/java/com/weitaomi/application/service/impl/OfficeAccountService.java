@@ -88,6 +88,14 @@ public class OfficeAccountService implements IOfficeAccountService {
         logger.info("app用户ID：{}开始拉取公众号列表，参数为：{}",memberId,JSON.toJSONString(addOfficalAccountDto));
         List<OfficeMember> officeMembers=officeMemberMapper.getOfficeMemberList(memberId);
         Long timeStart=System.currentTimeMillis();
+        if (addOfficalAccountDto!=null&&!addOfficalAccountDto.getLinkList().isEmpty()){
+            for (OfficialAccountMsg officialAccountMsg:addOfficalAccountDto.getLinkList()){
+                TaskPool taskPool = taskPoolMapper.getTaskPoolByOfficialId(officalAccountMapper.getAccountsIdByAppid(officialAccountMsg.getAppId()),1);
+
+            }
+        }else {
+            throw new InfoException("获取公众号列表为空");
+        }
         if (!officeMembers.isEmpty()){
             String info="您还有未关注公众号，请到公众号内完成\n未完成任务将会在1小时后删除\n若领任务之前已关注，请标注这些公众号";
             throw new InfoException(info);

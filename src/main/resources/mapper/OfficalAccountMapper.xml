@@ -95,4 +95,7 @@
     <select id="getOfficalAccountByAppId" resultType="com.weitaomi.application.model.bean.OfficialAccount">
         select * from wtm_official_accounts a WHERE a.appId=#{appid}
     </select>
+    <select id="getAccountsIdByAppid" resultType="java.lang.Long">
+        select id from wtm_official_accounts a WHERE a.appId=#{appid}
+    </select>
 </mapper>

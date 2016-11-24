@@ -17,4 +17,5 @@ public interface OfficalAccountMapper extends IBaseMapper<OfficialAccount> {
     List<OfficialAccount> getOfficialAccountList(@Param("memberId") Long memberId);
     String getOriginIdByAppId(@Param("appId") String appId);
     int deleteUnAuthAccount(@Param("officialAccountId") Long officialAccountId);
+    Long getAccountsIdByAppid(@Param("appid") String appid);
 }
