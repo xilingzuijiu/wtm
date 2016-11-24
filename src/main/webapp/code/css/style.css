@@ -42,12 +42,18 @@
 #envon .close{display:block;float:right;margin-bottom:0.8em;width:6%;padding-top:0.2em;-webkit-tap-highlight-color: rgba(0,0,0,0);  -webkit-tap-highlight-color:transparent;
     outline:none;}
 #envon .close img{width:100%;float:right;}
-#registerForm input{border:#d33711 1px solid;width:100%;height:2.7em;margin-bottom:0.9em;border-radius:0.8em;font-size:1.3em;padding-left:17%;}
-#telverify{width:100%;height:3.4em;margin-bottom:0.8em;overflow:hidden;position:relative;border:#d33711 1px solid;border-radius:0.8em !important;}
-#telephone{background:url("../img/pcwap/telephone.png") no-repeat 8% center;
-    background-size:10%; width:69% !important;margin:0 !important;display:block;float:left;border:none !important;line-height:3em;}
-#sendVerifyCode{display:block;background:#fb3204;width:30% !important;border:#fb3204 1px solid;float:right;cursor:pointer;
-    border-radius:0 0.7em 0.7em 0 !important;color:#fff;font-size:1em !important;height:3.4em !important;line-height:3.4em;text-align:center;}
+#registerForm input{border:#d33711 1px solid;width:100%;height:2.7em;margin-bottom:0.9em;outline:none;border-radius:0.5em;font-size:1.3em;padding-left:17%;}
+#telverify,#identifycode{width:100%;height:3.4em;margin-bottom:0.8em;overflow:hidden;position:relative;border:#d33711 1px solid;border-radius:0.8em !important;}
+#telephone,#imgcode{background:url("../img/pcwap/telephone.png") no-repeat 8% center;background-size:10%; width:69% !important;
+    margin:0 !important;display:block;float:left;border:none !important;line-height:3em;}
+#imgcode{background:url("../img/pcwap/yangzhengma.png") no-repeat 5% center;background-size:14%;}
+#sendVerifyCode,#sendidentifycode{display:block;background:#fb3204;width:30% !important;border:#fb3204 1px solid;float:right;cursor:pointer;
+    border-radius:0 0.7em 0.7em 0 !important;color:#fff;font-size:1em !important;height:3.4em !important;line-height:3.4em;text-align:center;outline:none;}
+#sendidentifycode{overflow:hidden;border:none;}
+#sendidentifycode img{width:100%;height:100%;border-radius:0 0.7em 0.7em 0 !important;overflow:hidden;}
+.readidentify{width:80% !important;margin:auto;}
+.readidentify #imgcode{background-size:12%;padding-left:2.5em;box-sizing: border-box;font-size:1.2rem;}
+#readsend{display:block;background:#68c1f4;padding:0.5em 1.8em;font-size:1.4rem;color:#fff;text-align:center;border-radius:0.3em;margin:auto;margin-top:2em;}
 #register{display:block;background:#fb3204;border-radius:0.4em;color:#fff;margin:auto;text-align:center;font-size:1.3em;  width:50%;padding:0.5em 0;cursor:pointer;}
 #memberName{background:url("../img/pcwap/account.png") no-repeat 5% center;background-size:10%;}
 #password,#repassword{background:url("../img/pcwap/password.png") no-repeat 5% center;background-size:7%;}
@@ -90,7 +96,7 @@
 }
 @media screen and (min-width:401px) and (max-width:639px){
     #readtitle{height:80px;line-height:80px;font-size:35px;}
-.readlist li{padding:2% 3%;}
+    .readlist li{padding:2% 3%;}
     .readcont h3{font-size:1.3em;margin-bottom:15px;line-height:1.2;width:12em;}
     .readcont,.readtool{padding-top:5px;}
     .readcont p{font-size:1.1em;width:12em;}

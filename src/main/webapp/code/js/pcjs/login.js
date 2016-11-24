@@ -50,14 +50,17 @@ window.location.href="/frontPage/wtmpc/index.html"
         });
     });
     $("#sendVerifyCode").click( function (){
+        var imgcode = $("#imgcode").val().trim();
         var telephone = $("#telephone").val().trim();
-        if (telephone==null || !telephone.match(/^1\d{10}$/)){
+        if(imgcode==null){
+            alert("图片验证码不能为空");
+        }else if (telephone==null || !telephone.match(/^1\d{10}$/)){
             alert("手机号码不正确")
         }else {
             $.ajax({
                 type: 'get',
                 url: '/pc/admin/member/sendIndentifyCode',
-                data: {telephone:telephone},
+                data: {telephone:telephone,imageCode:imgcode},
                 success: function (params) {
                     var data=eval(params)
                     var errorCode=data.errorCode

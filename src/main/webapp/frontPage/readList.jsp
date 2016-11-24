@@ -47,13 +47,42 @@
                 var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;//android终端
                 var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);// ios终端
                 if(isiOS||isAndroid){
-                    var cookietime=$.cookie(uuid+"flag");
-                    if (cookietime!=null&&cookietime!=undefined){
-                        $.cookie(uuid+"flag","",{expires:-1})
-                        location.reload()
-                    }else {
-                        loadreadlist()
-                    }
+                    var inviteheight=$(window).height();
+                    var eventheight=$(".readUppop").height();
+                    $(".readUppop").css("margin-top",inviteheight/2-eventheight/2);
+                    $("#readsend").click( function (){
+                        var imgcode = $("#imgcode").val().trim();
+                        if(imgcode==null){
+                            alert("图片验证码不能为空")
+                        }else {
+                            $.ajax({
+                                type: 'get',
+                                url: '/pc/admin/member/sendIndentifyCode',
+                                data: {imageCode:imgcode},
+                                beforeSend: function (XMLHttpRequest) {
+                                    getMemberRequestHeaderMsg(XMLHttpRequest)
+                                } ,
+                                success: function (params) {
+                                    var data=eval(params);
+                                    var errorCode=data.errorCode;
+                                    if (data!=null&&errorCode==0){
+                                        if(data){
+                                            $(".readUppop").css("display","none");
+                                            var cookietime=$.cookie(uuid+"flag");
+                                            if (cookietime!=null&&cookietime!=undefined){
+                                                $.cookie(uuid+"flag","",{expires:-1});
+                                                location.reload()
+                                            }else {
+                                                loadreadlist()
+                                            }
+                                        }
+                                    } else if (errorCode==4){
+                                        alert(data.message);
+                                    }
+                                }
+                            });
+                        }
+                    })
                 }else{
                     document.body.innerHTML = "请在手机端打开此页面";
                 }

@@ -1,18 +1,22 @@
 $(function(){
     if (is_weixin()){
-            $(".bodybox").css("display","block");
+        $(".bodybox").css("display","block");
     } else {
         document.body.innerHTML = "请在微信打开此页面"
     }
     $("#sendVerifyCode").click( function (){
+        var imgcode = $("#imgcode").val().trim();
         var telephone = $("#telephone").val().trim();
-        if (telephone==null || !telephone.match(/^1\d{10}$/)){
+        if(imgcode==null){
+            alert("图片验证码不能为空");
+        }
+        else if(telephone==null || !telephone.match(/^1\d{10}$/)){
             alert("手机号码不正确")
         }else {
             $.ajax({
                 type: 'get',
                 url: '/pc/admin/member/sendIndentifyCode',
-                data: {telephone:telephone},
+                data: {telephone:telephone,imageCode:imgcode},
                 beforeSend: function (XMLHttpRequest) {
                     getMemberRequestHeaderMsg(XMLHttpRequest)
                 } ,
@@ -29,7 +33,7 @@ $(function(){
             $("#sendVerifyCode").css("display","none");
             $("#downtime").css("display","block");
             countDown();
-            setTimeout(function () {
+            setTimeout(function (){
                 $("#sendVerifyCode").css("display","block");
                 $("#downtime").css("display","none");
             }, SS*1000);
@@ -83,7 +87,28 @@ $(function(){
         }
     })
 });
-
+function getimgCode(){
+    $.ajax({
+        type: 'post',
+        url: '/pc/admin/member/register',
+        //dataType:"json",
+        //data: request,
+        //contentType: "application/json",
+        beforeSend: function (XMLHttpRequest) {
+            getMemberRequestHeaderMsg(XMLHttpRequest)
+        } ,
+        success: function (params) {
+            var json=eval(params)
+            if (json.data!=null&&json.errorCode==0){
+                $("#imgcode").val(json.data);
+            } else if(json.errorCode==4){
+                alert(json.message);
+            }
+        }, error:function(data){
+            alert("页面加载错误，请重新加载");
+        }
+    });
+}
 function getRegeisterParams(requestObj){
     var invitedCode = requestObj.invitedCode
     var identifyCode = requestObj.identifyCode
