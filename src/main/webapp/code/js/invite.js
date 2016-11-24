@@ -87,34 +87,13 @@ $(function(){
         }
     })
 });
-function getimgCode(){
-    $.ajax({
-        type: 'post',
-        url: '/pc/admin/member/register',
-        //dataType:"json",
-        //data: request,
-        //contentType: "application/json",
-        beforeSend: function (XMLHttpRequest) {
-            getMemberRequestHeaderMsg(XMLHttpRequest)
-        } ,
-        success: function (params) {
-            var json=eval(params)
-            if (json.data!=null&&json.errorCode==0){
-                $("#imgcode").val(json.data);
-            } else if(json.errorCode==4){
-                alert(json.message);
-            }
-        }, error:function(data){
-            alert("页面加载错误，请重新加载");
-        }
-    });
-}
 function getRegeisterParams(requestObj){
     var invitedCode = requestObj.invitedCode
     var identifyCode = requestObj.identifyCode
     delete requestObj.invitedCode
     delete requestObj.identifyCode
     delete requestObj.repassword
+    delete requestObj.code
     var obj=new ReuqestObj(requestObj,invitedCode,identifyCode)
     return JSON.stringify(obj)
 }
@@ -279,6 +258,7 @@ function getRegeisterParams(requestObj){
     var identifyCode = requestObj.identifyCode
     delete requestObj.invitedCode
     delete requestObj.identifyCode
+    delete requestObj.code
     delete  requestObj.repassword
     var obj=new ReuqestObj(requestObj,invitedCode,identifyCode)
     return JSON.stringify(obj)

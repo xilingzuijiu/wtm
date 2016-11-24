@@ -163,6 +163,7 @@ function getRegeisterParams(requestObj){
     var invitedCode = requestObj.invitedCode
     var identifyCode = requestObj.identifyCode
     delete requestObj.invitedCode
+    delete requestObj.code
     delete requestObj.identifyCode
     delete requestObj.repassword
     var obj=new ReuqestObj(requestObj,invitedCode,identifyCode)

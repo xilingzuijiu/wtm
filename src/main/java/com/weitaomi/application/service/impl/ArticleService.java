@@ -222,7 +222,7 @@ public class ArticleService implements IArticleService {
 
     @Override
     @Transactional
-    public  Boolean readArticleRequest(Long memberId, Long time, Long articleId) {
+    public synchronized Boolean readArticleRequest(Long memberId, Long time, Long articleId) {
         Long time1=System.currentTimeMillis();
         this.isArticleAccessToRead(memberId);
         logger.info("文章可读判断时间："+(System.currentTimeMillis()-time1));
@@ -288,52 +288,53 @@ public class ArticleService implements IArticleService {
 
     @Override
     public synchronized Boolean pcreadArticleRequest(Long memberId, Long articleId) {
-        this.isArticleAccessToRead(memberId);
-        int num=articleReadRecordMapper.getArticleReadRecord(memberId, articleId);
-        if (num>0){
-            throw new InfoException("您已经在其他平台领取过该任务，请完成阅读~");
-        }
-        ArticleReadRecord articleReadRecord=new ArticleReadRecord();
-        articleReadRecord.setArticleId(articleId);
-        articleReadRecord.setMemberId(memberId);
-        articleReadRecord.setCreateTime(DateUtils.getUnixTimestamp());
-        articleReadRecord.setType(1);
-        TaskPool taskPool=taskPoolMapper.getTaskPoolByArticleId(articleId,1);
-        if (taskPool==null){
-            throw new InfoException("任务池中没有该文章");
-        }
-        Double scoreAmount=taskPool.getTotalScore();
-        Double score = taskPool.getTotalScore()-taskPool.getSingleScore();
-        if (score<0){
-            throw new InfoException("任务池中该文章的剩余米币不足以支付阅读任务");
-        }
-        articleReadRecordMapper.insertSelective(articleReadRecord);
-        taskPool.setTotalScore(score);
-        Article article=articleMapper.selectByPrimaryKey(articleId);
-        OfficialAccount account=officalAccountMapper.selectByPrimaryKey(article.getOfficialAccountId());
-        if (score<taskPool.getSingleScore()){
-            taskPool.setTotalScore(0D);
-            taskPool.setLimitDay(0L);
-            taskPool.setIsPublishNow(0);
-            memberScoreService.addMemberScore(account.getMemberId(), 6L,1,score.doubleValue(), UUIDGenerator.generate());
-            JpushUtils.buildRequest("您发布的文章"+article.getTitle()+"阅读任务已经完成，任务终止",account.getMemberId());
-        }
-        taskPoolMapper.updateByPrimaryKeySelective(taskPool);
-        memberTaskHistoryService.addMemberTaskToHistory(memberId,6L, BigDecimal.valueOf(taskPool.getSingleScore()).multiply(taskPool.getRate()).doubleValue(),1,"阅读文章-"+article.getTitle(),null,null);
-        memberScoreService.addMemberScore(memberId,13L,1,BigDecimal.valueOf(taskPool.getSingleScore()).multiply(taskPool.getRate()).doubleValue(),UUIDGenerator.generate());
-        Integer number=cacheService.getCacheByKey("article:number:"+articleId,Integer.class);
-        if (number!=null&&number>0) {
-            if (number > taskPool.getNeedNumber()&&scoreAmount<=0) {
-                cacheService.delKeyFromRedis("article:number:"+articleId);
-                cacheService.setCacheByKey("article:number:"+articleId,number,60);
-                throw new InfoException("任务池中该文章已完成阅读");
-            } else {
-                cacheService.increCacheBykey("article:number:"+articleId,1L);
-            }
-        }else {
-            cacheService.setCacheByKey("article:number:"+articleId,1,null);
-        }
-        return true;
+//        this.isArticleAccessToRead(memberId);
+//        int num=articleReadRecordMapper.getArticleReadRecord(memberId, articleId);
+//        if (num>0){
+//            throw new InfoException("您已经在其他平台领取过该任务，请完成阅读~");
+//        }
+//        ArticleReadRecord articleReadRecord=new ArticleReadRecord();
+//        articleReadRecord.setArticleId(articleId);
+//        articleReadRecord.setMemberId(memberId);
+//        articleReadRecord.setCreateTime(DateUtils.getUnixTimestamp());
+//        articleReadRecord.setType(1);
+//        TaskPool taskPool=taskPoolMapper.getTaskPoolByArticleId(articleId,1);
+//        if (taskPool==null){
+//            throw new InfoException("任务池中没有该文章");
+//        }
+//        Double scoreAmount=taskPool.getTotalScore();
+//        Double score = taskPool.getTotalScore()-taskPool.getSingleScore();
+//        if (score<0){
+//            throw new InfoException("任务池中该文章的剩余米币不足以支付阅读任务");
+//        }
+//        articleReadRecordMapper.insertSelective(articleReadRecord);
+//        taskPool.setTotalScore(score);
+//        Article article=articleMapper.selectByPrimaryKey(articleId);
+//        OfficialAccount account=officalAccountMapper.selectByPrimaryKey(article.getOfficialAccountId());
+//        if (score<taskPool.getSingleScore()){
+//            taskPool.setTotalScore(0D);
+//            taskPool.setLimitDay(0L);
+//            taskPool.setIsPublishNow(0);
+//            memberScoreService.addMemberScore(account.getMemberId(), 6L,1,score.doubleValue(), UUIDGenerator.generate());
+//            JpushUtils.buildRequest("您发布的文章"+article.getTitle()+"阅读任务已经完成，任务终止",account.getMemberId());
+//        }
+//        taskPoolMapper.updateByPrimaryKeySelective(taskPool);
+//        memberTaskHistoryService.addMemberTaskToHistory(memberId,6L, BigDecimal.valueOf(taskPool.getSingleScore()).multiply(taskPool.getRate()).doubleValue(),1,"阅读文章-"+article.getTitle(),null,null);
+//        memberScoreService.addMemberScore(memberId,13L,1,BigDecimal.valueOf(taskPool.getSingleScore()).multiply(taskPool.getRate()).doubleValue(),UUIDGenerator.generate());
+//        Integer number=cacheService.getCacheByKey("article:number:"+articleId,Integer.class);
+//        if (number!=null&&number>0) {
+//            if (number > taskPool.getNeedNumber()&&scoreAmount<=0) {
+//                cacheService.delKeyFromRedis("article:number:"+articleId);
+//                cacheService.setCacheByKey("article:number:"+articleId,number,60);
+//                throw new InfoException("任务池中该文章已完成阅读");
+//            } else {
+//                cacheService.increCacheBykey("article:number:"+articleId,1L);
+//            }
+//        }else {
+//            cacheService.setCacheByKey("article:number:"+articleId,1,null);
+//        }
+//        return true;
+        return false;
     }
 
     private void isArticleAccessToRead(Long memberId){

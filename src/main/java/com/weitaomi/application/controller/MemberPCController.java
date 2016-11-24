@@ -234,7 +234,6 @@ public class MemberPCController extends BaseController {
      * @param
      * @return
      */
-    @ResponseBody
     @RequestMapping(value = "/getIdentifyCode",method = RequestMethod.GET)
     public void getIdentifyCode(HttpServletRequest request,HttpServletResponse response){
         ValidateCode vCode = new ValidateCode(90,50,4,100);
@@ -246,7 +245,7 @@ public class MemberPCController extends BaseController {
             cacheService.setCacheByKey("getIdentifyCode:"+IpUtils.getIpAddr(request),vCode.getCode(),5*60);
             vCode.write(response.getOutputStream());
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.info("获取图片验证码异常");
         }
     }
     /**
