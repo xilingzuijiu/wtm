@@ -168,27 +168,6 @@ public class MemberPCController extends BaseController {
     }
 
     /**
-     * 获取文章列表
-     * @throws ParseException    the parse exception
-     * @see
-     */
-    @ResponseBody
-    @RequestMapping(value = "/getArticleList", method = RequestMethod.POST)
-    public AjaxResult getArticleList(@RequestParam(value = "memberId") Long memberId,@RequestParam(value = "requestTime") Long requestTime){
-        return AjaxResult.getOK(articleService.getArticleReadRecordDto(memberId, requestTime));
-    }
-    /**
-     * 阅读文章
-     * @throws ParseException    the parse exception
-     * @see
-     */
-    @ResponseBody
-    @RequestMapping(value = "/readArticleRequest", method = RequestMethod.POST)
-    public AjaxResult getArticleList(Long memberId,Long requestTime,Long articleId){
-        return AjaxResult.getOK(articleService.readArticleRequest(memberId, requestTime,articleId));
-    }
-
-    /**
      * 更新版本号
      * @throws ParseException    the parse exception
      * @see
@@ -238,7 +217,8 @@ public class MemberPCController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/sendIndentifyCode",method = RequestMethod.GET)
     public AjaxResult sendIndentifyCode(String telephone,@RequestParam(required = false,defaultValue ="0") Integer type,String uuid,HttpServletRequest request){
-        return AjaxResult.getOK(memberService.sendIndentifyCode(telephone,type));
+//        memberService.sendIndentifyCode(telephone,type)
+        return AjaxResult.getOK();
     }
 
 

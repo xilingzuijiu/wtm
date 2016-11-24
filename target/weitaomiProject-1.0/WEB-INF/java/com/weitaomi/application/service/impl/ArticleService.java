@@ -17,6 +17,7 @@ import com.weitaomi.systemconfig.exception.BusinessException;
 import com.weitaomi.systemconfig.exception.InfoException;
 import com.weitaomi.systemconfig.util.*;
 import org.apache.ibatis.session.RowBounds;
+import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,7 @@ public class ArticleService implements IArticleService {
     private TaskFailPushToWechatMapper taskFailPushToWechatMapper;
     @Override
     public Page<ArticleShowDto> getAllArticle(Long memberId,ArticleSearch articleSearch,Integer sourceType) {
+        Long timestart=System.currentTimeMillis();
         if (articleSearch.getSearchWay()==0){
             Integer number = 20;
             if (cacheService.getCacheByKey("read:article:limit:number",Integer.class)!=null){
@@ -70,6 +72,7 @@ public class ArticleService implements IArticleService {
             PageInfo<ArticleShowDto> showDtoPage=new PageInfo<ArticleShowDto>(articleShowDtoList);
             Page page = Page.trans(showDtoPage);
             page.setTotal(Long.valueOf(articleShowDtoList.size()));
+            logger.info("获取文章请求时间："+(System.currentTimeMillis()-timestart));
             return page;
         }else{
             //TODO
@@ -134,7 +137,7 @@ public class ArticleService implements IArticleService {
         String tableName="app:artile:read:limit:"+memberId.toString();
         Integer flagTemp = cacheService.getCacheByKey(tableName,Integer.class);
         if (flagTemp!=null&&flagTemp>0){
-            throw new InfoException("抱歉哦~亲~，微信规定一段时间内阅读文章太多属于‘频繁操作’，为了您更好的阅读，请每小时领取一次阅读任务~");
+            throw new InfoException("抱歉哦~亲~,有关规定一段时间内阅读文章太多属于‘频繁操作’，为了您更好的阅读，请每小时领取一次阅读任务~");
         } else {
             cacheService.setCacheByKey(tableName,1,62*60);
         }
@@ -153,7 +156,18 @@ public class ArticleService implements IArticleService {
             String messageUrl = PropertiesUtil.getValue("server.officialAccount.message.url");
             Map<String,String>  map=new HashMap<>();
             map.put("unionId",unionId);
-            map.put("url",messageUrl + "?memberId=" + memberId + "&requestTime=" +time);
+            String uuid=UUIDGenerator.generate();
+            Map<String,Object> param=new HashMap<>();
+            Map<String,Object> paramTemp=cacheService.getCacheByKey("member:obtain:artile:readList:"+uuid,Map.class);
+            if (paramTemp==null){
+                Member member=memberMapper.selectByPrimaryKey(memberId);
+                String onlyId=new Sha256Hash(uuid, member.getSalt()).toString();
+                param.put("onlyId",onlyId);
+                param.put("memberId",memberId);
+                param.put("createTime",time);
+                cacheService.setCacheByKey("member:obtain:artile:readList:"+uuid,param,10*60);
+            }
+            map.put("url",messageUrl + "?uuid=" + uuid);
             map.put("flag","0");
             Integer accountAdsId=accountAdsMapper.getLatestAccountAdsId();
             if (accountAdsId!=null){
@@ -185,14 +199,33 @@ public class ArticleService implements IArticleService {
     }
 
     @Override
-    public List<ArticleReadRecordDto> getArticleReadRecordDto(Long memberId, Long createTime) {
-        return articleReadRecordMapper.getArticleReadRecordDto(memberId, createTime);
+    public List<ArticleReadRecordDto> getArticleReadRecordDto(String uuid) {
+        Map<String,Object> params=cacheService.getCacheByKey("member:obtain:artile:readList:"+uuid,Map.class);
+        if (params!=null){
+            Long memberId=Long.parseLong(params.get("memberId").toString());
+            Long createTime=Long.parseLong(params.get("createTime").toString());
+            String onlyId=(String)params.get("onlyId");
+            if (memberId!=null&&createTime!=null){
+                Member member=memberMapper.selectByPrimaryKey(memberId);
+                if (member!=null){
+                    String onlyIdTemp=new Sha256Hash(uuid, member.getSalt()).toString();
+                    if (onlyIdTemp.equals(onlyId)){
+                        return articleReadRecordMapper.getArticleReadRecordDto(memberId, createTime);
+                    }
+                }
+            }else {
+                return null;
+            }
+        }
+        return null;
     }
 
     @Override
     @Transactional
-    public synchronized Boolean readArticleRequest(Long memberId, Long time, Long articleId) {
+    public  Boolean readArticleRequest(Long memberId, Long time, Long articleId) {
+        Long time1=System.currentTimeMillis();
         this.isArticleAccessToRead(memberId);
+        logger.info("文章可读判断时间："+(System.currentTimeMillis()-time1));
         ArticleReadRecord readRecord=new ArticleReadRecord();
         readRecord.setArticleId(articleId);
         readRecord.setMemberId(memberId);
@@ -218,18 +251,7 @@ public class ArticleService implements IArticleService {
         if (taskPool==null){
             throw new InfoException("任务池中没有该文章");
         }
-        Integer number=cacheService.getCacheByKey("article:number:"+articleId,Integer.class);
-        if (number!=null&&number>0) {
-            if (number > taskPool.getNeedNumber()) {
-                cacheService.delKeyFromRedis("article:number:"+articleId);
-                cacheService.setCacheByKey("article:number:"+articleId,number,60);
-                throw new InfoException("任务池中该文章已完成阅读");
-            } else {
-                cacheService.increCacheBykey("article:number:"+articleId,1L);
-            }
-        }else {
-            cacheService.setCacheByKey("article:number:"+articleId,1,null);
-        }
+        Double scoreAmount=taskPool.getTotalScore();
         Double score = taskPool.getTotalScore()-taskPool.getSingleScore();
         if (score<0){
             throw new InfoException("任务池中该文章的剩余米币不足以支付阅读任务");
@@ -248,6 +270,19 @@ public class ArticleService implements IArticleService {
         taskPoolMapper.updateByPrimaryKeySelective(taskPool);
         memberTaskHistoryService.addMemberTaskToHistory(memberId,6L, BigDecimal.valueOf(taskPool.getSingleScore()).multiply(taskPool.getRate()).doubleValue(),1,"阅读文章-"+article.getTitle(),null,null);
         memberScoreService.addMemberScore(memberId,13L,1,BigDecimal.valueOf(singleScore).multiply(taskPool.getRate()).doubleValue(),UUIDGenerator.generate());
+        Integer number=cacheService.getCacheByKey("article:number:"+articleId,Integer.class);
+        if (number!=null&&number>0) {
+            if (number > taskPool.getNeedNumber()&&scoreAmount<=0) {
+                cacheService.delKeyFromRedis("article:number:"+articleId);
+                cacheService.setCacheByKey("article:number:"+articleId,number,60);
+                throw new InfoException("任务池中该文章已完成阅读");
+            } else {
+                cacheService.increCacheBykey("article:number:"+articleId,1L);
+            }
+        }else {
+            cacheService.setCacheByKey("article:number:"+articleId,1,null);
+        }
+        logger.info("文章处理时间："+(System.currentTimeMillis()-time1));
         return true;
     }
 
@@ -267,18 +302,7 @@ public class ArticleService implements IArticleService {
         if (taskPool==null){
             throw new InfoException("任务池中没有该文章");
         }
-        Integer number=cacheService.getCacheByKey("article:number:"+articleId,Integer.class);
-        if (number!=null&&number>0) {
-            if (number > taskPool.getNeedNumber()) {
-                cacheService.delKeyFromRedis("article:number:"+articleId);
-                cacheService.setCacheByKey("article:number:"+articleId,number,60);
-                throw new InfoException("任务池中该文章已完成阅读");
-            } else {
-                cacheService.increCacheBykey("article:number:"+articleId,1L);
-            }
-        }else {
-            cacheService.setCacheByKey("article:number:"+articleId,1,null);
-        }
+        Double scoreAmount=taskPool.getTotalScore();
         Double score = taskPool.getTotalScore()-taskPool.getSingleScore();
         if (score<0){
             throw new InfoException("任务池中该文章的剩余米币不足以支付阅读任务");
@@ -297,6 +321,18 @@ public class ArticleService implements IArticleService {
         taskPoolMapper.updateByPrimaryKeySelective(taskPool);
         memberTaskHistoryService.addMemberTaskToHistory(memberId,6L, BigDecimal.valueOf(taskPool.getSingleScore()).multiply(taskPool.getRate()).doubleValue(),1,"阅读文章-"+article.getTitle(),null,null);
         memberScoreService.addMemberScore(memberId,13L,1,BigDecimal.valueOf(taskPool.getSingleScore()).multiply(taskPool.getRate()).doubleValue(),UUIDGenerator.generate());
+        Integer number=cacheService.getCacheByKey("article:number:"+articleId,Integer.class);
+        if (number!=null&&number>0) {
+            if (number > taskPool.getNeedNumber()&&scoreAmount<=0) {
+                cacheService.delKeyFromRedis("article:number:"+articleId);
+                cacheService.setCacheByKey("article:number:"+articleId,number,60);
+                throw new InfoException("任务池中该文章已完成阅读");
+            } else {
+                cacheService.increCacheBykey("article:number:"+articleId,1L);
+            }
+        }else {
+            cacheService.setCacheByKey("article:number:"+articleId,1,null);
+        }
         return true;
     }
 
@@ -320,7 +356,7 @@ public class ArticleService implements IArticleService {
                 Long timeLimit=flagTemp+timeLimitSeconds-DateUtils.getUnixTimestamp();
                 Long seconds=timeLimit%60;
                 Double minutes = Math.floor(timeLimit/60);
-                throw new InfoException("抱歉哦~亲~，微信规定一段时间内阅读文章太多属于‘频繁操作’，为了您更好的阅读，请"+minutes.intValue()+"分钟"+seconds+"秒后再来完成阅读任务~");
+                throw new InfoException("抱歉哦~亲~，有关规定一段时间内阅读文章太多属于‘频繁操作’，为了您更好的阅读，请"+minutes.intValue()+"分钟"+seconds+"秒后再来完成阅读任务~");
             } else if (flagTemp > 0) {
                 cacheService.increCacheBykey("wap:artile:read:limit:" + memberId, 1L);
             }

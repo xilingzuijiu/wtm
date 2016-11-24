@@ -200,7 +200,7 @@ public class MemberTaskHistoryService  implements IMemberTaskHistoryService {
         String nickName= Base64.decodeToString((String) map.get("nickname"));
         Long time=DateUtils.getTodayEndSeconds()-DateUtils.getUnixTimestamp();
         Integer number=cacheService.getCacheByKey(openId+":"+nickName,Integer.class);
-        if (number!=null&&number==1){
+        if (number!=null&&number>=1){
             throw new InfoException("该任务今天已完成");
         }
         String sexTemp=map.get("sex").toString();
@@ -217,30 +217,32 @@ public class MemberTaskHistoryService  implements IMemberTaskHistoryService {
         if (memberId.isEmpty()||memberId.get(0)==null){
             return "没有微淘米账号,请下载微淘米APP注册";
         }
-        MemberScore memberScore = this.addDailyTask(memberId.get(0),10L);
-        logger.info("请求时间为:"+(System.currentTimeMillis()-start));
-        if (memberScore!=null){
-            List<ThirdLogin> thirdLoginList = thirdLoginMapper.getThirdLoginByMemberId(memberId.get(0));
-            Member member=memberMapper.selectByPrimaryKey(memberId.get(0));
-            if (member==null){
-                throw new InfoException("用户不存在");
-            }else if (member.getSex()==3){
-                throw new InfoException("用户已经被禁用，请联系客服人员");
-            }
-            for (ThirdLogin thirdLogin:thirdLoginList){
-                if (thirdLogin.getNickname()!=nickName){
-                    thirdLogin.setNickname(nickName);
-                    thirdLoginMapper.updateByPrimaryKeySelective(thirdLogin);
+        if (!isSignAccount(memberId.get(0))) {
+            MemberScore memberScore = this.addDailyTask(memberId.get(0), 10L);
+            logger.info("请求时间为:" + (System.currentTimeMillis() - start));
+            if (memberScore != null) {
+                List<ThirdLogin> thirdLoginList = thirdLoginMapper.getThirdLoginByMemberId(memberId.get(0));
+                Member member = memberMapper.selectByPrimaryKey(memberId.get(0));
+                if (member == null) {
+                    throw new InfoException("用户不存在");
+                } else if (member.getSex() == 3) {
+                    throw new InfoException("用户已经被禁用，请联系客服人员");
                 }
-                if (sex!=-1&&member.getSex()!=sex){
-                    member.setSex(sex);
-                    memberMapper.updateByPrimaryKeySelective(member);
+                for (ThirdLogin thirdLogin : thirdLoginList) {
+                    if (thirdLogin.getNickname() != nickName) {
+                        thirdLogin.setNickname(nickName);
+                        thirdLoginMapper.updateByPrimaryKeySelective(thirdLogin);
+                    }
+                    if (sex != -1 && member.getSex() != sex) {
+                        member.setSex(sex);
+                        memberMapper.updateByPrimaryKeySelective(member);
+                    }
                 }
+                logger.info("签到成功，用户ID为{}", memberId.get(0));
+                cacheService.setCacheByKey(openId + ":" + nickName, 1, time.intValue());
+                cacheService.setCacheByKey("member:account:sign:" + memberId.get(0), 1, time.intValue());
+                return "签到成功，现在您可以返回APP领取任务";
             }
-            logger.info("签到成功，用户ID为{}",memberId.get(0));
-            cacheService.setCacheByKey(openId + ":" + nickName, 1, time.intValue());
-            cacheService.setCacheByKey("member:account:sign:"+memberId.get(0), 1, time.intValue());
-            return "签到成功，现在您可以返回APP领取任务";
         }
         logger.info("签到失败，用户ID为{}",memberId.get(0));
         return "签到失败，请稍后再试...";

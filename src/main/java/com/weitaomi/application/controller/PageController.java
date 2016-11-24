@@ -5,11 +5,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.weitaomi.application.controller.baseController.BaseController;
 import com.weitaomi.application.model.bean.Member;
 import com.weitaomi.application.model.bean.ThirdLogin;
+import com.weitaomi.application.model.dto.ArticleReadRecordDto;
 import com.weitaomi.application.model.dto.MemberInfoDto;
 import com.weitaomi.application.model.dto.RequestFrom;
 import com.weitaomi.application.model.enums.PayType;
 import com.weitaomi.application.model.mapper.ThirdLoginMapper;
 import com.weitaomi.application.model.mapper.WTMAccountMessageMapper;
+import com.weitaomi.application.service.interf.IArticleService;
 import com.weitaomi.application.service.interf.IMemberService;
 import com.weitaomi.application.service.interf.IPaymentService;
 import com.weitaomi.systemconfig.dataFormat.AjaxResult;
@@ -57,7 +59,6 @@ public class PageController extends BaseController {
     private IMemberService memberService;
     @Autowired
     private IPaymentService paymentService;
-
     /**
      * 微信授权回调
      *

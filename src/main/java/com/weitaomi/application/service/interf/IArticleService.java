@@ -52,11 +52,10 @@ public interface IArticleService {
 
     /**
      * 获取文章阅读列表
-     * @param memberId
-     * @param createTime
+     * @param uuid
      * @return
      */
-    public List<ArticleReadRecordDto> getArticleReadRecordDto(Long memberId,Long createTime);
+    public List<ArticleReadRecordDto> getArticleReadRecordDto(String uuid);
 
     /**
      * 阅读文章
