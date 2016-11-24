@@ -93,6 +93,8 @@ public interface IMemberService {
          */
     public String uploadShowImage(Long memberId,String imageFiles,String imageType);
 
+    String getImageValidateCode(String ip);
+
     Boolean validateIndetifyCode(String mobile, String indentifyCode);
 
 

@@ -222,9 +222,9 @@ public class MemberPCController extends BaseController {
     public AjaxResult sendIndentifyCode(String telephone,@RequestParam(required = false,defaultValue ="0") Integer type,String imageCode,HttpServletRequest request){
         String code=cacheService.getCacheByKey("getIdentifyCode:"+IpUtils.getIpAddr(request),String.class);
         if (StringUtil.isEmpty(code)){
-            throw new InfoException("验证码为空");
+            throw new InfoException("图片验证码为空");
         }else if (!code.equals(imageCode)){
-            throw new InfoException("验证码不正确");
+            throw new InfoException("图片验证码不正确");
         }
         String realCode=memberService.sendIndentifyCode(telephone,type);
         return AjaxResult.getOK(realCode);
@@ -249,7 +249,22 @@ public class MemberPCController extends BaseController {
             e.printStackTrace();
         }
     }
-
+    /**
+     * 获取邀请码
+     * @param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/validIdentifyCode",method = RequestMethod.GET)
+    public AjaxResult validIdentifyCode(String imageCode,HttpServletRequest request){
+        String code=cacheService.getCacheByKey("getIdentifyCode:"+IpUtils.getIpAddr(request),String.class);
+        if (StringUtil.isEmpty(code)){
+            throw new InfoException("图片验证码为空");
+        }else if (!code.equals(imageCode)){
+            throw new InfoException("图片验证码不正确");
+        }
+        return AjaxResult.getOK(true);
+    }
     /**
      * 用户注册（手机注册）
      *
