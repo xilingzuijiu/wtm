@@ -496,7 +496,11 @@ public class MemberService extends BaseService implements IMemberService {
         this.setIndentifyCodeToCache(key, identifyCode, 120L);
         return identifyCode;
     }
-
+    @Override
+    public String getImageValidateCode(String ip) {
+        ValidateCode validateCode=new ValidateCode(90,50,4,100);
+        return validateCode.getCode();
+    }
     @Override
     public Boolean validateIndetifyCode(String mobile, String indentifyCode) {
         String key = "member:indentifyCode:" + mobile;

@@ -89,6 +89,9 @@ public class MemberPCController extends BaseController {
     @RequestMapping(value = "/publishAddRequest", method = RequestMethod.POST)
     public AjaxResult publishAddRequest(@RequestBody TaskPool taskPool,HttpServletRequest request){
 //        Integer flag=Integer.valueOf(request.getHeader("flag"));
+        if (true){
+            throw new InfoException("发布公众号暂不可用~");
+        }
         taskPool.setTaskType(0);
         taskPool.setCreateTime(DateUtils.getUnixTimestamp());
         String rateTemp= cacheService.getCacheByKey("task:rate:percent",String.class);
@@ -216,11 +219,36 @@ public class MemberPCController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/sendIndentifyCode",method = RequestMethod.GET)
-    public AjaxResult sendIndentifyCode(String telephone,@RequestParam(required = false,defaultValue ="0") Integer type,String uuid,HttpServletRequest request){
-//        memberService.sendIndentifyCode(telephone,type)
-        return AjaxResult.getOK();
+    public AjaxResult sendIndentifyCode(String telephone,@RequestParam(required = false,defaultValue ="0") Integer type,String imageCode,HttpServletRequest request){
+        String code=cacheService.getCacheByKey("getIdentifyCode:"+IpUtils.getIpAddr(request),String.class);
+        if (StringUtil.isEmpty(code)){
+            throw new InfoException("验证码为空");
+        }else if (!code.equals(imageCode)){
+            throw new InfoException("验证码不正确");
+        }
+        String realCode=memberService.sendIndentifyCode(telephone,type);
+        return AjaxResult.getOK(realCode);
     }
-
+    /**
+     * 获取邀请码
+     * @param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getIdentifyCode",method = RequestMethod.GET)
+    public void getIdentifyCode(HttpServletRequest request,HttpServletResponse response){
+        ValidateCode vCode = new ValidateCode(90,50,4,100);
+        response.setContentType("image/jpeg");
+        response.setHeader("Pragma", "no-cache");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setDateHeader("Expires", 0);
+        try {
+            cacheService.setCacheByKey("getIdentifyCode:"+IpUtils.getIpAddr(request),vCode.getCode(),5*60);
+            vCode.write(response.getOutputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * 用户注册（手机注册）
