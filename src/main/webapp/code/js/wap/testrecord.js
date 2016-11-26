@@ -37,6 +37,7 @@ function loadrecord(){
     $.ajax({
         type: 'post',
         dataType: 'json',
+        timeout:180000,
         url: '/pc/admin/memberTask/getMemberTaskInfo',
         data:{memberId:memberId,pageIndex:pageIndex,pageSize:pageSize,type:1},
         beforeSend: function (XMLHttpRequest) {

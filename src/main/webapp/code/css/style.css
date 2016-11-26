@@ -12,7 +12,7 @@
 .focuslist li p span{font-size:12px;color:#f66866;}
 .focuslist li button{height:25px !important;padding:0 15px !important;background:#39aff0 !important;
     border:#0f95e0 1px solid;}
-#inviteby{background:url("../img/wap/bgone.jpg") no-repeat left center;background-size:cover;max-width:900px;margin:auto;}
+#inviteby{background:url("http://weitaomi.b0.upaiyun.com/common/pcwap/invitebg1480129047659.jpg") no-repeat left center;background-size:cover;max-width:900px;margin:auto;}
 .bodybox{display:none;}
 .ivwrap .ivbanner{width:100%;padding-bottom:5px;}
 .ivwrap .ivintroduce,.ivusage{font-size:15px;color:#333;width:90%;line-height:22px;margin:auto;text-align:center;}
@@ -44,9 +44,9 @@
 #envon .close img{width:100%;float:right;}
 #registerForm input{border:#d33711 1px solid;width:100%;height:2.7em;margin-bottom:0.9em;outline:none;border-radius:0.5em;font-size:1.3em;padding-left:17%;}
 #telverify,#identifycode{width:100%;height:3.4em;margin-bottom:0.8em;overflow:hidden;position:relative;border:#d33711 1px solid;border-radius:0.8em !important;}
-#telephone,#imgcode{background:url("../img/pcwap/telephone.png") no-repeat 8% center;background-size:10%; width:69% !important;
+#telephone,#imgcode{background:url("http://weitaomi.b0.upaiyun.com/common/common/telephone1480130075682.png") no-repeat 8% center;background-size:10%; width:69% !important;
     margin:0 !important;display:block;float:left;border:none !important;line-height:3em;}
-#imgcode{background:url("../img/pcwap/yangzhengma.png") no-repeat 5% center;background-size:14%;}
+#imgcode{background:url("http://weitaomi.b0.upaiyun.com/common/common/authcode1480130107843.png") no-repeat 5% center;background-size:14%;}
 #sendVerifyCode,#sendidentifycode{display:block;background:#fb3204;width:28% !important;border:#fb3204 1px solid;float:right;cursor:pointer;
     border-radius:0 0.7em 0.7em 0 !important;color:#fff;font-size:1em !important;height:3.4em !important;line-height:3.4em;text-align:center;outline:none;}
 #sendidentifycode{overflow:hidden;border:none;}
@@ -57,9 +57,9 @@
 #readsend{display:block;background:#68c1f4;padding:0.5em 1.8em;font-size:1.4rem;color:#fff;text-align:center;border-radius:0.3em;margin:auto;
     margin-top:2em;outline-style:none;-webkit-appearance:none;-webkit-tap-highlight-color: rgba(0,0,0,0);-webkit-tap-highlight-color:transparent; }
 #register{display:block;background:#fb3204;border-radius:0.4em;color:#fff;margin:auto;text-align:center;font-size:1.3em;  width:50%;padding:0.5em 0;cursor:pointer;}
-#memberName{background:url("../img/pcwap/account.png") no-repeat 5% center;background-size:10%;}
-#password,#repassword{background:url("../img/pcwap/password.png") no-repeat 5% center;background-size:7%;}
-.code{background:url("../img/pcwap/yangzhengma.png") no-repeat 5% center;background-size:10%;}
+#memberName{background:url("http://weitaomi.b0.upaiyun.com/common/common/account1480130048157.png") no-repeat 5% center;background-size:10%;}
+#password,#repassword{background:url("http://weitaomi.b0.upaiyun.com/common/common/password1480130065730.png") no-repeat 5% center;background-size:7%;}
+.code{background:url("http://weitaomi.b0.upaiyun.com/common/common/authcode1480130107843.png") no-repeat 5% center;background-size:10%;}
 #downtime{display:none;background:#ccc;border:#ccc 1px solid;width:30% !important;padding:0 !important;float:right;border-radius:0 10px 10px 0 !important;
     position:absolute;left:70%;top:0;text-align:center;font-size:15px;float:right;line-height:3em;}
 

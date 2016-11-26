@@ -54,6 +54,7 @@
                         type: 'post',
                         dataType: 'json',
                         url: '/pc/admin/member/getMemberAccountPublishMsg',
+                        timeout:180000,
                         data: {memberId: memberId, time: time},
                         success: function (params) {
                             var json = eval(params); //数组
@@ -130,6 +131,7 @@
                         dataType: 'json',
                         contentType: "application/json",
                         url: '/pc/admin/member/publishAddRequest',
+                        timeout:180000,
 //                        async:false,
                         data: request,
                         beforeSend: function (XMLHttpRequest) {

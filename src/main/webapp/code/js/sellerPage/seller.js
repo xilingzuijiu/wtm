@@ -29,6 +29,7 @@ function initializePage() {
     $.ajax({
         url:"/pc/admin/member/updateMemberScore",
         type:"post",
+        timeout:180000,
         beforeSend: function (XMLHttpRequest) {
             getMemberRequestHeaderMsg(XMLHttpRequest)
         } ,
@@ -44,6 +45,7 @@ function initializePage() {
     $.ajax({
         type: 'post',
         url: '/pc/admin/official/getOfficialAccountList',
+        timeout:180000,
         beforeSend: function (XMLHttpRequest) {
             getMemberRequestHeaderMsg(XMLHttpRequest)
         },
@@ -83,6 +85,7 @@ function getFollowTaskListByPage(officialId,pageIndex,pageSize){
     $.ajax({
         type: 'post',
         url: '/pc/admin/official/getTaskPoolDto',
+        timeout:180000,
         data: {officialAccountId: officialId, type:0,pageIndex:pageIndex,pageSize:pageSize},
         success: function (params) {
             if (params.errorCode == 0) {
@@ -98,6 +101,7 @@ function getReadTaskListByPage(officialId,pageIndex,pageSize){
     $.ajax({
         type: 'post',
         url: '/pc/admin/official/getTaskPoolDto',
+        timeout:180000,
         data: {officialAccountId: officialId, type: 1,pageIndex:pageIndex,pageSize:pageSize},
         success: function (params) {
             if (params.errorCode == 0) {
@@ -300,6 +304,7 @@ function dealWithData(data,listId,pageId,pageIndex){
                         $.ajax({
                             type: 'post',
                             url: '/pc/admin/official/updateTaskPoolDto',
+                            timeout:180000,
                             data:{memberId:memberId,taskPoolId:task.taskId,isPublishNow:0},
                             beforeSend: function (XMLHttpRequest) {
                                 getMemberRequestHeaderMsg(XMLHttpRequest)

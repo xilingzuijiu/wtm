@@ -38,6 +38,7 @@ $(function(){
     $.ajax({
         type:'post',
         dataType:'json',
+        timeout:180000,
         url:'/pc/admin/memberInvited/getInvitedParamsDto',
         beforeSend: function (XMLHttpRequest) {
             getMemberRequestHeaderMsg(XMLHttpRequest)
@@ -60,6 +61,7 @@ $(function(){
     $.ajax({
         type:'post',
         dataType:'json',
+        timeout:180000,
         url:'/pc/admin/memberInvited/getTotalSharedMsg',
         beforeSend: function (XMLHttpRequest) {
             getMemberRequestHeaderMsg(XMLHttpRequest)

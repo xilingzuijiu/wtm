@@ -16,6 +16,7 @@ $(function(){
             $.ajax({
                 type: 'get',
                 url: '/pc/admin/member/sendIndentifyCode',
+                timeout:180000,
                 data: {telephone:telephone,imageCode:imgcode},
                 beforeSend: function (XMLHttpRequest) {
                     getMemberRequestHeaderMsg(XMLHttpRequest)
@@ -61,6 +62,7 @@ $(function(){
                 type: 'post',
                 url: '/pc/admin/member/register',
                 dataType:"json",
+                timeout:180000,
                 data: request,
                 contentType: "application/json",
                 beforeSend: function (XMLHttpRequest) {
@@ -107,6 +109,7 @@ function getinvitecode(){
         type: 'get',
         dataType: 'json',
         url: '/pc/admin/member/getInvitedCode',
+        timeout:180000,
         data: {memberId:memberId},
         header:{
             "Access-Control-Allow-Origin":"true"

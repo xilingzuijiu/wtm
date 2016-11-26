@@ -28,6 +28,7 @@ var puser={
     $.ajax({
         url:"/pc/admin/member/updateMemberScore",
         type:"post",
+        timeout:180000,
         beforeSend: function (XMLHttpRequest) {
             puser.getMemberRequestHeaderMsg(XMLHttpRequest)
         } ,
@@ -46,6 +47,7 @@ var puser={
         $.ajax({
             url:"/pc/admin/payment/getMemberWalletInfo",
             type:"get",
+            timeout:180000,
             beforeSend: function (XMLHttpRequest) {
                 puser.getMemberRequestHeaderMsg(XMLHttpRequest)
             },

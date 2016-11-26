@@ -37,6 +37,7 @@ function loadinviterecord(){
     $.ajax({
         type:'post',
         dataType:'json',
+        timeout:180000,
         url:'/pc/admin/memberInvited/getInvitedRecordList',
         data:{pageIndex:count,pageSize:pageSize},
         beforeSend: function (XMLHttpRequest) {

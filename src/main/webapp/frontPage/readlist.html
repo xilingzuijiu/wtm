@@ -51,7 +51,7 @@
         });
         function is_weixin(){
             var ua = navigator.userAgent.toLowerCase();
-            if(ua.match(/MicroMessenger/i)=="micromessenger") {
+            if(ua.match(/MicroMessenger/i)=="micromessenger"){
                 return true;
             } else {
                 return false;
@@ -80,6 +80,7 @@
                 $.ajax({
                     type: 'post',
                     url: '/pc/admin/member/getArticleList',
+                    timeout:180000,
                     data: {memberId: memberId, requestTime: requestTime},
                     header: {
                         "Access-Control-Allow-Origin": "true"
@@ -166,6 +167,7 @@
             $.ajax({
                 type: 'post',
                 url: '/pc/admin/member/readArticleRequest',
+                timeout:180000,
                 data: {memberId: memberId, requestTime: requestTime, articleId: articleId},
                 header: {
                     "Access-Control-Allow-Origin": "true"
@@ -194,5 +196,13 @@
 <body>
 <ul class="readlist">
 </ul>
+<div class="readUppop">
+    <div id="identifycode" class="readidentify">
+        <input type="number" name="telephone" class="code" id="imgcode" value="" placeholder="请输入右侧数字">
+        <a id="sendidentifycode" >
+            <img src="../code/img/wap/ticket.png"/></a>
+    </div>
+    <input type="button" value="发送" id="readsend">
+</div>
 </body>
 </html>

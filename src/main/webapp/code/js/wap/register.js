@@ -10,6 +10,7 @@ $(function(){
             $.ajax({
                 type: 'get',
                 url: '/pc/admin/member/sendIndentifyCode',
+                timeout:180000,
                 data: {telephone:telephone},
                 beforeSend: function (XMLHttpRequest) {
                     getMemberRequestHeaderMsg(XMLHttpRequest)
@@ -56,6 +57,7 @@ $(function(){
                 url: '/pc/admin/member/register',
                 dataType:"json",
                 data: request,
+                timeout:180000,
                 contentType: "application/json",
                 beforeSend: function (XMLHttpRequest) {
                     getMemberRequestHeaderMsg(XMLHttpRequest)

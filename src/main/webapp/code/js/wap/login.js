@@ -10,6 +10,7 @@ $(function(){
         $.ajax({
             type: 'post',
             url: '/pc/admin/member/login',
+            timeout:180000,
             data: {mobileOrName:memberName,password:password},
             beforeSend: function (XMLHttpRequest) {
                 getMemberRequestHeaderMsg(XMLHttpRequest)

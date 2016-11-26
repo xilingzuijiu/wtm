@@ -55,12 +55,13 @@
                     $.ajax({
                         type:'post',
                         url:'/pc/admin/member/getAddUrlByArticleUrl',
+                        timeout:180000,
                         data:{articleUrl:articleUrl},
                         success:function(params){
                             var json=eval(params);
                             if(json.data!=null&&json.errorCode==0){
                                 addUrl=json.data;
-                                console.log(addUrl+"地址地址")
+                                console.log(addUrl)
                                 var articleUrlTemp=encodeURIComponent(articleUrl);
                                 top.location.href='http://www.weitaomi.com.cn/index.php/kfz/login/index?addUrl='+addUrl+"&remark="+remark+"&memberID="+memberId+'&articleUrl='+articleUrlTemp
                             }else if(json.errorCode==4){

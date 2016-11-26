@@ -5,6 +5,7 @@ function cleckhowcash(){
     $.ajax({
         url:"/common/admin/keyValue/getKeyValueDtoList",
         type:"get",
+        timeout:180000,
         //contentType:"application/json",
         data:{mapKey:'deposit:amount',id:null},
         beforeSend: function (XMLHttpRequest) {
@@ -33,6 +34,7 @@ var enchashment={
             url:"/pc/admin/payment/generatorPayParams",
             type:"post",
             contentType:"application/json",
+            timeout:180000,
             data:requestData,
             beforeSend: function (XMLHttpRequest) {
                 enchashment.getMemberRequestHeaderMsg(XMLHttpRequest)
@@ -119,6 +121,7 @@ function initilizePage(){
     $.ajax({
         url:"/pc/admin/member/getAvaliableScoreAndWxInfo",
         type:"post",
+        timeout:180000,
         beforeSend: function (XMLHttpRequest) {
             enchashment.getMemberRequestHeaderMsg(XMLHttpRequest)
         } ,

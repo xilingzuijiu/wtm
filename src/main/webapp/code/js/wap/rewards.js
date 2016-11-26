@@ -17,6 +17,7 @@ $(function(){
         type: 'post',
         contentType: "application/json",
         dataType: 'json',
+        timeout:180000,
         url: '/pc/admin/memberTask/getMemberDailyTask',
         data:{memberId:memberId},
         beforeSend: function (XMLHttpRequest) {
@@ -70,6 +71,7 @@ var taskSubmit=function(obj){
                     type: 'get',
                     contentType: "application/json",
                     dataType: 'json',
+                    timeout:180000,
                     url: '/pc/admin/memberTask/addDailyTask',
                     data:{memberId:memberId,taskId:taskId},
                     beforeSend: function (XMLHttpRequest) {

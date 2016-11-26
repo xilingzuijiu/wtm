@@ -7,6 +7,7 @@ $(function(){
     $.ajax({
         type: 'post',
         url: '/pc/admin/memberTask/getMemberTaskInfoDetail',
+        timeout:180000,
         data: {taskHistoryId:taskHistoryId},
         beforeSend: function (XMLHttpRequest) {
             getMemberRequestHeaderMsg(XMLHttpRequest)

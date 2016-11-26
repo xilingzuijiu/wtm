@@ -29,6 +29,7 @@ $(function(){
             $.ajax({
                 type:"post",
                 url:"/pc/admin/member/modifyMemberName",
+                timeout:180000,
                 data:{memberName:nowname},
                 beforeSend: function (XMLHttpRequest) {
                     getMemberRequestHeaderMsg(XMLHttpRequest)
@@ -72,6 +73,7 @@ function modifyBirth(){
     $.ajax({
         url:"/pc/admin/member/modifyBirth",
         type:"post",
+        timeout:180000,
         data:{birth:timestamp},
         beforeSend: function (XMLHttpRequest) {
             getMemberRequestHeaderMsg(XMLHttpRequest)

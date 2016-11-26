@@ -59,6 +59,7 @@ function request(howmoney){
         contentType: "application/json",
         dataType:'json',
         url: '/pc/admin/payment/getPCPaymentParams',
+        timeout:180000,
         data: requestParams,
         beforeSend: function (XMLHttpRequest) {
             getMemberRequestHeaderMsg(XMLHttpRequest)

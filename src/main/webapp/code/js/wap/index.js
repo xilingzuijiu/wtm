@@ -64,6 +64,7 @@ function  modifyMemberAddress(address){
     $.ajax({
         url:"/pc/admin/member/modifyMemberAddress",
         type:"post",
+        timeout:180000,
         data:{memberAddress:address},
         beforeSend: function (XMLHttpRequest) {
             getMemberRequestHeaderMsg(XMLHttpRequest)
@@ -76,6 +77,7 @@ function updateMyscore(updateType){
     $.ajax({
         url:"/pc/admin/member/updateMemberScore",
         type:"post",
+        timeout:180000,
         beforeSend: function (XMLHttpRequest) {
             getMemberRequestHeaderMsg(XMLHttpRequest)
         } ,

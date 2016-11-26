@@ -70,6 +70,7 @@ function loadReadlist() {
             contentType: "application/json",
             dataType: 'json',
             url: '/pc/admin/article/getAllArticle',
+            timeout:180000,
             data: request,
             beforeSend: function (XMLHttpRequest) {
                 getMemberRequestHeaderMsg(XMLHttpRequest)
@@ -130,6 +131,7 @@ var articleSubmit=function(obj){
     $.ajax({
         type: 'post',
         url: '/pc/admin/article/pcreadArticleRequest',
+        timeout:180000,
         data: {articleId: articleId},
         beforeSend: function (XMLHttpRequest) {
             getMemberRequestHeaderMsg(XMLHttpRequest)

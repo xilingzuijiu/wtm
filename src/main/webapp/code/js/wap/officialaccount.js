@@ -52,6 +52,7 @@ function loadofficiallist(){
     $.ajax({
         type: 'post',
         dataType: 'json',
+        timeout:180000,
         url: '/pc/admin/official/getFollowOfficialAccountList',
         data:request,
         beforeSend: function (XMLHttpRequest) {
@@ -103,6 +104,7 @@ var officialSubmit = function(obj){
         type:"post",
         url:'/pc/admin/official/markAddRecord',
         contentType: "application/json",
+        timeout:180000,
         data:requestData,
         beforeSend: function (XMLHttpRequest) {
             getMemberRequestHeaderMsg(XMLHttpRequest)
@@ -121,6 +123,7 @@ var officialSubmit = function(obj){
                     $.ajax({
                         type:"post",
                         url:'/pc/admin/official/getOfficialAccountMsgList',
+                        timeout:180000,
                         beforeSend: function (XMLHttpRequest) {
                             getMemberRequestHeaderMsg(XMLHttpRequest)
                         },
@@ -150,6 +153,7 @@ var officialSubmit = function(obj){
                                             $.ajax({
                                                 type:"post",
                                                 url:'/pc/admin/official/signOfficialAccountMsgList',
+                                                timeout:180000,
                                                 beforeSend: function (XMLHttpRequest) {
                                                     getMemberRequestHeaderMsg(XMLHttpRequest)
                                                 },

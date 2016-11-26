@@ -58,6 +58,7 @@
                     type: 'post',
                     dataType: 'json',
                     url: '/pc/admin/member/getMemberArticlePublishMsg',
+                    timeout:180000,
                     data: {memberId:memberId,time:time},
                     success: function (params) {
                         var json = eval(params); //数组
@@ -132,6 +133,7 @@
                         dataType: 'json',
                         contentType: "application/json",
                         url: '/pc/admin/member/publishReadRequest',
+                        timeout:180000,
 //                    async:false,
                         data: request,
                         success: function (data) {
@@ -213,7 +215,7 @@
         <div class="col-sm-8">
             <label class="col-sm-4 control-label" >上传文章展示图片</label>
             <input type="button" class="form-control" id="autoimagefile" value="自动获取图片"/>
-            <img class="imgsize" src="../../code/img/pc/clecked.png"/>
+            <img class="imgsize" src=" http://weitaomi.b0.upaiyun.com/pc/publishArticle/cleckok1480131302027.png"/>
         </div><br/>
         <div class="col-sm-8 margin0" id="cleckblank" >
             <label class="col-sm-4 control-label" id="blank">上传文章展示图片<span class="vicefont">(非必填)</span></label>
