@@ -38,17 +38,17 @@
     border:none;  -webkit-tap-highlight-color: rgba(0,0,0,0);  -webkit-tap-highlight-color:transparent;
     outline:none;padding:8px 0;outline-style:none;-webkit-appearance:none;cursor:pointer;margin-top:4em;}
 #envon{width:70%;max-width:400px !important;margin:auto; background-color:#FFFFFF; border:1px solid #999; padding:5%; overflow:hidden; display:none;}
-#envon h3{font-size:1.5em;color:#353535;font-weight:500;float:left;margin-bottom:1.3em;width:70%;}
+#envon h3{font-size:1.5em;color:#353535;font-weight:500;float:left;margin-bottom:1em;width:70%;}
 #envon .close{display:block;float:right;margin-bottom:0.8em;width:6%;padding-top:0.2em;-webkit-tap-highlight-color: rgba(0,0,0,0);  -webkit-tap-highlight-color:transparent;
     outline:none;}
 #envon .close img{width:100%;float:right;}
-#registerForm input{border:#d33711 1px solid;width:100%;height:2.7em;margin-bottom:0.9em;outline:none;border-radius:0.5em;font-size:1.3em;padding-left:17%;}
-#telverify,#identifycode{width:100%;height:3.4em;margin-bottom:0.8em;overflow:hidden;position:relative;border:#d33711 1px solid;border-radius:0.8em !important;}
+#registerForm input{border:#d33711 1px solid;width:100%;height:2.2em;margin-bottom:0.6em;outline:none;border-radius:0.5em;font-size:1.3em;padding-left:17%;}
+#telverify,#identifycode{width:100%;height:2.9em;margin-bottom:0.8em;overflow:hidden;position:relative;border:#d33711 1px solid;border-radius:0.8em !important;}
 #telephone,#imgcode{background:url("http://weitaomi.b0.upaiyun.com/common/common/telephone1480130075682.png") no-repeat 8% center;background-size:10%; width:69% !important;
     margin:0 !important;display:block;float:left;border:none !important;line-height:3em;}
 #imgcode{background:url("http://weitaomi.b0.upaiyun.com/common/common/authcode1480130107843.png") no-repeat 5% center;background-size:14%;}
 #sendVerifyCode,#sendidentifycode{display:block;background:#fb3204;width:28% !important;border:#fb3204 1px solid;float:right;cursor:pointer;
-    border-radius:0 0.7em 0.7em 0 !important;color:#fff;font-size:1em !important;height:3.4em !important;line-height:3.4em;text-align:center;outline:none;}
+    border-radius:0 0.7em 0.7em 0 !important;color:#fff;font-size:1em !important;height:2.9em !important;line-height:3.4em;text-align:center;outline:none;}
 #sendidentifycode{overflow:hidden;border:none;}
 #sendidentifycode img{width:100%;height:100%;border-radius:0 0.7em 0.7em 0 !important;overflow:hidden;}
 .readUppop{display:none;}
