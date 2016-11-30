@@ -20,6 +20,7 @@
     <result column="officialAccountsId" property="officialAccountsId" jdbcType="BIGINT" />
     <result column="articleId" property="articleId" jdbcType="BIGINT" />
     <result column="needNumber" property="needNumber" jdbcType="INTEGER" />
+    <result column="realityNumber" property="realityNumber" jdbcType="INTEGER" />
     <result column="createTime" property="createTime" jdbcType="BIGINT" />
   </resultMap>
   <update id="updateTaskPoolWithScore">

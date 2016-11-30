@@ -26,6 +26,9 @@ public interface IPaymentService {
     String verifyBatchPayNotify(Map requestParams);
 
     void patchAliPayCustomers(List<PaymentApprove> approveList);
+
+    boolean isFreeForDesposit(Long memberId);
+
     /**
      * 申请提现
      * @param memberId

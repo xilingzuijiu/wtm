@@ -126,14 +126,14 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
         String title = doc.title();
         if (!publishReadRequestDto.getArticleUrl().endsWith("wechat_redirect")) {
             String suffix = "&scene=0#wechat_redirect";
-            String urlParent = doc.getElementsByTag("script").get(10).toString();
+            String urlParent = doc.toString();
             if (!urlParent.contains("x26amp")||!urlParent.contains("msg_link")){
                 throw new InfoException("文章链接格式不正确");
             }
-            String urlParams = urlParent.substring(urlParent.indexOf("msg_link") + 12, urlParent.indexOf("#rd")).replace("\\x26amp;", "@");
+            String urlParams = urlParent.substring(urlParent.indexOf("msg_link") + 12, urlParent.indexOf("#rd",urlParent.indexOf("msg_link"))).replace("\\x26amp;", "@");
             String[] arr = urlParams.split("@");
             String articleUrl = arr[0] + "&" + arr[1] + "&" + arr[2] + "&" + arr[3] + suffix;
-            if (arr[1].length()!=14||arr[2].length()!=5||arr[3].length()!=35){
+            if (arr[2].length()!=5||arr[3].length()!=35){
                 throw new InfoException("文章链接格式不正确");
             }
             article.setOfficialAccountId(publishReadRequestDto.getOfficialAccountsId());

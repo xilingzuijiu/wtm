@@ -11,4 +11,6 @@ public interface IKeyValueService {
     public List<KeyValueDto> getKeyValueDtoList(String mapKey,String id);
 
     boolean keyIsExist(String tableName, String idKey);
+
+    boolean keyIsAvaliableByCondition(String tableName,Long redisNumberLimitMin,Long redisNumberLimitMax,Integer timeLimitSeconds,Long numberIncrease,Integer numberStart,boolean isStart);
 }

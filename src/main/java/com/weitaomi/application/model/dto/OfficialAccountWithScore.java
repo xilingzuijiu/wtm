@@ -5,25 +5,31 @@ import com.weitaomi.application.model.bean.OfficialAccount;
 /**
  * Created by Administrator on 2016/8/19.
  */
-public class OfficialAccountWithScore extends OfficialAccount{
-    /**
-     * 积分
-     */
-    private Double score;
-
-    /**
-     * 获取积分
-     * @return score 积分
-     */
-    public Double getScore() {
-        return this.score;
+public class OfficialAccountWithScore{
+    private String userName;
+    private Long id;
+    private Long memberId;
+    public String getUserName() {
+        return this.userName;
     }
 
-    /**
-     * 设置积分
-     * @param score 积分
-     */
-    public void setScore(Double score) {
-        this.score = score;
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getMemberId() {
+        return this.memberId;
+    }
+
+    public void setMemberId(Long memberId) {
+        this.memberId = memberId;
     }
 }

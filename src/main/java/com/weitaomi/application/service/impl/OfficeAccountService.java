@@ -27,7 +27,7 @@ import java.util.*;
  */
 @Service
 public class OfficeAccountService implements IOfficeAccountService {
-    private static Logger logger= LoggerFactory.getLogger(OfficeAccountService.class);
+    private static Logger logger = LoggerFactory.getLogger(OfficeAccountService.class);
     @Autowired
     private OfficalAccountMapper officalAccountMapper;
     @Autowired
@@ -54,117 +54,124 @@ public class OfficeAccountService implements IOfficeAccountService {
     private AccountAdsMapper accountAdsMapper;
     @Autowired
     private TaskFailPushToWechatMapper taskFailPushToWechatMapper;
+
     /**
      * 查看已关注公众号
      */
     @Override
-    public List<MemberAccountLabel> getOfficialAccountMsgList(Long memberId,Integer sourceType){
-        List<MemberAccountLabel> officialAccountNameList=officeMemberMapper.getOfficialAccountNameList(memberId,sourceType);
+    public List<MemberAccountLabel> getOfficialAccountMsgList(Long memberId, Integer sourceType) {
+        List<MemberAccountLabel> officialAccountNameList = officeMemberMapper.getOfficialAccountNameList(memberId, sourceType);
         return officialAccountNameList;
     }
+
     /**
-     *更新已关注公众号
+     * 更新已关注公众号
      */
     @Override
-    public Integer signOfficialAccountMsgList(Long memberId,Integer sourceType){
-        List<MemberAccountLabel> officialAccountNameList=officeMemberMapper.getOfficialAccountNameList(memberId,sourceType);
-        Integer num=officeMemberMapper.updateOfficialMemberList(memberId);
-        for (MemberAccountLabel memberAccountLabel: officialAccountNameList) {
+    public Integer signOfficialAccountMsgList(Long memberId, Integer sourceType) {
+        List<MemberAccountLabel> officialAccountNameList = officeMemberMapper.getOfficialAccountNameList(memberId, sourceType);
+        Integer num = officeMemberMapper.updateOfficialMemberList(memberId);
+        for (MemberAccountLabel memberAccountLabel : officialAccountNameList) {
             String key = null;
             try {
                 key = Base64Utils.encodeToString(memberAccountLabel.getNickName().getBytes("UTF-8")) + ":" + memberAccountLabel.getSex() + ":" + memberAccountLabel.getOriginId();
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            logger.info("用户执行标注公众号操作，key：{}",key);
+            logger.info("用户执行标注公众号操作，key：{}", key);
             int number = memberTaskHistoryMapper.deleteMemberTaskUnfinished(memberId, 0, memberAccountLabel.getOriginId());
             cacheService.delKeyFromRedis(key);
         }
         return num;
     }
+
     @Override
     @Transactional
-    public boolean pushAddRequest(Long memberId,AddOfficalAccountDto addOfficalAccountDto) {
-        logger.info("app用户ID：{}开始拉取公众号列表，参数为：{}",memberId,JSON.toJSONString(addOfficalAccountDto));
-        List<OfficeMember> officeMembers=officeMemberMapper.getOfficeMemberList(memberId);
-        Long timeStart=System.currentTimeMillis();
-        if (addOfficalAccountDto!=null&&!addOfficalAccountDto.getLinkList().isEmpty()){
-            for (OfficialAccountMsg officialAccountMsg:addOfficalAccountDto.getLinkList()){
-                TaskPool taskPool = taskPoolMapper.getTaskPoolByOfficialId(officalAccountMapper.getAccountsIdByAppid(officialAccountMsg.getAppId()),1);
-
-            }
-        }else {
-            throw new InfoException("获取公众号列表为空");
-        }
-        if (!officeMembers.isEmpty()){
-            String info="您还有未关注公众号，请到公众号内完成\n未完成任务将会在1小时后删除\n若领任务之前已关注，请标注这些公众号";
+    public boolean pushAddRequest(Long memberId, AddOfficalAccountDto addOfficalAccountDto) {
+        logger.info("app用户ID：{}开始拉取公众号列表，参数为：{}", memberId, JSON.toJSONString(addOfficalAccountDto));
+        List<OfficeMember> officeMembers = officeMemberMapper.getOfficeMemberList(memberId);
+        Long timeStart = System.currentTimeMillis();
+        if (!officeMembers.isEmpty()) {
+            String info = "您还有未关注公众号，请到公众号内完成\n未完成任务将会在1小时后删除\n若领任务之前已关注，请标注这些公众号";
             throw new InfoException(info);
         }
-        if (addOfficalAccountDto==null){
+        if (addOfficalAccountDto == null) {
             throw new BusinessException("任务列表为空");
         }
-        String unionId=addOfficalAccountDto.getUnionId();
-        if (StringUtil.isEmpty(unionId)){
+        String unionId = addOfficalAccountDto.getUnionId();
+        if (StringUtil.isEmpty(unionId)) {
             throw new BusinessException("用户唯一识别码为空");
         }
-        List<OfficialAccountMsg> list=addOfficalAccountDto.getLinkList();
-        if (list.isEmpty()){
+        List<OfficialAccountMsg> list = addOfficalAccountDto.getLinkList();
+        if (list.isEmpty()) {
             throw new BusinessException("要关注的公号列表为空");
         }
-        List<OfficeMember> officeMemberList=new ArrayList<>();
-        List<Long> idList=new ArrayList<>();
-        for (OfficialAccountMsg officialAccountMsg:list){
-            ThirdLoginDto thirdLoginDto=thirdLoginMapper.getThirdlogInDtoMemberId(memberId,0);
-            String nickName= null;
+        List<OfficeMember> officeMemberList = new ArrayList<>();
+        List<Long> idList = new ArrayList<>();
+        for (OfficialAccountMsg officialAccountMsg : list) {
+            ThirdLoginDto thirdLoginDto = thirdLoginMapper.getThirdlogInDtoMemberId(memberId, 0);
+            String nickName = null;
             try {
                 nickName = Base64Utils.encodeToString(thirdLoginDto.getNickname().getBytes("UTF-8"));
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            String key=nickName+":"+thirdLoginDto.getSex()+":"+officialAccountMsg.getOriginId();
-            logger.info("key is {}",key);
-            OfficialAccountWithScore officialAccountWithScore=officalAccountMapper.getOfficialAccountWithScoreById(officialAccountMsg.getOriginId(),1);
-            MemberCheck memberCheck=null;
-            if (officialAccountWithScore!=null) {
-                memberCheck = new MemberCheck(memberId, officialAccountWithScore.getId());
-            }
-            MemberCheck valueTemp = cacheService.getCacheByKey(key,MemberCheck.class);
-            if (valueTemp!=null){
-                throw new InfoException("公众号"+officialAccountWithScore.getUserName()+"的关注未完成，请先完成");
-            }
-            cacheService.setCacheByKey(key,memberCheck, SystemConfig.TASK_CACHE_TIME);
-            OfficeMember officeMember=new OfficeMember();
-            officeMember.setMemberId(memberId);
-            officeMember.setOfficeAccountId(officialAccountWithScore.getId());
-            officeMember.setIsAccessNow(0);
-            officeMemberList.add(officeMember);
+            String key = nickName + ":" + thirdLoginDto.getSex() + ":" + officialAccountMsg.getOriginId();
+            logger.info("key is {}", key);
+            OfficialAccountWithScore officialAccountWithScore = officalAccountMapper.getOfficialAccountWithScoreById(officialAccountMsg.getOriginId());
             TaskPool taskPool = taskPoolMapper.getTaskPoolByOfficialId(officialAccountWithScore.getId(), 1);
             //添加到待完成任务记录中
-            if (taskPool!=null) {
-                String detail = "关注公众号" + officialAccountWithScore.getUserName() + "，领取" + taskPool.getRate().multiply(BigDecimal.valueOf(officialAccountWithScore.getScore())).doubleValue() + "米币";
-                memberTaskHistoryService.addMemberTaskToHistory(memberId, 1L, taskPool.getRate().multiply(BigDecimal.valueOf(officialAccountWithScore.getScore())).doubleValue(), 0, detail, null, officialAccountMsg.getOriginId());
-                idList.add(officialAccountWithScore.getId());
+            if (taskPool != null) {
+                Double score = taskPool.getTotalScore() - taskPool.getSingleScore();
+                if (officialAccountWithScore != null && score >= 0) {
+                    MemberCheck memberCheck = null;
+                    if (officialAccountWithScore != null) {
+                        memberCheck = new MemberCheck(memberId, officialAccountWithScore.getId(), taskPool.getId());
+                    }
+                    MemberCheck valueTemp = cacheService.getCacheByKey(key, MemberCheck.class);
+                    if (valueTemp != null) {
+                        throw new InfoException("公众号" + officialAccountWithScore.getUserName() + "的关注未完成，请先完成");
+                    }
+                    cacheService.setCacheByKey(key, memberCheck, SystemConfig.TASK_CACHE_TIME);
+                    OfficeMember officeMember = new OfficeMember();
+                    officeMember.setMemberId(memberId);
+                    officeMember.setTaskPoolId(taskPool.getId());
+                    officeMember.setOfficeAccountId(officialAccountWithScore.getId());
+                    officeMember.setIsAccessNow(0);
+                    officeMemberList.add(officeMember);
+                    String detail = "关注公众号" + officialAccountWithScore.getUserName() + "，领取" + taskPool.getRate().multiply(BigDecimal.valueOf(taskPool.getSingleScore())).doubleValue() + "米币";
+                    memberTaskHistoryService.addMemberTaskToHistory(memberId, 1L, taskPool.getRate().multiply(BigDecimal.valueOf(taskPool.getSingleScore())).doubleValue(), 0, detail, null, officialAccountMsg.getOriginId());
+                    idList.add(officialAccountWithScore.getId());
+                    if (score >= taskPool.getSingleScore()) {
+                        taskPoolMapper.updateTaskPoolWithScore(score.doubleValue(), taskPool.getId());
+                    } else {
+                        taskPool.setTotalScore(0D);
+                        taskPool.setIsPublishNow(0);
+                        taskPoolMapper.updateByPrimaryKeySelective(taskPool);
+                        memberScoreService.addMemberScore(officialAccountWithScore.getMemberId(), 6L, 1, score.doubleValue(), UUIDGenerator.generate());
+                    }
+                }
             }
         }
-        Long time =DateUtils.getUnixTimestamp();
-        int number=officeMemberMapper.batchAddOfficeMember(officeMemberList,time);
-        if (number>0) {
+        Long time = DateUtils.getUnixTimestamp();
+        int number = officeMemberMapper.batchAddOfficeMember(officeMemberList, time);
+        if (number > 0) {
             String url = PropertiesUtil.getValue("server.officialAccount.receiveAddRequest.url");
-            Map<String,Object>  map=new HashMap<>();
-            map.put("unionId",unionId);
-            map.put("officialAccountIdList",idList);
-            map.put("flag","1");
-            Integer accountAdsId=accountAdsMapper.getLatestAccountAdsId();
-            if (accountAdsId!=null){
-                map.put("accountAdsId",accountAdsId);
+            Map<String, Object> map = new HashMap<>();
+            map.put("unionId", unionId);
+            map.put("officialAccountIdList", idList);
+            map.put("flag", "1");
+            Integer accountAdsId = accountAdsMapper.getLatestAccountAdsId();
+            if (accountAdsId != null) {
+                map.put("accountAdsId", accountAdsId);
             }
             try {
                 String result = HttpRequestUtils.postStringEntity(url, JSON.toJSONString(map));
                 if (!StringUtil.isEmpty(result)) {
-                    Map<String,String> params= (Map<String, String>) JSONObject.parse(result);
+                    Map<String, String> params = (Map<String, String>) JSONObject.parse(result);
                     boolean flag = Boolean.valueOf(params.get("temp"));
-                    if (!flag){
-                        TaskFailPushToWechat taskFailPushToWechat=new TaskFailPushToWechat();
+                    if (!flag) {
+                        TaskFailPushToWechat taskFailPushToWechat = new TaskFailPushToWechat();
                         taskFailPushToWechat.setParams(JSON.toJSONString(map));
                         taskFailPushToWechat.setPostUrl(url);
                         taskFailPushToWechat.setType(0);
@@ -173,7 +180,7 @@ public class OfficeAccountService implements IOfficeAccountService {
                         taskFailPushToWechatMapper.insertSelective(taskFailPushToWechat);
                     }
                 }
-                logger.info("领取关注任务列表时间："+(System.currentTimeMillis()-timeStart));
+                logger.info("领取关注任务列表时间：" + (System.currentTimeMillis() - timeStart));
                 return true;
             } catch (IOException e) {
                 e.printStackTrace();
@@ -185,26 +192,26 @@ public class OfficeAccountService implements IOfficeAccountService {
     @Override
     @Transactional
     public Boolean pushAddFinished(Map<String, Object> params) {
-        String openid="";
-        if (params.get("openid")!=null) {
+        String openid = "";
+        if (params.get("openid") != null) {
             openid = (String) params.get("openid").toString();
         }
-        String nickname="";
-        if (params.get("nickname")!=null) {
+        String nickname = "";
+        if (params.get("nickname") != null) {
             nickname = params.get("nickname").toString();
         }
         String sexString = "";
-        if (params.get("sex")!=null) {
+        if (params.get("sex") != null) {
             sexString = params.get("sex").toString();
         }
         String originId = "";
-        if (params.get("originId")!=null) {
+        if (params.get("originId") != null) {
             originId = params.get("originId").toString();
         }
         Integer flag = Integer.valueOf(params.get("flag").toString());
-        logger.info("openId:{},nickname:{},sex:{},originId:{},flag:{}", openid, nickname, sexString,originId,flag);
+        logger.info("openId:{},nickname:{},sex:{},originId:{},flag:{}", openid, nickname, sexString, originId, flag);
         if (flag == 0) {
-            OfficialAccountWithScore officialAccountWithScore = officalAccountMapper.getOfficialAccountWithScoreById(originId, 0);
+            OfficialAccountWithScore officialAccountWithScore = officalAccountMapper.getOfficialAccountWithScoreById(originId);
             if (officialAccountWithScore != null) {
                 OfficeMember officeMember = officeMemberMapper.getOfficeMemberByOpenId(openid);
                 if (officeMember == null) {
@@ -214,26 +221,28 @@ public class OfficeAccountService implements IOfficeAccountService {
                 //增加积分以及积分记录
                 Long memberId = officeMember.getMemberId();
                 int num = officeMemberMapper.deleteFollowAccountsMember(officeMember.getId());
-                if (num > 0) {
+                if (num > 0&&officeMember.getIsScoreAccess()!=2) {
                     if (DateUtils.getUnixTimestamp() - officeMember.getCreateTime() < 7 * 24 * 60 * 60) {
-                        TaskPool taskPool = taskPoolMapper.getTaskPoolByOfficialId(officialAccountWithScore.getId(),null);
-                        memberScoreService.addMemberScore(memberId, 7L, 1, -(taskPool.getRate().multiply(BigDecimal.valueOf(officialAccountWithScore.getScore()))).doubleValue(), UUIDGenerator.generate());
-                        memberTaskHistoryService.addMemberTaskToHistory(memberId, 11L, -(taskPool.getRate().multiply(BigDecimal.valueOf(officialAccountWithScore.getScore()))).doubleValue(), 1, "七天之内取消关注公众号" + officialAccountWithScore.getUserName(), null, null);
-                        memberScoreService.addMemberScore(officialAccountWithScore.getMemberId(), 9L, 1, officialAccountWithScore.getScore(), UUIDGenerator.generate());
-                        memberTaskHistoryService.addMemberTaskToHistory(officialAccountWithScore.getMemberId(), 12L, officialAccountWithScore.getScore(), 1, "用户七天之内取消关注公众号" + officialAccountWithScore.getUserName() + ",米币退还给公众号商家", null, null);
-                        logger.info("普通用户ID为{}的用户米币扣除成功，米币数为{}，商户用户ID为{}的用户米币返还成功，米币数为{}", memberId, -(taskPool.getRate().multiply(BigDecimal.valueOf(officialAccountWithScore.getScore()))).doubleValue(), officialAccountWithScore.getMemberId(), officialAccountWithScore.getScore());
-                        Map memberInfoDto = thirdLoginMapper.getNickNameAndSex(memberId);
-                        String key = Base64Utils.encodeToString(memberInfoDto.get("nickname").toString().getBytes())+ ":" +memberInfoDto.get("sex")+ ":" + officialAccountWithScore.getOriginId();
-                        cacheService.delKeyFromRedis(key);
+                        TaskPool taskPool=null;
+                        if (officeMember.getTaskPoolId()!=null) {
+                            taskPool = taskPoolMapper.selectByPrimaryKey(officeMember.getTaskPoolId());
+                        }else {
+                            taskPool = taskPoolMapper.getTaskPoolByOfficialId(officialAccountWithScore.getId(), null);
+                        }
+                        memberScoreService.addMemberScore(memberId, 7L, 1, -(taskPool.getRate().multiply(BigDecimal.valueOf(taskPool.getSingleScore()))).doubleValue(), UUIDGenerator.generate());
+                        memberTaskHistoryService.addMemberTaskToHistory(memberId, 11L, -(taskPool.getRate().multiply(BigDecimal.valueOf(taskPool.getSingleScore()))).doubleValue(), 1, "七天之内取消关注公众号" + officialAccountWithScore.getUserName(), null, null);
+                        memberScoreService.addMemberScore(officialAccountWithScore.getMemberId(), 9L, 1, taskPool.getSingleScore(), UUIDGenerator.generate());
+                        memberTaskHistoryService.addMemberTaskToHistory(officialAccountWithScore.getMemberId(), 12L, taskPool.getSingleScore(), 1, "用户七天之内取消关注公众号" + officialAccountWithScore.getUserName() + ",米币退还给公众号商家", null, null);
+                        logger.info("普通用户ID为{}的用户米币扣除成功，米币数为{}，商户用户ID为{}的用户米币返还成功，米币数为{}", memberId, -(taskPool.getRate().multiply(BigDecimal.valueOf(taskPool.getSingleScore()))).doubleValue(), officialAccountWithScore.getMemberId(), taskPool.getSingleScore());
                         return true;
                     }
                 }
-            }else {
+            } else {
                 return true;
             }
         }
         if (flag == 1) {
-            OfficialAccountWithScore officialAccountWithScore = officalAccountMapper.getOfficialAccountWithScoreById(originId, 1);
+            OfficialAccountWithScore officialAccountWithScore = officalAccountMapper.getOfficialAccountWithScoreById(originId);
             if (officialAccountWithScore != null) {
                 String key = nickname + ":" + sexString + ":" + originId;
                 logger.info("key is {}", key);
@@ -241,123 +250,121 @@ public class OfficeAccountService implements IOfficeAccountService {
                 logger.info("获取到的关注数据为:{}", JSON.toJSONString(memberCheck));
                 if (memberCheck != null) {
                     Long officeAccountId = Long.valueOf(memberCheck.getOfficialAccountsId());
-                    TaskPool taskPool = taskPoolMapper.getTaskPoolByOfficialId(officeAccountId, 1);
+                    Long taskPoolId = Long.valueOf(memberCheck.getTaskPoolId());
+                    TaskPool taskPool = taskPoolMapper.selectByPrimaryKey(taskPoolId);
+                    Double score = taskPool.getSingleScore();
                     Long memberId = memberCheck.getMemberId();
                     if (taskPool == null) {
-                        JpushUtils.buildRequest("您关注的公众号任务：" + officialAccountWithScore.getUserName() + "已经结束", memberId);
-                        return false;
+                        JpushUtils.buildRequest("您关注的公众号任务：" + officialAccountWithScore.getUserName() + "不存在", memberId);
+                        return true;
                     }
-                    Double score = taskPool.getTotalScore() - taskPool.getSingleScore();
-                    if (taskPool != null && officialAccountWithScore != null && score >= 0) {
-                        //添加到公众号关注表中
-                        OfficeMember officeMember = officeMemberMapper.getOfficeMember(memberId, officeAccountId);
-                        logger.info("关注记录表:{}", JSON.toJSONString(officeMember));
-                        if (officeMember == null) {
-                            JpushUtils.buildRequest("您关注的公众号任务：" + officialAccountWithScore.getUserName() + "，不存在或者已经结束", memberId);
-                            return false;
-                        }
-                        if (officeMember.getIsAccessNow() == 1) {
-                            JpushUtils.buildRequest("您已关注过公众号：" + officialAccountWithScore.getUserName() + "，该任务失效", memberId);
-                            return false;
-                        }
-                        officeMember.setIsAccessNow(1);
-                        officeMember.setOpenId(openid);
-                        officeMember.setAddRewarScore((taskPool.getRate().multiply(BigDecimal.valueOf(officialAccountWithScore.getScore()))));
-                        officeMember.setFinishedTime(DateUtils.getUnixTimestamp());
-                        int num = officeMemberMapper.updateByPrimaryKeySelective(officeMember);
-                        if (num > 0) {
-                            //任务池中的任务剩余积分更改
-                            if (score >= taskPool.getSingleScore()) {
-                                taskPoolMapper.updateTaskPoolWithScore(score.doubleValue(), taskPool.getId());
-                            } else {
-                                taskPool.setTotalScore(0D);
-                                taskPool.setLimitDay(0L);
-                                taskPool.setIsPublishNow(0);
-                                taskPoolMapper.updateByPrimaryKeySelective(taskPool);
-                                memberScoreService.addMemberScore(officialAccountWithScore.getMemberId(), 6L, 1, score.doubleValue(), UUIDGenerator.generate());
-                            }
-                            //增加任务记录
-                            logger.info("增加任务记录");
-                            int number = memberTaskHistoryMapper.updateMemberTaskUnfinished(memberId, 0, officialAccountWithScore.getOriginId());
-                            //增加积分以及积分记录
-                            logger.info("ID为：{}用户,增加积分以及积分记录：{}", memberId, (taskPool.getRate().multiply(BigDecimal.valueOf(officialAccountWithScore.getScore()))).doubleValue());
-                            memberScoreService.addMemberScore(memberId, 11L, 1, (taskPool.getRate().multiply(BigDecimal.valueOf(officialAccountWithScore.getScore()))).doubleValue(), UUIDGenerator.generate());
-                            cacheService.delKeyFromRedis(key);
-                            return true;
-                        }
+                    //添加到公众号关注表中
+                    OfficeMember officeMember = officeMemberMapper.getOfficeMember(memberId, officeAccountId);
+                    logger.info("关注记录表:{}", JSON.toJSONString(officeMember));
+                    if (officeMember == null) {
+                        JpushUtils.buildRequest("您关注的公众号任务：" + officialAccountWithScore.getUserName() + "，不存在或者已经结束", memberId);
+                        return true;
+                    }
+                    if (officeMember.getIsAccessNow() == 1) {
+                        JpushUtils.buildRequest("您已关注过公众号：" + officialAccountWithScore.getUserName() + "，该任务失效", memberId);
+                        return true;
+                    }
+                    officeMember.setIsAccessNow(1);
+                    officeMember.setOpenId(openid);
+                    officeMember.setAddRewarScore((taskPool.getRate().multiply(BigDecimal.valueOf(score))));
+                    officeMember.setFinishedTime(DateUtils.getUnixTimestamp());
+                    if (taskPool.getRealityNumber() < taskPool.getNeedNumber()) {
+                        //增加任务记录
+                        logger.info("增加任务记录");
+                        int number = memberTaskHistoryMapper.updateMemberTaskUnfinished(memberId, 0, originId);
+                        //增加积分以及积分记录
+                        logger.info("ID为：{}用户,增加积分以及积分记录：{}", memberId, (taskPool.getRate().multiply(BigDecimal.valueOf(score))).doubleValue());
+                        memberScoreService.addMemberScore(memberId, 11L, 1, (taskPool.getRate().multiply(BigDecimal.valueOf(score))).doubleValue(), UUIDGenerator.generate());
+                        cacheService.delKeyFromRedis(key);
+                        officeMemberMapper.updateByPrimaryKeySelective(officeMember);
+                        taskPool.setRealityNumber(taskPool.getRealityNumber()-1);
+                        taskPoolMapper.updateByPrimaryKeySelective(taskPool);
+                        return true;
                     } else {
-                        JpushUtils.buildRequest(JpushUtils.getJpushMessage(memberId, "任务不存在，或者任务已结束"));
-                        throw new InfoException("任务不存在，或者任务已结束");
+                        JpushUtils.buildRequest("公众号" + officialAccountWithScore.getUserName() + "的关注任务已经完成啦~去完成其他任务吧", memberId);
+                        logger.info("公众号：{}的关注任务已经完成，memberID：{}", officialAccountWithScore.getUserName(), memberId);
+                        cacheService.delKeyFromRedis(key);
+                        officeMember.setIsScoreAccess(2);
+                        officeMemberMapper.updateByPrimaryKeySelective(officeMember);
+                        return true;
                     }
-                }else {
+                } else {
+                    logger.info("获取待关注缓存信息失败，redis key is {}", key);
                     return true;
                 }
             } else {
-                logger.info("任务不存在，或者任务已结束");
+                logger.info("获取要关注的公众号失败");
                 String key = nickname + ":" + sexString + ":" + originId;
                 cacheService.delKeyFromRedis(key);
                 return true;
             }
         }
-        return false;
+        return true;
     }
 
 
     @Override
     @Transactional
     public boolean markAddRecord(Long memberId, OfficialAccountMsg officialAccountMsg) {
-        logger.info("wap用户ID：{}开始拉取公众号列表，参数为：{}",memberId,JSON.toJSONString(officialAccountMsg));
-        List<OfficeMember> officeMembers=officeMemberMapper.getOfficeMemberList(memberId);
-        if (!officeMembers.isEmpty()){
-            String info="您还有未关注公众号，请到公众号内完成\n未完成任务将会在1小时后删除\n若领任务之前已关注，请标注这些公众号";
-            throw new InfoException(info);
-        }
-        ThirdLogin thirdLogin=thirdLoginMapper.getUnionIdByMemberId(memberId,1);
-        if (thirdLogin==null||StringUtil.isEmpty(thirdLogin.getUnionId())){
-            throw new InfoException("用户唯一识别码为空");
-        }
-        if (officialAccountMsg==null){
-            throw new InfoException("要关注的公号列表为空");
-        }
-        List<OfficeMember> officeMemberList=new ArrayList<>();
-        List<Long> idList=new ArrayList<>();
-        ThirdLoginDto thirdLoginDto=thirdLoginMapper.getThirdlogInDtoMemberId(memberId,1);
-        String key= null;
-        try {
-            key = Base64Utils.encodeToString(thirdLoginDto.getNickname().getBytes("UTF-8"))+":"+thirdLoginDto.getSex()+":"+officialAccountMsg.getOriginId();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        logger.info("key is {}",key);
-        OfficialAccountWithScore officialAccountWithScore=officalAccountMapper.getOfficialAccountWithScoreById(officialAccountMsg.getOriginId(),1);
-        MemberCheck memberCheck=new MemberCheck(memberId,officialAccountWithScore.getId());
-        MemberCheck valueTemp = cacheService.getCacheByKey(key,MemberCheck.class);
-        if (valueTemp!=null){
-            throw new InfoException("公众号"+officialAccountWithScore.getUserName()+"的关注未完成，请先完成");
-        }
-        cacheService.setCacheByKey(key,memberCheck, SystemConfig.TASK_CACHE_TIME);
-        OfficeMember officeMember=new OfficeMember();
-        officeMember.setMemberId(memberId);
-        officeMember.setOfficeAccountId(officialAccountWithScore.getId());
-        officeMember.setIsAccessNow(0);
-        officeMemberList.add(officeMember);
-        TaskPool taskPool = taskPoolMapper.getTaskPoolByOfficialId(officialAccountWithScore.getId(), 1);
-        //添加到待完成任务记录中
-        String detail ="关注公众号"+officialAccountWithScore.getUserName()+"，领取"+taskPool.getRate().multiply(BigDecimal.valueOf(officialAccountWithScore.getScore())).doubleValue()+"米币";
-        memberTaskHistoryService.addMemberTaskToHistory(memberId,1L,taskPool.getRate().multiply(BigDecimal.valueOf(officialAccountWithScore.getScore())).doubleValue(),0,detail,null,officialAccountMsg.getOriginId());
-        idList.add(officialAccountWithScore.getId());
-        Long time =DateUtils.getUnixTimestamp();
-        int number=officeMemberMapper.batchAddOfficeMember(officeMemberList,time);
-        return number>0?true:false;
+//        logger.info("wap用户ID：{}开始拉取公众号列表，参数为：{}", memberId, JSON.toJSONString(officialAccountMsg));
+//        List<OfficeMember> officeMembers = officeMemberMapper.getOfficeMemberList(memberId);
+//        if (!officeMembers.isEmpty()) {
+//            String info = "您还有未关注公众号，请到公众号内完成\n未完成任务将会在1小时后删除\n若领任务之前已关注，请标注这些公众号";
+//            throw new InfoException(info);
+//        }
+//        ThirdLogin thirdLogin = thirdLoginMapper.getUnionIdByMemberId(memberId, 1);
+//        if (thirdLogin == null || StringUtil.isEmpty(thirdLogin.getUnionId())) {
+//            throw new InfoException("用户唯一识别码为空");
+//        }
+//        if (officialAccountMsg == null) {
+//            throw new InfoException("要关注的公号列表为空");
+//        }
+//        List<OfficeMember> officeMemberList = new ArrayList<>();
+//        List<Long> idList = new ArrayList<>();
+//        ThirdLoginDto thirdLoginDto = thirdLoginMapper.getThirdlogInDtoMemberId(memberId, 1);
+//        String key = null;
+//        try {
+//            key = Base64Utils.encodeToString(thirdLoginDto.getNickname().getBytes("UTF-8")) + ":" + thirdLoginDto.getSex() + ":" + officialAccountMsg.getOriginId();
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
+//        logger.info("key is {}", key);
+//        OfficialAccountWithScore officialAccountWithScore = officalAccountMapper.getOfficialAccountWithScoreById(officialAccountMsg.getOriginId(), 1);
+//        MemberCheck memberCheck = new MemberCheck(memberId, officialAccountWithScore.getId());
+//        MemberCheck valueTemp = cacheService.getCacheByKey(key, MemberCheck.class);
+//        if (valueTemp != null) {
+//            throw new InfoException("公众号" + officialAccountWithScore.getUserName() + "的关注未完成，请先完成");
+//        }
+//        cacheService.setCacheByKey(key, memberCheck, SystemConfig.TASK_CACHE_TIME);
+//        OfficeMember officeMember = new OfficeMember();
+//        officeMember.setMemberId(memberId);
+//        officeMember.setOfficeAccountId(officialAccountWithScore.getId());
+//        officeMember.setIsAccessNow(0);
+//        officeMemberList.add(officeMember);
+//        TaskPool taskPool = taskPoolMapper.getTaskPoolByOfficialId(officialAccountWithScore.getId(), 1);
+//        //添加到待完成任务记录中
+//        String detail = "关注公众号" + officialAccountWithScore.getUserName() + "，领取" + taskPool.getRate().multiply(BigDecimal.valueOf(officialAccountWithScore.getScore())).doubleValue() + "米币";
+//        memberTaskHistoryService.addMemberTaskToHistory(memberId, 1L, taskPool.getRate().multiply(BigDecimal.valueOf(officialAccountWithScore.getScore())).doubleValue(), 0, detail, null, officialAccountMsg.getOriginId());
+//        idList.add(officialAccountWithScore.getId());
+//        Long time = DateUtils.getUnixTimestamp();
+//        int number = officeMemberMapper.batchAddOfficeMember(officeMemberList, time);
+//        return number > 0 ? true : false;
+        return false;
     }
+
     @Override
-    public List<OfficialAccountMsg> getOfficialAccountMsg(Long memberId,String unionId,Integer sourceType) {
-        Member member=memberMapper.selectByPrimaryKey(memberId);
-        if (member==null){
+    public List<OfficialAccountMsg> getOfficialAccountMsg(Long memberId, String unionId, Integer sourceType) {
+        Member member = memberMapper.selectByPrimaryKey(memberId);
+        if (member == null) {
             throw new InfoException("用户信息为空");
         }
-        List<OfficialAccountMsg> officialAccountMsgs=officalAccountMapper.getOfficialAccountMsg(memberId,unionId,member.getSex(),member.getProvince(),member.getCity());
-        if (officialAccountMsgs.isEmpty()){
+        List<OfficialAccountMsg> officialAccountMsgs = officalAccountMapper.getOfficialAccountMsg(memberId, unionId, member.getSex(), member.getProvince(), member.getCity());
+        if (officialAccountMsgs.isEmpty()) {
             return null;
         }
         return officialAccountMsgs;
@@ -367,25 +374,27 @@ public class OfficeAccountService implements IOfficeAccountService {
     public List<OfficialAccount> getOfficialAccountList(Long memberId) {
         return officalAccountMapper.getOfficialAccountList(memberId);
     }
+
     @Override
     public boolean updateOfficialAccountList(Long accountId, Integer isOpen) {
-        OfficialAccount officialAccount=officalAccountMapper.selectByPrimaryKey(accountId);
+        OfficialAccount officialAccount = officalAccountMapper.selectByPrimaryKey(accountId);
         officialAccount.setIsOpen(isOpen);
-        return officalAccountMapper.updateByPrimaryKeySelective(officialAccount)==1?true:false;
+        return officalAccountMapper.updateByPrimaryKeySelective(officialAccount) == 1 ? true : false;
     }
 
     @Override
     public String addOfficialAccount(Long memberId, String addUrl, String remark) {
-        Map<String,String> map=new HashMap<>();
-        map.put("addUrl",addUrl);
-        map.put("memberId",memberId.toString());
-        map.put("remark",remark);
+        Map<String, String> map = new HashMap<>();
+        map.put("addUrl", addUrl);
+        map.put("memberId", memberId.toString());
+        map.put("remark", remark);
         try {
-            String url= HttpRequestUtils.postString("http://www.weitaomi.com.cn/index.php/kfz/login/index",JSON.toJSONString(map));
+            String url = HttpRequestUtils.postString("http://www.weitaomi.com.cn/index.php/kfz/login/index", JSON.toJSONString(map));
             return url;
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
     }
+
 }

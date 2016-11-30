@@ -14,6 +14,11 @@ public class OfficeMember extends BaseModel implements Serializable{
      */
     @Column(name = "officeAccountId")
     private Long officeAccountId;
+    /**
+     * 任务池ID
+     */
+    @Column(name = "taskPoolId")
+    private Long taskPoolId;
 
     /**
      * 会员ID
@@ -204,5 +209,21 @@ public class OfficeMember extends BaseModel implements Serializable{
      */
     public void setAddRewarScore(BigDecimal addRewarScore) {
         this.addRewarScore = addRewarScore;
+    }
+
+    /**
+     * 获取任务池ID
+     * @return taskPoolId 任务池ID
+     */
+    public Long getTaskPoolId() {
+        return this.taskPoolId;
+    }
+
+    /**
+     * 设置任务池ID
+     * @param taskPoolId 任务池ID
+     */
+    public void setTaskPoolId(Long taskPoolId) {
+        this.taskPoolId = taskPoolId;
     }
 }

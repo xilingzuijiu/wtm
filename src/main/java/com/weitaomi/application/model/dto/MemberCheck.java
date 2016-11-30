@@ -6,13 +6,14 @@ package com.weitaomi.application.model.dto;
 public class MemberCheck {
     private Long memberId;
     private Long officialAccountsId;
-
+    private Long taskPoolId;
     public MemberCheck() {
     }
 
-    public MemberCheck(Long memberId, Long officialAccountsId) {
+    public MemberCheck(Long memberId, Long officialAccountsId, Long taskPoolId) {
         this.memberId = memberId;
         this.officialAccountsId = officialAccountsId;
+        this.taskPoolId = taskPoolId;
     }
 
     public Long getOfficialAccountsId() {
@@ -29,5 +30,13 @@ public class MemberCheck {
 
     public void setMemberId(Long memberId) {
         this.memberId = memberId;
+    }
+
+    public Long getTaskPoolId() {
+        return this.taskPoolId;
+    }
+
+    public void setTaskPoolId(Long taskPoolId) {
+        this.taskPoolId = taskPoolId;
     }
 }

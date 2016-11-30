@@ -2,12 +2,10 @@ package com.weitaomi.application.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.weitaomi.application.controller.baseController.BaseController;
-import com.weitaomi.application.model.bean.Article;
 import com.weitaomi.application.model.bean.Member;
 import com.weitaomi.application.model.dto.ArticleReadRecordDto;
 import com.weitaomi.application.model.dto.ArticleSearch;
 import com.weitaomi.application.model.dto.RequestFrom;
-import com.weitaomi.application.model.mapper.ArticleMapper;
 import com.weitaomi.application.service.interf.IArticleService;
 import com.weitaomi.application.service.interf.ICacheService;
 import com.weitaomi.systemconfig.dataFormat.AjaxResult;
@@ -18,10 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
@@ -36,8 +31,6 @@ public class ArticlePcController extends BaseController {
     private IArticleService articleService;
     @Autowired
     private ICacheService cacheService;
-    @Autowired
-    private ArticleMapper articleMapper;
     /**
      * 根据条件获取文章列表
      * @param articleSearch
@@ -78,9 +71,8 @@ public class ArticlePcController extends BaseController {
      * @see
      */
     @ResponseBody
-    @RequestMapping(value = "/readArticleRequest", method = RequestMethod.GET)
-    public ModelAndView getArticleList(String uuid, Long articleId, HttpServletRequest request, HttpServletResponse response){
-        Long time1=System.currentTimeMillis();
+    @RequestMapping(value = "/readArticleRequest", method = RequestMethod.POST)
+    public AjaxResult getArticleList(String uuid,Long articleId){
         Map<String,Object> params=cacheService.getCacheByKey("member:obtain:artile:readList:"+uuid,Map.class);
         if (params!=null){
             Long memberId=Long.parseLong(params.get("memberId").toString());
@@ -90,17 +82,8 @@ public class ArticlePcController extends BaseController {
                 Member member=memberMapper.selectByPrimaryKey(memberId);
                 if (member!=null){
                     String onlyIdTemp=new Sha256Hash(uuid, member.getSalt()).toString();
-                    if (onlyIdTemp.equals(onlyId)) {
-                        System.out.println(System.currentTimeMillis() - time1);
-                        if (articleService.readArticleRequest(memberId, requestTime, articleId)) {
-                            Article article = articleMapper.selectByPrimaryKey(articleId);
-                            try {
-                                response.setHeader("Access-Control-Allow-Origin", "*");
-                                response.sendRedirect(article.getUrl());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
+                    if (onlyIdTemp.equals(onlyId)){
+                        return AjaxResult.getOK(articleService.readArticleRequest(memberId, requestTime,articleId));
                     }
                 }
             }else {

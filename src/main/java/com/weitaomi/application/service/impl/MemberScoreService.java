@@ -138,7 +138,9 @@ public class MemberScoreService implements IMemberScoreService {
                     if (typeId!=17&&typeId!=16) {
                         memberScore.setMemberScore(afterScore);
                     }
-                    memberScore.setAvaliableScore(avaliableScore);
+                    if (typeId!=8) {
+                        memberScore.setAvaliableScore(avaliableScore);
+                    }
                     memberScore.setRechargeCurrentScore(rechargeCurrentScore);
                     memberScore.setRechargeTotalScore(rechargeTotalScore);
                     memberScore.setRate(BigDecimal.ONE);

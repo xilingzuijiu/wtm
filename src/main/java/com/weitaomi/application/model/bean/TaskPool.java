@@ -83,6 +83,11 @@ public class TaskPool extends BaseModel {
      */
     @Column(name = "needNumber")
     private Integer needNumber;
+    /**
+     * 实际增长数
+     */
+    @Column(name = "realityNumber")
+    private Integer realityNumber;
 
     /**
      * 创建日期
@@ -345,5 +350,21 @@ public class TaskPool extends BaseModel {
 
     public void setRandomKey(String randomKey) {
         this.randomKey = randomKey;
+    }
+
+    /**
+     * 获取实际增长数
+     * @return realityNumber 实际增长数
+     */
+    public Integer getRealityNumber() {
+        return this.realityNumber;
+    }
+
+    /**
+     * 设置实际增长数
+     * @param realityNumber 实际增长数
+     */
+    public void setRealityNumber(Integer realityNumber) {
+        this.realityNumber = realityNumber;
     }
 }

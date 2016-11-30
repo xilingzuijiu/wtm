@@ -13,7 +13,7 @@ public interface OfficalAccountMapper extends IBaseMapper<OfficialAccount> {
     OfficialAccount getOfficalAccountByoriginId(@Param("originId") String originId);
     OfficialAccount getOfficalAccountByAppId(@Param("appid") String appid);
     List<OfficialAccountMsg> getOfficialAccountMsg(@Param("memberId") Long memberId, @Param("unionId") String unionId, @Param("sex") Integer sex, @Param("provinceCode") String provinceCode, @Param("cityCode") String cityCode);
-    OfficialAccountWithScore getOfficialAccountWithScoreById(@Param("originId") String originId, @Param("flag") Integer flag);
+    OfficialAccountWithScore getOfficialAccountWithScoreById(@Param("originId") String originId);
     List<OfficialAccount> getOfficialAccountList(@Param("memberId") Long memberId);
     String getOriginIdByAppId(@Param("appId") String appId);
     int deleteUnAuthAccount(@Param("officialAccountId") Long officialAccountId);

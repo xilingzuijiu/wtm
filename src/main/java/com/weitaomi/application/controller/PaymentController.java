@@ -71,6 +71,12 @@ public class PaymentController extends BaseController{
         return AjaxResult.getOK();
     }
     @ResponseBody
+    @RequestMapping(value = "/isChargeForDesposit", method = RequestMethod.POST)
+    public AjaxResult isFreeForDesposit(HttpServletRequest request){
+        Long memberId=this.getUserId(request);
+        return AjaxResult.getOK(paymentService.isFreeForDesposit(memberId));
+    }
+    @ResponseBody
     @RequestMapping(value = "/generatorPayParams", method = RequestMethod.POST)
     public AjaxResult generatorPayParams(HttpServletRequest request,@RequestBody PaymentApprove approve){
         Long memberId=this.getUserId(request);

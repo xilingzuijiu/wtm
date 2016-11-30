@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 public class MessagePushTest {
     @Test
     public void testPushMessage(){
-            JpushUtils.buildRequest("各位微淘米小主们，11点15分系统升级开始了，请收好爪机，明日再来~~",0L);
+            JpushUtils.buildRequest("各位微淘米小主们，11点15分系统升级开始了，请收好爪机，明日再来~~",215L);
     }
 
     @Test

@@ -1,7 +1,11 @@
 package com.weitaomi.application.service.impl;
 
+import com.weitaomi.application.service.interf.IBaseService;
+import com.weitaomi.application.service.interf.ICacheService;
+import com.weitaomi.application.service.interf.IKeyValueService;
 import com.weitaomi.systemconfig.exception.InfoException;
 import com.weitaomi.systemconfig.fileManage.UpYun;
+import org.springframework.beans.factory.annotation.Autowired;
 import sun.misc.BASE64Decoder;
 
 import java.io.IOException;
@@ -10,7 +14,11 @@ import java.io.UnsupportedEncodingException;
 /**
  * Created by Administrator on 2016/8/16.
  */
-public class BaseService {
+public class BaseService implements IBaseService{
+    @Autowired
+    protected ICacheService cacheService;
+    @Autowired
+    protected IKeyValueService keyValueService;
     public boolean uploadImage(String imageUrl,String imageFiles){
         BASE64Decoder base64Decoder=new BASE64Decoder();
         UpYun upYun=new UpYun("weitaomi","weitaomi","Weitaomi@Woyun");

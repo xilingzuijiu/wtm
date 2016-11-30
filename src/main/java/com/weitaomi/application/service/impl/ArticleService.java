@@ -34,7 +34,7 @@ import java.util.Map;
  * Created by supumall on 2016/7/7.
  */
 @Service
-public class ArticleService implements IArticleService {
+public class ArticleService extends BaseService implements IArticleService {
     private Logger logger= LoggerFactory.getLogger(ArticleService.class);
     @Autowired
     private ArticleMapper articleMapper;
@@ -44,8 +44,6 @@ public class ArticleService implements IArticleService {
     private IMemberScoreService memberScoreService;
     @Autowired
     private IMemberTaskHistoryService memberTaskHistoryService;
-    @Autowired
-    private ICacheService cacheService;
     @Autowired
     private TaskPoolMapper taskPoolMapper;
     @Autowired
@@ -135,11 +133,16 @@ public class ArticleService implements IArticleService {
     @Transactional
     public Boolean readArticle(Long memberId,String unionId,List<Long> articleId) {
         String tableName="app:artile:read:limit:"+memberId.toString();
-        Integer flagTemp = cacheService.getCacheByKey(tableName,Integer.class);
-        if (flagTemp!=null&&flagTemp>0){
-            throw new InfoException("抱歉哦~亲~,有关规定一段时间内阅读文章太多属于‘频繁操作’，为了您更好的阅读，请每小时领取一次阅读任务~");
-        } else {
-            cacheService.setCacheByKey(tableName,1,62*60);
+        Integer numberLimit = 20;
+        Integer timeLimitSeconds=60*60;
+        if (cacheService.getCacheByKey("read:article:limit:time",Integer.class)!=null){
+            timeLimitSeconds=cacheService.getCacheByKey("read:article:limit:time",Integer.class);
+        }
+        if (cacheService.getCacheByKey("read:article:limit:number",Integer.class)!=null){
+            numberLimit=cacheService.getCacheByKey("read:article:limit:number",Integer.class);
+        }
+        if (!keyValueService.keyIsAvaliableByCondition(tableName,numberLimit.longValue(),numberLimit.longValue()+5,timeLimitSeconds,Integer.valueOf(articleId.size()).longValue(),1,true)){
+            throw new InfoException("抱歉哦~亲~,有关规定一段时间内阅读文章太多属于‘频繁操作’，为了您更好的阅读，请稍后领取阅读任务或者减少领取的阅读列表数量~");
         }
         long ts=System.currentTimeMillis();
         if(memberId==null){
@@ -338,50 +341,34 @@ public class ArticleService implements IArticleService {
     }
 
     private void isArticleAccessToRead(Long memberId){
-        Long flagTemp = cacheService.getCacheByKey("wap:artile:read:limit:"+memberId,Long.class);
+        String tableName="wap:artile:read:limit:"+memberId;
         Integer number = 20;
         Integer timeLimitSeconds=60*60;
         if (cacheService.getCacheByKey("read:article:limit:time",Integer.class)!=null){
             timeLimitSeconds=cacheService.getCacheByKey("read:article:limit:time",Integer.class);
-        }else {
-            cacheService.setCacheByKey("read:article:limit:time",timeLimitSeconds,null);
         }
         if (cacheService.getCacheByKey("read:article:limit:number",Integer.class)!=null){
             number=cacheService.getCacheByKey("read:article:limit:number",Integer.class);
         }
-        if (flagTemp!=null) {
-            if (flagTemp.intValue()==number){
-                cacheService.delKeyFromRedis("wap:artile:read:limit:"+memberId);
-                cacheService.setCacheByKey("wap:artile:read:limit:"+memberId,DateUtils.getUnixTimestamp(),timeLimitSeconds);
-            } else if (flagTemp > number) {
-                Long timeLimit=flagTemp+timeLimitSeconds-DateUtils.getUnixTimestamp();
-                Long seconds=timeLimit%60;
-                Double minutes = Math.floor(timeLimit/60);
-                throw new InfoException("抱歉哦~亲~，有关规定一段时间内阅读文章太多属于‘频繁操作’，为了您更好的阅读，请"+minutes.intValue()+"分钟"+seconds+"秒后再来完成阅读任务~");
-            } else if (flagTemp > 0) {
-                cacheService.increCacheBykey("wap:artile:read:limit:" + memberId, 1L);
-            }
-        }else {
-            cacheService.setCacheByKey("wap:artile:read:limit:"+memberId,1,timeLimitSeconds);
+        if (!keyValueService.keyIsAvaliableByCondition(tableName,number.longValue(),number.longValue()+5,timeLimitSeconds,1L,1,true)){
+            Long timeLimit=cacheService.getCacheByKey(tableName,Integer.class)+timeLimitSeconds-DateUtils.getUnixTimestamp();
+            Long seconds=timeLimit%60;
+            Double minutes = Math.floor(timeLimit/60);
+            throw new InfoException("抱歉哦~亲~，有关规定一段时间内阅读文章太多属于‘频繁操作’，为了您更好的阅读，请"+minutes.intValue()+"分钟"+seconds+"秒后再来完成阅读任务~");
         }
-        Integer value=cacheService.getCacheByKey(memberId+":readNumberRecordForInvitedReward:"+13,Integer.class);
-        if (value!=null&&value>0){
-            if (value>=25){
-                MemberInvitedRecord memberInvitedRecord=memberInvitedRecordMapper.getMemberInvitedRecordByMemberId(memberId);
-                if (memberInvitedRecord!=null&&memberInvitedRecord.getIsAccessForInvitor()==0){
-                    MemberTask memberTask = memberTaskMapper.selectByPrimaryKey(3L);
-                    memberScoreService.addMemberScore(memberInvitedRecord.getParentId(),16L,1,memberTask.getPointCount().doubleValue(),UUIDGenerator.generate());
-                    memberInvitedRecord.setIsAccessForInvitor(1);
-                    memberInvitedRecordMapper.updateByPrimaryKeySelective(memberInvitedRecord);
-                    cacheService.delKeyFromRedis(memberId+":readNumberRecordForInvitedReward:"+13);
-                }
-            }else {
-                cacheService.increCacheBykey(memberId+":readNumberRecordForInvitedReward:"+13,1L);
-            }
-        }else {
-            MemberInvitedRecord memberInvitedRecord=memberInvitedRecordMapper.getMemberInvitedRecordByMemberId(memberId);
-            if (memberInvitedRecord!=null&&memberInvitedRecord.getIsAccessForInvitor()==0) {
-                cacheService.setCacheByKey(memberId + ":readNumberRecordForInvitedReward:" + 13, 1, null);
+        String invitorRewardCheckKey=memberId+":readNumberRecordForInvitedReward:"+13;
+        boolean flag=false;
+        MemberInvitedRecord memberInvitedRecord=memberInvitedRecordMapper.getMemberInvitedRecordByMemberId(memberId);
+        if (memberInvitedRecord!=null&&memberInvitedRecord.getIsAccessForInvitor()==0) {
+            flag=true;
+        }
+        if (!keyValueService.keyIsAvaliableByCondition(invitorRewardCheckKey,number.longValue()+5, number.longValue()+10,null,1L,1,flag)){
+            if (memberInvitedRecord!=null&&memberInvitedRecord.getIsAccessForInvitor()==0){
+                MemberTask memberTask = memberTaskMapper.selectByPrimaryKey(3L);
+                memberScoreService.addMemberScore(memberInvitedRecord.getParentId(),16L,1,memberTask.getPointCount().doubleValue(),UUIDGenerator.generate());
+                memberInvitedRecord.setIsAccessForInvitor(1);
+                memberInvitedRecordMapper.updateByPrimaryKeySelective(memberInvitedRecord);
+                cacheService.delKeyFromRedis(invitorRewardCheckKey);
             }
         }
     }

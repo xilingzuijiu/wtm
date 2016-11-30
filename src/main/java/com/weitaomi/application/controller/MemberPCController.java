@@ -152,7 +152,7 @@ public class MemberPCController extends BaseController {
             e.printStackTrace();
         }
         String prefix="https://mp.weixin.qq.com/mp/profile_ext?action=home&APPADDURL&scene=110#wechat_redirect";
-        String urlParent=doc.getElementsByTag("script").get(10).toString();
+        String urlParent=doc.toString();
         String urlParams=urlParent.substring(urlParent.indexOf("msg_link")+12,urlParent.indexOf("#rd")).replace("\\x26amp;","@");
         String[] arr=urlParams.split("@");
         String addUrl=prefix.replace("APPADDURL",arr[0].substring(arr[0].indexOf("__biz=")));

@@ -249,30 +249,37 @@ public class PaymentService implements IPaymentService {
         }
         cacheService.setCacheByKey(batch_no, batch_no, 24 * 60 * 60);
     }
-
+    @Override
+    public boolean isFreeForDesposit(Long memberId){
+        Integer num=cacheService.getCacheByKey("member:desposit:number:limit:"+memberId,Integer.class);
+        if (num==null){
+            return false;
+        }
+        return num>=1;
+    }
     @Override
     @Transactional
     public MemberScore generatorPayParams(Long memberId, PaymentApprove approve, Integer sourceType) {
         if (approve != null) {
-            String minutesKey = "deposit:count:minutes:" + memberId;
-            String dayKey = "deposit:count:day:" + memberId;
-            Integer minuteNumber = cacheService.getCacheByKey(minutesKey, Integer.class);
-            if (minuteNumber != null && minuteNumber == 1) {
-                throw new InfoException("提现操作过于频繁，24小时内可提现三次，每次间隔需大于十分钟，请合并金额选择大额提现~");
-            } else {
-                cacheService.setCacheByKey(minutesKey, 1, 10 * 60);
-            }
-            Integer dayNumber = cacheService.getCacheByKey(dayKey, Integer.class);
-            if (dayNumber != null && dayNumber > 0) {
-                if (dayNumber >= 3) {
-                    throw new InfoException("提现操作过于频繁，十分钟内可提现一次，24小时内可提现三次，请合并金额选择大额提现~");
-                } else {
-                    cacheService.increCacheBykey(dayKey, 1L);
-                }
-            } else {
-                Long time=DateUtils.getTodayEndSeconds()-DateUtils.getUnixTimestamp();
-                cacheService.setCacheByKey(dayKey, 1,time.intValue());
-            }
+//            String minutesKey = "deposit:count:minutes:" + memberId;
+//            String dayKey = "deposit:count:day:" + memberId;
+//            Integer minuteNumber = cacheService.getCacheByKey(minutesKey, Integer.class);
+//            if (minuteNumber != null && minuteNumber == 1) {
+//                throw new InfoException("提现操作过于频繁，24小时内可提现三次，每次间隔需大于十分钟，请合并金额选择大额提现~");
+//            } else {
+//                cacheService.setCacheByKey(minutesKey, 1, 10 * 60);
+//            }
+//            Integer dayNumber = cacheService.getCacheByKey(dayKey, Integer.class);
+//            if (dayNumber != null && dayNumber > 0) {
+//                if (dayNumber >= 3) {
+//                    throw new InfoException("提现操作过于频繁，十分钟内可提现一次，24小时内可提现三次，请合并金额选择大额提现~");
+//                } else {
+//                    cacheService.increCacheBykey(dayKey, 1L);
+//                }
+//            } else {
+//                Long time=DateUtils.getTodayEndSeconds()-DateUtils.getUnixTimestamp();
+//                cacheService.setCacheByKey(dayKey, 1,time.intValue());
+//            }
             MemberScore memberScore = memberScoreMapper.getMemberScoreByMemberId(memberId);
             if (memberScore == null) {
                 throw new InfoException("没有可用提现金额");
@@ -290,6 +297,25 @@ public class PaymentService implements IPaymentService {
                 approve.setAccountNumber(thirdLogin.getOpenId());
                 approve.setAccountName(thirdLogin.getNickname());
             }
+            Integer num=cacheService.getCacheByKey("member:desposit:number:limit:"+memberId,Integer.class);
+            if (num!=null&&num>=1){
+                BigDecimal amount=approve.getAmount();
+                BigDecimal extraAmount=BigDecimal.ONE;
+                if (amount.doubleValue()<1){
+                    throw new InfoException("提现金额过小");
+                } else if (amount.doubleValue()>=1&&amount.doubleValue()<=200){
+                       approve.setExtraAmount(extraAmount);
+                       approve.setAmount(amount.subtract(extraAmount));
+                   } else if (amount.doubleValue()>200&&amount.doubleValue()<5000){
+                    extraAmount=approve.getAmount().multiply(BigDecimal.valueOf(0.005D)).setScale(2,BigDecimal.ROUND_HALF_UP);
+                    approve.setExtraAmount(extraAmount);
+                    approve.setAmount(amount.subtract(extraAmount));
+                }
+            }else {
+                approve.setExtraAmount(BigDecimal.ZERO);
+                Long time=DateUtils.getTodayEndSeconds()-DateUtils.getUnixTimestamp();
+                cacheService.setCacheByKey("member:desposit:number:limit:"+memberId,1,time.intValue());
+            }
             approve.setMemberId(memberId);
             approve.setCreateTime(DateUtils.getUnixTimestamp());
             int number = approveMapper.insertSelective(approve);
@@ -297,7 +323,7 @@ public class PaymentService implements IPaymentService {
             if (flag) {
                 memberScore.setInValidScore(approve.getAmount().multiply(BigDecimal.valueOf(100)).add(memberScore.getInValidScore()));
                 memberScoreMapper.updateByPrimaryKeySelective(memberScore);
-                return memberScoreService.addMemberScore(memberId, 2L, 0, -approve.getAmount().multiply(BigDecimal.valueOf(100)).doubleValue(), UUIDGenerator.generate());
+                return memberScoreService.addMemberScore(memberId, 2L, 0, -approve.getAmount().add(approve.getExtraAmount()).multiply(BigDecimal.valueOf(100)).doubleValue(), UUIDGenerator.generate());
             }
         }
         return null;

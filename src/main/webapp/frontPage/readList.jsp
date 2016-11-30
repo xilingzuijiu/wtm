@@ -41,102 +41,57 @@
             }
         }
         $(function () {
-            if (is_weixin()) {
+            if(is_weixin()){
                 uuid = GetQueryString('uuid');
                 var u = navigator.userAgent;
                 var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;//android终端
                 var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);// ios终端
-                if (isiOS || isAndroid) {
-                    var inviteheight = $(window).height();
-                    var eventheight = $(".readUppop").height();
-                    $(".readUppop").css("margin-top", inviteheight / 2 - eventheight / 2);
-                    var isAccessToRead = $.cookie("isAccessToRead:" + uuid)
-                    if (isAccessToRead == null || isAccessToRead == undefined) {
-                        $(".readUppop").css("display", "block");
-                        $("#readsend").click(function () {
-                            var imgcode = $("#imgcode").val().trim();
-                            if (imgcode == null) {
-                                alert("图片验证码不能为空")
-                            } else {
-                                $.ajax({
-                                    type: 'get',
-                                    url: '/pc/admin/member/validIdentifyCode',
-                                    data: {imageCode: imgcode},
-                                    success: function (params) {
-                                        var data = eval(params);
-                                        var errorCode = data.errorCode;
-                                        if (data != null && errorCode == 0) {
-                                            if (data) {
-                                                $(".readUppop").css("display", "none");
-                                                $.cookie("isAccessToRead:" + uuid, 1)
-                                                var cookietime = $.cookie(uuid + "flag");
-                                                if (cookietime != null && cookietime != undefined) {
-                                                    $.cookie(uuid + "flag", "", {expires: -1});
-                                                    location.reload()
-                                                } else {
-                                                    loadreadlist()
-                                                }
-                                            }
-                                        } else if (errorCode == 4) {
-                                            alert(data.message);
-                                        }
-                                    }
-                                });
-                            }
-                        })
-                    } else {
-                        var cookietime = $.cookie(uuid + "flag");
-                        if (cookietime != null && cookietime != undefined) {
-                            $.cookie(uuid + "flag", "", {expires: -1});
-                            location.reload()
-                        } else {
-                            loadreadlist()
-                        }
+                if(isiOS||isAndroid){
+                    var cookietime=$.cookie(uuid+"flag");
+                    if (cookietime!=null&&cookietime!=undefined){
+                        $.cookie(uuid+"flag","",{expires:-1})
+                        location.reload()
+                    }else {
+                        loadreadlist()
                     }
-                } else {
+                }else{
                     document.body.innerHTML = "请在手机端打开此页面";
                 }
-            } else {
+            }else {
                 $(".readlist").empty();
-                document.body.innerHTML = "请在微信打开此页面";
+                document.body.innerHTML="请在微信打开此页面";
             }
         });
-        function is_weixin() {
+        function is_weixin(){
             var ua = navigator.userAgent.toLowerCase();
-            if (ua.match(/MicroMessenger/i) == "micromessenger") {
+            if(ua.match(/MicroMessenger/i)=="micromessenger") {
                 return true;
             } else {
                 return false;
             }
         }
-        function loadreadlist() {
+        function loadreadlist(){
             uuid = GetQueryString('uuid');
             console.log(uuid);
-            var cookietime = $.cookie(uuid);
-            if (cookietime == null || cookietime == undefined) {
-                cookietime = 0;
-                var timeEnd = new Date().getTime() - cookietime;
-            } else {
-                var timeEnd = new Date().getTime() - cookietime;
+            var cookietime=$.cookie(uuid);
+            if(cookietime==null||cookietime==undefined){
+                cookietime=0;
             }
-            console.log("timeEnd" + timeEnd);
+            var timeEnd = new Date().getTime() - cookietime;
+            console.log("timeEnd"+timeEnd);
             if (timeEnd < 2000) {
                 alert("手速太快");
-                setTimeout(function () {
-                    $.cookie(uuid, "", {expires: -1})
-                    loadReadlist();
-                }, 5000)
+                var articleUrl=$.cookie(uuid+"articleUrl")
+                $.cookie(uuid,'',{expires:-1})
+                location.href=articleUrl
             } else {
-                var parameters =
-                ${articleReadRecordDtoList}
+                var parameters =${articleReadRecordDtoList}
                 var leng = parameters.length
                 for (var i = 0; i < leng; i++) {
                     var timestamp = parameters[i].createTime;
-
                     function add0(m) {
                         return m < 10 ? '0' + m : m
                     }
-
                     function format(timestamp) {
                         var time = new Date(timestamp * 1000);
                         var y = time.getFullYear();
@@ -171,7 +126,7 @@
                     p3.className = "clickcount";
                     p3.innerHTML = "点击：";
                     var span = document.createElement('span');
-                    span.innerHTML = parameters[i].singleScore + "米";
+                    span.innerHTML =parameters[i].singleScore + "米";
                     div2.appendChild(h3);
                     div1.appendChild(img);
                     div1.appendChild(div2);
@@ -182,57 +137,45 @@
                     div3.appendChild(p3);
                     document.body.appendChild(li);
                     document.getElementsByTagName('ul')[0].appendChild(li);//动态添加文章（li标签）
-
                 }
             }
         }
         var articleSubmit = function (obj) {
             var articleId = obj.getAttribute("id");
-            obj.remove()
-            $.cookie(uuid, new Date().getTime(), {expires: -1})
-            $.cookie(uuid + "flag", "1")
-            location.href = "http://weitaomi.cn/pc/admin/article/readArticleRequest?uuid=" + uuid + "&articleId=" + articleId
-//            var articleUrl = hashMap.Get(articleId);
-//            console.log(articleId);
-//            $.ajax({
-//                type: 'post',
-//                url: '/pc/admin/article/readArticleRequest',
-//                data: {uuid:uuid,articleId: articleId},
-//                header: {
-//                    "Access-Control-Allow-Origin": "true"
-//                },
-//                success: function (params) {
-//                    var json = eval(params); //数组
-//                    console.log("json数据为：" + params)
-//                    if (json != null && json.errorCode == 0) {
-//                        obj.remove()
-//                        $.cookie(uuid,new Date().getTime(),{expires:-1})
-//                        $.cookie(uuid+"flag","1")
-//                        location.href = articleUrl;
-//                    } else if (json != null && json.errorCode == 4) {
-//                        alert(json.message);
-//                    } else {
-//                        alert("获取数据失败")
-//                    }
-//                },
-//                error: function (data) {
-//                    console.log(data)
-//                    alert("页面加载错误，请重试");
-//                }
-//            })
+            var articleUrl = hashMap.Get(articleId);
+            console.log(articleId);
+            $.ajax({
+                type: 'post',
+                url: '/pc/admin/article/readArticleRequest',
+                data: {uuid:uuid,articleId: articleId},
+                header: {
+                    "Access-Control-Allow-Origin": "true"
+                },
+                success: function (params) {
+                    var json = eval(params); //数组
+                    console.log("json数据为：" + params)
+                    if (json != null && json.errorCode == 0) {
+                        obj.remove()
+                        $.cookie(uuid,new Date().getTime())
+                        $.cookie(uuid+"flag","1")
+                        $.cookie(uuid+"articleUrl",articleUrl)
+                        location.href = articleUrl;
+                    } else if (json != null && json.errorCode == 4) {
+                        alert(json.message);
+                    } else {
+                        alert("获取数据失败")
+                    }
+                },
+                error: function (data) {
+                    console.log(data)
+                    alert("页面加载错误，请重试");
+                }
+            })
         }
     </script>
 </head>
 <body>
 <ul class="readlist">
 </ul>
-<div class="readUppop">
-    <div id="identifycode" class="readidentify">
-        <input type="number" name="telephone" class="code" id="imgcode" value="" placeholder="请输入右侧数字">
-        <a id="sendidentifycode">
-            <img src="http://weitaomi.cn/pc/admin/member/getIdentifyCode"/></a>
-    </div>
-    <input type="button" value="发送" id="readsend">
-</div>
 </body>
 </html>
