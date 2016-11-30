@@ -17,9 +17,9 @@
     <result column="createTime" property="createTime" jdbcType="BIGINT" />
   </resultMap>
   <insert id="batchAddOfficeMember">
-    INSERT INTO wtm_office_member  (memberId,officeAccountId,isAccessNow,createTime) VALUES
+    INSERT INTO wtm_office_member  (memberId,officeAccountId,isAccessNow,taskPoolId,createTime) VALUES
     <foreach collection="memberList" index="flag" item="item" separator=",">
-      (#{item.memberId},#{item.officeAccountId},#{item.isAccessNow},#{dateTime})
+      (#{item.memberId},#{item.officeAccountId},#{item.isAccessNow},#{item.taskPoolId},#{dateTime})
     </foreach>
   </insert>
   <update id="updateOfficialMemberList">

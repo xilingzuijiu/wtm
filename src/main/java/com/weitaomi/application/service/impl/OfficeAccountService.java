@@ -282,10 +282,13 @@ public class OfficeAccountService implements IOfficeAccountService {
                         memberScoreService.addMemberScore(memberId, 11L, 1, (taskPool.getRate().multiply(BigDecimal.valueOf(score))).doubleValue(), UUIDGenerator.generate());
                         cacheService.delKeyFromRedis(key);
                         officeMemberMapper.updateByPrimaryKeySelective(officeMember);
-                        taskPool.setRealityNumber(taskPool.getRealityNumber()-1);
+                        taskPool.setRealityNumber(taskPool.getRealityNumber()+1);
                         taskPoolMapper.updateByPrimaryKeySelective(taskPool);
                         return true;
                     } else {
+                        //增加任务记录
+                        logger.info("增加任务记录");
+                        int number = memberTaskHistoryMapper.updateMemberTaskUnfinished(memberId, 0, originId);
                         JpushUtils.buildRequest("公众号" + officialAccountWithScore.getUserName() + "的关注任务已经完成啦~去完成其他任务吧", memberId);
                         logger.info("公众号：{}的关注任务已经完成，memberID：{}", officialAccountWithScore.getUserName(), memberId);
                         cacheService.delKeyFromRedis(key);
