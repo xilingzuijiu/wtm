@@ -30,7 +30,9 @@ public interface IOfficeAccountService {
      * 推送关注任务
      * @param addOfficalAccountDto
      */
+    @Transactional
     public boolean pushAddRequest(Long memberId,AddOfficalAccountDto addOfficalAccountDto);
+
     /**
      * {"originId":""," nickname ":"昵称，如果unionId一致则换成unionId","time":"关注时间"}
      */

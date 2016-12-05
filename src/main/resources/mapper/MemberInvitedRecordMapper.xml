@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.weitaomi.application.model.mapper.MemberInvitedRecordMapper">
-    <resultMap id="BaseResultMap" type="com.weitaomi.application.model.bean.MemberInvitedRecord">
-        <!--
-          WARNING - @mbggenerated
-        -->
-        <id column="id" jdbcType="BIGINT" property="id" />
-        <result column="memberId" jdbcType="BIGINT" property="memberId" />
-        <result column="parentId" jdbcType="BIGINT" property="parentId" />
-        <result column="isAccessible" jdbcType="INTEGER" property="isAccessible" />
-        <result column="isAccessForInvitor" jdbcType="INTEGER" property="isAccessForInvitor" />
-        <result column="createTime" jdbcType="BIGINT" property="createTime" />
-    </resultMap>
-    <select id="getMemberInvitedRecordByMemberId" resultType="com.weitaomi.application.model.bean.MemberInvitedRecord">
-        select * from wtm_member_invited_record r WHERE r.memberId=#{memberId};
-    </select>
-    <select id="getInvitedRecord" resultType="com.weitaomi.application.model.dto.InvitedRecord">
-        select m.imageUrl imageUrl,m.memberName memberName,s.memberScore,r.createTime invitedTime from wtm_member m LEFT JOIN wtm_member_invited_record r ON r.memberId=m.id LEFT JOIN wtm_member_score s ON s.memberId=m.id WHERE  r.parentId=#{parentID} order by r.createTime desc
-    </select>
-    <select id="getInvitedParamsDto" resultType="com.weitaomi.application.model.dto.InvitedParamsDto">
-        SELECT
+  <resultMap id="BaseResultMap" type="com.weitaomi.application.model.bean.MemberInvitedRecord">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="memberId" jdbcType="BIGINT" property="memberId" />
+    <result column="parentId" jdbcType="BIGINT" property="parentId" />
+    <result column="isAccessible" jdbcType="INTEGER" property="isAccessible" />
+    <result column="isAccessForInvitor" jdbcType="INTEGER" property="isAccessForInvitor" />
+    <result column="createTime" jdbcType="BIGINT" property="createTime" />
+  </resultMap>
+  <select id="getMemberInvitedRecordByMemberId" resultType="com.weitaomi.application.model.bean.MemberInvitedRecord">
+    select * from wtm_member_invited_record r WHERE r.memberId=#{memberId};
+  </select>
+  <select id="getInvitedRecord" resultType="com.weitaomi.application.model.dto.InvitedRecord">
+    select m.imageUrl imageUrl,m.memberName memberName,s.memberScore,r.createTime invitedTime from wtm_member m LEFT JOIN wtm_member_invited_record r ON r.memberId=m.id LEFT JOIN wtm_member_score s ON s.memberId=m.id WHERE  r.parentId=#{parentID} order by r.createTime desc
+  </select>
+  <select id="getInvitedParamsDto" resultType="com.weitaomi.application.model.dto.InvitedParamsDto">
+    SELECT
         CASE  WHEN sum(flow.flowScore) is null THEN 0 ELSE sum(flow.flowScore) END AS totalScore,
         (SELECT pointCount FROM   wtm_member_task WHERE id=3)    invitedScore,
         (SELECT invitedCode FROM   wtm_member WHERE id=#{memberId})   invitedCode
-        FROM wtm_member_score_flow flow LEFT JOIN wtm_member_score_flow_type t ON t.id = flow.typeId
-        WHERE flow.memberId =#{memberId} AND t.id IN (10,18);
-    </select>
-    <select id="getTotalSharedMsg" resultType="com.weitaomi.application.model.dto.TotalSharedMsg">
+    FROM wtm_member_score_flow flow LEFT JOIN wtm_member_score_flow_type t ON t.id = flow.typeId
+    WHERE flow.memberId =#{memberId} AND t.id IN (10,18);
+  </select>
+  <select id="getTotalSharedMsg" resultType="com.weitaomi.application.model.dto.TotalSharedMsg">
        SELECT
           sum(h.flowScore) shareCounts,
           m.memberName      memberName,

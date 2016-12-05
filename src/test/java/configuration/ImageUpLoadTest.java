@@ -17,12 +17,12 @@ public class ImageUpLoadTest extends BaseContextCase {
     @Test
     public void testUpYun() throws IOException {
 
-            File file = new File("D:\\Documents\\Pictures\\176123317102280021.png");
+            File file = new File("D:\\Documents\\Tencent Files\\123803374\\FileRecv\\weitaomi1.4.2.apk");
             try {
                 UpYun upYun = new UpYun("weitaomi", "weitaomi", "Weitaomi@Woyun");
                 InputStream fileInputStream = new FileInputStream(file);
                 byte[] bytes = StreamUtils.InputStreamTOByte(fileInputStream);
-                String imageUrl = "/app/showImage/weitaomi20161122.png";
+                String imageUrl = "/app/version/download/weitaomi1.4.2.apk";
                 boolean flag = upYun.writeFile(imageUrl, bytes);
                 System.out.println("=============> Is success? " + imageUrl);
             } catch (FileNotFoundException e) {

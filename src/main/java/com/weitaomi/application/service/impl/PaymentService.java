@@ -261,25 +261,13 @@ public class PaymentService implements IPaymentService {
     @Transactional
     public MemberScore generatorPayParams(Long memberId, PaymentApprove approve, Integer sourceType) {
         if (approve != null) {
-//            String minutesKey = "deposit:count:minutes:" + memberId;
-//            String dayKey = "deposit:count:day:" + memberId;
-//            Integer minuteNumber = cacheService.getCacheByKey(minutesKey, Integer.class);
-//            if (minuteNumber != null && minuteNumber == 1) {
-//                throw new InfoException("提现操作过于频繁，24小时内可提现三次，每次间隔需大于十分钟，请合并金额选择大额提现~");
-//            } else {
-//                cacheService.setCacheByKey(minutesKey, 1, 10 * 60);
-//            }
-//            Integer dayNumber = cacheService.getCacheByKey(dayKey, Integer.class);
-//            if (dayNumber != null && dayNumber > 0) {
-//                if (dayNumber >= 3) {
-//                    throw new InfoException("提现操作过于频繁，十分钟内可提现一次，24小时内可提现三次，请合并金额选择大额提现~");
-//                } else {
-//                    cacheService.increCacheBykey(dayKey, 1L);
-//                }
-//            } else {
-//                Long time=DateUtils.getTodayEndSeconds()-DateUtils.getUnixTimestamp();
-//                cacheService.setCacheByKey(dayKey, 1,time.intValue());
-//            }
+            String minutesKey = "deposit:count:minutes:" + memberId;
+            Integer minuteNumber = cacheService.getCacheByKey(minutesKey, Integer.class);
+            if (minuteNumber != null && minuteNumber == 1) {
+                throw new InfoException("提现操作过于频繁，请勿短时间内重复操作~");
+            } else {
+                cacheService.setCacheByKey(minutesKey, 1, 3 * 60);
+            }
             MemberScore memberScore = memberScoreMapper.getMemberScoreByMemberId(memberId);
             if (memberScore == null) {
                 throw new InfoException("没有可用提现金额");

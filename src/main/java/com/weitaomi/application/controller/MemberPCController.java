@@ -88,10 +88,6 @@ public class MemberPCController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/publishAddRequest", method = RequestMethod.POST)
     public AjaxResult publishAddRequest(@RequestBody TaskPool taskPool,HttpServletRequest request){
-//        Integer flag=Integer.valueOf(request.getHeader("flag"));
-        if (true){
-            throw new InfoException("发布公众号暂不可用~");
-        }
         taskPool.setTaskType(0);
         taskPool.setCreateTime(DateUtils.getUnixTimestamp());
         String rateTemp= cacheService.getCacheByKey("task:rate:percent",String.class);
@@ -153,7 +149,7 @@ public class MemberPCController extends BaseController {
         }
         String prefix="https://mp.weixin.qq.com/mp/profile_ext?action=home&APPADDURL&scene=110#wechat_redirect";
         String urlParent=doc.toString();
-        String urlParams=urlParent.substring(urlParent.indexOf("msg_link")+12,urlParent.indexOf("#rd")).replace("\\x26amp;","@");
+        String urlParams = urlParent.substring(urlParent.indexOf("msg_link") + 12, urlParent.indexOf("#rd",urlParent.indexOf("msg_link"))).replace("\\x26amp;", "@");
         String[] arr=urlParams.split("@");
         String addUrl=prefix.replace("APPADDURL",arr[0].substring(arr[0].indexOf("__biz=")));
         return AjaxResult.getOK(URLEncoder.encode(addUrl));
@@ -209,8 +205,14 @@ public class MemberPCController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/pushAddFinished",method = RequestMethod.POST)
-    public AjaxResult pushAddFinished(@RequestBody Map<String,Object> params){
-        return AjaxResult.getOK(officeAccountService.pushAddFinished(params));
+    public AjaxResult pushAddFinished(@RequestBody Map<String,Object> params,HttpServletRequest request){
+        String ip=IpUtils.getIpAddr(request);
+        if (!StringUtil.isEmpty(ip)&&ip.equals("114.215.19.133")) {
+            return AjaxResult.getOK(officeAccountService.pushAddFinished(params));
+        }else {
+            logger.info("有人使坏想进来");
+            return AjaxResult.getOK(true);
+        }
     }
     /**
      * 获取邀请码
