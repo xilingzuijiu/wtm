@@ -134,8 +134,6 @@ public class OfficeAccountService extends BaseService implements IOfficeAccountS
                 if (number != null && number > 0) {
                     if (number >= taskPool.getNeedNumber()) {
                         flag = false;
-                    } else {
-                        cacheService.increCacheBykey(tableName, 1L);
                     }
                 } else {
                     cacheService.setCacheByKey(tableName, 1, null);
@@ -152,7 +150,6 @@ public class OfficeAccountService extends BaseService implements IOfficeAccountS
                         if (valueTemp != null) {
                             throw new InfoException("公众号" + officialAccountWithScore.getUserName() + "的关注未完成，请先完成");
                         }
-                        cacheService.setCacheByKey(key, memberCheck, SystemConfig.TASK_CACHE_TIME);
                         Integer numberFlag = taskPool.getNeedNumber() - BigDecimal.valueOf(taskPool.getTotalScore()).divide(BigDecimal.valueOf(taskPool.getSingleScore())).intValue();
                         if (numberFlag.intValue() != number.intValue()) {
                             logger.warn("发出警告!!!!关注公众号领取人数与米币消费数量不相等，公众号Id：{}，本次不相等数量缓存：{}，实际：{}", taskPool.getOfficialAccountsId(), number, numberFlag);
@@ -164,15 +161,14 @@ public class OfficeAccountService extends BaseService implements IOfficeAccountS
                         officeMember.setIsAccessNow(0);
                         String detail = "关注公众号" + officialAccountWithScore.getUserName() + "，领取" + taskPool.getRate().multiply(BigDecimal.valueOf(taskPool.getSingleScore())).doubleValue() + "米币";
                         if (score >= taskPool.getSingleScore()) {
-                            int num = taskPoolMapper.updateTaskPoolWithScore(score.doubleValue(), taskPool.getId());
+                            Integer num = taskPoolMapper.updateTaskPoolWithScore(score.doubleValue(), taskPool.getId());
                             if (num>0){
                                 memberTaskHistoryService.addMemberTaskToHistory(memberId, 1L, taskPool.getRate().multiply(BigDecimal.valueOf(taskPool.getSingleScore())).doubleValue(), 0, detail, null, officialAccountMsg.getOriginId());
                                 officeMemberList.add(officeMember);
+                                cacheService.setCacheByKey(key, memberCheck, SystemConfig.TASK_CACHE_TIME);
                                 idList.add(officialAccountWithScore.getId());
+                                cacheService.increCacheBykey(tableName, num.longValue());
                             }else {
-                                if (number>0){
-                                    cacheService.increCacheBykey(tableName, -1L);
-                                }
                                 continue;
                             }
                         } else {

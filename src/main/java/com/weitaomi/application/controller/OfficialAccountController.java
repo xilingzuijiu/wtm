@@ -55,8 +55,7 @@ public class OfficialAccountController extends BaseController{
     @RequestMapping(value = "/pushAddRequest",method = RequestMethod.POST)
     public AjaxResult pushAddRequest(HttpServletRequest request,@RequestBody AddOfficalAccountDto addOfficalAccountDto){
         Long memberId=super.getUserId(request);
-        officeAccountService.pushAddRequest(memberId,addOfficalAccountDto);
-        return AjaxResult.getOK();
+        return AjaxResult.getOK(officeAccountService.pushAddRequest(memberId,addOfficalAccountDto));
     }
 
     /**

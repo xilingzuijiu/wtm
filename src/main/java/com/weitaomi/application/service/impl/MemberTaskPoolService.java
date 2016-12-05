@@ -113,8 +113,8 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
         if (StringUtil.isEmpty(publishReadRequestDto.getArticleUrl())){
             throw new InfoException("文章地址不能为空");
         }
-        Article articleTemp=articleMapper.getArticleByUrl(publishReadRequestDto.getArticleUrl());
-        if (articleTemp!=null){
+        Integer flag =cacheService.getCacheByKey(publishReadRequestDto.getArticleUrl(),Integer.class);
+        if (flag!=null){
             throw new InfoException("该文章已经发布过，请在个人相应公众号中查看");
         }
         Document doc = null;
@@ -249,6 +249,7 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
         int num = taskPoolMapper.insertSelective(taskPool);
         memberScoreService.addMemberScore(publishReadRequestDto.getMemberId(),5L,1,-taskPool.getNeedNumber()*taskPool.getSingleScore().doubleValue(),UUIDGenerator.generate());
         memberTaskHistoryService.addMemberTaskToHistory(publishReadRequestDto.getMemberId(),9L,-taskPool.getNeedNumber()*taskPool.getSingleScore().doubleValue(),1,"发布文章\""+title+"\"求阅读任务",null,null);
+        cacheService.setCacheByKey(publishReadRequestDto.getArticleUrl(),1,24*60*60);
         if (num>0) return "提交审核成功";
         return "发布失败";
     }
