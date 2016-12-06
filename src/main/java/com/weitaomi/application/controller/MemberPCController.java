@@ -108,6 +108,16 @@ public class MemberPCController extends BaseController {
         }
         String tableFinish="task:finish:pay";
         String finishfollowKey="follow";
+        if (taskPool.getSex()!=0){
+            followScore=followScore*1.2;
+        }
+        if (!StringUtil.isEmpty(taskPool.getProvinceCode())){
+            if (!StringUtil.isEmpty(taskPool.getCityCode())){
+                followScore=followScore*1.5;
+            }else {
+                followScore=followScore*1.2;
+            }
+        }
         Double finishfollowScore=Double.valueOf(keyValueService.getKeyValueDtoList(tableFinish,finishfollowKey).get(0).getValue().toString());
         taskPool.setFinishScore(finishfollowScore);
         taskPool.setSingleScore(followScore);

@@ -50,7 +50,7 @@
       a.addUrl        addUrl,
       a.imageUrl      imageUrl,
       a.accountNumber followNumber,
-      pool.singleScore*pool.rate  rewardCount
+      pool.finishScore  rewardCount
     FROM wtm_official_accounts a LEFT JOIN wtm_official_accounts_level l ON a.level = l.id LEFT JOIN wtm_task_pool pool
     ON pool.officialAccountsId=a.id
     WHERE pool.id>0 AND pool.taskType=0 AND pool.isPublishNow=1 AND  pool.totalScore>0 AND pool.totalScore>=pool.singleScore AND a.id NOT IN (

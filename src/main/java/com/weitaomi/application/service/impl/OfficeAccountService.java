@@ -150,7 +150,7 @@ public class OfficeAccountService extends BaseService implements IOfficeAccountS
                         if (valueTemp != null) {
                             throw new InfoException("公众号" + officialAccountWithScore.getUserName() + "的关注未完成，请先完成");
                         }
-                        Integer numberFlag = taskPool.getNeedNumber() - BigDecimal.valueOf(taskPool.getTotalScore()).divide(BigDecimal.valueOf(taskPool.getSingleScore())).intValue();
+                        Integer numberFlag = taskPool.getNeedNumber() - BigDecimal.valueOf(taskPool.getTotalScore()).divide(BigDecimal.valueOf(taskPool.getSingleScore()),1,BigDecimal.ROUND_HALF_UP).intValue();
                         if (numberFlag.intValue() != number.intValue()) {
                             logger.warn("发出警告!!!!关注公众号领取人数与米币消费数量不相等，公众号Id：{}，本次不相等数量缓存：{}，实际：{}", taskPool.getOfficialAccountsId(), number, numberFlag);
                         }
