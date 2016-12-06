@@ -118,13 +118,17 @@ function checkAmount(value){
 
 };
 var amount=0.00;
-var singleScoreTemp=0.00
+var singleScoreTemp=0.00;
+var readScore=0.00;
 function deal(obj){
+    console.log(obj);
     var accountList=obj.officialAccountList;
     var elements='';
     accountList.forEach(function(account){
         amount=account.memberScore;
-        singleScoreTemp=account.singleScore
+        singleScoreTemp=obj.followScore;
+        readScore=obj.readScore;
+        console.log(readScore);
         var element='<option value="'+account.id+'">'+account.ofiicialAccountName+'</option>';
         elements += element;
     })
@@ -147,4 +151,5 @@ function deal(obj){
     var singleEle=' <input type="text" class="form-control" onchange="changeScore(this.value)" name="singleScore" id="input1" readonly="true" value="'+singleScoreTemp.toFixed(2)+'"/>'+
         '<div class="input-group-addon">米币</div>'
     $("#singleScore").append(singleEle)
+    $("#input3").attr("value",readScore);
 };

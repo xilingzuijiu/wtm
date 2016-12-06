@@ -172,7 +172,7 @@ function dealWithData(data,listId,pageId,pageIndex){
                 eleme = eleme+first;
             }else eleme = eleme+'<li><a onclick="getFollowTaskListByPage(officialId,$(this).text(),3,$(this).parentNode)">'+i+'</a></li>'
         }
-        $("#followPage>span").empty()
+        $("#followPage>span").empty();
         $("#followPage>span").append(eleme)
     }
     if (pageId=='readPage'){
@@ -192,7 +192,7 @@ function dealWithData(data,listId,pageId,pageIndex){
                 eleme = eleme+'<li><a onclick="getReadTaskListByPage(officialId,$(this).text(),3)">'+i+'</a></li>'
             }
         }
-        $("#readPage>span").empty()
+        $("#readPage>span").empty();
         $("#readPage>span").append(eleme)
     }
     var listId=listId;
