@@ -29,16 +29,17 @@ public class RedisConnectionTest extends BaseContextCase {
     }
     @Test
     public void testCacheData(){
-        String avaliableScoreKey="member:score:type:isAvaliableScore";
+        String avaliableScoreKey="task:publish:pay";
         String table="member:score:type:isAvaliableToSuper";
-        int[] value1={1,2,4,5,6,8,9,10,12,13,14,15,16,17,18,20};
-        int[] value2={11,12,13,14,15,18,20};
-        for (int i :value1){
-            cacheService.setToHashTable(avaliableScoreKey,""+i,1,null);
-        }
-        for (int i :value2){
-            cacheService.setToHashTable(table,""+i,1,null);
-        }
+//        int[] value1={1,2,4,5,6,8,9,10,12,13,14,15,16,17,18,20};
+//        int[] value2={11,12,13,14,15,18,20};
+//        for (int i :value1){
+            cacheService.setToHashTable(avaliableScoreKey,"follow",30.0,null);
+            cacheService.setToHashTable(avaliableScoreKey,"read",1.5,null);
+//        }
+//        for (int i :value2){
+//            cacheService.setToHashTable(table,""+i,1,null);
+//        }
     }
     @Test
     public void testKeyValueIsExist(){

@@ -180,7 +180,7 @@ public class MemberService extends BaseService implements IMemberService {
                 }
             }
         }
-        cacheService.setCacheByKey(registerKey,1,null);
+        cacheService.setCacheByKey(registerKey,1,5);
         if (registerMsg.getFlag() == 1) {
             return memberMapper.getMemberByTelephone(registerMsg.getMember().getTelephone(), sourceType);
         }else {

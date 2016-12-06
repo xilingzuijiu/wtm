@@ -60,6 +60,8 @@ public class MemberPCController extends BaseController {
     private IMemberScoreService memberScoreService;
     @Autowired
     private ICacheService cacheService;
+    @Autowired
+    private IKeyValueService keyValueService;
     /**
      * 获取用户信息
      * @throws ParseException    the parse exception
@@ -98,6 +100,17 @@ public class MemberPCController extends BaseController {
             cacheService.setCacheByKey("task:rate:percent",0.5,null);
         }
         taskPool.setRate(BigDecimal.valueOf(rate));
+        String table="task:publish:pay";
+        String followKey="follow";
+        Double followScore=cacheService.getFromHashTable(table,followKey);
+        if (followScore==null||followScore<=0){
+            followScore=Double.valueOf(keyValueService.getKeyValueDtoList(table,followKey).get(0).getValue().toString());
+        }
+        String tableFinish="task:finish:pay";
+        String finishfollowKey="follow";
+        Double finishfollowScore=Double.valueOf(keyValueService.getKeyValueDtoList(tableFinish,finishfollowKey).get(0).getValue().toString());
+        taskPool.setFinishScore(finishfollowScore);
+        taskPool.setSingleScore(followScore);
         taskPool.setTotalScore(taskPool.getNeedNumber()*taskPool.getSingleScore());
         String randomkey=taskPool.getRandomKey();
         Integer rands=cacheService.getCacheByKey(taskPool.getMemberId()+":"+randomkey,Integer.class);

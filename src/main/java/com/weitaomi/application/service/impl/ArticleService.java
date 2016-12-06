@@ -225,7 +225,7 @@ public class ArticleService extends BaseService implements IArticleService {
 
     @Override
     @Transactional
-    public synchronized Boolean readArticleRequest(Long memberId, Long time, Long articleId) {
+    public  Boolean readArticleRequest(Long memberId, Long time, Long articleId) {
         Long time1=System.currentTimeMillis();
         this.isArticleAccessToRead(memberId);
         logger.info("文章可读判断时间："+(System.currentTimeMillis()-time1));
@@ -271,8 +271,8 @@ public class ArticleService extends BaseService implements IArticleService {
             JpushUtils.buildRequest("您发布的文章"+article.getTitle()+"阅读任务已完成",account.getMemberId());
         }
         taskPoolMapper.updateByPrimaryKeySelective(taskPool);
-        memberTaskHistoryService.addMemberTaskToHistory(memberId,6L, BigDecimal.valueOf(taskPool.getSingleScore()).multiply(taskPool.getRate()).doubleValue(),1,"阅读文章-"+article.getTitle(),null,null);
-        memberScoreService.addMemberScore(memberId,13L,1,BigDecimal.valueOf(singleScore).multiply(taskPool.getRate()).doubleValue(),UUIDGenerator.generate());
+        memberTaskHistoryService.addMemberTaskToHistory(memberId,6L,taskPool.getFinishScore(),1,"阅读文章-"+article.getTitle(),null,null);
+        memberScoreService.addMemberScore(memberId,13L,1,taskPool.getFinishScore(),UUIDGenerator.generate());
         Integer number=cacheService.getCacheByKey("article:number:"+articleId,Integer.class);
         if (number!=null&&number>0) {
             if (number > taskPool.getNeedNumber()&&scoreAmount<=0) {

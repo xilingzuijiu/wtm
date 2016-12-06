@@ -48,7 +48,11 @@ public class TaskPool extends BaseModel {
      */
     @Column(name = "singleScore")
     private Double singleScore;
-
+    /**
+     * 完成奖励
+     */
+    @Column(name = "finishScore")
+    private Double finishScore;
     /**
      * 请求群体性别
      */
@@ -366,5 +370,21 @@ public class TaskPool extends BaseModel {
      */
     public void setRealityNumber(Integer realityNumber) {
         this.realityNumber = realityNumber;
+    }
+
+    /**
+     * 获取完成奖励
+     * @return finishScore 完成奖励
+     */
+    public Double getFinishScore() {
+        return this.finishScore;
+    }
+
+    /**
+     * 设置完成奖励
+     * @param finishScore 完成奖励
+     */
+    public void setFinishScore(Double finishScore) {
+        this.finishScore = finishScore;
     }
 }

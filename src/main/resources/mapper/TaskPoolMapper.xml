@@ -12,6 +12,7 @@
     <result column="totalScore" property="totalScore" jdbcType="INTEGER" />
     <result column="sex" property="sex" jdbcType="INTEGER" />
     <result column="singleScore" property="singleScore" jdbcType="INTEGER" />
+    <result column="finishScore" property="finishScore" jdbcType="INTEGER" />
     <result column="isPublishNow" property="isPublishNow" jdbcType="INTEGER" />
     <result column="rate" property="rate" jdbcType="DECIMAL" />
     <result column="isAutoPublishToOthers" property="isAutoPublishToOthers" jdbcType="INTEGER" />

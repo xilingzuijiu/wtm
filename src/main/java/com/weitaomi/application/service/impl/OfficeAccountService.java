@@ -159,11 +159,11 @@ public class OfficeAccountService extends BaseService implements IOfficeAccountS
                         officeMember.setTaskPoolId(taskPool.getId());
                         officeMember.setOfficeAccountId(officialAccountWithScore.getId());
                         officeMember.setIsAccessNow(0);
-                        String detail = "关注公众号" + officialAccountWithScore.getUserName() + "，领取" + taskPool.getRate().multiply(BigDecimal.valueOf(taskPool.getSingleScore())).doubleValue() + "米币";
+                        String detail = "关注公众号" + officialAccountWithScore.getUserName() + "，领取" + taskPool.getFinishScore() + "米币";
                         if (score >= taskPool.getSingleScore()) {
                             Integer num = taskPoolMapper.updateTaskPoolWithScore(score.doubleValue(), taskPool.getId());
                             if (num>0){
-                                memberTaskHistoryService.addMemberTaskToHistory(memberId, 1L, taskPool.getRate().multiply(BigDecimal.valueOf(taskPool.getSingleScore())).doubleValue(), 0, detail, null, officialAccountMsg.getOriginId());
+                                memberTaskHistoryService.addMemberTaskToHistory(memberId, 1L, taskPool.getFinishScore(), 0, detail, null, officialAccountMsg.getOriginId());
                                 officeMemberList.add(officeMember);
                                 cacheService.setCacheByKey(key, memberCheck, SystemConfig.TASK_CACHE_TIME);
                                 idList.add(officialAccountWithScore.getId());
@@ -245,11 +245,11 @@ public class OfficeAccountService extends BaseService implements IOfficeAccountS
                         }else {
                             taskPool = taskPoolMapper.getTaskPoolByOfficialId(officialAccountWithScore.getId(), null);
                         }
-                        memberScoreService.addMemberScore(memberId, 7L, 1, -(taskPool.getRate().multiply(BigDecimal.valueOf(taskPool.getSingleScore()))).doubleValue(), UUIDGenerator.generate());
-                        memberTaskHistoryService.addMemberTaskToHistory(memberId, 11L, -(taskPool.getRate().multiply(BigDecimal.valueOf(taskPool.getSingleScore()))).doubleValue(), 1, "七天之内取消关注公众号" + officialAccountWithScore.getUserName(), null, null);
+                        memberScoreService.addMemberScore(memberId, 7L, 1, -taskPool.getFinishScore(), UUIDGenerator.generate());
+                        memberTaskHistoryService.addMemberTaskToHistory(memberId, 11L, -taskPool.getFinishScore(), 1, "七天之内取消关注公众号" + officialAccountWithScore.getUserName(), null, null);
                         memberScoreService.addMemberScore(officialAccountWithScore.getMemberId(), 9L, 1, taskPool.getSingleScore(), UUIDGenerator.generate());
                         memberTaskHistoryService.addMemberTaskToHistory(officialAccountWithScore.getMemberId(), 12L, taskPool.getSingleScore(), 1, "用户七天之内取消关注公众号" + officialAccountWithScore.getUserName() + ",米币退还给公众号商家", null, null);
-                        logger.info("普通用户ID为{}的用户米币扣除成功，米币数为{}，商户用户ID为{}的用户米币返还成功，米币数为{}", memberId, -(taskPool.getRate().multiply(BigDecimal.valueOf(taskPool.getSingleScore()))).doubleValue(), officialAccountWithScore.getMemberId(), taskPool.getSingleScore());
+                        logger.info("普通用户ID为{}的用户米币扣除成功，米币数为{}，商户用户ID为{}的用户米币返还成功，米币数为{}", memberId, -taskPool.getFinishScore(), officialAccountWithScore.getMemberId(), taskPool.getSingleScore());
                         return true;
                     }
                 }
@@ -287,15 +287,15 @@ public class OfficeAccountService extends BaseService implements IOfficeAccountS
                     }
                     officeMember.setIsAccessNow(1);
                     officeMember.setOpenId(openid);
-                    officeMember.setAddRewarScore((taskPool.getRate().multiply(BigDecimal.valueOf(score))));
+                    officeMember.setAddRewarScore(BigDecimal.valueOf(taskPool.getFinishScore()));
                     officeMember.setFinishedTime(DateUtils.getUnixTimestamp());
                     if (taskPool.getRealityNumber() < taskPool.getNeedNumber()) {
                         //增加任务记录
                         logger.info("增加任务记录");
                         int number = memberTaskHistoryMapper.updateMemberTaskUnfinished(memberId, 0, originId);
                         //增加积分以及积分记录
-                        logger.info("ID为：{}用户,增加积分以及积分记录：{}", memberId, (taskPool.getRate().multiply(BigDecimal.valueOf(score))).doubleValue());
-                        memberScoreService.addMemberScore(memberId, 11L, 1, (taskPool.getRate().multiply(BigDecimal.valueOf(score))).doubleValue(), UUIDGenerator.generate());
+                        logger.info("ID为：{}用户,增加积分以及积分记录：{}", memberId, taskPool.getFinishScore());
+                        memberScoreService.addMemberScore(memberId, 11L, 1, taskPool.getFinishScore(), UUIDGenerator.generate());
                         cacheService.delKeyFromRedis(key);
                         officeMemberMapper.updateByPrimaryKeySelective(officeMember);
                         taskPool.setRealityNumber(taskPool.getRealityNumber()+1);

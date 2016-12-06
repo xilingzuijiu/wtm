@@ -83,7 +83,7 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
             if (memberScore==null){
                 return "可用米币为零，您还不能发布任务，请充值或者去赚取米币";
             }
-            if (memberScore.getMemberScore().doubleValue()-taskPool.getTotalScore()<0){
+            if (memberScore.getAvaliableScore().doubleValue()-taskPool.getTotalScore()<0){
                 return "可用米币为不足，请充值或者去赚取米币";
             }
             int num =taskPoolMapper.insertSelective(taskPool);
@@ -230,7 +230,17 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
         if (publishReadRequestDto.getNeedNumber()==null||publishReadRequestDto.getNeedNumber()==0){
             throw new InfoException("单次阅读需求数必须大于零哦~亲~");
         }
-        taskPool.setSingleScore(publishReadRequestDto.getSingleScore());
+        String table="task:publish:pay";
+        String readKey="read";
+        Double readScore=cacheService.getFromHashTable(table,readKey);
+        if (readScore==null||readScore<=0){
+            readScore=Double.valueOf(keyValueService.getKeyValueDtoList(table,readKey).get(0).getValue().toString());
+        }
+        String tableFinish="task:finish:pay";
+        String finishReadKey="read";
+        Double finishReadScore=Double.valueOf(keyValueService.getKeyValueDtoList(tableFinish,finishReadKey).get(0).getValue().toString());
+        taskPool.setFinishScore(finishReadScore);
+        taskPool.setSingleScore(readScore);
         taskPool.setNeedNumber(publishReadRequestDto.getNeedNumber());
         taskPool.setCreateTime(DateUtils.getUnixTimestamp());
         String rateTemp= cacheService.getCacheByKey("task:rate:percent",String.class);
@@ -242,7 +252,7 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
         }
         taskPool.setRate(BigDecimal.valueOf(rate));
         MemberScore memberScore=memberScoreMapper.getMemberScoreByMemberId(publishReadRequestDto.getMemberId());
-        if (memberScore.getMemberScore().doubleValue()-taskPool.getNeedNumber()*taskPool.getSingleScore()<0){
+        if (memberScore.getAvaliableScore().doubleValue()-taskPool.getNeedNumber()*taskPool.getSingleScore()<0){
             throw new InfoException("账户可用积分不足，请充值~么么哒~");
         }
         taskPool.setTotalScore(taskPool.getNeedNumber()*taskPool.getSingleScore());
@@ -267,8 +277,7 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
             throw new BusinessException("获取地区列表失败，请稍后再试");
         }
         requireFollowerParamsDto.setAddressList(addressList);
-//        logger.info(JSON.toJSONString(requireFollowerParamsDto));
-        return requireFollowerParamsDto;
+        return this.initRequireFollowerParamsDto(requireFollowerParamsDto);
     }
 
     @Override
@@ -279,10 +288,29 @@ public class MemberTaskPoolService extends BaseService implements IMemberTaskPoo
             throw new BusinessException("公众号列表为空");
         }
         requireFollowerParamsDto.setOfficialAccountList(accountList);
-//        logger.info(JSON.toJSONString(requireFollowerParamsDto));
-        return requireFollowerParamsDto;
+        return this.initRequireFollowerParamsDto(requireFollowerParamsDto);
     }
 
+    private RequireFollowerParamsDto initRequireFollowerParamsDto(RequireFollowerParamsDto requireFollowerParamsDto){
+        String table="task:publish:pay";
+        String followKey="follow";
+        String readKey="read";
+        Double followScore=cacheService.getFromHashTable(table,followKey);
+        if (followScore==null||followScore<=0){
+            followScore=(Double) keyValueService.getKeyValueDtoList(table,followKey).get(0).getValue();
+        }
+        if (followScore>0){
+            requireFollowerParamsDto.setFollowScore(followScore);
+        }
+        Double readScore=cacheService.getFromHashTable(table,readKey);
+        if (readScore==null||readScore<=0){
+            readScore=(Double) keyValueService.getKeyValueDtoList(table,readKey).get(0).getValue();
+        }
+        if (readScore>0){
+            requireFollowerParamsDto.setReadScore(readScore);
+        }
+        return requireFollowerParamsDto;
+    }
     @Override
     public Page<TaskPoolDto> getTaskPoolDto(Long officialAccountId, Integer type, int pageSize, int pageIndex) {
         List<TaskPoolDto> taskPoolDtoList=null;
