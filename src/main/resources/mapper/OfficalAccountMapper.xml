@@ -32,7 +32,7 @@
     </delete>
     <select id="getAccountsByMemberId"
             resultType="com.weitaomi.application.model.dto.OfficialAccountsDto">
-    select fa.id,fa.userName ofiicialAccountName,score.memberScore memberScore,t.singleScore from wtm_official_accounts fa LEFT JOIN wtm_member_score score ON score.memberId=fa.memberId
+    select fa.id,fa.userName ofiicialAccountName,score.avaliableScore memberScore,t.singleScore from wtm_official_accounts fa LEFT JOIN wtm_member_score score ON score.memberId=fa.memberId
      LEFT JOIN wtm_seller_type t ON t.id=fa.sellerTypeId
         WHERE fa.memberId=#{memberId} AND fa.isOpen=1
         <if test="flag==0">

@@ -37,6 +37,21 @@ public class MemberScoreFlow extends BaseModel {
     private BigDecimal memberScoreBefore;
 
     /**
+     * 用户流动前可用积分
+     */
+    @Column(name = "avaliableScoreBefore")
+    private BigDecimal avaliableScoreBefore;
+    /**
+     * 用户流动后可用积分
+     */
+    @Column(name = "avaliableScoreAfter")
+    private BigDecimal avaliableScoreAfter;
+    /**
+     * 可用流动积分
+     */
+    @Column(name = "avaliableFlowScore")
+    private BigDecimal avaliableFlowScore;
+    /**
      * 用户流动后积分
      */
     @Column(name = "memberScoreAfter")
@@ -212,5 +227,53 @@ public class MemberScoreFlow extends BaseModel {
      */
     public void setIsFinished(Integer isFinished) {
         this.isFinished = isFinished;
+    }
+
+    /**
+     * 获取用户流动前可用积分
+     * @return avaliableScoreBefore 用户流动前可用积分
+     */
+    public BigDecimal getAvaliableScoreBefore() {
+        return this.avaliableScoreBefore;
+    }
+
+    /**
+     * 设置用户流动前可用积分
+     * @param avaliableScoreBefore 用户流动前可用积分
+     */
+    public void setAvaliableScoreBefore(BigDecimal avaliableScoreBefore) {
+        this.avaliableScoreBefore = avaliableScoreBefore;
+    }
+
+    /**
+     * 获取用户流动后可用积分
+     * @return avaliableScoreAfter 用户流动后可用积分
+     */
+    public BigDecimal getAvaliableScoreAfter() {
+        return this.avaliableScoreAfter;
+    }
+
+    /**
+     * 设置用户流动后可用积分
+     * @param avaliableScoreAfter 用户流动后可用积分
+     */
+    public void setAvaliableScoreAfter(BigDecimal avaliableScoreAfter) {
+        this.avaliableScoreAfter = avaliableScoreAfter;
+    }
+
+    /**
+     * 获取可用流动积分
+     * @return avaliableFlowScore 可用流动积分
+     */
+    public BigDecimal getAvaliableFlowScore() {
+        return this.avaliableFlowScore;
+    }
+
+    /**
+     * 设置可用流动积分
+     * @param avaliableFlowScore 可用流动积分
+     */
+    public void setAvaliableFlowScore(BigDecimal avaliableFlowScore) {
+        this.avaliableFlowScore = avaliableFlowScore;
     }
 }

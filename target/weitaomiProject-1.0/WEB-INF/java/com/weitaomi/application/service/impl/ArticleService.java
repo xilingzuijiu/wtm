@@ -29,6 +29,8 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Created by supumall on 2016/7/7.
@@ -58,6 +60,7 @@ public class ArticleService extends BaseService implements IArticleService {
     private MemberMapper memberMapper;
     @Autowired
     private TaskFailPushToWechatMapper taskFailPushToWechatMapper;
+    private Lock lock=new ReentrantLock();
     @Override
     public Page<ArticleShowDto> getAllArticle(Long memberId,ArticleSearch articleSearch,Integer sourceType) {
         Long timestart=System.currentTimeMillis();
@@ -249,7 +252,6 @@ public class ArticleService extends BaseService implements IArticleService {
         }
         readRecord=articleReadRecordList.get(0);
         readRecord.setType(1);
-        articleReadRecordMapper.updateByPrimaryKeySelective(readRecord);
         TaskPool taskPool=taskPoolMapper.getTaskPoolByArticleId(articleId,1);
         if (taskPool==null){
             throw new InfoException("任务池中没有该文章");
@@ -270,9 +272,23 @@ public class ArticleService extends BaseService implements IArticleService {
             memberScoreService.addMemberScore(account.getMemberId(), 6L,1,score.doubleValue(), UUIDGenerator.generate());
             JpushUtils.buildRequest("您发布的文章"+article.getTitle()+"阅读任务已完成",account.getMemberId());
         }
-        taskPoolMapper.updateByPrimaryKeySelective(taskPool);
-        memberTaskHistoryService.addMemberTaskToHistory(memberId,6L,taskPool.getFinishScore(),1,"阅读文章-"+article.getTitle(),null,null);
-        memberScoreService.addMemberScore(memberId,13L,1,taskPool.getFinishScore(),UUIDGenerator.generate());
+        try {
+            lock.lock();
+            int num = articleReadRecordMapper.updateByPrimaryKeySelective(readRecord);
+            if (num > 0) {
+                int num1 = taskPoolMapper.updateByPrimaryKeySelective(taskPool);
+                if (num1 > 0) {
+                    memberTaskHistoryService.addMemberTaskToHistory(memberId, 6L, taskPool.getFinishScore(), 1, "阅读文章-" + article.getTitle(), null, null);
+                    memberScoreService.addMemberScore(memberId, 13L, 1, taskPool.getFinishScore(), UUIDGenerator.generate());
+                } else {
+                    throw new InfoException("阅读文章任务池更新失败");
+                }
+            }
+        }catch (Exception e){
+            logger.info("发生异常");
+        }finally {
+            lock.unlock();
+        }
         Integer number=cacheService.getCacheByKey("article:number:"+articleId,Integer.class);
         if (number!=null&&number>0) {
             if (number > taskPool.getNeedNumber()&&scoreAmount<=0) {

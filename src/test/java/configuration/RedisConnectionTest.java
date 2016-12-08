@@ -31,14 +31,21 @@ public class RedisConnectionTest extends BaseContextCase {
     public void testCacheData(){
         String avaliableScoreKey="task:publish:pay";
         String table="member:score:type:isAvaliableToSuper";
-//        int[] value1={1,2,4,5,6,8,9,10,12,13,14,15,16,17,18,20};
-//        int[] value2={11,12,13,14,15,18,20};
-//        for (int i :value1){
-            cacheService.setToHashTable(avaliableScoreKey,"follow",30.0,null);
-            cacheService.setToHashTable(avaliableScoreKey,"read",1.5,null);
-//        }
+        String avaliableScore="member:score:type:isAvaliableScore";
+        String memberScoreKey="member:score:type:isMemberScore";
+        int[] value1={1,2,4,5,6,8,9,10,12,13,14,15,16,17,19,20};
+        int[] value2={12,13,14,15,17,18,20};
+        int[] value3={1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,18,19,20};
+        for (int i :value1){
+//            cacheService.setToHashTable(avaliableScoreKey,"follow",30.0,null);
+//            cacheService.setToHashTable(avaliableScoreKey,"read",1.5,null);
+            cacheService.setToHashTable(avaliableScore,""+i,1,null);
+        }
 //        for (int i :value2){
 //            cacheService.setToHashTable(table,""+i,1,null);
+//        }
+//        for (int i :value3){
+//            cacheService.setToHashTable(memberScoreKey,""+i,1,null);
 //        }
     }
     @Test
